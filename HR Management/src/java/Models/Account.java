@@ -10,8 +10,8 @@ package Models;
  * @author dangGG
  */
 public class Account {
-        private int accountId;
-        private int employeeId;
+        private int account_id;
+        private int employee_id;
         private String username;
         private String password;
         private String email;
@@ -19,28 +19,37 @@ public class Account {
     public Account() {
     }
 
-    public Account(int accountId, int employeeId, String username, String password, String email) {
-        this.accountId = accountId;
-        this.employeeId = employeeId;
+    public Account(int employee_id, String username, String password, String email) {
+        this.employee_id = employee_id;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
+    
+    
+
+    public Account(int account_id, int employee_id, String username, String password, String email) {
+        this.account_id = account_id;
+        this.employee_id = employee_id;
         this.username = username;
         this.password = password;
         this.email = email;
     }
 
-    public int getAccountId() {
-        return accountId;
+    public int getAccount_id() {
+        return account_id;
     }
 
-    public void setAccountId(int accountId) {
-        this.accountId = accountId;
+    public void setAccount_id(int account_id) {
+        this.account_id = account_id;
     }
 
-    public int getEmployeeId() {
-        return employeeId;
+    public int getEmployee_id() {
+        return employee_id;
     }
 
-    public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
+    public void setEmployee_id(int employee_id) {
+        this.employee_id = employee_id;
     }
 
     public String getUsername() {
@@ -67,7 +76,5 @@ public class Account {
         this.email = email;
     }
     
-    
-        
         
 }
