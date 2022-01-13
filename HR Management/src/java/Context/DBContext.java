@@ -20,21 +20,21 @@ public class DBContext {
     public Connection getConnection() throws Exception{
         String url = "jdbc:mysql://localhost:3306/hr_system";
         String user = "root";
-        String password = "";
+        String password = "dang";
+        Class.forName("com.mysql.cj.jdbc.Driver");
         Connection conn = DriverManager.getConnection(url, user, password);
         return conn;
-        
     }
     //check Connection
-//    public static void main(String[] args) {
-//        DBContext dBContext = new DBContext();
-//        try {
-//            System.out.println("Thanh Cong");
-//            System.out.println(dBContext.getConnection());
-//        } catch (Exception ex) {
-//            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
+    public static void main(String[] args) {
+        DBContext dBContext = new DBContext();
+        try {
+            System.out.println("Thanh Cong");
+            System.out.println(dBContext.getConnection());
+        } catch (Exception ex) {
+            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
 
 }

@@ -44,4 +44,9 @@ public class EmployeeDAO {
         }
         return vec;
     }
+    
+    public static void main(String[] args) throws Exception {
+         EmployeeDAO eDAO = new EmployeeDAO();
+         eDAO.getEmployeeList();
+    }
 }
