@@ -16,6 +16,10 @@
         <servlet-name>VerifyUserRegisterEmailController</servlet-name>
         <servlet-class>Controller.VerifyUserRegisterEmailController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>VerifyUserEmailController</servlet-name>
+        <servlet-class>Controller.VerifyUserEmailController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>EditProfileController</servlet-name>
         <url-pattern>/EditProfile</url-pattern>

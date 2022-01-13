@@ -5,21 +5,18 @@
  */
 package Controller;
 
-import Context.SendEmail;
-import Models.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author dangGG
  */
-public class UserRegisterController extends HttpServlet {
+public class VerifyUserEmailController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +35,10 @@ public class UserRegisterController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UserRegisterController</title>");
+            out.println("<title>Servlet VerifyUserEmailController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UserRegisterController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet VerifyUserEmailController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,7 +58,8 @@ public class UserRegisterController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            request.getRequestDispatcher("Views/UserRegisterView.jsp").forward(request, response);
+            /* TODO output your page here. You may use following sample code. */
+            request.getRequestDispatcher(path).f;
         }
     }
 
@@ -76,27 +74,7 @@ public class UserRegisterController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("utf-8");
-        try (PrintWriter out = response.getWriter();) {
-            String fullname = request.getParameter("fullname");
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
-            String email = request.getParameter("email");
-            Account account = new Account(fullname,username,password,email);
-            SendEmail sm = new SendEmail();
-            String code = sm.getRandom();
-            String message = "Your code is: "+code;
-        
-            //check if the email send successfully
-           if( sm.send(account.getEmail(),"Verify Code",message)){
-               request.setAttribute("account", account);
-               request.setAttribute("systemCode", code);
-               request.getRequestDispatcher("VerifyUserEmail").forward(request, response);
-           }else{
-            out.println("Failed to send verification email");
-      	   }
-        }
+        processRequest(request, response);
     }
 
     /**
