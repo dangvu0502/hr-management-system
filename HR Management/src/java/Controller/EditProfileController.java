@@ -34,11 +34,7 @@ public class EditProfileController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            EmployeeDAO eDAO = new EmployeeDAO();
-            Vector<Employee> e = new Vector();
-            e = eDAO.getEmployeeList();
-            request.setAttribute("listE", e);
-            request.getRequestDispatcher("WEB-INF/settingList.jsp").forward(request, response);
+            request.getRequestDispatcher("Views/EditProfile.jsp").forward(request, response);
         }
     }
 

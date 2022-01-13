@@ -73,7 +73,7 @@
             <div class="tab-content">
                 <ul class="nav nav-tabs nav-justified" role="tablist">
                     <li class="active"><a data-toggle="tab" href="#profile">Profile</a></li>
-                    <li><a data-toggle="tab" href="#password">Password</a></li>
+                    <li><a data-toggle="tab" href="#password">Change Password</a></li>
                 </ul>
                 <div id="profile" class="tab-pane fade in active">
                     <div class="row">
