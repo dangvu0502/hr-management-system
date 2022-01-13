@@ -6,12 +6,12 @@
 package DAO;
 
 import Context.DBContext;
+import Models.Employee;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
-import model.Employee;
 
 /**
  *
@@ -24,19 +24,20 @@ public class EmployeeDAO {
     public Vector<Employee> getEmployeeList() throws Exception {
         Vector vec = new Vector();
         try {
-            String sql = "SELECT * FROM hr_systemdb.employee";
+            String sql = "SELECT * FROM hr_system.employee";
             con = new DBContext().getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Employee e = new Employee();
                 e.setEmployee_id(rs.getInt(1));
-                e.setAccount_id(rs.getInt(2));
-                e.setName(rs.getString(3));
-                e.setAvatar(rs.getString(4));
-                e.setStatus(rs.getBoolean(5));
-                e.setJob_id(rs.getInt(6));
-                e.setManager_id(rs.getInt(7));
+                e.setFullname(rs.getString(2));
+                e.setUsername(rs.getString(3));
+                e.setPassword(rs.getString(4));
+                e.setEmail(rs.getString(5));
+                e.setAvatar(rs.getString(6));
+                e.setStatus(rs.getInt(7));
+                e.setType_id(rs.getInt(8));
                 vec.add(e);
             }
         } catch (Exception e) {

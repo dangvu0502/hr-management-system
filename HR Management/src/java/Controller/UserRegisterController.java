@@ -6,7 +6,7 @@
 package Controller;
 
 import Context.SendEmail;
-import Models.Account;
+import Models.Employee;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -83,7 +83,7 @@ public class UserRegisterController extends HttpServlet {
             String username = request.getParameter("username");
             String password = request.getParameter("password");
             String email = request.getParameter("email");
-            Account account = new Account(fullname, username, password, email);
+            Employee employee = new Employee(fullname, username, password, email);
             boolean isExist = false;
             if (isExist) {
                 out.println("username exist");
@@ -92,10 +92,10 @@ public class UserRegisterController extends HttpServlet {
                 String code = sm.getRandom();
                 String message = "Your code is: " + code;
                 //check if the email send successfully
-                if (sm.send(account.getEmail(), "Verify Code", message)) {
+                if (sm.send(employee.getEmail(), "Verify Code", message)) {
                    HttpSession session  = request.getSession();
                    session.setAttribute("code", code);
-                   session.setAttribute("account", account);
+                   session.setAttribute("employee", employee);
                    response.sendRedirect("Views/VerifyUserEmailView.jsp");
                 } else {
                     out.println("Failed to send verification email");

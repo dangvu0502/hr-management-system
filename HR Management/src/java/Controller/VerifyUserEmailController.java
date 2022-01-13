@@ -5,7 +5,7 @@
  */
 package Controller;
 
-import Models.Account;
+import Models.Employee;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -76,7 +76,7 @@ public class VerifyUserEmailController extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession();
-            Account account = (Account) session.getAttribute("account");
+            Employee employee = (Employee) session.getAttribute("employee");
             String code = (String) session.getAttribute("code");
             String authCode = (String) request.getParameter("authcode");
             if (authCode.equals(code)) {
@@ -85,7 +85,7 @@ public class VerifyUserEmailController extends HttpServlet {
                 out.println("error back to login|" + authCode + "|" + code);
             }
             session.removeAttribute("code");
-            session.removeAttribute("account");
+            session.removeAttribute("employee");
         }
     }
 
