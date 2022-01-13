@@ -93,10 +93,10 @@ public class UserRegisterController extends HttpServlet {
                 String message = "Your code is: " + code;
                 //check if the email send successfully
                 if (sm.send(account.getEmail(), "Verify Code", message)) {
-                    request.setAttribute("account", account);
-                    request.setAttribute("systemCode", code);
-                    request.setAttribute("haveCodeEntered", false);
-                    request.getRequestDispatcher("VerifyUserEmail").forward(request, response);
+                   HttpSession session  = request.getSession();
+                   session.setAttribute("code", code);
+                   session.setAttribute("account", account);
+                   response.sendRedirect("Views/VerifyUserEmailView.jsp");
                 } else {
                     out.println("Failed to send verification email");
                 }

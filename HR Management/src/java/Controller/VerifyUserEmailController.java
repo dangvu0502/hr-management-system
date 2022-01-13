@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -36,7 +37,7 @@ public class VerifyUserEmailController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet VerifyUserEmailController</title>");            
+            out.println("<title>Servlet VerifyUserEmailController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet VerifyUserEmailController at " + request.getContextPath() + "</h1>");
@@ -57,7 +58,7 @@ public class VerifyUserEmailController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 
     /**
@@ -74,20 +75,17 @@ public class VerifyUserEmailController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            Account account = (Account) request.getAttribute("account");
-            String code = (String) request.getAttribute("code");
-            boolean haveCodeEntered = (boolean) request.getAttribute("haveCodeEntered");
-            if (!haveCodeEntered){
-                request.getRequestDispatcher("Views/VerifyUserEmailView.jsp").forward(request, response);
-            }else{
-                String authCode = (String) request.getAttribute("authcode");
-                if (authCode.equals(code)){
-                    out.println("succes back to login");
-                }else{
-                    out.println("error back to login");
-                }
+            HttpSession session = request.getSession();
+            Account account = (Account) session.getAttribute("account");
+            String code = (String) session.getAttribute("code");
+            String authCode = (String) request.getParameter("authcode");
+            if (authCode.equals(code)) {
+                out.println("succes back to login");
+            } else {
+                out.println("error back to login|" + authCode + "|" + code);
             }
-            
+            session.removeAttribute("code");
+            session.removeAttribute("account");
         }
     }
 

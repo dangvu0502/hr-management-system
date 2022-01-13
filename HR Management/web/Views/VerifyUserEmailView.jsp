@@ -14,7 +14,7 @@
     <body>
         <span>We already send a verification  code to your email.</span>
         
-        <form action="VerifyUserEmail" method="POST">
+        <form action="../VerifyUserEmail" method="POST">
             <input type="text" name="authcode" >
             <input type="submit" value="verify">
         </form>
