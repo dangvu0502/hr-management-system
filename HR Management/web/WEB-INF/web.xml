@@ -29,8 +29,8 @@
         <url-pattern>/UserRegister</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>VerifyUserRegisterEmailController</servlet-name>
-        <url-pattern>/VerifyUserRegisterEmailController</url-pattern>
+        <servlet-name>VerifyUserEmailController</servlet-name>
+        <url-pattern>/VerifyUserEmail</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
