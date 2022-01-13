@@ -3,56 +3,56 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Models;
+package model;
 
 /**
  *
- * @author Egamorft
+ * @author Kha Chinh
  */
 public class Employee {
-    private int employeeId;
-    private int accountId;
-    private String fullname;
+    private int employee_id;
+    private int account_id;
+    private String name;
     private String avatar;
-    private String status;
-    private int jobId;
-    private int managerId;
+    private boolean status;
+    private int job_id;
+    private int manager_id;
 
     public Employee() {
     }
 
-    public Employee(int employeeId, int accountId, String fullname, String avatar, String status, int jobId, int managerId) {
-        this.employeeId = employeeId;
-        this.accountId = accountId;
-        this.fullname = fullname;
+    public Employee(int employee_id, int account_id, String name, String avatar, boolean status, int job_id, int manager_id) {
+        this.employee_id = employee_id;
+        this.account_id = account_id;
+        this.name = name;
         this.avatar = avatar;
         this.status = status;
-        this.jobId = jobId;
-        this.managerId = managerId;
+        this.job_id = job_id;
+        this.manager_id = manager_id;
     }
 
-    public int getEmployeeId() {
-        return employeeId;
+    public int getEmployee_id() {
+        return employee_id;
     }
 
-    public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
+    public void setEmployee_id(int employee_id) {
+        this.employee_id = employee_id;
     }
 
-    public int getAccountId() {
-        return accountId;
+    public int getAccount_id() {
+        return account_id;
     }
 
-    public void setAccountId(int accountId) {
-        this.accountId = accountId;
+    public void setAccount_id(int account_id) {
+        this.account_id = account_id;
     }
 
-    public String getFullname() {
-        return fullname;
+    public String getName() {
+        return name;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAvatar() {
@@ -63,30 +63,28 @@ public class Employee {
         this.avatar = avatar;
     }
 
-    public String getStatus() {
+    public boolean isStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 
-    public int getJobId() {
-        return jobId;
+    public int getJob_id() {
+        return job_id;
     }
 
-    public void setJobId(int jobId) {
-        this.jobId = jobId;
+    public void setJob_id(int job_id) {
+        this.job_id = job_id;
     }
 
-    public int getManagerId() {
-        return managerId;
+    public int getManager_id() {
+        return manager_id;
     }
 
-    public void setManagerId(int managerId) {
-        this.managerId = managerId;
+    public void setManager_id(int manager_id) {
+        this.manager_id = manager_id;
     }
-    
-    
     
 }
