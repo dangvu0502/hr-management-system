@@ -12,6 +12,10 @@
         <servlet-name>UserRegisterController</servlet-name>
         <servlet-class>Controller.UserRegisterController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>VerifyUserRegisterEmailController</servlet-name>
+        <servlet-class>Controller.VerifyUserRegisterEmailController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>EditProfileController</servlet-name>
         <url-pattern>/EditProfile</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>UserRegisterController</servlet-name>
         <url-pattern>/UserRegister</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VerifyUserRegisterEmailController</servlet-name>
+        <url-pattern>/VerifyUserRegisterEmailController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
