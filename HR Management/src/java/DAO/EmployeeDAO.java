@@ -40,7 +40,7 @@ public class EmployeeDAO {
                 vec.add(e);
             }
         } catch (Exception e) {
-            System.out.println("fbwefbefwndfwegregregrg " + e.getMessage());
+            System.out.println("Error: " + e.getMessage());
         }
         return vec;
     }

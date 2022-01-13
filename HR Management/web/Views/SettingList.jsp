@@ -314,7 +314,11 @@
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
-
+                                    <c:forEach items="${listE}" var="e">
+                                        <tr>
+                                            <td>${e.employee_id}</td>
+                                        </tr>
+                                    </c:forEach>
                                 </table>
                                 <div class="table-foot">
                                     <ul class="pagination pagination-sm no-margin pull-right">
