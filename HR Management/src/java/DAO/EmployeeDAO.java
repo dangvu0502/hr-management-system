@@ -21,7 +21,7 @@ public class EmployeeDAO {
     Connection con;
 
   
-    public Vector<Employee> getEmployeeList() {
+    public Vector<Employee> getEmployeeList() throws Exception {
         Vector vec = new Vector();
         try {
             String sql = "SELECT * FROM hr_systemdb.employee";
@@ -39,7 +39,7 @@ public class EmployeeDAO {
                 e.setManager_id(rs.getInt(7));
                 vec.add(e);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("fbwefbefwndfwegregregrg " + e.getMessage());
         }
         return vec;
