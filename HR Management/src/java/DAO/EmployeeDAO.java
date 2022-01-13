@@ -39,8 +39,8 @@ public class EmployeeDAO {
                 e.setManager_id(rs.getInt(7));
                 vec.add(e);
             }
-        } catch (SQLException e) {
-            System.out.println("fbwefbefwndfwegregregrg " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
         }
         return vec;
     }
