@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Context.SendEmail;
 import Models.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -82,11 +84,17 @@ public class UserRegisterController extends HttpServlet {
             String password = request.getParameter("password");
             String email = request.getParameter("email");
             Account account = new Account(fullname,username,password,email);
-
-        } catch (Exception e) {
-
+            SendEmail sm = new SendEmail();
+            String message = "Your code is: "+sm.getRandom();
+           //call the send email method
+            boolean test = sm.send(account.getEmail(),"Verify Code",message);
+      		//check if the email send successfully
+           if(test){
+               out.println("succes");
+           }else{
+            out.println("Failed to send verification email");
+      	   }
         }
-
     }
 
     /**
