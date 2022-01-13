@@ -36,7 +36,7 @@ public class UserRegisterController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UserRegisterController</title>");            
+            out.println("<title>Servlet UserRegisterController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet UserRegisterController at " + request.getContextPath() + "</h1>");
@@ -74,8 +74,19 @@ public class UserRegisterController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         Account account = new Account();
-         
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
+        try (PrintWriter out = response.getWriter();) {
+            String fullname = request.getParameter("fullname");
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+            String email = request.getParameter("email");
+            Account account = new Account(fullname,username,password,email);
+
+        } catch (Exception e) {
+
+        }
+
     }
 
     /**

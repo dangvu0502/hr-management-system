@@ -45,26 +45,26 @@
                                 Sign Up
                             </header>
                             <div class="panel-body">
-                                <form action="#" method="POST" role="form" onsubmit="return isValid">
+                                <form action="UserRegister" method="POST" role="form" onsubmit="return isValid">
                                     <div class="row">
                                         <div class="col-lg-2"></div>
                                         <div class="col-lg-8">
                                             <div class="row ">
                                                 <div class="form-group col-lg-12">
                                                     <label for="fullname">Full name</label>
-                                                    <input type="text" class="form-control" id="fullname" placeholder="Enter your name" required>
+                                                    <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Enter your name" required>
                                                 </div>
                                             </div>
                                             <div class="row ">
                                                 <div class="form-group col-lg-12">
                                                     <label for="username">Username</label>
-                                                    <input type="text" class="form-control" id="username" placeholder="Enter your username" required>
+                                                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
                                                 </div>
                                             </div>
                                             <div class="row ">
                                                 <div class="form-group col-lg-12">
                                                         <label for="password">Password</label>
-                                                        <input type="password" class="form-control" id="password" onkeyup="checkEqual()" placeholder="Enter your password"  required >
+                                                        <input type="password" class="form-control" id="password" name="password" onkeyup="checkEqual()" placeholder="Enter your password"  required >
                                                 </div>
                                             </div>
                                             <div class="row ">
@@ -83,7 +83,7 @@
                                             <div class="row">
                                                 <div class="form-group col-lg-12">
                                                     <label for="email">Email address</label>
-                                                    <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+                                                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
                                                 </div>
                                             </div>
                                             <div class=" form-group row col-lg-12 text-center">
