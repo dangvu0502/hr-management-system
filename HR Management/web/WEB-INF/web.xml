@@ -8,6 +8,10 @@
         <servlet-name>SettingListController</servlet-name>
         <servlet-class>Controller.SettingListController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UserRegisterController</servlet-name>
+        <servlet-class>Controller.UserRegisterController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>EditProfileController</servlet-name>
         <url-pattern>/EditProfile</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>SettingListController</servlet-name>
         <url-pattern>/SettingListController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserRegisterController</servlet-name>
+        <url-pattern>/UserRegisterController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -5,21 +5,18 @@
  */
 package Controller;
 
-import DAO.EmployeeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Vector;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Employee;
 
 /**
  *
  * @author dangGG
  */
-public class SettingListController extends HttpServlet {
+public class UserRegisterController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,15 +30,17 @@ public class SettingListController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try {
-            EmployeeDAO eDAO = new EmployeeDAO();
-            Vector<Employee> e = new Vector();
-            e = eDAO.getEmployeeList();
-            request.setAttribute("listE", e);
-            request.getRequestDispatcher("WEB-INF/settingList.jsp").forward(request, response);
-
-        } catch (Exception e) {
-            System.out.println("ádfasdfasdfasd"+e.getMessage());
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet UserRegisterController</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet UserRegisterController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -57,7 +56,10 @@ public class SettingListController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            request.getRequestDispatcher("Views/UserRegisterView.jsp").forward(request, response);
+        }
     }
 
     /**

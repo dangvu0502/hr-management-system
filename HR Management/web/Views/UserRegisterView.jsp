@@ -14,15 +14,15 @@
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
         <!-- bootstrap 3.0.2 -->
-        <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <!-- font Awesome -->
-        <link href="../css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <!-- Ionicons -->
-        <link href="../css/ionicons.min.css" rel="stylesheet" type="text/css" />
+        <link href="css/ionicons.min.css" rel="stylesheet" type="text/css" />
 
         <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
         <!-- Theme style -->
-        <link href="../css/style.css" rel="stylesheet" type="text/css" />
+        <link href="css/style.css" rel="stylesheet" type="text/css" />
 
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -108,13 +108,13 @@
         </div>
         <!-- jQuery 2.0.2 -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-        <script src="../js/jquery.min.js" type="text/javascript"></script>
+        <script src="js/jquery.min.js" type="text/javascript"></script>
 
         <!-- Bootstrap -->
-        <script src="../js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="js/bootstrap.min.js" type="text/javascript"></script>
         <!-- Director App -->
-        <script src="../js/Director/app.js" type="text/javascript"></script>
-        <script src="../js/Director/myScript.js" type="text/javascript"></script>
+        <script src="js/Director/app.js" type="text/javascript"></script>
+        <script src="js/Director/myScript.js" type="text/javascript"></script>
     </body>
 </html>
 
