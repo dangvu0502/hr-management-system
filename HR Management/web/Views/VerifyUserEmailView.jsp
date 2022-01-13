@@ -12,7 +12,7 @@
         <title>Verify Page</title>
     </head>
     <body>
-        <span>We already send a verification  code to your email.</span>
+        <span>We already send a verification code to your email.</span>
         
         <form action="../VerifyUserEmail" method="POST">
             <input type="text" name="authcode" >
