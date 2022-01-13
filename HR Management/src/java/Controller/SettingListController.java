@@ -38,7 +38,7 @@ public class SettingListController extends HttpServlet {
             Vector<Employee> e = new Vector();
             e = eDAO.getEmployeeList();
             request.setAttribute("listE", e);
-            request.getRequestDispatcher("WEB-INF/settingList.jsp").forward(request, response);
+            request.getRequestDispatcher("Views/SettingList.jsp").forward(request, response);
 
         } catch (Exception e) {
 
