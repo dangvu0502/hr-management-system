@@ -39,7 +39,6 @@ public class SettingListController extends HttpServlet {
             e = eDAO.getEmployeeList();
             request.setAttribute("listE", e);
             request.getRequestDispatcher("Views/SettingList.jsp").forward(request, response);
-
         } catch (Exception e) {
             System.out.println("ádfasdfasdfasd"+e.getMessage());
         }

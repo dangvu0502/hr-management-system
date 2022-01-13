@@ -9,7 +9,6 @@ package Context;
  *
  * @author dangGG
  */
-import Models.Employee;
 import java.util.Properties;
 import java.util.Random;
 import javax.mail.Authenticator;
