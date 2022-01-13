@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Models.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -56,11 +57,7 @@ public class VerifyUserEmailController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            request.getRequestDispatcher(path).f;
-        }
+        
     }
 
     /**
@@ -74,7 +71,24 @@ public class VerifyUserEmailController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            Account account = (Account) request.getAttribute("account");
+            String code = (String) request.getAttribute("code");
+            boolean haveCodeEntered = (boolean) request.getAttribute("haveCodeEntered");
+            if (!haveCodeEntered){
+                request.getRequestDispatcher("Views/VerifyUserEmailView.jsp").forward(request, response);
+            }else{
+                String authCode = (String) request.getAttribute("authcode");
+                if (authCode.equals(code)){
+                    out.println("succes back to login");
+                }else{
+                    out.println("error back to login");
+                }
+            }
+            
+        }
     }
 
     /**

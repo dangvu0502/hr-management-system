@@ -83,19 +83,25 @@ public class UserRegisterController extends HttpServlet {
             String username = request.getParameter("username");
             String password = request.getParameter("password");
             String email = request.getParameter("email");
-            Account account = new Account(fullname,username,password,email);
-            SendEmail sm = new SendEmail();
-            String code = sm.getRandom();
-            String message = "Your code is: "+code;
-        
-            //check if the email send successfully
-           if( sm.send(account.getEmail(),"Verify Code",message)){
-               request.setAttribute("account", account);
-               request.setAttribute("systemCode", code);
-               request.getRequestDispatcher("VerifyUserEmail").forward(request, response);
-           }else{
-            out.println("Failed to send verification email");
-      	   }
+            Account account = new Account(fullname, username, password, email);
+            boolean isExist = false;
+            if (isExist) {
+                out.println("username exist");
+            } else {
+                SendEmail sm = new SendEmail();
+                String code = sm.getRandom();
+                String message = "Your code is: " + code;
+                //check if the email send successfully
+                if (sm.send(account.getEmail(), "Verify Code", message)) {
+                    request.setAttribute("account", account);
+                    request.setAttribute("systemCode", code);
+                    request.setAttribute("haveCodeEntered", false);
+                    request.getRequestDispatcher("VerifyUserEmail").forward(request, response);
+                } else {
+                    out.println("Failed to send verification email");
+                }
+            }
+
         }
     }
 
