@@ -5,12 +5,15 @@
  */
 package Controller;
 
+import DAO.EmployeeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Vector;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Employee;
 
 /**
  *
@@ -31,8 +34,11 @@ public class EditProfileController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            request.getRequestDispatcher("Views/EditProfile.jsp").forward(request, response);
+            EmployeeDAO eDAO = new EmployeeDAO();
+            Vector<Employee> e = new Vector();
+            e = eDAO.getEmployeeList();
+            request.setAttribute("listE", e);
+            request.getRequestDispatcher("WEB-INF/settingList.jsp").forward(request, response);
         }
     }
 

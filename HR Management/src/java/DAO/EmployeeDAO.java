@@ -5,6 +5,7 @@
  */
 package DAO;
 
+import Context.DBContext;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,10 +20,12 @@ import model.Employee;
 public class EmployeeDAO {
     Connection con;
 
+  
     public Vector<Employee> getEmployeeList() {
         Vector vec = new Vector();
         try {
             String sql = "SELECT * FROM hr_systemdb.employee";
+            con = new DBContext().getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -36,7 +39,7 @@ public class EmployeeDAO {
                 e.setManager_id(rs.getInt(7));
                 vec.add(e);
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             System.out.println("fbwefbefwndfwegregregrg " + e.getMessage());
         }
         return vec;

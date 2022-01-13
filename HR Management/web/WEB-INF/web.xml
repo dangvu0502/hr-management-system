@@ -4,9 +4,17 @@
         <servlet-name>EditProfileController</servlet-name>
         <servlet-class>Controller.EditProfileController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SettingListController</servlet-name>
+        <servlet-class>Controller.SettingListController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>EditProfileController</servlet-name>
         <url-pattern>/EditProfile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SettingListController</servlet-name>
+        <url-pattern>/SettingListController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
