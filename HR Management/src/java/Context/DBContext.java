@@ -19,7 +19,7 @@ public class DBContext {
 
     private static String jdbcURL = "jdbc:mysql://localhost:3306/hr_system?useTimeZone=true&serverTimezone=UTC&autoReconnect=true&useSSL=false";
     private static String jdbcUsername = "root";
-    private static String jdbcPassword = "dang";
+    private static String jdbcPassword = "";
 
     public Connection getConnection() {
         Connection connection = null;
