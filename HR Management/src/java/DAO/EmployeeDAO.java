@@ -113,6 +113,7 @@ public class EmployeeDAO {
 
     public int addEmployee(Employee employee) throws Exception {
         int rows = 0;
+        con.setAutoCommit(false);
         try {
             String sql = "INSERT INTO `hr_system`.`employee` (`fullname`,`username`,`password`,`email`) VALUES (?,?,?,?)";
             con = new DBContext().getConnection();
@@ -122,8 +123,10 @@ public class EmployeeDAO {
             ps.setString(3, employee.getPassword());
             ps.setString(4, employee.getEmail());
             rows = ps.executeUpdate();
+            con.commit();
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            con.rollback(); 
+            System.err.println("Error: " + e.getMessage());
         }
         return rows;
     }

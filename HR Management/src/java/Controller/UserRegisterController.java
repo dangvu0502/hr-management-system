@@ -93,11 +93,11 @@ public class UserRegisterController extends HttpServlet {
             if (isExist) {
                 out.println("username exist back to login");
             } else {
-                SendEmail sm = new SendEmail();
-                String code = sm.getRandom();
+            
+                String code = SendEmail.getRandom();
                 String message = "Your code is: " + code;
                 //check if the email send successfully
-                if (sm.send(employee.getEmail(), "Verify Code", message)) {
+                if (SendEmail.send(employee.getEmail(), "Verify Code", message)) {
                    HttpSession session  = request.getSession();
                    session.setAttribute("code", code);
                    session.setAttribute("employee", employee);

@@ -21,22 +21,22 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class SendEmail {
+
     //generate vrification code
-    public String getRandom() {
+    public static String getRandom() {
         Random rnd = new Random();
         int number = rnd.nextInt(999999);
         return String.format("%06d", number);
     }
 
     //send email to the user email
-
-    public boolean send(String to, String sub,
+    public static boolean send(String to, String sub,
             String msg) {
-        
-        boolean test= false;
+
+        boolean test = false;
         //create an instance of Properties Class   
         Properties props = new Properties();
-        
+
         /* Specifies the IP address of your default mail server
      	   for e.g if you are using gmail server as an email sever
            you will pass smtp.gmail.com as value of mail.smtp host. 
@@ -74,11 +74,11 @@ public class SendEmail {
             /* Transport class is used to deliver the message to the recipients */
             Transport.send(message);
             test = true;
-            
+
         } catch (MessagingException e) {
             e.printStackTrace();
         }
-        
+
         return test;
     }
 
