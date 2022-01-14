@@ -28,7 +28,7 @@ public class AccountDAO {
         try {
             //mo ket noi
             Connection conn = new DBContext().getConnection();
-            String sql = "select * from account where user_name=? and password=?";
+            String sql = "select * from hr_system.employee where username=? and password=?";
             ps = conn.prepareStatement(sql);
             ps.setString(1, username);
             ps.setString(2, password);
