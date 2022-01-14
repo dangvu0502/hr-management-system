@@ -28,10 +28,11 @@ public class AccountDAO {
         try {
             //mo ket noi
             Connection conn = new DBContext().getConnection();
-            String sql = "select * from hr_system.employee where username=? and password=?";
+            String sql = "SELECT * FROM hr_system.employee where (username =? or email = ?) and password=?";
             ps = conn.prepareStatement(sql);
             ps.setString(1, username);
-            ps.setString(2, password);
+            ps.setString(2, username);
+            ps.setString(3, password);
             rs = ps.executeQuery();
            
             while (rs.next()) {
@@ -56,6 +57,5 @@ public class AccountDAO {
 
         return null;
     }
-   
-   
+ 
 }
