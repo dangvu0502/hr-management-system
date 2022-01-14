@@ -18,11 +18,12 @@ import java.util.Vector;
  * @author Egamorft
  */
 public class EmployeeDAO {
+
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
-  
-    public Vector<Employee> getEmployeeList() throws Exception {
+
+    public Vector<Employee> getEmployeeList() {
         Vector vec = new Vector();
         try {
             String sql = "SELECT * FROM hr_system.employee";
@@ -46,7 +47,20 @@ public class EmployeeDAO {
         }
         return vec;
     }
-    
+
+    public void editStatus(int status, int employee_id) throws SQLException {
+        String sql = "UPDATE `hr_system`.`employee` SET `status` = ? WHERE (`employee_id` = ?)";
+        con = new DBContext().getConnection();
+        ps = con.prepareStatement(sql);
+        if (status == 0) {
+            ps.setInt(1, 1);
+        } else {
+            ps.setInt(1, 0);
+        }
+        ps.setInt(2, employee_id);
+        ps.executeUpdate();
+    }
+
     public Employee checkEmailExist(String email) throws Exception {
         try {
             String sql = "SELECT * FROM hr_system.employee WHERE email = ? ";
@@ -71,7 +85,7 @@ public class EmployeeDAO {
         }
         return null;
     }
-    
+
     public Employee checkUsernameExist(String username) throws Exception {
         try {
             String sql = "SELECT * FROM hr_system.employee WHERE username = ? ";
@@ -96,26 +110,33 @@ public class EmployeeDAO {
         }
         return null;
     }
-    
+
     public int addEmployee(Employee employee) throws Exception {
         int rows = 0;
         try {
             String sql = "INSERT INTO `hr_system`.`employee` (`fullname`,`username`,`password`,`email`) VALUES (?,?,?,?)";
             con = new DBContext().getConnection();
+            con.setAutoCommit(false);
             ps = con.prepareStatement(sql);
             ps.setString(1, employee.getFullname());
             ps.setString(2, employee.getUsername());
             ps.setString(3, employee.getPassword());
             ps.setString(4, employee.getEmail());
             rows = ps.executeUpdate();
+            con.commit();
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            con.rollback(); 
+            System.err.println("Error: " + e.getMessage());
         }
         return rows;
     }
-    
+
     public static void main(String[] args) throws Exception {
-         EmployeeDAO eDAO = new EmployeeDAO();
-         System.out.println(eDAO.addEmployee(new Employee("test","test","test","test@gmail.com")));
+        EmployeeDAO eDAO = new EmployeeDAO();
+//         System.out.println(eDAO.addEmployee(new Employee("test","test","test","test@gmail.com")));
+        Vector<Employee> e = eDAO.getEmployeeList();
+        for (Employee s : e) {
+            System.out.println(s.getFullname());
+        }
     }
 }

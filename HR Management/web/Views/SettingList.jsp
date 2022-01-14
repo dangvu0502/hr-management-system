@@ -308,8 +308,8 @@
                                     <tr>
                                         <th style="width: 10px">ID</th>
                                         <th>Avatar</th>
-                                        <th>Name</th>
-                                        <th>Job</th>
+                                        <th>User Name</th>
+                                        <th>Full Name</th>
                                         <th>Type</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -317,6 +317,24 @@
                                     <c:forEach items="${listE}" var="e">
                                         <tr>
                                             <td>${e.employee_id}</td>
+                                            <td><img src="${e.avatar}" width = "80px" height="80px"></td>
+                                            <td>${e.username}</td>
+                                            <td>${e.fullname}</td>
+                                            <td>${e.type_id}</td>
+                                            <td>
+                                                <c:if test = "${e.status == 0}">
+                                                    <span class="badge bg-red">Deactivate</span>
+                                                    <div><a href="StatusController?status=${e.status}&id=${e.employee_id}">switch</a></div>
+                                                </c:if>
+                                                <c:if test = "${e.status == 1}">
+                                                    <span class="badge bg-green">Activate</span>
+                                                    <div><a href="StatusController?status=${e.status}&id=${e.employee_id}">switch</a></div>
+                                                </c:if>
+                                            </td>
+                                            <td>
+                                                <a href="#">delete...</a>
+                                                <a href="#">edit...</a>
+                                            </td>
                                         </tr>
                                     </c:forEach>
                                 </table>
