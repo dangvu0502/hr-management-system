@@ -125,7 +125,7 @@ public class EmployeeDAO {
             rows = ps.executeUpdate();
             con.commit();
         } catch (Exception e) {
-            con.rollback(); 
+            con.rollback();
             System.err.println("Error: " + e.getMessage());
         }
         return rows;
@@ -138,5 +138,25 @@ public class EmployeeDAO {
         for (Employee s : e) {
             System.out.println(s.getFullname());
         }
+    }
+
+    public void UpdateProfile(String fullname, String avatar, String username) {
+        try {
+            //mo ket noi
+            String sql = "update hr_system.employee set fullname = ?, avatar = ? where username =?";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, fullname);
+            ps.setString(2, avatar);
+            ps.setString(3, username);
+            ps.executeUpdate();
+
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+    }
+
+    public void changePass(String username, String newpass) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

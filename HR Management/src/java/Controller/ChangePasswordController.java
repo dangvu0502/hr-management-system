@@ -6,23 +6,21 @@
 package Controller;
 
 import DAO.EmployeeDAO;
+import Models.Employee;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import Models.Employee;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Egamorft
  */
-public class EditProfileController extends HttpServlet {
+public class ChangePasswordController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,12 +32,10 @@ public class EditProfileController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, Exception {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-
-//            request.getRequestDispatcher("Views/EditProfile.jsp").forward(request, response);
-
+            /* TODO output your page here. You may use following sample code. */
         }
     }
 
@@ -55,15 +51,7 @@ public class EditProfileController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-//            processRequest(request, response);
-            EmployeeDAO dao = new EmployeeDAO();
-            String username = "admin";
-            request.setAttribute("employee", dao.checkUsernameExist(username));
-            request.getRequestDispatcher("Views/EditProfile.jsp").forward(request, response);
-        } catch (Exception ex) {
-            Logger.getLogger(EditProfileController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -77,23 +65,34 @@ public class EditProfileController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         try {
-            EmployeeDAO dao = new EmployeeDAO();
-
-            String fullname = request.getParameter("fullname");
-            String avatar = request.getParameter("avatar");
             String username = request.getParameter("username");
-            HttpSession session = request.getSession();
-//                        session.setAttribute("employee", dao.checkUsernameExist(username));
-        
-            Employee employee = (Employee) session.getAttribute("employee");
-//            employee.setFullname(fullname);
-
-            dao.UpdateProfile(fullname, avatar, username);
+            String oldpass = request.getParameter("oldpass");
+            String newpass = request.getParameter("newpass");
+            String renewpass = request.getParameter("renewpass");
+            EmployeeDAO employeeDAO = new EmployeeDAO();
+            Employee employee = employeeDAO.checkUsernameExist(username);
+            if (!employee.getPassword().equals(oldpass)) {
+                request.setAttribute("error", "Wrong old password");
+                request.getRequestDispatcher("Views/EditProfile.jsp").forward(request, response);
+                return;
+            }
+            if (!newpass.equals(renewpass)) {
+                request.setAttribute("error", "Wrong re-new password");
+                request.getRequestDispatcher("Views/EditProfile.jsp").forward(request, response);
+                return;
+            }
+            if (oldpass.equals(newpass)) {
+                request.setAttribute("error", "New pass must different from old pass");
+                request.getRequestDispatcher("Views/EditProfile.jsp").forward(request, response);
+                return;
+            }
+            employee.setPassword(newpass);
+            employeeDAO.changePass(username, newpass);
+            request.setAttribute("error", "Successfully");
             response.sendRedirect("EditProfile");
         } catch (Exception ex) {
-            Logger.getLogger(EditProfileController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ChangePasswordController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
