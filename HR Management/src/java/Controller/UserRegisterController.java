@@ -6,9 +6,12 @@
 package Controller;
 
 import Context.SendEmail;
+import DAO.EmployeeDAO;
 import Models.Employee;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -84,9 +87,11 @@ public class UserRegisterController extends HttpServlet {
             String password = request.getParameter("password");
             String email = request.getParameter("email");
             Employee employee = new Employee(fullname, username, password, email);
-            boolean isExist = false;
+            EmployeeDAO eDAO = new EmployeeDAO();
+            // check user name or email exist in databse
+            boolean isExist = eDAO.checkEmailExist(email) != null || eDAO.checkUsernameExist(username) != null;
             if (isExist) {
-                out.println("username exist");
+                out.println("username exist back to login");
             } else {
                 SendEmail sm = new SendEmail();
                 String code = sm.getRandom();
@@ -101,7 +106,8 @@ public class UserRegisterController extends HttpServlet {
                     out.println("Failed to send verification email");
                 }
             }
-
+        } catch (Exception ex) {
+            Logger.getLogger(UserRegisterController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
