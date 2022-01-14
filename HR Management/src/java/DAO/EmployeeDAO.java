@@ -113,10 +113,10 @@ public class EmployeeDAO {
 
     public int addEmployee(Employee employee) throws Exception {
         int rows = 0;
-        con.setAutoCommit(false);
         try {
             String sql = "INSERT INTO `hr_system`.`employee` (`fullname`,`username`,`password`,`email`) VALUES (?,?,?,?)";
             con = new DBContext().getConnection();
+            con.setAutoCommit(false);
             ps = con.prepareStatement(sql);
             ps.setString(1, employee.getFullname());
             ps.setString(2, employee.getUsername());
