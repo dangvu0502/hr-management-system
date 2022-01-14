@@ -5,9 +5,12 @@
  */
 package Controller;
 
+import DAO.EmployeeDAO;
 import Models.Employee;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,22 +32,22 @@ public class VerifyUserEmailController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet VerifyUserEmailController</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet VerifyUserEmailController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
+//    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+//            throws ServletException, IOException {
+//        response.setContentType("text/html;charset=UTF-8");
+//        try (PrintWriter out = response.getWriter()) {
+//            /* TODO output your page here. You may use following sample code. */
+//            out.println("<!DOCTYPE html>");
+//            out.println("<html>");
+//            out.println("<head>");
+//            out.println("<title>Servlet VerifyUserEmailController</title>");
+//            out.println("</head>");
+//            out.println("<body>");
+//            out.println("<h1>Servlet VerifyUserEmailController at " + request.getContextPath() + "</h1>");
+//            out.println("</body>");
+//            out.println("</html>");
+//        }
+//    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -78,14 +81,19 @@ public class VerifyUserEmailController extends HttpServlet {
             HttpSession session = request.getSession();
             Employee employee = (Employee) session.getAttribute("employee");
             String code = (String) session.getAttribute("code");
+            code = code.trim();
             String authCode = (String) request.getParameter("authcode");
             if (authCode.equals(code)) {
                 out.println("succes back to login");
+                EmployeeDAO eDAO = new EmployeeDAO();
+                eDAO.addEmployee(employee);
             } else {
                 out.println("error back to login|" + authCode + "|" + code);
             }
             session.removeAttribute("code");
             session.removeAttribute("employee");
+        } catch (Exception ex) {
+            Logger.getLogger(VerifyUserEmailController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
