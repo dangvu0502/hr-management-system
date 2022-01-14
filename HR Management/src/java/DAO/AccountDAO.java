@@ -57,5 +57,33 @@ public class AccountDAO {
 
         return null;
     }
+    public Employee getStatus(int status) {
+
+        try {
+            //mo ket noi
+            Connection conn = new DBContext().getConnection();
+            String sql = "SELECT * FROM hr_system.employee where status =?";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, status);
+            rs = ps.executeQuery();
+           
+            while (rs.next()) {
+                Employee account = new Employee();
+                account.setEmployee_id(rs.getInt("employee_id"));
+                account.setFullname(rs.getString("fullname"));
+                account.setUsername(rs.getString("username"));
+                account.setPassword(rs.getString("password"));
+                account.setEmail(rs.getString("email"));
+                account.setAvatar(rs.getString("avatar"));
+                account.setStatus(rs.getInt("status"));
+                account.setType_id(rs.getInt("type_id"));
+                return account;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+
+        return null;
+    }
  
 }
