@@ -39,7 +39,7 @@ public class LoginController extends HttpServlet {
             Employee employee = (Employee) request.getSession().getAttribute("employee");
             //kiem tra nếu acc = null thì chưa đăng nhập
             if (employee == null) {
-                request.getRequestDispatcher("login.jsp").forward(request, response);
+                request.getRequestDispatcher("Views/login.jsp").forward(request, response);
             } else {
                 response.sendRedirect("homepage");
             }
@@ -80,7 +80,7 @@ public class LoginController extends HttpServlet {
         Employee account = new AccountDAO().login(username, password);
         if (account == null) {
             request.setAttribute("err", "Login failed");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+            request.getRequestDispatcher("Views/login.jsp").forward(request, response);
             return;
         } else {
             request.getSession().setAttribute("account", account); //lưu trên ss
