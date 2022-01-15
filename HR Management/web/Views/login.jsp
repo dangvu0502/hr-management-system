@@ -82,7 +82,7 @@
                                             <div class="row ">
                                                 <div class="col-lg-3"></div>
                                                 <div class="col-lg-8">
-                                                    <p>Do not have an account? &nbsp &nbsp  &nbsp  <a href="#">SignUp</a></p>
+                                                    <p>Do not have an account? &nbsp &nbsp  &nbsp  <a href="UserRegister">SignUp</a></p>
                                                 </div>
                                             </div>
                                         </div>
