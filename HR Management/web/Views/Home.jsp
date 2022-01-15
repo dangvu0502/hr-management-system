@@ -114,7 +114,7 @@
             >Home <span class="sr-only">(current)</span></a
           >
           <a class="nav-item nav-link" href="../SettingListController">Setting List</a>
-          <a class="nav-item nav-link" href="#">User Profile</a>
+          <a class="nav-item nav-link" href="../EditProfile">User Profile</a>
         </div>
        <!-- If User Log-in -->
 
