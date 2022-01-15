@@ -16,12 +16,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Models.Employee;
+import java.io.File;
+import java.io.InputStream;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 /**
  *
  * @author Egamorft
  */
+@MultipartConfig()
 public class EditProfileController extends HttpServlet {
 
     /**
@@ -38,8 +44,7 @@ public class EditProfileController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
 
-//            request.getRequestDispatcher("Views/EditProfile.jsp").forward(request, response);
-
+            request.getRequestDispatcher("Views/EditProfile.jsp").forward(request, response);
         }
     }
 
@@ -56,11 +61,11 @@ public class EditProfileController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-//            processRequest(request, response);
-            EmployeeDAO dao = new EmployeeDAO();
-            String username = "admin";
-            request.setAttribute("employee", dao.checkUsernameExist(username));
-            request.getRequestDispatcher("Views/EditProfile.jsp").forward(request, response);
+            processRequest(request, response);
+//            EmployeeDAO dao = new EmployeeDAO();
+//            String username = "admin";
+//            request.setAttribute("employee", dao.checkUsernameExist(username));
+//            request.getRequestDispatcher("Views/EditProfile.jsp").forward(request, response);
         } catch (Exception ex) {
             Logger.getLogger(EditProfileController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -84,13 +89,33 @@ public class EditProfileController extends HttpServlet {
             String fullname = request.getParameter("fullname");
             String avatar = request.getParameter("avatar");
             String username = request.getParameter("username");
+//            InputStream inputStream = null; // input stream of the upload file
+//
+//            // obtains the upload file part in this multipart request
+//            Part filePart = request.getPart("image");
+//            if (filePart != null) {
+//                // prints out some information for debugging
+//                System.out.println(filePart.getName());
+//                System.out.println(filePart.getSize());
+//                System.out.println(filePart.getContentType());
+//
+//                // obtains input stream of the upload file
+//                inputStream = filePart.getInputStream();
+//            }
+
+            Part part = request.getPart("image");
+            String fileName = part.getSubmittedFileName();
+            //String path = getServletContext().getRealPath("../"+"img"+File.separator+fileName);
+
             HttpSession session = request.getSession();
 //                        session.setAttribute("employee", dao.checkUsernameExist(username));
-        
+
             Employee employee = (Employee) session.getAttribute("employee");
 //            employee.setFullname(fullname);
 
-            dao.UpdateProfile(fullname, avatar, username);
+            dao.UpdateProfile(fullname, fileName, username);
+//            request.setAttribute("error", "Wrong password");
+//            request.getRequestDispatcher("Views/EditProfile.jsp").forward(request, response);
             response.sendRedirect("EditProfile");
         } catch (Exception ex) {
             Logger.getLogger(EditProfileController.class.getName()).log(Level.SEVERE, null, ex);

@@ -76,52 +76,58 @@
                     <li><a data-toggle="tab" href="#password">Change Password</a></li>
                 </ul>
                 <div id="profile" class="tab-pane fade in active">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <figure class="text-center">
-                                <figcaption>
-                                    <h4>${employee.username}</h4>
-                                </figcaption>
-                                <img class="img-rounded" src="../img/${employee.avatar}" alt="avatar" style="width:200px">
-                                <input name="file" class="file-upload" type="file" accept="image/*" id="file">
-                                <input type="hidden" name="image" value="${employee.avatar}">
-                                <button class="btn btn-primary btn-addon btn-sm"><label for="file">Choose Photo</label></button>
-                            </figure>
-                        </div>
-                        <div class="col-md-9">
-                            <div class="col-md-8 col-md-4">
-                                <form action="EditProfile" method="post">
-                                    <input name="username" type="hidden" value="${employee.username}">
+
+                    <form action="EditProfile" method="post" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <figure class="text-center">
+                                    <figcaption>
+                                        <h4>${sessionScope.account.username}</h4>
+                                    </figcaption>
+                                    <img class="img-rounded" src="../img/${sessionScope.account.avatar}" alt="avatar" style="width:200px">
+                                    <input name="image" class="file-upload" type="file" accept="image/*" id="file">
+                                    <!--<input type="hidden" name="image" value="">-->
+                                    <button class="btn btn-primary btn-addon btn-sm"><label for="file">Choose Photo</label></button>
+                                </figure>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="col-md-8 col-md-4">
+                                    <input name="username" type="hidden" value="${sessionScope.account.username}">
                                     <div class="col-md"><label class="labels">Date of birth</label><input type="date" class="form-control" value="" disabled=""></div>
 
-                                    <div class="col-md"><label class="labels">Full name</label><input name="fullname" type="text" class="form-control" value="${employee.fullname}"></div>
+                                    <div class="col-md"><label class="labels">Full name</label><input name="fullname" type="text" class="form-control" value="${sessionScope.account.fullname}"></div>
                                     <div class="col-md"><label class="labels">Address</label><input type="text" class="form-control" value="" disabled=""></div>
                                     <div class="col-md"><label class="labels">Password</label><input name="password" type="password" class="form-control" value=""></div>
-                            </div>
-                            <div class="col-md-8 col-md-4">
-                                <div class="col-md"><label class="labels">Sex</label>
-                                    <select class="form-control" disabled="">
-                                        <option value="">Male</option>
-                                        <option value="">Female</option>
-                                    </select>
                                 </div>
-                                <div class="col-md"><label class="labels">Email</label><input type="email" class="form-control" value="" disabled=""></div>
-                                <div class="col-md"><label class="labels">Phone number</label><input type="tel" class="form-control" value="" disabled=""></div>
+                                <div class="col-md-8 col-md-4">
+                                    <div class="col-md"><label class="labels">Sex</label>
+                                        <select class="form-control" disabled="">
+                                            <option value="">Male</option>
+                                            <option value="">Female</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md"><label class="labels">Email</label><input type="email" class="form-control" value="" disabled=""></div>
+                                    <div class="col-md"><label class="labels">Phone number</label><input type="tel" class="form-control" value="" disabled=""></div>
+                                </div>
+
                             </div>
 
                         </div>
-
-                    </div>
-                    <c:if test="${error != null && error !=''}">
-                        <label style="color: red">${error}</label>
-                    </c:if>
-                    <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
+                        <c:choose>      
+                            <c:when test="${error != null && error !=''}">
+                                <p style="color: red ">${error}</p>
+                            </c:when>
+                            <c:otherwise>
+                                <p style="color: green">${error}</p>
+                            </c:otherwise>
+                        </c:choose>  
+                        <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
                     </form>
                 </div>
                 <div id="password" class="tab-pane fade">
                     <form action="ChangePassword" method="POST">
                         <div class="row mt-5">
-                            <input name="username" type="hidden" value="${employee.username}">
+                            <input name="username" type="hidden" value="${sessionScope.account.username}">
 
                             <div class="col-md-8">
                                 <div class="col-md-4 col-md-offset-7"><label class="labels">Old Password</label><input name="oldpass" type="password" class="form-control" required="" ></div>
