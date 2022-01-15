@@ -5,6 +5,11 @@
  */
 package Models;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  *
  * @author Kha Chinh
@@ -21,6 +26,10 @@ public class Employee {
     private int type_id;
     private int code; // only for email vefify
 
+    public static final int STATUS_ACTIVE = 1;
+    public static final int STATUS_DEACTIVE = 0;
+
+    
     public Employee() {
     }
 

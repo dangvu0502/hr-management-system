@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Models.Employee;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -36,7 +37,9 @@ public class EditProfileController extends HttpServlet {
             throws ServletException, IOException, Exception {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            request.getRequestDispatcher("Views/EditProfile.jsp").forward(request, response);
+
+//            request.getRequestDispatcher("Views/EditProfile.jsp").forward(request, response);
+
         }
     }
 
@@ -53,7 +56,11 @@ public class EditProfileController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            processRequest(request, response);
+//            processRequest(request, response);
+            EmployeeDAO dao = new EmployeeDAO();
+            String username = "admin";
+            request.setAttribute("employee", dao.checkUsernameExist(username));
+            request.getRequestDispatcher("Views/EditProfile.jsp").forward(request, response);
         } catch (Exception ex) {
             Logger.getLogger(EditProfileController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -70,8 +77,21 @@ public class EditProfileController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         try {
-            processRequest(request, response);
+            EmployeeDAO dao = new EmployeeDAO();
+
+            String fullname = request.getParameter("fullname");
+            String avatar = request.getParameter("avatar");
+            String username = request.getParameter("username");
+            HttpSession session = request.getSession();
+//                        session.setAttribute("employee", dao.checkUsernameExist(username));
+        
+            Employee employee = (Employee) session.getAttribute("employee");
+//            employee.setFullname(fullname);
+
+            dao.UpdateProfile(fullname, avatar, username);
+            response.sendRedirect("EditProfile");
         } catch (Exception ex) {
             Logger.getLogger(EditProfileController.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -3,7 +3,7 @@
     Created on : Jan 12, 2022, 8:23:08 PM
     Author     : Egamorft
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -80,54 +80,61 @@
                         <div class="col-md-3">
                             <figure class="text-center">
                                 <figcaption>
-                                    <h4>Username</h4>
+                                    <h4>${employee.username}</h4>
                                 </figcaption>
-                                <img class="img-rounded" src="https://www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png" alt="username" style="width:200px">
-                                <input class="file-upload" type="file" accept="image/*" id="file">
+                                <img class="img-rounded" src="../img/${employee.avatar}" alt="avatar" style="width:200px">
+                                <input name="file" class="file-upload" type="file" accept="image/*" id="file">
+                                <input type="hidden" name="image" value="${employee.avatar}">
                                 <button class="btn btn-primary btn-addon btn-sm"><label for="file">Choose Photo</label></button>
                             </figure>
                         </div>
                         <div class="col-md-9">
                             <div class="col-md-8 col-md-4">
-                                <form action="/" method="post">
-                                    <div class="col-md"><label class="labels">Date of birth</label><input type="date" class="form-control" value=""></div>
+                                <form action="EditProfile" method="post">
+                                    <input name="username" type="hidden" value="${employee.username}">
+                                    <div class="col-md"><label class="labels">Date of birth</label><input type="date" class="form-control" value="" disabled=""></div>
 
-                                    <div class="col-md"><label class="labels">Email</label><input type="email" class="form-control" value=""></div>
-                                    <div class="col-md"><label class="labels">Address</label><input type="text" class="form-control" value=""></div>
-                                    <div class="col-md"><label class="labels">Password</label><input type="password" class="form-control" value=""></div>
+                                    <div class="col-md"><label class="labels">Full name</label><input name="fullname" type="text" class="form-control" value="${employee.fullname}"></div>
+                                    <div class="col-md"><label class="labels">Address</label><input type="text" class="form-control" value="" disabled=""></div>
+                                    <div class="col-md"><label class="labels">Password</label><input name="password" type="password" class="form-control" value=""></div>
                             </div>
                             <div class="col-md-8 col-md-4">
                                 <div class="col-md"><label class="labels">Sex</label>
-                                    <select class="form-control">
+                                    <select class="form-control" disabled="">
                                         <option value="">Male</option>
                                         <option value="">Female</option>
                                     </select>
                                 </div>
-
-                                <div class="col-md"><label class="labels">Phone number</label><input type="tel" class="form-control" value=""></div>
+                                <div class="col-md"><label class="labels">Email</label><input type="email" class="form-control" value="" disabled=""></div>
+                                <div class="col-md"><label class="labels">Phone number</label><input type="tel" class="form-control" value="" disabled=""></div>
                             </div>
 
                         </div>
 
                     </div>
-                    <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button">Save Profile</button></div>
+                    <c:if test="${error != null && error !=''}">
+                        <label style="color: red">${error}</label>
+                    </c:if>
+                    <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
                     </form>
                 </div>
                 <div id="password" class="tab-pane fade">
-                    <form action="/" method="post">
+                    <form action="ChangePassword" method="POST">
                         <div class="row mt-5">
+                            <input name="username" type="hidden" value="${employee.username}">
 
                             <div class="col-md-8">
-                                <div class="col-md-4 col-md-offset-7"><label class="labels">Old Password</label><input type="password" class="form-control" value=""></div>
+                                <div class="col-md-4 col-md-offset-7"><label class="labels">Old Password</label><input name="oldpass" type="password" class="form-control" required="" ></div>
                             </div>
                             <div class="col-md-8">
-                                <div class="col-md-4 col-md-offset-7"><label class="labels">New Password</label><input type="password" class="form-control" value=""></div>
+                                <div class="col-md-4 col-md-offset-7"><label class="labels">New Password</label><input name="newpass" type="password" class="form-control" required=""></div>
                             </div>
                             <div class="col-md-8">
-                                <div class="col-md-4 col-md-offset-7"><label class="labels">Confirm Password</label><input type="password" class="form-control" value=""></div>
+                                <div class="col-md-4 col-md-offset-7"><label class="labels">Confirm Password</label><input name="renewpass" type="password" class="form-control"  required=""></div>
                             </div>
                         </div>
-                        <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button">Save Profile</button></div>
+                        <input name="test" type="hidden" value="1">
+                        <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Submit Change</button></div>
                     </form>
                 </div>
             </div>

@@ -13,7 +13,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import  Models.Employee;
+import Models.Employee;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -36,13 +37,14 @@ public class LoginController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            Employee employee = (Employee) request.getSession().getAttribute("employee");
-            //kiem tra nếu acc = null thì chưa đăng nhập
-            if (employee == null) {
-                request.getRequestDispatcher("Views/login.jsp").forward(request, response);
-            } else {
-                response.sendRedirect("homepage");
-            }
+//            HttpSession session = request.getSession();
+//            Employee account = (Employee) session.getAttribute("account");
+//            //kiem tra nếu acc = null thì chưa đăng nhập
+//            if (account == null) {
+//                request.getRequestDispatcher("Views/login.jsp").forward(request, response);
+//            } else {
+//                response.sendRedirect("homepage");
+//            }
 
         }
     }
@@ -59,7 +61,16 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            HttpSession session = request.getSession();
+            Employee account = (Employee) session.getAttribute("account");
+            if (account == null) {
+                request.getRequestDispatcher("Views/login.jsp").forward(request, response);
+            } else {
+                response.sendRedirect("home");
+            }
+        }
     }
 
     /**
@@ -73,18 +84,31 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        String warning = null;
 
         Employee account = new AccountDAO().login(username, password);
         if (account == null) {
             request.setAttribute("err", "Login failed");
             request.getRequestDispatcher("Views/login.jsp").forward(request, response);
-            return;
+
         } else {
-            request.getSession().setAttribute("account", account); //lưu trên ss
-            response.sendRedirect("homepage");
+            if (account.getStatus() == Employee.STATUS_DEACTIVE) {
+                warning = "You do not have access to this website";
+                request.getRequestDispatcher("Views/login.jsp").forward(request, response);
+            } else {
+                if (account.getStatus() == Employee.STATUS_ACTIVE) {
+                    request.getSession().setAttribute("account", account); //lưu trên ss
+                    response.sendRedirect("homepage");
+                }
+                else{
+                    request.getRequestDispatcher("Views/login.jsp").forward(request, response);
+                }
+
+            }
+
         }
 
     }
