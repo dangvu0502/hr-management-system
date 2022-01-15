@@ -3,7 +3,7 @@
     Created on : Jan 11, 2022, 9:05:18 PM
     Author     : quocb
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -44,6 +44,11 @@
                             <header class="panel-heading text-center">
                                 Login
                             </header>
+                            <c:if test="${verifyMessage != null}">
+                                <div class="alert alert-danger" role="alert">
+                                    <p class="mb-0">${verifyMessage}</p>
+                                </div>
+                            </c:if>
                             <div class="panel-body">
                                 <form action="login" method="POST" role="form" onsubmit="return isValid">
                                     <div class="row">

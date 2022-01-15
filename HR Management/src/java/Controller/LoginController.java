@@ -47,7 +47,9 @@ public class LoginController extends HttpServlet {
 //            }
             HttpSession session = request.getSession();
             Employee account = (Employee) session.getAttribute("account");
+            String verifyMessage = (String) request.getAttribute("verifyMessage");
             if (account == null) {
+                request.setAttribute("verifyMessage", verifyMessage);
                 request.getRequestDispatcher("Views/login.jsp").forward(request, response);
             } else {
                 response.sendRedirect("Views/Home.jsp");

@@ -84,14 +84,16 @@ public class VerifyUserEmailController extends HttpServlet {
             code = code.trim();
             String authCode = (String) request.getParameter("authcode");
             if (authCode.equals(code)) {
-                out.println("succes back to login");
                 EmployeeDAO eDAO = new EmployeeDAO();
                 eDAO.addEmployee(employee);
+                request.setAttribute("verifyMessage", "Register Successfully");
             } else {
                 out.println("error back to login|" + authCode + "|" + code);
+                request.setAttribute("verifyMessage", "Invalid Code");
             }
             session.removeAttribute("code");
             session.removeAttribute("employee");
+            request.getRequestDispatcher("login").forward(request, response);
         } catch (Exception ex) {
             Logger.getLogger(VerifyUserEmailController.class.getName()).log(Level.SEVERE, null, ex);
         }
