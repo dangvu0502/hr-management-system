@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -44,6 +45,12 @@
                             <header class="panel-heading text-center">
                                 Sign Up
                             </header>
+                            <c:if test="${message != null}">
+                                <div class="alert alert-danger" role="alert">
+                                    <h4 class="alert-heading">Error</h4><hr>
+                                    <p class="mb-0">${message}</p>
+                                </div>
+                            </c:if>
                             <div class="panel-body">
                                 <form action="UserRegister" method="POST" role="form" onsubmit="return isValid">
                                     <div class="row">
@@ -63,8 +70,8 @@
                                             </div>
                                             <div class="row ">
                                                 <div class="form-group col-lg-12">
-                                                        <label for="password">Password</label>
-                                                        <input type="password" class="form-control" id="password" name="password" onkeyup="checkEqual()" placeholder="Enter your password"  required >
+                                                    <label for="password">Password</label>
+                                                    <input type="password" class="form-control" id="password" name="password" onkeyup="checkEqual()" placeholder="Enter your password"  required >
                                                 </div>
                                             </div>
                                             <div class="row ">
@@ -79,7 +86,7 @@
                                                     <span> <input type="checkbox" onclick="password_show_hide()">Show Password </span>
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="row">
                                                 <div class="form-group col-lg-12">
                                                     <label for="email">Email address</label>

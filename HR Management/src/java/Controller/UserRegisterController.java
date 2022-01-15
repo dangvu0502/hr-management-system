@@ -49,7 +49,6 @@ public class UserRegisterController extends HttpServlet {
 //            out.println("</html>");
 //        }
 //    }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -64,6 +63,16 @@ public class UserRegisterController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            if (request.getParameter("error") != null) {
+                int error = Integer.parseInt(request.getParameter("error"));
+                if (error == 1) {
+                    request.setAttribute("message", "Username is exist");
+                }
+                if (error == 2) {
+                    request.setAttribute("message", "Email is exist");
+                }
+            }
+
             request.getRequestDispatcher("Views/UserRegisterView.jsp").forward(request, response);
         }
     }
@@ -89,19 +98,20 @@ public class UserRegisterController extends HttpServlet {
             Employee employee = new Employee(fullname, username, password, email);
             EmployeeDAO eDAO = new EmployeeDAO();
             // check user name or email exist in databse
-            boolean isExist = eDAO.checkEmailExist(email) != null || eDAO.checkUsernameExist(username) != null;
-            if (isExist) {
-                out.println("username exist back to login");
+            // boolean isExist = eDAO.checkEmailExist(email) != null || eDAO.checkUsernameExist(username) != null;
+            if (eDAO.checkUsernameExist(username) != null) {
+                response.sendRedirect("UserRegister?error=1");
+            } else if (eDAO.checkEmailExist(email) != null) {
+                response.sendRedirect("UserRegister?error=2");
             } else {
-            
                 String code = SendEmail.getRandom();
                 String message = "Your code is: " + code;
                 //check if the email send successfully
                 if (SendEmail.send(employee.getEmail(), "Verify Code", message)) {
-                   HttpSession session  = request.getSession();
-                   session.setAttribute("code", code);
-                   session.setAttribute("employee", employee);
-                   response.sendRedirect("Views/VerifyUserEmailView.jsp");
+                    HttpSession session = request.getSession();
+                    session.setAttribute("code", code);
+                    session.setAttribute("employee", employee);
+                    response.sendRedirect("Views/VerifyUserEmailView.jsp");
                 } else {
                     out.println("Failed to send verification email");
                 }
