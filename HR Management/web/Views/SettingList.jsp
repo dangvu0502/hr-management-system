@@ -350,11 +350,11 @@
                                             <td>
                                                 <c:if test = "${e.status == 0}">
                                                     <span class="badge bg-red">Deactivate</span>
-                                                    <div><a href="StatusController?status=${e.status}&id=${e.employee_id}">switch</a></div>
+                                                    <div><a href="StatusController?status=${e.status}&id=${e.employee_id}&page=${page}">switch</a></div>
                                                 </c:if>
                                                 <c:if test = "${e.status == 1}">
                                                     <span class="badge bg-green">Activate</span>
-                                                    <div><a href="StatusController?status=${e.status}&id=${e.employee_id}">switch</a></div>
+                                                    <div><a href="StatusController?status=${e.status}&id=${e.employee_id}&page=${page}">switch</a></div>
                                                 </c:if>
                                             </td>
                                             <td>
