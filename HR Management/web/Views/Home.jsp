@@ -113,7 +113,7 @@
           <a class="nav-item nav-link active" href="#"
             >Home <span class="sr-only">(current)</span></a
           >
-          <a class="nav-item nav-link" href="#">Setting List</a>
+          <a class="nav-item nav-link" href="../SettingListController">Setting List</a>
           <a class="nav-item nav-link" href="#">User Profile</a>
         </div>
        <!-- If User Log-in -->

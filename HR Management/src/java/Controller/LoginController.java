@@ -67,7 +67,7 @@ public class LoginController extends HttpServlet {
             if (account == null) {
                 request.getRequestDispatcher("Views/login.jsp").forward(request, response);
             } else {
-                response.sendRedirect("home");
+                response.sendRedirect("Views/Home.jsp");
             }
         }
     }
@@ -100,7 +100,7 @@ public class LoginController extends HttpServlet {
             } else {
                 if (account.getStatus() == Employee.STATUS_ACTIVE) {
                     request.getSession().setAttribute("account", account); //lưu trên ss
-                    response.sendRedirect("homepage");
+                    response.sendRedirect("Views/Home.jsp");
                 }
                 else{
                     request.getRequestDispatcher("Views/login.jsp").forward(request, response);
