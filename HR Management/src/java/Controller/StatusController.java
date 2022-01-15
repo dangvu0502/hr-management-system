@@ -37,11 +37,15 @@ public class StatusController extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             String status = request.getParameter("status");
             String employee_id = request.getParameter("id");
+            String page = request.getParameter("page");
+            if (page == null) {
+                page = "1";
+            }
             int s = Integer.parseInt(status);
             int i = Integer.parseInt(employee_id);
             EmployeeDAO e = new EmployeeDAO();
             e.editStatus(s, i);
-            response.sendRedirect("SettingListController");
+            response.sendRedirect("SettingListController?page=" + page + "");
         } catch (Exception e) {
             System.out.println("Error " + e.getMessage());
         }

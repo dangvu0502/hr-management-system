@@ -34,17 +34,30 @@ public class SettingListController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
+            String setting_type = request.getParameter("type");
+            String input = request.getParameter("input");
+            String page = request.getParameter("page");
+            if (page == null) page = "1";
+            request.setAttribute("page", page);
             EmployeeDAO eDAO = new EmployeeDAO();
+            int count = eDAO.getTotalEmployee();
+            int endPage = count/3;
+            if (endPage % 3 != 0) endPage++;
+            request.setAttribute("endP", endPage);
             Vector<Employee> e = new Vector();
-            e = eDAO.getEmployeeList();
+            if (setting_type == null || input == null) {
+                e = eDAO.getEmployeeList(Integer.parseInt(page));
+            } else {
+                e = eDAO.getEmployeeBySearch(setting_type, input);
+            }
             request.setAttribute("listE", e);
             request.getRequestDispatcher("Views/SettingList.jsp").forward(request, response);
         } catch (Exception e) {
-            System.out.println("ádfasdfasdfasd"+e.getMessage());
+            System.out.println("ádfasdfasdfasd" + e.getMessage());
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

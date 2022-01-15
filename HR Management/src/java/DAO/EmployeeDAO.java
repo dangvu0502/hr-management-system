@@ -23,12 +23,14 @@ public class EmployeeDAO {
     PreparedStatement ps;
     ResultSet rs;
 
-    public Vector<Employee> getEmployeeList() {
+    public Vector<Employee> getEmployeeList(int page) {
         Vector vec = new Vector();
         try {
-            String sql = "SELECT * FROM hr_system.employee";
+            String sql = "select * FROM hr_system.employee\n"
+                    + "LIMIT 3 offset ?";
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
+            ps.setInt(1, (page-1)*3);
             rs = ps.executeQuery();
             while (rs.next()) {
                 Employee e = new Employee();
@@ -59,6 +61,48 @@ public class EmployeeDAO {
         }
         ps.setInt(2, employee_id);
         ps.executeUpdate();
+    }
+
+    public Vector<Employee> getEmployeeBySearch(String setting_type, String input) {
+        Vector vec = new Vector();
+        try {
+            String sql = "SELECT * FROM hr_system.employee where " + setting_type + " = ?";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, input);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Employee e = new Employee();
+                e.setEmployee_id(rs.getInt(1));
+                e.setFullname(rs.getString(2));
+                e.setUsername(rs.getString(3));
+                e.setPassword(rs.getString(4));
+                e.setEmail(rs.getString(5));
+                e.setAvatar(rs.getString(6));
+                e.setStatus(rs.getInt(7));
+                e.setType_id(rs.getInt(8));
+                vec.add(e);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return vec;
+    }
+
+    public int getTotalEmployee() {
+        int total = 0;
+        try {
+            String sql = "select count(*) FROM hr_system.employee";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                total = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return total;
     }
 
     public Employee checkEmailExist(String email) throws Exception {
@@ -134,10 +178,10 @@ public class EmployeeDAO {
     public static void main(String[] args) throws Exception {
         EmployeeDAO eDAO = new EmployeeDAO();
 //         System.out.println(eDAO.addEmployee(new Employee("test","test","test","test@gmail.com")));
-        Vector<Employee> e = eDAO.getEmployeeList();
-        for (Employee s : e) {
-            System.out.println(s.getFullname());
-        }
+//        Vector<Employee> e = eDAO.getEmployeeList();
+//        for (Employee s : e) {
+//            System.out.println(s.getFullname());
+//        }
     }
 
     public void UpdateProfile(String fullname, String avatar, String username) {
