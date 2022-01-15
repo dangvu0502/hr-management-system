@@ -300,6 +300,8 @@
                     <div class="row">
                         <div class="panel">
                             <header class="panel-heading">
+                                Setting List
+                            </header>
                             <div class="panel-body" style="width: 50%;">
                                 <header class="panel-heading">
                                     Filter
@@ -326,7 +328,6 @@
                                 </form>
                             </div>
                             <div class="btn btn-success text-right"><a href="#" style="color: white;">Add</a></div>
-                            </header>
                             <div class="panel-body">
                                 <table class="table table-bordered">
                                     <tr>
@@ -368,7 +369,7 @@
                                     <ul class="pagination pagination-sm no-margin pull-right">
                                         <c:forEach begin="1" end="${endP}" var="p">
                                             <li><a href="SettingListController?page=${p}">${p}</a></li>
-                                        </c:forEach>
+                                            </c:forEach>
                                     </ul>
                                 </div>
                             </div>
