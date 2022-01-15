@@ -5,7 +5,7 @@ package Controller;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import dao.AccountDAO;
+import DAO.EmployeeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -45,7 +45,6 @@ public class LoginController extends HttpServlet {
 //            } else {
 //                response.sendRedirect("homepage");
 //            }
-
         }
     }
 
@@ -89,7 +88,7 @@ public class LoginController extends HttpServlet {
         String password = request.getParameter("password");
         String warning = null;
 
-        Employee account = new AccountDAO().login(username, password);
+        Employee account = new EmployeeDAO().login(username, password);
         if (account == null) {
             request.setAttribute("err", "Login failed");
             request.getRequestDispatcher("Views/login.jsp").forward(request, response);
