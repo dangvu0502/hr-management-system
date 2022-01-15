@@ -45,6 +45,14 @@ public class LoginController extends HttpServlet {
 //            } else {
 //                response.sendRedirect("homepage");
 //            }
+            HttpSession session = request.getSession();
+            Employee account = (Employee) session.getAttribute("account");
+            if (account == null) {
+                request.getRequestDispatcher("Views/login.jsp").forward(request, response);
+            } else {
+                response.sendRedirect("Views/Home.jsp");
+            }
+
         }
     }
 
@@ -60,16 +68,7 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            HttpSession session = request.getSession();
-            Employee account = (Employee) session.getAttribute("account");
-            if (account == null) {
-                request.getRequestDispatcher("Views/login.jsp").forward(request, response);
-            } else {
-                response.sendRedirect("Views/Home.jsp");
-            }
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -95,14 +94,13 @@ public class LoginController extends HttpServlet {
 
         } else {
             if (account.getStatus() == Employee.STATUS_DEACTIVE) {
-                warning = "You do not have access to this website";
+                request.setAttribute("err", "You do not have access to this website");
                 request.getRequestDispatcher("Views/login.jsp").forward(request, response);
             } else {
                 if (account.getStatus() == Employee.STATUS_ACTIVE) {
                     request.getSession().setAttribute("account", account); //lưu trên ss
                     response.sendRedirect("Views/Home.jsp");
-                }
-                else{
+                } else {
                     request.getRequestDispatcher("Views/login.jsp").forward(request, response);
                 }
 
