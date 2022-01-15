@@ -300,8 +300,32 @@
                     <div class="row">
                         <div class="panel">
                             <header class="panel-heading">
-                                Bordered Table
-
+                            <div class="panel-body" style="width: 50%;">
+                                <header class="panel-heading">
+                                    Filter
+                                </header>
+                                <form action="SettingListController" method="post">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-3">
+                                            <select class="form-control" name="type">
+                                                <option value="employee_id">ID</option>
+                                                <option value="username">User Name</option>
+                                                <option value="fullname">Full Name</option>
+                                                <option value="email">Email</option>
+                                                <option value="type_id">Type</option>
+                                                <option value="status">Status</option>
+                                            </select>                                            
+                                        </div>
+                                        <div class="form-group col-md-7">
+                                            <input class="form-control" type="text" placeholder="Input..." name="input">
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <input type="submit" class="btn btn-info" value="Search">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="btn btn-success text-right"><a href="#" style="color: white;">Add</a></div>
                             </header>
                             <div class="panel-body">
                                 <table class="table table-bordered">
@@ -340,11 +364,9 @@
                                 </table>
                                 <div class="table-foot">
                                     <ul class="pagination pagination-sm no-margin pull-right">
-                                        <li><a href="#">&laquo;</a></li>
-                                        <li><a href="#">1</a></li>
-                                        <li><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li><a href="#">&raquo;</a></li>
+                                        <c:forEach begin="1" end="${endP}" var="p">
+                                            <li><a href="SettingListController?page=${p}">${p}</a></li>
+                                        </c:forEach>
                                     </ul>
                                 </div>
                             </div>
