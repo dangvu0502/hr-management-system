@@ -24,6 +24,7 @@ public class Employee {
     private String avatar;
     private int status;
     private int type_id;
+    private String type_name;
     private int code; // only for email vefify
 
     public static final int STATUS_ACTIVE = 1;
@@ -40,7 +41,7 @@ public class Employee {
         this.email = email;
     }
 
-    public Employee(int employee_id, String fullname, String username, String password, String email, String avatar, int status, int type_id, int code) {
+    public Employee(int employee_id, String fullname, String username, String password, String email, String avatar, int status, int type_id, String type_name, int code) {
         this.employee_id = employee_id;
         this.fullname = fullname;
         this.username = username;
@@ -49,6 +50,7 @@ public class Employee {
         this.avatar = avatar;
         this.status = status;
         this.type_id = type_id;
+        this.type_name = type_name;
         this.code = code;
     }
 
@@ -114,6 +116,14 @@ public class Employee {
 
     public void setType_id(int type_id) {
         this.type_id = type_id;
+    }
+
+    public String getType_name() {
+        return type_name;
+    }
+
+    public void setType_name(String type_name) {
+        this.type_name = type_name;
     }
 
     public int getCode() {

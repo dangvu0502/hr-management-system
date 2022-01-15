@@ -312,7 +312,7 @@
                                                 <option value="username">User Name</option>
                                                 <option value="fullname">Full Name</option>
                                                 <option value="email">Email</option>
-                                                <option value="type_id">Type</option>
+                                                <option value="type_name">Type</option>
                                                 <option value="status">Status</option>
                                             </select>                                            
                                         </div>
@@ -335,6 +335,7 @@
                                         <th>User Name</th>
                                         <th>Full Name</th>
                                         <th>Type</th>
+                                        <th>Gmail</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -344,7 +345,8 @@
                                             <td><img src="${e.avatar}" width = "80px" height="80px"></td>
                                             <td>${e.username}</td>
                                             <td>${e.fullname}</td>
-                                            <td>${e.type_id}</td>
+                                            <td>${e.type_name}</td>
+                                            <td>${e.email}</td>
                                             <td>
                                                 <c:if test = "${e.status == 0}">
                                                     <span class="badge bg-red">Deactivate</span>

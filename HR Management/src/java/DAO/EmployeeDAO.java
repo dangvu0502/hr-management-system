@@ -26,11 +26,12 @@ public class EmployeeDAO {
     public Vector<Employee> getEmployeeList(int page) {
         Vector vec = new Vector();
         try {
-            String sql = "select * FROM hr_system.employee\n"
-                    + "LIMIT 3 offset ?";
+            String sql = "select * FROM hr_system.employee e, hr_system.type t\n"
+                    + "Where e.type_id = t.type_id\n"
+                    + "limit 3 offset ?";
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
-            ps.setInt(1, (page-1)*3);
+            ps.setInt(1, (page - 1) * 3);
             rs = ps.executeQuery();
             while (rs.next()) {
                 Employee e = new Employee();
@@ -41,7 +42,7 @@ public class EmployeeDAO {
                 e.setEmail(rs.getString(5));
                 e.setAvatar(rs.getString(6));
                 e.setStatus(rs.getInt(7));
-                e.setType_id(rs.getInt(8));
+                e.setType_name(rs.getString(10));
                 vec.add(e);
             }
         } catch (Exception e) {
@@ -66,7 +67,8 @@ public class EmployeeDAO {
     public Vector<Employee> getEmployeeBySearch(String setting_type, String input) {
         Vector vec = new Vector();
         try {
-            String sql = "SELECT * FROM hr_system.employee where " + setting_type + " = ?";
+            String sql = "SELECT * FROM hr_system.employee e, hr_system.type t"
+                    + " where " + setting_type + " = ? and e.type_id = t.type_id";
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
             ps.setString(1, input);
@@ -80,7 +82,7 @@ public class EmployeeDAO {
                 e.setEmail(rs.getString(5));
                 e.setAvatar(rs.getString(6));
                 e.setStatus(rs.getInt(7));
-                e.setType_id(rs.getInt(8));
+                e.setType_name(rs.getString(10));
                 vec.add(e);
             }
         } catch (Exception e) {
@@ -211,7 +213,7 @@ public class EmployeeDAO {
             ps.setString(2, username);
             ps.setString(3, password);
             rs = ps.executeQuery();
-           
+
             while (rs.next()) {
                 Employee account = new Employee();
                 account.setEmployee_id(rs.getInt("employee_id"));
@@ -234,6 +236,7 @@ public class EmployeeDAO {
 
         return null;
     }
+
     public Employee getStatus(int status) {
 
         try {
@@ -243,7 +246,7 @@ public class EmployeeDAO {
             ps = conn.prepareStatement(sql);
             ps.setInt(1, status);
             rs = ps.executeQuery();
-           
+
             while (rs.next()) {
                 Employee account = new Employee();
                 account.setEmployee_id(rs.getInt("employee_id"));
@@ -262,7 +265,7 @@ public class EmployeeDAO {
 
         return null;
     }
-    
+
     public void changePass(String username, String newpass) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
