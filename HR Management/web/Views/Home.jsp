@@ -84,7 +84,19 @@
                 border-radius: 10px;
                 box-shadow: 2px 5px #888888;
             }
-
+            .modal-header{
+                justify-content: flex-start!important;
+            }
+            .close{
+                margin: -1rem!important;
+                font-size: 2rem;
+            }
+            .modal-title{
+                margin-left: 20px;
+            }
+            .file-upload{
+                margin-top: 20px;
+            }
         </style>
     </head>
     <body>
@@ -119,14 +131,13 @@
                        >Home <span class="sr-only">(current)</span></a
                     >
                     <c:if test="${sessionScope.account.type_id == 0}"> 
-                    <a class="nav-item nav-link" href="../SettingListController">Setting List</a>
+                        <a class="nav-item nav-link" href="../SettingListController">Setting List</a>
                     </c:if>
                     <a class="nav-item nav-link" href="#">Our Team</a>
-                    
+
                 </div>
                 <!-- If User Log-in -->
-                <%
-                    if (acc == null) {
+                <%                    if (acc == null) {
                 %>
                 <div class="navbar-nav ml-auto">
                     <a class="nav-item nav-link" href="../login">Login</a>
