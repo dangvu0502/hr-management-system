@@ -21,10 +21,6 @@
         <servlet-class>Controller.VerifyUserEmailController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ChangePasswordController</servlet-name>
-        <servlet-class>Controller.ChangePasswordController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>Logout</servlet-name>
         <servlet-class>Controller.Logout</servlet-class>
     </servlet>
@@ -43,10 +39,6 @@
     <servlet-mapping>
         <servlet-name>VerifyUserEmailController</servlet-name>
         <url-pattern>/VerifyUserEmail</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ChangePasswordController</servlet-name>
-        <url-pattern>/ChangePassword</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Logout</servlet-name>

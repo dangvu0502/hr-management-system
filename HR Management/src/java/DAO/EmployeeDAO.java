@@ -266,7 +266,7 @@ public class EmployeeDAO {
         return null;
     }
 
-    public void changePass(String username, String newpass) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+//    public void changePass(String username, String newpass) {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
 }
