@@ -97,6 +97,18 @@
             .file-upload{
                 margin-top: 20px;
             }
+            img {
+                border-radius: 50%;
+            }
+
+            #photo {
+                height: 100%;
+                width: 100%;
+            }
+
+            #file {
+                display: none;
+            }
         </style>
     </head>
     <body>
@@ -200,7 +212,7 @@
                                             <img class="img-rounded" src="${sessionScope.account.avatar}" alt="avatar" style="width:200px">
                                             <input name="image" class="file-upload" type="file" accept="image/*" id="file">
                                             <!--<input type="hidden" name="image" value="">-->
-                                            <!--<button class="btn btn-primary btn-addon btn-sm"><label for="file">Choose Photo</label></button>-->
+                                            <button class="btn btn-primary btn-addon btn-sm"><label for="file">Choose Photo</label></button>
                                         </figure>
                                     </div>
                                     <div class="col-md-9">
@@ -211,7 +223,6 @@
                                             <div class="col-md"><label class="labels">Full name</label><input name="fullname" type="text" class="form-control" value="${sessionScope.account.fullname}"></div>
                                             <div class="col-md"><label class="labels">Address</label><input type="text" class="form-control" value="" disabled=""></div>
                                             <input id="password1" type="hidden" class="form-control" value="${sessionScope.account.password}">
-                                            <div class="col-md"><label class="labels">Password</label><input id="password2" name="password" type="password" class="form-control" value="" required=""></div>
                                         </div>
                                         <div class="col-md-8 col-md-6">
                                             <div class="col-md"><label class="labels">Sex</label>
@@ -222,6 +233,8 @@
                                             </div>
                                             <div class="col-md"><label class="labels">Email</label><input type="email" class="form-control" value="" disabled=""></div>
                                             <div class="col-md"><label class="labels">Phone number</label><input type="tel" class="form-control" value="" disabled=""></div>
+                                            <div class="col-md"><label class="labels">Password</label><input id="password2" name="password" type="password" class="form-control" value="" required=""></div>
+
                                         </div>
 
                                     </div>
@@ -380,9 +393,9 @@
             var password1 = document.getElementById('password1').value;
             var password2 = document.getElementById('password2').value;
             if (password1 == password2) {
-                alert("success");
+                alert("Successful change your information");
             } else {
-                alert("fail");
+                alert("Wrong password");
             }
         }
     </script>
