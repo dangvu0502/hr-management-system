@@ -19,6 +19,12 @@ body {
   min-height: 100%;
   background: #f1f2f7;
 }
+
+.w170 {width: 170px;}
+.s12 {font-size: 12px;}
+.w150 {width: 150px;}
+.w70{width: 70px;}
+
 a {
   color: #3c8dbc;
 }
@@ -3462,6 +3468,8 @@ ul.notification-meta {
 .tasks-widget .task-footer:after {
   clear: both;
 }
+
+
 
 .tasks-widget  .task-list {
   padding:0;

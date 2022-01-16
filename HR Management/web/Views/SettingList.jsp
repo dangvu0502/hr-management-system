@@ -2,6 +2,8 @@
 <!DOCTYPE html>
 <html>
     <head>
+
+
         <meta charset="UTF-8">
         <title>Director | Simple Tables</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
@@ -300,39 +302,10 @@
                     <div class="row">
                         <div class="panel">
                             <header class="panel-heading">
-                                Setting List
+                                Bordered Table
+                                <a id="opener" >Add</a>
                             </header>
-                            <div class="panel-body" style="width: 50%;">
-                                <header class="panel-heading">
-                                    Filter
-                                </header>
-                                <form action="SettingListController" method="post">
-                                    <div class="form-row">
-                                        <div class="form-group col-md-3">
-                                            <select class="form-control" name="type">
-                                                <option value="employee_id">ID</option>
-                                                <option value="username">User Name</option>
-                                                <option value="fullname">Full Name</option>
-                                                <option value="email">Email</option>
-                                                <option value="type_name">Type</option>
-                                                <option value="status">Status</option>
-                                            </select>                                            
-                                        </div>
-                                        <div class="form-group col-md-7">
-                                            <input class="form-control" type="text" placeholder="Input..." name="input">
-                                        </div>
-                                        <div class="form-group col-md-2">
-                                            <input type="submit" class="btn btn-info" value="Search">
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
                             <div class="panel-body">
-                                <div class="pull-right">
-                                    <div class="btn btn-success">
-                                        <a href="#" style="color: white;">Add</a>    
-                                    </div>
-                                </div>
                                 <table class="table table-bordered">
                                     <tr>
                                         <th style="width: 10px">ID</th>
@@ -340,9 +313,8 @@
                                         <th>User Name</th>
                                         <th>Full Name</th>
                                         <th>Type</th>
-                                        <th>Gmail</th>
-                                        <th style="width: 150px;">Status</th>
-                                        <th style="width: 150px;">Action</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
                                     </tr>
                                     <c:forEach items="${listE}" var="e">
                                         <tr>
@@ -350,50 +322,181 @@
                                             <td><img src="${e.avatar}" width = "80px" height="80px"></td>
                                             <td>${e.username}</td>
                                             <td>${e.fullname}</td>
-                                            <td>${e.type_name}</td>
-                                            <td>${e.email}</td>
+                                            <td>${e.type_id}</td>
                                             <td>
                                                 <c:if test = "${e.status == 0}">
                                                     <span class="badge bg-red">Deactivate</span>
-                                                    <div><a href="StatusController?status=${e.status}&id=${e.employee_id}&page=${page}">switch</a></div>
+                                                    <div><a href="StatusController?status=${e.status}&id=${e.employee_id}">switch</a></div>
                                                 </c:if>
                                                 <c:if test = "${e.status == 1}">
                                                     <span class="badge bg-green">Activate</span>
-                                                    <div><a href="StatusController?status=${e.status}&id=${e.employee_id}&page=${page}">switch</a></div>
+                                                    <div><a href="StatusController?status=${e.status}&id=${e.employee_id}">switch</a></div>
                                                 </c:if>
                                             </td>
                                             <td>
-                                                <div class="btn btn-danger"><a href="#" style="color: white;">Delete</a></div>
-                                                <div class="btn btn-info"><a href="#" style="color: white;">Edit</a></div>
+                                                <a id="delete" href="#">Delete </a>
+                                                <a class="edit" href="" onclick="dialogOpen('${e.username}', '${e.fullname}', '${e.employee_id}', '${e.type_id}', '${e.status}', '${e.email}', '${e.password}');
+                                                        return false;">Edit</a>
                                             </td>
                                         </tr>
                                     </c:forEach>
                                 </table>
                                 <div class="table-foot">
                                     <ul class="pagination pagination-sm no-margin pull-right">
-                                        <c:forEach begin="1" end="${endP}" var="p">
-                                            <li><a href="SettingListController?page=${p}">${p}</a></li>
-                                            </c:forEach>
+                                        <li><a href="#">&laquo;</a></li>
+                                        <li><a href="#">1</a></li>
+                                        <li><a href="#">2</a></li>
+                                        <li><a href="#">3</a></li>
+                                        <li><a href="#">&raquo;</a></li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section><!-- /.content -->
+                <!-- /.Dialog -->
+                <table id="dialog" hidden="hidden">
+                    <tr>
+                        <td><img style="width: 90px; height: 90px;" src="https://www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png" alt="Avatar" class="avatar"> </td>
+                    </tr>
+                    <tr>
+                        <td class="w150">
+                            <label>ID</label></td>
+                        <td>
+                            <input id="txtId" type="text" name="name" class="w170 " required="" autocomplete="off" /></td>
+                    </tr>
+                    <tr>
+                        <td class="w150">
+                            <label>User Name:</label></td>
+                        <td>
+                            <input  id="txtUserName" type="text" name="name" class="w170 " required autocomplete="off" /></td>
+                    </tr>
+                    <tr>
+                        <td class="w150">
+                            <label>Full Name:</label></td>
+                        <td>
+                            <input id="txtFullName" type="text" name="name" class="w170 " required autocomplete="off" /></td>
+                    </tr>
+                    <tr>
+                        <td class="w150">
+                            <label>PassWord:</label></td>
+                        <td>
+                            <input id="txtPassWord" type="password" name="name" class="w170 " required autocomplete="off"  /></td>
+                    </tr>
+                    <tr>
+                        <td class="w150">
+                            <label>Gmail:</label></td>
+                        <td>
+                            <input id="txtGmail" type="text" name="name" class="w170 " required autocomplete="off" /></td>
+                    </tr>
+                    <td class="w150">
+                        <label>Status:</label></td>
+                    </td>
+                    <td >
+                        <input type="radio" name="foo" value="1" id="rbStatus"> Active
+                        <input type="radio" name="foo" value="0" id="rbStatus"> Deactivate
+                    </td>
+                    </tr>
+                    <tr>
+                        <td class="w150">
+                            <label>Type</label></td>
+                        </td>
+                        <td><select name="cbbType" id="cbbType" class="w170 ">
+                                <option value="0">Admin</option>
+                                <option value="1">HR</option>
+                                <option value="2">Manager</option>
+                                <option value="3">Staff</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
                 <div class="footer-main">
                     Copyright &copy Director, 2014
                 </div>
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
+        <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
+        <script type="text/javascript">
+                                                    $(function () {
+                                                        $("#dialog").dialog({
+                                                            autoOpen: false,
+                                                            title: "Add",
+                                                            width: 'auto',
+                                                            height: 'auto',
+                                                            buttons: {
+                                                                Submit: function () {
+                                                                    add();
+                                                                },
+                                                                Close: function () {
+                                                                    $(this).dialog('close');
+                                                                }
+                                                            }
+                                                        });
+                                                        $("#opener").click(function () {
+                                                            $("#dialog").dialog('open');
+                                                        });
+                                                        $(".edit").click(function () {
+                                                            $("#dialog").dialog('open');
+                                                        });
+                                                    });
 
+                                                    function dialogOpen(name, fullname, id, type_id, status, email, pw) {
+//                                                        var id = e.valueOf().toString();
+//                                                        var u = username.toString();
+                                                        $('#txtId').val(id);
+                                                        $('#txtUserName').val(name);
+                                                        $('#txtPassWord').val(pw)
+                                                        $('#txtGmail').val(email);
+                                                        $('#txtFullName').val(fullname)
+                                                        $("#cbbType").val(type_id);
+                                                        $("[name=foo]").val([status]);
 
-        <!-- jQuery 2.0.2 -->
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-        <script src="js/jquery.min.js" type="text/javascript"></script>
+                                                        $("#dialog").dialog({
+                                                            autoOpen: false,
+                                                            title: "Edit",
+                                                            width: 'auto',
+                                                            height: 'auto',
+                                                            buttons: {
+                                                                Submit: function () {
+                                                                    edit(id);
+                                                                    alert('Edit Successfull');
+                                                                },
+                                                                Close: function () {
+                                                                    $(this).dialog('close');
+                                                                }
+                                                            }
+                                                        });
+                                                    }
+                                                    function add() {
+                                                        var id = document.getElementById("txtId").value;
+                                                        var username = document.getElementById("txtUserName").value;
+                                                        var fullname = document.getElementById("txtFullName").value;
+                                                        var password = document.getElementById("txtPassWord").value;
+                                                        var status = $('input[name = "foo"]:checked').val();
+                                                        var mail = document.getElementById("txtGmail").value;
+                                                        var typename = $('#cbbType option:selected').val();                             
+                                                        if ( !!username && !!fullname && !!password && !!mail) {
+                                                            window.location = "SettingDetailController?type=add" + "&id=" + id + "&username=" + username + "&fullname=" + fullname + "&password=" + password + "&status=" + status + "&mail=" + mail + "&typename=" + typename;
+                                                            alert('Add Successfull');
+                                                        } else
+                                                        {
+                                                            alert('Add Fail');
+                                                        }
+                                                    }
+                                                    function edit(id) {
+//                                                        var id = document.getElementById("txtId").value;
+                                                        var username = document.getElementById("txtUserName").value;
+                                                        var fullname = document.getElementById("txtFullName").value;
+                                                        var password = document.getElementById("txtPassWord").value;
+                                                        var status = $('input[name = "foo"]:checked').val();
+                                                        var mail = document.getElementById("txtGmail").value;
+                                                        var typename = $('#cbbType option:selected').val();
+                                                        window.location = "SettingDetailController?type=edit" + "&id=" + id + "&username=" + username + "&fullname=" + fullname + "&password=" + password + "&status=" + status + "&mail=" + mail + "&typename=" + typename;
 
-        <!-- Bootstrap -->
-        <script src="js/bootstrap.min.js" type="text/javascript"></script>
-        <!-- Director App -->
-        <script src="js/Director/app.js" type="text/javascript"></script>
+                                                    }
+        </script>
     </body>
 </html>

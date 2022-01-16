@@ -40,6 +40,26 @@ public class Employee {
         this.password = password;
         this.email = email;
     }
+    
+    public Employee(String fullname, String username, String password, String email,String avatar, int status) {
+        this.fullname = fullname;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.avatar = avatar;
+        this.status = status;
+    }
+    
+     public Employee(int employee_id,String fullname, String username, String password, String email,String avatar, int status, int type_id) {
+        this.employee_id = employee_id;
+        this.fullname = fullname;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.avatar = avatar;
+        this.type_id = type_id;
+        this.status = status;
+    }
 
     public Employee(int employee_id, String fullname, String username, String password, String email, String avatar, int status, int type_id, String type_name, int code) {
         this.employee_id = employee_id;

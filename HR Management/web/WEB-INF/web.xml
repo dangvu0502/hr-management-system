@@ -24,6 +24,10 @@
         <servlet-name>Logout</servlet-name>
         <servlet-class>Controller.Logout</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SettingDetailController</servlet-name>
+        <servlet-class>Controller.SettingDetailController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>EditProfileController</servlet-name>
         <url-pattern>/EditProfile</url-pattern>
@@ -43,6 +47,10 @@
     <servlet-mapping>
         <servlet-name>Logout</servlet-name>
         <url-pattern>/Logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SettingDetailController</servlet-name>
+        <url-pattern>/SettingDetailController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
