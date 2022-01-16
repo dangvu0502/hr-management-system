@@ -124,11 +124,7 @@
         <script src="js/Director/myScript.js" type="text/javascript"></script>
         <script>
 
-                                                    /** HIDE ALERT**/
-                                                    $(document).keypress(function (e) {
-                                                        $('.error').hide();
-                                                    });
-                                                    /** HIDE ALERT**/
+                                                
         </script>
     </body>
 </html>

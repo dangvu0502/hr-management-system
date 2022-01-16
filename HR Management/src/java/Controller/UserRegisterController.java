@@ -107,7 +107,7 @@ public class UserRegisterController extends HttpServlet {
                 String code = SendEmail.getRandom();
                 String message = "Your code is: " + code;
                 //check if the email send successfully
-                if (SendEmail.send(employee.getEmail(), "Verify Code", message)) {
+                if (SendEmail.send(email, "Verify Code", message)) {
                     HttpSession session = request.getSession();
                     session.setAttribute("code", code);
                     session.setAttribute("employee", employee);
