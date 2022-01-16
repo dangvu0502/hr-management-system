@@ -44,8 +44,13 @@
                             <header class="panel-heading text-center">
                                 Login
                             </header>
-                            <c:if test="${verifyMessage != null}">
+                            <c:if test="${verifyMessage == 'Invalid Code'}">
                                 <div class="alert alert-danger" role="alert">
+                                    <p class="mb-0">${verifyMessage}</p>
+                                </div>
+                            </c:if>
+                            <c:if test="${verifyMessage == 'Register Successfully'}">
+                                <div class="alert alert-success" role="alert">
                                     <p class="mb-0">${verifyMessage}</p>
                                 </div>
                             </c:if>

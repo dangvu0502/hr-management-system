@@ -47,9 +47,7 @@ public class LoginController extends HttpServlet {
 //            }
             HttpSession session = request.getSession();
             Employee account = (Employee) session.getAttribute("account");
-            String verifyMessage = (String) request.getAttribute("verifyMessage");
             if (account == null) {
-                request.setAttribute("verifyMessage", verifyMessage);
                 request.getRequestDispatcher("Views/login.jsp").forward(request, response);
             } else {
                 response.sendRedirect("Views/Home.jsp");
@@ -87,14 +85,17 @@ public class LoginController extends HttpServlet {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        String verifyMessage = (String) request.getAttribute("verifyMessage");
         String warning = null;
 
         Employee account = new EmployeeDAO().login(username, password);
-        if (account == null) {
+        if (account == null && verifyMessage ==  null) {
             request.setAttribute("err", "Login failed");
             request.getRequestDispatcher("Views/login.jsp").forward(request, response);
-
-        } else {
+        } else if (account == null && verifyMessage !=  null ){
+             request.setAttribute("verifyMessage", verifyMessage);
+             request.getRequestDispatcher("Views/login.jsp").forward(request, response);
+        }else if (account != null){
             if (account.getStatus() == Employee.STATUS_DEACTIVE) {
                 request.setAttribute("err", "You do not have access to this website");
                 request.getRequestDispatcher("Views/login.jsp").forward(request, response);
