@@ -3,7 +3,7 @@
     Created on : Jan 14, 2022, 2:27:08 PM
     Author     : lehun
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="Models.Employee"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -44,6 +44,7 @@
             referrerpolicy="no-referrer"
             />
         <link rel="icon" href="../img/Honey Bee.png" />
+
         <style>
             .Signup {
                 border: 2px solid black;
@@ -117,10 +118,11 @@
                     <a class="nav-item nav-link active" href="#"
                        >Home <span class="sr-only">(current)</span></a
                     >
+                    <c:if test="${sessionScope.account.type_id == 0}"> 
                     <a class="nav-item nav-link" href="../SettingListController">Setting List</a>
-                    <%if (acc != null) {%>
-                    <a class="nav-item nav-link" href="../EditProfile">User Profile</a>
-                    <%}%>
+                    </c:if>
+                    <a class="nav-item nav-link" href="#">Our Team</a>
+                    
                 </div>
                 <!-- If User Log-in -->
                 <%
@@ -136,17 +138,24 @@
                     if (acc != null) {
                 %>
                 <div class="navbar-nav ml-auto">
-                    <a href="../EditProfile">  <img
+                    <a href="../EditProfile" data-toggle="modal" data-target="#myModal">  <img
                             src="https://www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png"
                             alt="Avatar" width="50" height="50"
                             /></a>
-                    <p class="nav-item nav-link text-center">Hello ${sessionScope.account.username}</p>     
+                    <p class="nav-item nav-link text-center"> Hello ${sessionScope.account.username}</p>     
                     <a href="../Logout" class="nav-item nav-link">Log Out</a>
                 </div>
                 <%}%>
             </div>
         </nav>
         <!-- Nav bar -->
+
+        <div id="success" class="error alert alert-success" style="display: none">
+            <strong>Well done!</strong> You successfully read this important alert message.
+        </div>
+        <div id="danger" class="error alert alert-warning" style="display: none">
+            <strong>Warning!</strong> Best check yo self, you're not looking too good.
+        </div>
         <!-- Main content -->
         <div class="MainContent text-white">
             <div class="Content">
@@ -161,6 +170,82 @@
             </div>
         </div>
         <!-- Main content -->
+        <div class="container">
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Edit Profile</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form action="../EditProfile" method="post" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <figure class="text-center">
+                                            <figcaption>
+                                                <h4>${sessionScope.account.username}</h4>
+                                            </figcaption>
+                                            <img class="img-rounded" src="${sessionScope.account.avatar}" alt="avatar" style="width:200px">
+                                            <input name="image" class="file-upload" type="file" accept="image/*" id="file">
+                                            <!--<input type="hidden" name="image" value="">-->
+                                            <!--<button class="btn btn-primary btn-addon btn-sm"><label for="file">Choose Photo</label></button>-->
+                                        </figure>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="col-md-8 col-md-6">
+                                            <input name="username" type="hidden" value="${sessionScope.account.username}">
+                                            <div class="col-md"><label class="labels">Date of birth</label><input type="date" class="form-control" value="" disabled=""></div>
+
+                                            <div class="col-md"><label class="labels">Full name</label><input name="fullname" type="text" class="form-control" value="${sessionScope.account.fullname}"></div>
+                                            <div class="col-md"><label class="labels">Address</label><input type="text" class="form-control" value="" disabled=""></div>
+                                            <input id="password1" type="hidden" class="form-control" value="${sessionScope.account.password}">
+                                            <div class="col-md"><label class="labels">Password</label><input id="password2" name="password" type="password" class="form-control" value="" required=""></div>
+                                        </div>
+                                        <div class="col-md-8 col-md-6">
+                                            <div class="col-md"><label class="labels">Sex</label>
+                                                <select class="form-control" disabled="">
+                                                    <option value="">Male</option>
+                                                    <option value="">Female</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md"><label class="labels">Email</label><input type="email" class="form-control" value="" disabled=""></div>
+                                            <div class="col-md"><label class="labels">Phone number</label><input type="tel" class="form-control" value="" disabled=""></div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit" onclick="checkPassword()">Save Profile</button></div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div id="password" class="tab-pane fade">
+                    <form action="ChangePassword" method="POST">
+                        <div class="row mt-5">
+                            <input name="username" type="hidden" value="">
+    
+                            <div class="col-md-8">
+                                <div class="col-md-4 col-md-offset-7"><label class="labels">Old Password</label><input name="oldpass" type="password" class="form-control" required=""></div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="col-md-4 col-md-offset-7"><label class="labels">New Password</label><input name="newpass" type="password" class="form-control" required=""></div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="col-md-4 col-md-offset-7"><label class="labels">Confirm Password</label><input name="renewpass" type="password" class="form-control" required=""></div>
+                            </div>
+                        </div>
+                        <input name="test" type="hidden" value="1">
+                        <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Submit Change</button></div>
+                    </form>
+                </div> -->
+            </div>
+        </div>
         <!-- Footer -->
         <footer class="text-center text-lg-start bg-light text-muted">
             <!-- Section: Links  -->
@@ -254,4 +339,40 @@
         </footer>
         <!-- Footer -->
     </body>
+    <script>
+        /***AVATAR SCRIPT***/
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var fileurl = e.target.result;
+                    $('.img-rounded').attr('src', fileurl);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $(".file-upload").on('change', function () {
+            readURL(this);
+        });
+        $(".upload-button").on('click', function () {
+            $(".file-upload").click();
+        });
+        /***AVATAR SCRIPT***/
+
+        /** HIDE ALERT**/
+        $(document).keypress(function (e) {
+            $('.error').hide();
+        });
+        /** HIDE ALERT**/
+        function checkPassword() {
+            var password1 = document.getElementById('password1').value;
+            var password2 = document.getElementById('password2').value;
+            if (password1 == password2) {
+                alert("success");
+            } else {
+                alert("fail");
+            }
+        }
+    </script>
 </html>

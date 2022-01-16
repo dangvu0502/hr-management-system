@@ -44,7 +44,7 @@ public class EditProfileController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
 
-            request.getRequestDispatcher("Views/EditProfile.jsp").forward(request, response);
+//            request.getRequestDispatcher("Views/Home.jsp").forward(request, response);
         }
     }
 
@@ -117,12 +117,12 @@ public class EditProfileController extends HttpServlet {
                 }
                 session.setAttribute("account", employee);
 
-                dao.UpdateProfile(fullname, "", username);
+                dao.UpdateProfile(fullname, "https://www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png", username);
                 request.setAttribute("error", "success");
-                request.getRequestDispatcher("Views/EditProfile.jsp").forward(request, response);
+                response.sendRedirect("Views/Home.jsp");
             } else {
                 request.setAttribute("error", "danger");
-                request.getRequestDispatcher("Views/EditProfile.jsp").forward(request, response);
+                response.sendRedirect("Views/Home.jsp");
             }
 
 //            response.sendRedirect("EditProfile");
