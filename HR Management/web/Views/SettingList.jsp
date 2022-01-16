@@ -327,8 +327,12 @@
                                     </div>
                                 </form>
                             </div>
-                            <div class="btn btn-success text-right"><a href="#" style="color: white;">Add</a></div>
                             <div class="panel-body">
+                                <div class="pull-right">
+                                    <div class="btn btn-success">
+                                        <a href="#" style="color: white;">Add</a>    
+                                    </div>
+                                </div>
                                 <table class="table table-bordered">
                                     <tr>
                                         <th style="width: 10px">ID</th>
@@ -337,8 +341,8 @@
                                         <th>Full Name</th>
                                         <th>Type</th>
                                         <th>Gmail</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
+                                        <th style="width: 150px;">Status</th>
+                                        <th style="width: 150px;">Action</th>
                                     </tr>
                                     <c:forEach items="${listE}" var="e">
                                         <tr>
@@ -359,8 +363,8 @@
                                                 </c:if>
                                             </td>
                                             <td>
-                                                <a href="#">delete...</a>
-                                                <a href="#">edit...</a>
+                                                <div class="btn btn-danger"><a href="#" style="color: white;">Delete</a></div>
+                                                <div class="btn btn-info"><a href="#" style="color: white;">Edit</a></div>
                                             </td>
                                         </tr>
                                     </c:forEach>

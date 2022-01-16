@@ -41,8 +41,8 @@ public class SettingListController extends HttpServlet {
             request.setAttribute("page", page);
             EmployeeDAO eDAO = new EmployeeDAO();
             int count = eDAO.getTotalEmployee();
-            int endPage = count/3;
-            if (endPage % 3 != 0) endPage++;
+            int endPage = count/5;
+            if (endPage % 5 != 0) endPage++;
             request.setAttribute("endP", endPage);
             Vector<Employee> e = new Vector();
             if (setting_type == null || input == null) {

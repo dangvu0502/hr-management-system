@@ -28,10 +28,10 @@ public class EmployeeDAO {
         try {
             String sql = "select * FROM hr_system.employee e, hr_system.type t\n"
                     + "Where e.type_id = t.type_id\n"
-                    + "limit 3 offset ?";
+                    + "limit 5 offset ?";
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
-            ps.setInt(1, (page - 1) * 3);
+            ps.setInt(1, (page - 1) * 5);
             rs = ps.executeQuery();
             while (rs.next()) {
                 Employee e = new Employee();
