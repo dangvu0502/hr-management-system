@@ -3,7 +3,7 @@
     Created on : Jan 12, 2022, 8:30:25 AM
     Author     : dangGG
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -42,8 +42,13 @@
                     <div class="col-lg-6 ">
                         <section class="panel">
                             <header class="panel-heading text-center">
-                                   We already send verify code to your mail
+                                We already send verify code to your mail
                             </header>
+                            <c:if test="${verifyMessage != null}">
+                                <div class="error alert alert-danger" role="alert">
+                                    <p class="mb-0">${verifyMessage}</p>
+                                </div>
+                            </c:if>
                             <div class="panel-body">
                                 <form action="../VerifyUserEmail" method="POST" role="form">
                                     <div class="row">
@@ -65,7 +70,21 @@
             </section>
 
         </div>
-      
+
     </body>
+    <!-- jQuery 2.0.2 -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <script src="js/jquery.min.js" type="text/javascript"></script>
+
+
+
+    <script>
+
+        /** HIDE ALERT**/
+        $(document).keypress(function (e) {
+            $('.error').hide();
+        });
+        /** HIDE ALERT**/
+    </script>
 </html>
 

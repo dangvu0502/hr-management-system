@@ -48,7 +48,6 @@ public class VerifyUserEmailController extends HttpServlet {
 //            out.println("</html>");
 //        }
 //    }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -84,16 +83,18 @@ public class VerifyUserEmailController extends HttpServlet {
             code = code.trim();
             String authCode = (String) request.getParameter("authcode");
             if (authCode.equals(code)) {
+                session.removeAttribute("code");
+                session.removeAttribute("employee");
                 EmployeeDAO eDAO = new EmployeeDAO();
                 eDAO.addEmployee(employee);
                 request.setAttribute("verifyMessage", "Register Successfully");
+                request.getRequestDispatcher("login").forward(request, response);
+
             } else {
-                out.println("error back to login|" + authCode + "|" + code);
-                request.setAttribute("verifyMessage", "Invalid Code");
+//                out.println("error back to login|" + authCode + "|" + code);
+                session.setAttribute("verifyMessage", "Invalid Code");
+                response.sendRedirect("Views/VerifyUserEmailView.jsp");
             }
-            session.removeAttribute("code");
-            session.removeAttribute("employee");
-            request.getRequestDispatcher("login").forward(request, response);
         } catch (Exception ex) {
             Logger.getLogger(VerifyUserEmailController.class.getName()).log(Level.SEVERE, null, ex);
         }

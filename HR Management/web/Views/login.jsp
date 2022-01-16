@@ -45,12 +45,12 @@
                                 Login
                             </header>
                             <c:if test="${verifyMessage == 'Invalid Code'}">
-                                <div class="alert alert-danger" role="alert">
+                                <div class="error alert alert-danger" role="alert">
                                     <p class="mb-0">${verifyMessage}</p>
                                 </div>
                             </c:if>
                             <c:if test="${verifyMessage == 'Register Successfully'}">
-                                <div class="alert alert-success" role="alert">
+                                <div class="error alert alert-success" role="alert">
                                     <p class="mb-0">${verifyMessage}</p>
                                 </div>
                             </c:if>
@@ -115,6 +115,14 @@
         <!-- Director App -->
         <script src="js/Director/app.js" type="text/javascript"></script>
         <script src="js/Director/myScript.js" type="text/javascript"></script>
+        <script>
+
+                                                    /** HIDE ALERT**/
+                                                    $(document).keypress(function (e) {
+                                                        $('.error').hide();
+                                                    });
+                                                    /** HIDE ALERT**/
+        </script>
     </body>
 </html>
 

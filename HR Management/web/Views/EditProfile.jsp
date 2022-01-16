@@ -97,7 +97,7 @@
 
                                     <div class="col-md"><label class="labels">Full name</label><input name="fullname" type="text" class="form-control" value="${sessionScope.account.fullname}"></div>
                                     <div class="col-md"><label class="labels">Address</label><input type="text" class="form-control" value="" disabled=""></div>
-                                    <div class="col-md"><label class="labels">Password</label><input name="password" type="password" class="form-control" value=""></div>
+                                    <div class="col-md"><label class="labels">Password</label><input name="password" type="password" class="form-control" value="" required=""></div>
                                 </div>
                                 <div class="col-md-8 col-md-4">
                                     <div class="col-md"><label class="labels">Sex</label>
@@ -113,14 +113,16 @@
                             </div>
 
                         </div>
-                        <c:choose>      
-                            <c:when test="${error != null && error !=''}">
-                                <p style="color: red ">${error}</p>
-                            </c:when>
-                            <c:otherwise>
-                                <p style="color: green">${error}</p>
-                            </c:otherwise>
-                        </c:choose>  
+                            <c:if test="${error == 'success' }">
+                                <div class="error alert alert-success">
+                                    <strong>Well done!</strong> You successfully read this important alert message.
+                                </div>
+                            </c:if>
+                            <c:if test="${error == 'danger' }">
+                                <div class="error alert alert-warning">
+                                    <strong>Warning!</strong> Best check yo self, you're not looking too good.
+                                </div>
+                            </c:if>
                         <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
                     </form>
                 </div>
@@ -166,5 +168,11 @@
             $(".file-upload").click();
         });
         /***AVATAR SCRIPT***/
+
+        /** HIDE ALERT**/
+        $(document).keypress(function (e) {
+            $('.error').hide();
+        });
+        /** HIDE ALERT**/
     </script>
 </html>

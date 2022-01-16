@@ -46,7 +46,7 @@
                                 Sign Up
                             </header>
                             <c:if test="${message != null}">
-                                <div class="alert alert-danger" role="alert">
+                                <div class="error alert alert-danger" role="alert">
                                     <h4 class="alert-heading">Error</h4><hr>
                                     <p class="mb-0">${message}</p>
                                 </div>
@@ -122,6 +122,14 @@
         <!-- Director App -->
         <script src="js/Director/app.js" type="text/javascript"></script>
         <script src="js/Director/myScript.js" type="text/javascript"></script>
+        <script>
+
+                                                    /** HIDE ALERT**/
+                                                    $(document).keypress(function (e) {
+                                                        $('.error').hide();
+                                                    });
+                                                    /** HIDE ALERT**/
+        </script>
     </body>
 </html>
 

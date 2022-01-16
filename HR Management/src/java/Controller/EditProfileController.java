@@ -89,6 +89,7 @@ public class EditProfileController extends HttpServlet {
             String fullname = request.getParameter("fullname");
             String avatar = request.getParameter("avatar");
             String username = request.getParameter("username");
+            String password = request.getParameter("password");
 //            InputStream inputStream = null; // input stream of the upload file
 //
 //            // obtains the upload file part in this multipart request
@@ -103,20 +104,28 @@ public class EditProfileController extends HttpServlet {
 //                inputStream = filePart.getInputStream();
 //            }
 
-            Part part = request.getPart("image");
-            String fileName = part.getSubmittedFileName();
+//            Part part = request.getPart("image");
+//            String fileName = part.getSubmittedFileName();
             //String path = getServletContext().getRealPath("../"+"img"+File.separator+fileName);
-
             HttpSession session = request.getSession();
-//                        session.setAttribute("employee", dao.checkUsernameExist(username));
 
-            Employee employee = (Employee) session.getAttribute("employee");
-//            employee.setFullname(fullname);
+            Employee employee = (Employee) session.getAttribute("account"); //EMPLOYEE!!!!
+            if (employee.getPassword().equals(password)) {
+                if (fullname != null) {
 
-            dao.UpdateProfile(fullname, fileName, username);
-//            request.setAttribute("error", "Wrong password");
-//            request.getRequestDispatcher("Views/EditProfile.jsp").forward(request, response);
-            response.sendRedirect("EditProfile");
+                    employee.setFullname(fullname);
+                }
+                session.setAttribute("account", employee);
+
+                dao.UpdateProfile(fullname, "", username);
+                request.setAttribute("error", "success");
+                request.getRequestDispatcher("Views/EditProfile.jsp").forward(request, response);
+            } else {
+                request.setAttribute("error", "danger");
+                request.getRequestDispatcher("Views/EditProfile.jsp").forward(request, response);
+            }
+
+//            response.sendRedirect("EditProfile");
         } catch (Exception ex) {
             Logger.getLogger(EditProfileController.class.getName()).log(Level.SEVERE, null, ex);
         }
