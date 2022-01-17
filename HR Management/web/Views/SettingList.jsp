@@ -332,7 +332,7 @@
                             <div class="panel-body">
                                 <div class="pull-right">
                                     <div class="btn btn-success">
-                                        <a href="#" style="color: white;">Add</a>    
+                                        <a id="opener" href="#" style="color: white;">Add</a>    
                                     </div>
                                 </div>
                                 <table class="table table-bordered">
@@ -473,8 +473,6 @@
                                                     });
 
                                                     function dialogOpen(name, fullname, id, type_id, status, email, pw) {
-//                                                        var id = e.valueOf().toString();
-//                                                        var u = username.toString();
                                                         $('#txtId').val(id);
                                                         $('#txtUserName').val(name);
                                                         $('#txtPassWord').val(pw)
@@ -482,7 +480,6 @@
                                                         $('#txtFullName').val(fullname)
                                                         $("#cbbType").val(type_id);
                                                         $("[name=foo]").val([status]);
-
                                                         $("#dialog").dialog({
                                                             autoOpen: false,
                                                             title: "Edit",
@@ -516,7 +513,6 @@
                                                         }
                                                     }
                                                     function edit(id) {
-//                                                        var id = document.getElementById("txtId").value;
                                                         var username = document.getElementById("txtUserName").value;
                                                         var fullname = document.getElementById("txtFullName").value;
                                                         var password = document.getElementById("txtPassWord").value;
@@ -524,7 +520,6 @@
                                                         var mail = document.getElementById("txtGmail").value;
                                                         var typename = $('#cbbType option:selected').val();
                                                         window.location = "SettingDetailController?type=edit" + "&id=" + id + "&username=" + username + "&fullname=" + fullname + "&password=" + password + "&status=" + status + "&mail=" + mail + "&typename=" + typename;
-
                                                     }
         </script>
     </body>
