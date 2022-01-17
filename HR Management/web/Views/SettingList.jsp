@@ -302,10 +302,39 @@
                     <div class="row">
                         <div class="panel">
                             <header class="panel-heading">
-                                Bordered Table
-                                <a id="opener" >Add</a>
+                                Setting List
                             </header>
+                            <div class="panel-body" style="width: 50%;">
+                                <header class="panel-heading">
+                                    Filter
+                                </header>
+                                <form action="SettingListController" method="post">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-3">
+                                            <select class="form-control" name="type">
+                                                <option value="employee_id">ID</option>
+                                                <option value="username">User Name</option>
+                                                <option value="fullname">Full Name</option>
+                                                <option value="email">Email</option>
+                                                <option value="type_name">Type</option>
+                                                <option value="status">Status</option>
+                                            </select>                                            
+                                        </div>
+                                        <div class="form-group col-md-7">
+                                            <input class="form-control" type="text" placeholder="Input..." name="input">
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <input type="submit" class="btn btn-info" value="Search">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                             <div class="panel-body">
+                                <div class="pull-right">
+                                    <div class="btn btn-success">
+                                        <a href="#" style="color: white;">Add</a>    
+                                    </div>
+                                </div>
                                 <table class="table table-bordered">
                                     <tr>
                                         <th style="width: 10px">ID</th>
@@ -313,8 +342,9 @@
                                         <th>User Name</th>
                                         <th>Full Name</th>
                                         <th>Type</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
+                                        <th>Gmail</th>
+                                        <th style="width: 150px;">Status</th>
+                                        <th style="width: 150px;">Action</th>
                                     </tr>
                                     <c:forEach items="${listE}" var="e">
                                         <tr>
@@ -322,15 +352,16 @@
                                             <td><img src="${e.avatar}" width = "80px" height="80px"></td>
                                             <td>${e.username}</td>
                                             <td>${e.fullname}</td>
-                                            <td>${e.type_id}</td>
+                                            <td>${e.type_name}</td>
+                                            <td>${e.email}</td>
                                             <td>
                                                 <c:if test = "${e.status == 0}">
                                                     <span class="badge bg-red">Deactivate</span>
-                                                    <div><a href="StatusController?status=${e.status}&id=${e.employee_id}">switch</a></div>
+                                                    <div><a href="StatusController?status=${e.status}&id=${e.employee_id}&page=${page}">switch</a></div>
                                                 </c:if>
                                                 <c:if test = "${e.status == 1}">
                                                     <span class="badge bg-green">Activate</span>
-                                                    <div><a href="StatusController?status=${e.status}&id=${e.employee_id}">switch</a></div>
+                                                    <div><a href="StatusController?status=${e.status}&id=${e.employee_id}&page=${page}">switch</a></div>
                                                 </c:if>
                                             </td>
                                             <td>
@@ -343,11 +374,9 @@
                                 </table>
                                 <div class="table-foot">
                                     <ul class="pagination pagination-sm no-margin pull-right">
-                                        <li><a href="#">&laquo;</a></li>
-                                        <li><a href="#">1</a></li>
-                                        <li><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li><a href="#">&raquo;</a></li>
+                                        <c:forEach begin="1" end="${endP}" var="p">
+                                            <li><a href="SettingListController?page=${p}">${p}</a></li>
+                                            </c:forEach>
                                     </ul>
                                 </div>
                             </div>
@@ -477,8 +506,8 @@
                                                         var password = document.getElementById("txtPassWord").value;
                                                         var status = $('input[name = "foo"]:checked').val();
                                                         var mail = document.getElementById("txtGmail").value;
-                                                        var typename = $('#cbbType option:selected').val();                             
-                                                        if ( !!username && !!fullname && !!password && !!mail) {
+                                                        var typename = $('#cbbType option:selected').val();
+                                                        if (!!username && !!fullname && !!password && !!mail) {
                                                             window.location = "SettingDetailController?type=add" + "&id=" + id + "&username=" + username + "&fullname=" + fullname + "&password=" + password + "&status=" + status + "&mail=" + mail + "&typename=" + typename;
                                                             alert('Add Successfull');
                                                         } else
