@@ -63,6 +63,18 @@ public class EmployeeDAO {
         ps.setInt(2, employee_id);
         ps.executeUpdate();
     }
+    
+    public void deleteByID(int id) {
+        try {
+            String sql = "delete from hr_system.employee where employee_id = ?";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
 
     public Vector<Employee> getEmployeeBySearch(String setting_type, String input) {
         Vector vec = new Vector();

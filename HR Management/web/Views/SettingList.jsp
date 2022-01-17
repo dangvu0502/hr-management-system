@@ -365,7 +365,7 @@
                                                 </c:if>
                                             </td>
                                             <td>
-                                                <a id="delete" href="#">Delete </a>
+                                                <a id="delete" onclick="deleteByID('${e.employee_id}');" href="#">Delete </a>
                                                 <a class="edit" href="" onclick="dialogOpen('${e.username}', '${e.fullname}', '${e.employee_id}', '${e.type_id}', '${e.status}', '${e.email}', '${e.password}');
                                                         return false;">Edit</a>
                                             </td>
@@ -472,6 +472,11 @@
                                                         });
                                                     });
 
+                                                    function deleteByID(id) {
+                                                        if (confirm("Do you really want to delete profile?")) {
+                                                             window.location = "SettingDetailController?typef=delete" + "&id=" + id ;
+                                                        }
+                                                    }
                                                     function dialogOpen(name, fullname, id, type_id, status, email, pw) {
                                                         $('#txtId').val(id);
                                                         $('#txtUserName').val(name);
@@ -505,7 +510,7 @@
                                                         var mail = document.getElementById("txtGmail").value;
                                                         var typename = $('#cbbType option:selected').val();
                                                         if (!!username && !!fullname && !!password && !!mail) {
-                                                            window.location = "SettingDetailController?type=add" + "&id=" + id + "&username=" + username + "&fullname=" + fullname + "&password=" + password + "&status=" + status + "&mail=" + mail + "&typename=" + typename;
+                                                            window.location = "SettingDetailController?typef=add" + "&id=" + id + "&username=" + username + "&fullname=" + fullname + "&password=" + password + "&status=" + status + "&mail=" + mail + "&typename=" + typename;
                                                             alert('Add Successfull');
                                                         } else
                                                         {
@@ -519,7 +524,7 @@
                                                         var status = $('input[name = "foo"]:checked').val();
                                                         var mail = document.getElementById("txtGmail").value;
                                                         var typename = $('#cbbType option:selected').val();
-                                                        window.location = "SettingDetailController?type=edit" + "&id=" + id + "&username=" + username + "&fullname=" + fullname + "&password=" + password + "&status=" + status + "&mail=" + mail + "&typename=" + typename;
+                                                        window.location = "SettingDetailController?typef=edit" + "&id=" + id + "&username=" + username + "&fullname=" + fullname + "&password=" + password + "&status=" + status + "&mail=" + mail + "&typename=" + typename;
                                                     }
         </script>
     </body>
