@@ -19,7 +19,7 @@
         <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' />
         <!-- Theme style -->
         <link href="css/style.css" rel="stylesheet"/>
-
+        <link href="../css/dialog.css" rel="stylesheet" type="text/css"/>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -365,9 +365,9 @@
                                                 </c:if>
                                             </td>
                                             <td>
-                                                <a id="delete" href="#">Delete </a>
-                                                <a class="edit" href="" onclick="dialogOpen('${e.username}', '${e.fullname}', '${e.employee_id}', '${e.type_id}', '${e.status}', '${e.email}', '${e.password}');
-                                                        return false;">Edit</a>
+                                                <div style="background-color: orangered; border-radius:25px;margin-bottom: 2rem;text-align: center; padding: 0.4rem;"><a style="color: white; font-weight:700; " id="delete" onclick="deleteByID('${e.employee_id}');" href="#">Delete </a></div>
+                                                <div style="background-color: #f9d21a;border-radius:25px;text-align: center;padding: 0.4rem;"><a style="color: white;  font-weight:700; " class="edit" href="" onclick="dialogOpen('${e.username}', '${e.fullname}', '${e.employee_id}', '${e.type_id}', '${e.status}', '${e.email}', '${e.password}');
+                                                        return false;">Edit</a></div>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -384,13 +384,59 @@
                     </div>
                 </section><!-- /.content -->
                 <!-- /.Dialog -->
-                <table id="dialog" hidden="hidden">
+                <div id="dialog">
+                    <div style="display: flex; justify-content: center;  margin: 2rem;"><img style=" width: 100px; height: 100px;" src="https://www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png" alt="Avatar" > </div>
+                    <div style="display: flex; justify-content: space-between;margin-bottom: 2rem">
+                        <div><label>ID</label></div>
+                        <div style="margin-left: 4rem;"><input style="border-radius:8px; " type="text" id="txtId"></div>
+                    </div>
+                    <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
+                        <div><label>UserName</label></div>
+                        <div  style="margin-left: 4rem;"><input style="border-radius:8px; " type="text" id="txtUserName"></div>
+                    </div>
+                    <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
+                        <div><label>FullName</label></div>
+                        <div  style="margin-left: 4rem;"><input style="border-radius:8px; " type="text" id="txtFullName"></div>
+                    </div>
+                    <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
+                        <div><label>PassWord</label></div>
+                        <div style="margin-left: 4rem;"><input style="border-radius:8px; " type="password" id="txtPassWord"></div>
+                    </div>
+                    <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
+                        <div><label>Gmail</label></div>
+                        <div style="margin-left: 4rem;" ><input style="border-radius:8px; " type="text" id="txtGmail"></div>
+                    </div>
+                    <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
+                        <div><label>Status</label></div>
+                        <div style="padding-right: 2rem;" >
+                            <input  type="radio" name="foo" value="1" id="rbStatus"> <span style="margin-right: 2rem;">Active</span>
+                            <input type="radio" name="foo" value="0" id="rbStatus"> Deactivate
+                        </div>
+                    </div>
+                    <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
+                        <div><label>Type</label></div>
+                        <div style="margin-left: 4rem;" >
+                            <select name="cbbType" id="cbbType" style="width: 215px;height: 30px;border-radius: 8px;">
+                                <option value="0">Admin</option>
+                                <option value="1">HR</option>
+                                <option value="2">Manager</option>
+                                <option value="3">Staff</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+
+<!--                <table id="dialog" hidden="hidden">
                     <tr>
-                        <td><img style="width: 90px; height: 90px;" src="https://www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png" alt="Avatar" class="avatar"> </td>
+                                                <td></td>
+                        <td><img style=" border-radius: 50%;  width: 90px; height: 90px;" src="https://www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png" alt="Avatar" > </td>
+                                                <td></td>
                     </tr>
                     <tr>
                         <td class="w150">
                             <label>ID</label></td>
+
                         <td>
                             <input id="txtId" type="text" name="name" class="w170 " required="" autocomplete="off" /></td>
                     </tr>
@@ -438,7 +484,7 @@
                             </select>
                         </td>
                     </tr>
-                </table>
+                </table>-->
                 <div class="footer-main">
                     Copyright &copy Director, 2014
                 </div>
@@ -472,6 +518,11 @@
                                                         });
                                                     });
 
+                                                    function deleteByID(id) {
+                                                        if (confirm("Do you really want to delete profile?")) {
+                                                            window.location = "SettingDetailController?typef=delete" + "&id=" + id;
+                                                        }
+                                                    }
                                                     function dialogOpen(name, fullname, id, type_id, status, email, pw) {
                                                         $('#txtId').val(id);
                                                         $('#txtUserName').val(name);
@@ -505,7 +556,7 @@
                                                         var mail = document.getElementById("txtGmail").value;
                                                         var typename = $('#cbbType option:selected').val();
                                                         if (!!username && !!fullname && !!password && !!mail) {
-                                                            window.location = "SettingDetailController?type=add" + "&id=" + id + "&username=" + username + "&fullname=" + fullname + "&password=" + password + "&status=" + status + "&mail=" + mail + "&typename=" + typename;
+                                                            window.location = "SettingDetailController?typef=add" + "&id=" + id + "&username=" + username + "&fullname=" + fullname + "&password=" + password + "&status=" + status + "&mail=" + mail + "&typename=" + typename;
                                                             alert('Add Successfull');
                                                         } else
                                                         {
@@ -519,7 +570,7 @@
                                                         var status = $('input[name = "foo"]:checked').val();
                                                         var mail = document.getElementById("txtGmail").value;
                                                         var typename = $('#cbbType option:selected').val();
-                                                        window.location = "SettingDetailController?type=edit" + "&id=" + id + "&username=" + username + "&fullname=" + fullname + "&password=" + password + "&status=" + status + "&mail=" + mail + "&typename=" + typename;
+                                                        window.location = "SettingDetailController?typef=edit" + "&id=" + id + "&username=" + username + "&fullname=" + fullname + "&password=" + password + "&status=" + status + "&mail=" + mail + "&typename=" + typename;
                                                     }
         </script>
     </body>

@@ -36,11 +36,11 @@ public class SettingDetailController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String type = request.getParameter("type");
+            String typef = request.getParameter("typef");
             String idIP = request.getParameter("id");
             String statusIP = request.getParameter("status");
             String typenameIP = request.getParameter("typename");
-            if (type.equals("add")) {
+            if (typef.equals("add")) {
                 int id = Integer.parseInt(idIP);
                 String userName = request.getParameter("username");
                 String fullName = request.getParameter("fullname");
@@ -54,27 +54,30 @@ public class SettingDetailController extends HttpServlet {
                 try {
                     eDAO.addEmployeeFull(employee);
                     String setting_type = request.getParameter("type");
-            String input = request.getParameter("input");
-            String page = request.getParameter("page");
-            if (page == null) page = "1";
-            request.setAttribute("page", page);
-            int count = eDAO.getTotalEmployee();
-            int endPage = count/5;
-            if (endPage % 5 != 0) endPage++;
-            request.setAttribute("endP", endPage);
-            Vector<Employee> e = new Vector();
-            if (setting_type == null || input == null) {
-                e = eDAO.getEmployeeList(Integer.parseInt(page));
-            } else {
-                e = eDAO.getEmployeeBySearch(setting_type, input);
-            }
+                    String input = request.getParameter("input");
+                    String page = request.getParameter("page");
+                    if (page == null) {
+                        page = "1";
+                    }
+                    request.setAttribute("page", page);
+                    int count = eDAO.getTotalEmployee();
+                    int endPage = count / 5;
+                    if (endPage % 5 != 0) {
+                        endPage++;
+                    }
+                    request.setAttribute("endP", endPage);
+                    Vector<Employee> e = new Vector();
+                    if (setting_type == null || input == null) {
+                        e = eDAO.getEmployeeList(Integer.parseInt(page));
+                    } else {
+                        e = eDAO.getEmployeeBySearch(setting_type, input);
+                    }
                     request.setAttribute("listE", e);
-                    request.setAttribute("err", "Add Success");
                     request.getRequestDispatcher("Views/SettingList.jsp").forward(request, response);
                 } catch (Exception e) {
                     System.out.println("Error " + e.getMessage());
                 }
-            } else {
+            } else if (typef.equals("edit")) {
                 int id = Integer.parseInt(request.getParameter("id"));
                 String userName = request.getParameter("username");
                 String fullName = request.getParameter("fullname");
@@ -88,22 +91,55 @@ public class SettingDetailController extends HttpServlet {
                 try {
                     eDAO.updateEmployee(employee, id);
                     String setting_type = request.getParameter("type");
-            String input = request.getParameter("input");
-            String page = request.getParameter("page");
-            if (page == null) page = "1";
-            request.setAttribute("page", page);
-            int count = eDAO.getTotalEmployee();
-            int endPage = count/5;
-            if (endPage % 5 != 0) endPage++;
-            request.setAttribute("endP", endPage);
-            Vector<Employee> e = new Vector();
-            if (setting_type == null || input == null) {
-                e = eDAO.getEmployeeList(Integer.parseInt(page));
-            } else {
-                e = eDAO.getEmployeeBySearch(setting_type, input);
-            }
+                    String input = request.getParameter("input");
+                    String page = request.getParameter("page");
+                    if (page == null) {
+                        page = "1";
+                    }
+                    request.setAttribute("page", page);
+                    int count = eDAO.getTotalEmployee();
+                    int endPage = count / 5;
+                    if (endPage % 5 != 0) {
+                        endPage++;
+                    }
+                    request.setAttribute("endP", endPage);
+                    Vector<Employee> e = new Vector();
+                    if (setting_type == null || input == null) {
+                        e = eDAO.getEmployeeList(Integer.parseInt(page));
+                    } else {
+                        e = eDAO.getEmployeeBySearch(setting_type, input);
+                    }
                     request.setAttribute("listE", e);
-                    request.setAttribute("err", "Edit Success");
+                    request.getRequestDispatcher("Views/SettingList.jsp").forward(request, response);
+                } catch (Exception e) {
+                    System.out.println("Error " + e.getMessage());
+                }
+            } else {
+                int id = Integer.parseInt(request.getParameter("id"));
+                EmployeeDAO eDAO = new EmployeeDAO();
+                try {
+                    eDAO.deleteByID(id);
+                    String setting_type = request.getParameter("type");
+                    String input = request.getParameter("input");
+                    String page = request.getParameter("page");
+                    if (page == null) {
+                        page = "1";
+                    }
+                    request.setAttribute("page", page);
+                    
+                    int count = eDAO.getTotalEmployee();
+                    int endPage = count / 5;
+                    if (endPage % 5 != 0) {
+                        endPage++;
+                    }
+                    request.setAttribute("endP", endPage);
+                    Vector<Employee> e = new Vector();
+                    if (setting_type == null || input == null) {
+                        e = eDAO.getEmployeeList(Integer.parseInt(page));
+                    } else {
+                        e = eDAO.getEmployeeBySearch(setting_type, input);
+                    }
+                    request.setAttribute("listE", e);
                     request.getRequestDispatcher("Views/SettingList.jsp").forward(request, response);
                 } catch (Exception e) {
                     System.out.println("Error " + e.getMessage());
