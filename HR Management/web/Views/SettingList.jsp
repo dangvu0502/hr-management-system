@@ -425,66 +425,6 @@
                         </div>
                     </div>
                 </div>
-
-
-<!--                <table id="dialog" hidden="hidden">
-                    <tr>
-                                                <td></td>
-                        <td><img style=" border-radius: 50%;  width: 90px; height: 90px;" src="https://www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png" alt="Avatar" > </td>
-                                                <td></td>
-                    </tr>
-                    <tr>
-                        <td class="w150">
-                            <label>ID</label></td>
-
-                        <td>
-                            <input id="txtId" type="text" name="name" class="w170 " required="" autocomplete="off" /></td>
-                    </tr>
-                    <tr>
-                        <td class="w150">
-                            <label>User Name:</label></td>
-                        <td>
-                            <input  id="txtUserName" type="text" name="name" class="w170 " required autocomplete="off" /></td>
-                    </tr>
-                    <tr>
-                        <td class="w150">
-                            <label>Full Name:</label></td>
-                        <td>
-                            <input id="txtFullName" type="text" name="name" class="w170 " required autocomplete="off" /></td>
-                    </tr>
-                    <tr>
-                        <td class="w150">
-                            <label>PassWord:</label></td>
-                        <td>
-                            <input id="txtPassWord" type="password" name="name" class="w170 " required autocomplete="off"  /></td>
-                    </tr>
-                    <tr>
-                        <td class="w150">
-                            <label>Gmail:</label></td>
-                        <td>
-                            <input id="txtGmail" type="text" name="name" class="w170 " required autocomplete="off" /></td>
-                    </tr>
-                    <td class="w150">
-                        <label>Status:</label></td>
-                    </td>
-                    <td >
-                        <input type="radio" name="foo" value="1" id="rbStatus"> Active
-                        <input type="radio" name="foo" value="0" id="rbStatus"> Deactivate
-                    </td>
-                    </tr>
-                    <tr>
-                        <td class="w150">
-                            <label>Type</label></td>
-                        </td>
-                        <td><select name="cbbType" id="cbbType" class="w170 ">
-                                <option value="0">Admin</option>
-                                <option value="1">HR</option>
-                                <option value="2">Manager</option>
-                                <option value="3">Staff</option>
-                            </select>
-                        </td>
-                    </tr>
-                </table>-->
                 <div class="footer-main">
                     Copyright &copy Director, 2014
                 </div>
@@ -496,9 +436,7 @@
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
         <script type="text/javascript">
                                                     $(function () {
-                                                        
                                                         $("#dialog").dialog({
-                                                            
                                                             autoOpen: false,
                                                             title: "Add",
                                                             width: 'auto',
@@ -520,7 +458,6 @@
                                                             $("#dialog").dialog('open');
                                                         });
                                                     });
-
                                                     function deleteByID(id) {
                                                         if (confirm("Do you really want to delete profile?")) {
                                                             window.location = "SettingDetailController?typef=delete" + "&id=" + id;
@@ -542,7 +479,6 @@
                                                             buttons: {
                                                                 Submit: function () {
                                                                     edit(id);
-                                                                    alert('Edit Successfull');
                                                                 },
                                                                 Close: function () {
                                                                     $(this).dialog('close');
@@ -573,7 +509,14 @@
                                                         var status = $('input[name = "foo"]:checked').val();
                                                         var mail = document.getElementById("txtGmail").value;
                                                         var typename = $('#cbbType option:selected').val();
-                                                        window.location = "SettingDetailController?typef=edit" + "&id=" + id + "&username=" + username + "&fullname=" + fullname + "&password=" + password + "&status=" + status + "&mail=" + mail + "&typename=" + typename;
+                                                        if (!!username && !!fullname && !!password && !!mail) {
+                                                            window.location = "SettingDetailController?typef=edit" + "&id=" + id + "&username=" + username + "&fullname=" + fullname + "&password=" + password + "&status=" + status + "&mail=" + mail + "&typename=" + typename;
+                                                            alert('Edit Successfull');
+                                                        } else
+                                                        {
+                                                            alert('Edit Fail');
+                                                        }
+                                                        
                                                     }
         </script>
     </body>
