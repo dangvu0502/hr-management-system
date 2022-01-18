@@ -41,7 +41,7 @@ public class SettingDetailController extends HttpServlet {
             String statusIP = request.getParameter("status");
             String typenameIP = request.getParameter("typename");
             if (typef.equals("add")) {
-                int id = Integer.parseInt(idIP);
+//                int id = Integer.parseInt(idIP);
                 String userName = request.getParameter("username");
                 String fullName = request.getParameter("fullname");
                 String passWord = request.getParameter("password");
@@ -50,7 +50,7 @@ public class SettingDetailController extends HttpServlet {
                 int status = Integer.parseInt(statusIP);
                 int typename = Integer.parseInt(typenameIP);
                 EmployeeDAO eDAO = new EmployeeDAO();
-                Employee employee = new Employee(id, fullName, userName, passWord, email, avatar, status, typename);
+                Employee employee = new Employee(fullName, userName, passWord, email, avatar, status, typename);
                 try {
                     eDAO.addEmployeeFull(employee);
                     String setting_type = request.getParameter("type");

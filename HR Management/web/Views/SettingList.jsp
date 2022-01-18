@@ -388,7 +388,7 @@
                     <div style="display: flex; justify-content: center;  margin: 2rem;"><img style=" width: 100px; height: 100px;" src="https://www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png" alt="Avatar" > </div>
                     <div style="display: flex; justify-content: space-between;margin-bottom: 2rem">
                         <div><label>ID</label></div>
-                        <div style="margin-left: 4rem;"><input style="border-radius:8px; " type="text" id="txtId"></div>
+                        <div style="margin-left: 4rem;"><input  disabled="true" style="border-radius:8px; " type="text" id="txtId"></div>
                     </div>
                     <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
                         <div><label>UserName</label></div>
@@ -409,7 +409,7 @@
                     <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
                         <div><label>Status</label></div>
                         <div style="padding-right: 2rem;" >
-                            <input  type="radio" name="foo" value="1" id="rbStatus"> <span style="margin-right: 2rem;">Active</span>
+                            <input  type="radio" name="foo" value="1" id="rbStatus" checked="checked"> <span style="margin-right: 2rem;" >Active</span>
                             <input type="radio" name="foo" value="0" id="rbStatus"> Deactivate
                         </div>
                     </div>
@@ -496,7 +496,9 @@
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
         <script type="text/javascript">
                                                     $(function () {
+                                                        
                                                         $("#dialog").dialog({
+                                                            
                                                             autoOpen: false,
                                                             title: "Add",
                                                             width: 'auto',
@@ -511,6 +513,7 @@
                                                             }
                                                         });
                                                         $("#opener").click(function () {
+                                                            
                                                             $("#dialog").dialog('open');
                                                         });
                                                         $(".edit").click(function () {

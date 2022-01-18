@@ -193,19 +193,19 @@ public class EmployeeDAO {
         Connection connection = null;
         PreparedStatement ps = null;
         int check = 0;
-        String query = " INSERT INTO hr_system.employee (employee_id, fullname, username, password, email, avatar,status,type_id)"
-                + " VALUES(?,?, ?, ?, ?, ?, ?, ?)";
+        String query = " INSERT INTO hr_system.employee ( fullname, username, password, email, avatar,status,type_id)"
+                + " VALUES(?, ?, ?, ?, ?, ?, ?)";
         try {
             con = new DBContext().getConnection();
             ps = con.prepareStatement(query);
-            ps.setInt(1, employee.getEmployee_id());
-            ps.setString(2, employee.getFullname());
-            ps.setString(3, employee.getUsername());
-            ps.setString(4, employee.getPassword());
-            ps.setString(5, employee.getEmail());
-            ps.setString(6, employee.getAvatar());
-            ps.setInt(7, employee.getStatus());
-            ps.setInt(8, employee.getType_id());
+//            ps.setInt(1, employee.getEmployee_id());
+            ps.setString(1, employee.getFullname());
+            ps.setString(2, employee.getUsername());
+            ps.setString(3, employee.getPassword());
+            ps.setString(4, employee.getEmail());
+            ps.setString(5, employee.getAvatar());
+            ps.setInt(6, employee.getStatus());
+            ps.setInt(7, employee.getType_id());
             check = ps.executeUpdate();
         } catch (SQLException e) {
             throw e;
