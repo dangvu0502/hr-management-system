@@ -30,13 +30,13 @@
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
         <header class="header">
-            <a href="index.html" class="logo">
+            <a href="Views/Home.jsp" class="logo">
                 <!-- Add the class icon to your logo image or logo icon to add the margining -->
-                Director
+                Home
             </a>
             <!-- Header Navbar: style can be found in header.less -->
-            <nav class="navbar navbar-static-top" role="navigation">
-                <!-- Sidebar toggle button-->
+<!--            <nav class="navbar navbar-static-top" role="navigation">
+                 Sidebar toggle button
                 <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
@@ -45,7 +45,7 @@
                 </a>
                 <div class="navbar-right">
                     <ul class="nav navbar-nav">
-                        <!-- Messages: style can be found in dropdown.less-->
+                         Messages: style can be found in dropdown.less
                         <li class="dropdown messages-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-envelope"></i>
@@ -54,9 +54,9 @@
                             <ul class="dropdown-menu">
                                 <li class="header">You have 4 messages</li>
                                 <li>
-                                    <!-- inner menu: contains the actual data -->
+                                     inner menu: contains the actual data 
                                     <ul class="menu">
-                                        <li><!-- start message -->
+                                        <li> start message 
                                             <a href="#">
                                                 <div class="pull-left">
                                                     <img src="img/avatar3.png" class="img-circle" alt="User Image"/>
@@ -67,7 +67,7 @@
                                                 </h4>
                                                 <p>Why not buy a new awesome theme?</p>
                                             </a>
-                                        </li><!-- end message -->
+                                        </li> end message 
                                         <li>
                                             <a href="#">
                                                 <div class="pull-left">
@@ -130,9 +130,9 @@
 
                                 <li class="header">You have 9 tasks</li>
                                 <li>
-                                    <!-- inner menu: contains the actual data -->
+                                     inner menu: contains the actual data 
                                     <ul class="menu">
-                                        <li><!-- Task item -->
+                                        <li> Task item 
                                             <a href="#">
                                                 <h3>
                                                     Design some buttons
@@ -144,8 +144,8 @@
                                                     </div>
                                                 </div>
                                             </a>
-                                        </li><!-- end task item -->
-                                        <li><!-- Task item -->
+                                        </li> end task item 
+                                        <li> Task item 
                                             <a href="#">
                                                 <h3>
                                                     Create a nice theme
@@ -157,8 +157,8 @@
                                                     </div>
                                                 </div>
                                             </a>
-                                        </li><!-- end task item -->
-                                        <li><!-- Task item -->
+                                        </li> end task item 
+                                        <li> Task item 
                                             <a href="#">
                                                 <h3>
                                                     Some task I need to do
@@ -170,8 +170,8 @@
                                                     </div>
                                                 </div>
                                             </a>
-                                        </li><!-- end task item -->
-                                        <li><!-- Task item -->
+                                        </li> end task item 
+                                        <li> Task item 
                                             <a href="#">
                                                 <h3>
                                                     Make beautiful transitions
@@ -183,7 +183,7 @@
                                                     </div>
                                                 </div>
                                             </a>
-                                        </li><!-- end task item -->
+                                        </li> end task item 
                                     </ul>
                                 </li>
                                 <li class="footer">
@@ -192,7 +192,7 @@
 
                             </ul>
                         </li>
-                        <!-- User Account: style can be found in dropdown.less -->
+                         User Account: style can be found in dropdown.less 
                         <li class="dropdown user user-menu">
 
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -238,7 +238,7 @@
                         </li>
                     </ul>
                 </div>
-            </nav>
+            </nav>-->
         </header>
         <div class="wrapper row-offcanvas row-offcanvas-left">
             <!-- Left side column. contains the logo and sidebar -->
@@ -251,21 +251,21 @@
                             <img src="img/avatar3.png" class="img-circle" alt="User Image" />
                         </div>
                         <div class="pull-left info">
-                            <p>Hello, Jane</p>
+                            <p>${sessionScope.account.fullname}</p>
 
                             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                         </div>
                     </div>
                     <!-- search form -->
-                    <form action="#" method="get" class="sidebar-form">
+<!--                    <form action="#" method="get" class="sidebar-form">
                         <div class="input-group">
                             <input type="text" name="q" class="form-control" placeholder="Search..."/>
                             <span class="input-group-btn">
                                 <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
                             </span>
                         </div>
-                    </form>
-                    <ul class="sidebar-menu">
+                    </form>-->
+<!--                    <ul class="sidebar-menu">
                         <li>
                             <a href="index.html">
                                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
@@ -289,7 +289,7 @@
                             </a>
                         </li>
 
-                    </ul>
+                    </ul>-->
                 </section>
                 <!-- /.sidebar -->
             </aside>
