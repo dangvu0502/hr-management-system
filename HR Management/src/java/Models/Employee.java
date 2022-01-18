@@ -41,13 +41,14 @@ public class Employee {
         this.email = email;
     }
     
-    public Employee(String fullname, String username, String password, String email,String avatar, int status) {
+    public Employee(String fullname, String username, String password, String email,String avatar, int status,int type_id) {
         this.fullname = fullname;
         this.username = username;
         this.password = password;
         this.email = email;
         this.avatar = avatar;
         this.status = status;
+        this.type_id = type_id;
     }
     
      public Employee(int employee_id,String fullname, String username, String password, String email,String avatar, int status, int type_id) {
