@@ -162,7 +162,7 @@
                 %>
                 <div class="navbar-nav ml-auto">
                     <a href="../EditProfile" data-toggle="modal" data-target="#myModal">  <img
-                            src="https://www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png"
+                            src="../userimg/${sessionScope.account.avatar}"
                             alt="Avatar" width="50" height="50"
                             /></a>
                     <p class="nav-item nav-link text-center"> Hello ${sessionScope.account.username}</p>     
@@ -202,16 +202,15 @@
                             <h4 class="modal-title">Edit Profile</h4>
                         </div>
                         <div class="modal-body">
-                            <form action="../EditProfile" method="post" enctype="multipart/form-data">
+                            <form action="../EditProfile" id="frm" method="POST">
                                 <div class="row">
                                     <div class="col-md-3">
                                         <figure class="text-center">
                                             <figcaption>
                                                 <h4>${sessionScope.account.username}</h4>
                                             </figcaption>
-                                            <img class="img-rounded" src="${sessionScope.account.avatar}" alt="avatar" style="width:200px">
-                                            <input name="image" class="file-upload" type="file" accept="image/*" id="file">
-                                            <!--<input type="hidden" name="image" value="">-->
+                                            <img class="img-rounded" src="../userimg/${sessionScope.account.avatar}" alt="avatar" style="width:200px">
+                                            <input name="fileName" onchange="downloadImage()" class="file-upload" type="file" multiple accept="image/*" id="file">
                                             <button class="btn btn-primary btn-addon btn-sm"><label for="file">Choose Photo</label></button>
                                         </figure>
                                     </div>
@@ -363,40 +362,66 @@
         </footer>
         <!-- Footer -->
     </body>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
-        /***AVATAR SCRIPT***/
+                                    /***AVATAR SCRIPT***/
 
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    var fileurl = e.target.result;
-                    $('.img-rounded').attr('src', fileurl);
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-        $(".file-upload").on('change', function () {
-            readURL(this);
-        });
-        $(".upload-button").on('click', function () {
-            $(".file-upload").click();
-        });
-        /***AVATAR SCRIPT***/
+                                    function readURL(input) {
+                                        if (input.files && input.files[0]) {
+                                            var reader = new FileReader();
+                                            reader.onload = function (e) {
+                                                var fileurl = e.target.result;
+                                                $('.img-rounded').attr('src', fileurl);
+                                            }
+                                            reader.readAsDataURL(input.files[0]);
+                                        }
+                                    }
+                                    $(".file-upload").on('change', function () {
+                                        readURL(this);
+                                    });
+                                    $(".upload-button").on('click', function () {
+                                        $(".file-upload").click();
+                                    });
+                                    /***AVATAR SCRIPT***/
 
-        /** HIDE ALERT**/
-        $(document).keypress(function (e) {
-            $('.error').hide();
-        });
-        /** HIDE ALERT**/
-        function checkPassword() {
-            var password1 = document.getElementById('password1').value;
-            var password2 = document.getElementById('password2').value;
-            if (password1 == password2) {
-                alert("Successful change your information");
-            } else {
-                alert("Wrong password");
-            }
-        }
+                                    /** HIDE ALERT**/
+                                    $(document).keypress(function (e) {
+                                        $('.error').hide();
+                                    });
+                                    /** HIDE ALERT**/
+
+                                    /** CHECK EDIT PROFILE**/
+                                    function checkPassword() {
+                                        var password1 = document.getElementById('password1').value;
+                                        var password2 = document.getElementById('password2').value;
+                                        if (password1 == password2) {
+                                            alert("Successful change your information");
+                                        } else {
+                                            alert("Wrong password");
+                                        }
+//            document.getElementById('frm').submit()
+                                    }
+                                    /** CHECK EDIT PROFILE**/
+
+                                    /** DOWNLOAD IMAGE**/
+                                    function downloadImage() {
+                                        var file = document.getElementById('file')
+                                        var bodyFormData = new FormData();
+                                        bodyFormData.append('fileName', file.files[0]);
+                                        axios({
+                                            method: "post",
+                                            url: "http://localhost:8080/HR_Management/UploadFile",
+                                            data: bodyFormData,
+                                            headers: {"Content-Type": "multipart/form-data"},
+                                        }).then(function (response) {
+                                            //handle success
+                                            console.log(response);
+                                        })
+                                                .catch(function (response) {
+                                                    //handle error
+                                                    console.log(response);
+                                                });
+                                    }
+                                    /** DOWNLOAD IMAGE**/
     </script>
 </html>

@@ -18,16 +18,25 @@ import javax.servlet.http.HttpServletResponse;
 import Models.Employee;
 import java.io.File;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 /**
  *
  * @author Egamorft
  */
-@MultipartConfig()
 public class EditProfileController extends HttpServlet {
 
     /**
@@ -84,40 +93,28 @@ public class EditProfileController extends HttpServlet {
             throws ServletException, IOException {
 
         try {
+            /* TODO output your page here. You may use following sample code. */
+
+            response.setContentType("text/html;charset=UTF-8");
+            response.setCharacterEncoding("UTF-8");
+            request.setCharacterEncoding("UTF-8");
+
             EmployeeDAO dao = new EmployeeDAO();
 
             String fullname = request.getParameter("fullname");
-            String avatar = request.getParameter("avatar");
+            String avatar = request.getParameter("fileName");
             String username = request.getParameter("username");
             String password = request.getParameter("password");
-//            InputStream inputStream = null; // input stream of the upload file
-//
-//            // obtains the upload file part in this multipart request
-//            Part filePart = request.getPart("image");
-//            if (filePart != null) {
-//                // prints out some information for debugging
-//                System.out.println(filePart.getName());
-//                System.out.println(filePart.getSize());
-//                System.out.println(filePart.getContentType());
-//
-//                // obtains input stream of the upload file
-//                inputStream = filePart.getInputStream();
-//            }
-
-//            Part part = request.getPart("image");
-//            String fileName = part.getSubmittedFileName();
-            //String path = getServletContext().getRealPath("../"+"img"+File.separator+fileName);
             HttpSession session = request.getSession();
 
             Employee employee = (Employee) session.getAttribute("account"); //EMPLOYEE!!!!
             if (employee.getPassword().equals(password)) {
-                if (fullname != null) {
 
                     employee.setFullname(fullname);
-                }
+                    employee.setAvatar(avatar);
                 session.setAttribute("account", employee);
 
-                dao.UpdateProfile(fullname, "https://www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png", username);
+                dao.UpdateProfile(fullname, avatar, username);
                 request.setAttribute("error", "success");
                 response.sendRedirect("Views/Home.jsp");
             } else {
@@ -125,7 +122,7 @@ public class EditProfileController extends HttpServlet {
                 response.sendRedirect("Views/Home.jsp");
             }
 
-//            response.sendRedirect("EditProfile");
+//                response.sendRedirect("EditProfile");
         } catch (Exception ex) {
             Logger.getLogger(EditProfileController.class.getName()).log(Level.SEVERE, null, ex);
         }
