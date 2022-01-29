@@ -7,6 +7,7 @@ package DAO;
 
 import Context.DBContext;
 import Models.Employee;
+import Models.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -261,12 +262,12 @@ public class EmployeeDAO {
         }
     }
 
-    public Employee login(String username, String password) {
+    public User login(String username, String password) {
 
         try {
             //mo ket noi
             Connection conn = new DBContext().getConnection();
-            String sql = "SELECT * FROM hr_system.employee where (username =? or email = ?) and password=?";
+            String sql = "SELECT * FROM hr_system_v2.user where (username =? or email = ?) and password=?";
             ps = conn.prepareStatement(sql);
             ps.setString(1, username);
             ps.setString(2, username);
@@ -274,15 +275,22 @@ public class EmployeeDAO {
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                Employee account = new Employee();
-                account.setEmployee_id(rs.getInt("employee_id"));
+                User account = new User();
+                account.setId(rs.getInt("id"));
                 account.setFullname(rs.getString("fullname"));
                 account.setUsername(rs.getString("username"));
                 account.setPassword(rs.getString("password"));
                 account.setEmail(rs.getString("email"));
+                account.setMobile(rs.getString("mobile"));
+                account.setGender(rs.getBoolean("gender"));
                 account.setAvatar(rs.getString("avatar"));
-                account.setStatus(rs.getInt("status"));
-                account.setType_id(rs.getInt("type_id"));
+                account.setDob(rs.getDate("dob"));
+                account.setAddress(rs.getString("address"));
+                account.setRole_id(rs.getInt("role_id"));
+                account.setProject_role_id(rs.getInt("project_role_id"));
+                account.setSupervisor_id(rs.getInt("supervisor_id"));
+                account.setGroup_code(rs.getString("group_code"));
+                account.setStatus(rs.getBoolean("status"));
                 if (password.equals(account.getPassword())) {
                     System.out.println("password true");
                     return account;
@@ -296,26 +304,33 @@ public class EmployeeDAO {
         return null;
     }
 
-    public Employee getStatus(int status) {
+    public User getStatus(int status) {
 
         try {
             //mo ket noi
             Connection conn = new DBContext().getConnection();
-            String sql = "SELECT * FROM hr_system.employee where status =?";
+            String sql = "SELECT * FROM hr_system_v2.user where status =?";
             ps = conn.prepareStatement(sql);
             ps.setInt(1, status);
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                Employee account = new Employee();
-                account.setEmployee_id(rs.getInt("employee_id"));
+                User account = new User();
+                account.setId(rs.getInt("id"));
                 account.setFullname(rs.getString("fullname"));
                 account.setUsername(rs.getString("username"));
                 account.setPassword(rs.getString("password"));
                 account.setEmail(rs.getString("email"));
+                account.setMobile(rs.getString("mobile"));
+                account.setGender(rs.getBoolean("gender"));
                 account.setAvatar(rs.getString("avatar"));
-                account.setStatus(rs.getInt("status"));
-                account.setType_id(rs.getInt("type_id"));
+                account.setDob(rs.getDate("dob"));
+                account.setAddress(rs.getString("address"));
+                account.setRole_id(rs.getInt("role_id"));
+                account.setProject_role_id(rs.getInt("project_role_id"));
+                account.setSupervisor_id(rs.getInt("supervisor_id"));
+                account.setGroup_code(rs.getString("group_code"));
+                account.setStatus(rs.getBoolean("status"));
                 return account;
             }
         } catch (Exception ex) {

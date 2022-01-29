@@ -26,11 +26,7 @@ public class Employee {
     private int type_id;
     private String type_name;
     private int code; // only for email vefify
-
-    public static final int STATUS_ACTIVE = 1;
-    public static final int STATUS_DEACTIVE = 0;
-
-    
+  
     public Employee() {
     }
 

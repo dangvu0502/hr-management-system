@@ -27,7 +27,7 @@ public class User {
     private int supervisor_id;
     private String group_code;
     private boolean status;
-
+    
     public User() {
     }
 

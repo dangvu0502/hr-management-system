@@ -3,6 +3,7 @@
     Created on : Jan 14, 2022, 2:27:08 PM
     Author     : lehun
 --%>
+<%@page import="Models.User"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="Models.Employee"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -133,7 +134,7 @@
                 >
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <% Models.Employee acc = (Employee) session.getAttribute("account");
+            <% Models.User acc = (User) session.getAttribute("account");
 
             %>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
@@ -142,7 +143,7 @@
                     <a class="nav-item nav-link active" href="#"
                        >Home <span class="sr-only">(current)</span></a
                     >
-                    <c:if test="${sessionScope.account.type_id == 0}"> 
+                    <c:if test="${sessionScope.account.role_id == 0}"> 
                         <a class="nav-item nav-link" href="../SettingListController">Setting List</a>
                     </c:if>
                     <a class="nav-item nav-link" href="#">Our Team</a>
