@@ -62,10 +62,25 @@
                                                     <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Enter your name" required>
                                                 </div>
                                             </div>
-                                            <div class="row ">
+                                            <div class="row">
                                                 <div class="form-group col-lg-12">
-                                                    <label for="username">Username</label>
-                                                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
+                                                    <label for="email">Email address</label>
+                                                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-lg-12">
+                                                    <label for="mobile">Mobile</label>
+                                                    <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Enter your mobile" required>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-lg-12">
+                                                    
+                                                    <label for="male">Male</label>
+                                                    <input type="radio" name="gender" id="male" value="male" checked> &nbsp &nbsp &nbsp
+                                                    <label for="female">Female</label>
+                                                    <input type="radio" name="gender" id="female" value="female">
                                                 </div>
                                             </div>
                                             <div class="row ">
@@ -87,12 +102,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="row">
-                                                <div class="form-group col-lg-12">
-                                                    <label for="email">Email address</label>
-                                                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
-                                                </div>
-                                            </div>
+
                                             <div class=" form-group row col-lg-12 text-center">
                                                 <button type="submit" id="submit-btn" class="btn btn-info" onclick="ansValidation(event)">Register</button>
                                             </div>
