@@ -13,7 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import Models.Employee;
+import Models.User;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -35,7 +35,7 @@ public class LoginController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
 //            HttpSession session = request.getSession();
 //            Employee account = (Employee) session.getAttribute("account");
@@ -46,7 +46,7 @@ public class LoginController extends HttpServlet {
 //                response.sendRedirect("homepage");
 //            }
             HttpSession session = request.getSession();
-            Employee account = (Employee) session.getAttribute("account");
+            User account = (User) session.getAttribute("account");
             if (account == null) {
                 request.getRequestDispatcher("Views/login.jsp").forward(request, response);
             } else {
@@ -88,29 +88,22 @@ public class LoginController extends HttpServlet {
         String verifyMessage = (String) request.getAttribute("verifyMessage");
         String warning = null;
 
-        Employee account = new EmployeeDAO().login(username, password);
-        if (account == null && verifyMessage ==  null) {
+        User account = new EmployeeDAO().login(username, password);
+        if (account == null && verifyMessage == null) {
             request.setAttribute("err", "Login failed");
             request.getRequestDispatcher("Views/login.jsp").forward(request, response);
-        } else if (account == null && verifyMessage !=  null ){
-             request.setAttribute("verifyMessage", verifyMessage);
-             request.getRequestDispatcher("Views/login.jsp").forward(request, response);
-        }else if (account != null){
-            if (account.getStatus() == Employee.STATUS_DEACTIVE) {
+        } else if (account == null && verifyMessage != null) {
+            request.setAttribute("verifyMessage", verifyMessage);
+            request.getRequestDispatcher("Views/login.jsp").forward(request, response);
+        } else if (account != null) {
+            if (!account.isStatus()) {
                 request.setAttribute("err", "You do not have access to this website");
                 request.getRequestDispatcher("Views/login.jsp").forward(request, response);
             } else {
-                if (account.getStatus() == Employee.STATUS_ACTIVE) {
-                    request.getSession().setAttribute("account", account); //lưu trên ss
-                    response.sendRedirect("Views/Home.jsp");
-                } else {
-                    request.getRequestDispatcher("Views/login.jsp").forward(request, response);
-                }
-
+                request.getSession().setAttribute("account", account); //lưu trên ss
+                response.sendRedirect("Views/Home.jsp");
             }
-
         }
-
     }
 
     /**
