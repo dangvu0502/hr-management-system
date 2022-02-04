@@ -77,13 +77,13 @@ public class VerifyUserEmailController extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession();
-            Employee employee = (Employee) session.getAttribute("employee");
+//            Employee employee = (Employee) session.getAttribute("employee");
             String code = (String) session.getAttribute("code");
             code = code.trim();
             String authCode = (String) request.getParameter("authcode");
             if (authCode.equals(code)) {
                 EmployeeDAO eDAO = new EmployeeDAO();
-                eDAO.addEmployee(employee);
+//                eDAO.addEmployee(employee);
                 request.setAttribute("verifyMessage", "Register Successfully");
             } else {
 //                out.println("error back to login|" + authCode + "|" + code);

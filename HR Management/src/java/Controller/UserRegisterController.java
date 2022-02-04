@@ -101,12 +101,12 @@ public class UserRegisterController extends HttpServlet {
             if (userDAO.checkEmailExist(email) != null) {
                 response.sendRedirect("UserRegister?error=2");
             } else {
-                String code = SendEmail.getRandom();
-                String message = "Your code is: " + code;
+                //String code = SendEmail.getRandom();
+                String message = td.encrypt(email);
                 //check if the email send successfully
                 if (SendEmail.send(email, "Verify Code", message)) {
                     HttpSession session = request.getSession();
-                    session.setAttribute("code", code);
+                   // session.setAttribute("code", code);
                     session.setAttribute("user", user);
                     response.sendRedirect("Views/VerifyUserEmailView.jsp");
                 } else {
