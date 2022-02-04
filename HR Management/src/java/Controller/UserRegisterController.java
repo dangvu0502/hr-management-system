@@ -33,22 +33,14 @@ public class UserRegisterController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-//    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-//            throws ServletException, IOException {
-//        response.setContentType("text/html;charset=UTF-8");
-//        try (PrintWriter out = response.getWriter()) {
-//            /* TODO output your page here. You may use following sample code. */
-//            out.println("<!DOCTYPE html>");
-//            out.println("<html>");
-//            out.println("<head>");
-//            out.println("<title>Servlet UserRegisterController</title>");
-//            out.println("</head>");
-//            out.println("<body>");
-//            out.println("<h1>Servlet UserRegisterController at " + request.getContextPath() + "</h1>");
-//            out.println("</body>");
-//            out.println("</html>");
-//        }
-//    }
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+      
+        }
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -79,7 +71,7 @@ public class UserRegisterController extends HttpServlet {
 
     /**
      * Handles the HTTP <code>POST</code> method.
-     *
+     * 
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -92,30 +84,16 @@ public class UserRegisterController extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         try (PrintWriter out = response.getWriter();) {
             String fullname = request.getParameter("fullname");
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
             String email = request.getParameter("email");
-            Employee employee = new Employee(fullname, username, password, email);
-            EmployeeDAO eDAO = new EmployeeDAO();
+            String mobile = request.getParameter("mobile");
+            boolean gender = request.getParameter("gender").equals("male") ? true : false;
+            String password = request.getParameter("password");
+         
+        
+     
             // check user name or email exist in databse
             // boolean isExist = eDAO.checkEmailExist(email) != null || eDAO.checkUsernameExist(username) != null;
-            if (eDAO.checkUsernameExist(username) != null) {
-                response.sendRedirect("UserRegister?error=1");
-            } else if (eDAO.checkEmailExist(email) != null) {
-                response.sendRedirect("UserRegister?error=2");
-            } else {
-                String code = SendEmail.getRandom();
-                String message = "Your code is: " + code;
-                //check if the email send successfully
-                if (SendEmail.send(email, "Verify Code", message)) {
-                    HttpSession session = request.getSession();
-                    session.setAttribute("code", code);
-                    session.setAttribute("employee", employee);
-                    response.sendRedirect("Views/VerifyUserEmailView.jsp");
-                } else {
-                    out.println("Failed to send verification email");
-                }
-            }
+            
         } catch (Exception ex) {
             Logger.getLogger(UserRegisterController.class.getName()).log(Level.SEVERE, null, ex);
         }
