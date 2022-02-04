@@ -21,10 +21,7 @@ public class User {
     private boolean gender;
     private String avatar;
     private Date dob;
-
     private String address;
-
-  
     private int role_id;
     private int project_role_id;
     private int supervisor_id;
