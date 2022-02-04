@@ -5,7 +5,9 @@
  */
 package Controller;
 
+
 import Context.SendEmail;
+import Context.TrippleDes;
 import DAO.EmployeeDAO;
 import DAO.UserDAO;
 import Models.Employee;
@@ -85,13 +87,14 @@ public class UserRegisterController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
         try (PrintWriter out = response.getWriter();) {
+            UserDAO userDAO = new UserDAO();
+            TrippleDes td = new TrippleDes();
             String fullname = request.getParameter("fullname");
             String email = request.getParameter("email");
             String mobile = request.getParameter("mobile");
             boolean gender = request.getParameter("gender").equals("male") ? true : false;
-            String password = request.getParameter("password");
+            String password = td.encrypt(request.getParameter("password"));
             User user = new User(fullname, password, email, mobile, gender);
-            UserDAO userDAO = new UserDAO(); 
             boolean isExist = userDAO.checkEmailExist(email) != null ;
             log(isExist+" ");
             // check user name or email exist in databse
