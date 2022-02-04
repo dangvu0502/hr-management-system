@@ -145,6 +145,7 @@
                     >
                     <c:if test="${sessionScope.account.role_id == 0}"> 
                         <a class="nav-item nav-link" href="../SettingListController">Setting List</a>
+                        <a class="nav-item nav-link" href="../grouplist">Group List</a>
                     </c:if>
                     <a class="nav-item nav-link" href="#">Our Team</a>
 

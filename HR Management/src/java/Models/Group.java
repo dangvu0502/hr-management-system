@@ -13,7 +13,7 @@ public class Group {
     private int manager_id;
     private String name;
     private boolean status;
-    private String depcription;
+    private String description;
     private String parent_group_code;
     private boolean delete;
 
@@ -49,12 +49,12 @@ public class Group {
         this.status = status;
     }
 
-    public String getDepcription() {
-        return depcription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDepcription(String depcription) {
-        this.depcription = depcription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getParent_group_code() {
@@ -73,12 +73,12 @@ public class Group {
         this.delete = delete;
     }
 
-    public Group(String code, int manager_id, String name, boolean status, String depcription, String parent_group_code, boolean delete) {
+    public Group(String code, int manager_id, String name, boolean status, String description, String parent_group_code, boolean delete) {
         this.code = code;
         this.manager_id = manager_id;
         this.name = name;
         this.status = status;
-        this.depcription = depcription;
+        this.description = description;
         this.parent_group_code = parent_group_code;
         this.delete = delete;
     }
