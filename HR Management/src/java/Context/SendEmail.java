@@ -49,7 +49,7 @@ public class SendEmail {
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         String fromEmail = "haidang0528@gmail.com";
-        String password = "H@idang0502";
+        String password = "Haid@ng0502";
         /* Pass Properties object(props) and Authenticator object   
            for authentication to Session instance 
          */

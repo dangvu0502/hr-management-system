@@ -7,7 +7,9 @@ package Controller;
 
 import Context.SendEmail;
 import DAO.EmployeeDAO;
+import DAO.UserDAO;
 import Models.Employee;
+import Models.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
@@ -88,14 +90,29 @@ public class UserRegisterController extends HttpServlet {
             String mobile = request.getParameter("mobile");
             boolean gender = request.getParameter("gender").equals("male") ? true : false;
             String password = request.getParameter("password");
-         
-        
-     
+            User user = new User(fullname, password, email, mobile, gender);
+            UserDAO userDAO = new UserDAO(); 
+            boolean isExist = userDAO.checkEmailExist(email) != null ;
+            log(isExist+" ");
             // check user name or email exist in databse
             // boolean isExist = eDAO.checkEmailExist(email) != null || eDAO.checkUsernameExist(username) != null;
-            
+            if (userDAO.checkEmailExist(email) != null) {
+                response.sendRedirect("UserRegister?error=2");
+            } else {
+                String code = SendEmail.getRandom();
+                String message = "Your code is: " + code;
+                //check if the email send successfully
+                if (SendEmail.send(email, "Verify Code", message)) {
+                    HttpSession session = request.getSession();
+                    session.setAttribute("code", code);
+                    session.setAttribute("user", user);
+                    response.sendRedirect("Views/VerifyUserEmailView.jsp");
+                } else {
+                    out.println("Failed to send verification email");
+                }
+            }
         } catch (Exception ex) {
-            Logger.getLogger(UserRegisterController.class.getName()).log(Level.SEVERE, null, ex);
+            log(ex.getMessage());
         }
     }
 
