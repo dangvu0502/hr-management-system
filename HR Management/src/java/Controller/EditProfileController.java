@@ -6,6 +6,7 @@
 package Controller;
 
 import DAO.EmployeeDAO;
+import DAO.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Vector;
@@ -20,6 +21,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -99,9 +101,14 @@ public class EditProfileController extends HttpServlet {
             response.setCharacterEncoding("UTF-8");
             request.setCharacterEncoding("UTF-8");
 
-            EmployeeDAO dao = new EmployeeDAO();
+            UserDAO dao = new UserDAO();
 
             String fullname = request.getParameter("fullname");
+            String dob = request.getParameter("dob");
+            String address = request.getParameter("address");
+            Boolean gender = Boolean.parseBoolean(request.getParameter("gender"));
+            String email = request.getParameter("email");
+            String mobile = request.getParameter("mobile");
             String avatar = request.getParameter("fileName");
             String username = request.getParameter("username");
             String password = request.getParameter("password");
@@ -114,7 +121,7 @@ public class EditProfileController extends HttpServlet {
                     user.setAvatar(avatar);
                 session.setAttribute("account", user);
 
-                dao.UpdateProfile(fullname, avatar, username);
+                dao.UpdateProfile(fullname, avatar, email, mobile, gender, dob, address, username);
                 request.setAttribute("error", "success");
                 response.sendRedirect("Views/Home.jsp");
             } else {

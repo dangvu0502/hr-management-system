@@ -246,21 +246,6 @@ public class EmployeeDAO {
 //        }
     }
 
-    public void UpdateProfile(String fullname, String avatar, String username) {
-        try {
-            //mo ket noi
-            String sql = "update hr_system.employee set fullname = ?, avatar = ? where username =?";
-            con = new DBContext().getConnection();
-            ps = con.prepareStatement(sql);
-            ps.setString(1, fullname);
-            ps.setString(2, avatar);
-            ps.setString(3, username);
-            ps.executeUpdate();
-
-        } catch (Exception ex) {
-            ex.printStackTrace(System.out);
-        }
-    }
 
     public User login(String username, String password) {
 
