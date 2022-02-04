@@ -211,7 +211,7 @@
                                                 <h4>${sessionScope.account.username}</h4>
                                             </figcaption>
                                             <img class="img-rounded" src="../userimg/${sessionScope.account.avatar}" alt="avatar" style="width:200px">
-                                            <input name="fileName" onchange="downloadImage()" class="file-upload" type="file" multiple accept="image/*" id="file">
+                                            <input name="fileName" onchange="downloadImage()" class="file-upload" type="file" multiple accept="image/*" id="file" value="${sessionScope.account.avatar}">
                                             <button class="btn btn-primary btn-addon btn-sm"><label for="file">Choose Photo</label></button>
                                         </figure>
                                     </div>
@@ -226,11 +226,11 @@
                                         <div class="col-md-8 col-md-6">
                                             <div class="col-md"><label class="labels">Sex</label>
                                                 <select class="form-control" name="gender">
-                                                    <option value="${sessionScope.account.gender}" ${sessionScope.account.gender eq '1'?"selected":""}>Male</option>
-                                                    <option value="${sessionScope.account.gender}" ${sessionScope.account.gender eq '0'?"selected":""}>Female</option>
+                                                    <option value="1" ${sessionScope.account.gender eq '1'?"selected":""}>Male</option>
+                                                    <option value="0" ${sessionScope.account.gender eq '0'?"selected":""}>Female</option>
                                                 </select>
                                             </div>
-                                                    <div class="col-md"><label class="labels">Email</label><input name="email" type="email" class="form-control" value="${sessionScope.account.email}" disabled="" ></div>
+                                            <div class="col-md"><label class="labels">Email</label><input name="email" type="email" class="form-control" value="${sessionScope.account.email}" disabled="" ></div>
                                             <div class="col-md"><label class="labels">Phone number</label><input name="mobile" type="tel" class="form-control" value="${sessionScope.account.mobile}" ></div>
                                             <div class="col-md"><label class="labels">Password</label><input id="password2" name="password" type="password" class="form-control" value="" required=""></div>
 

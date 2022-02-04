@@ -269,7 +269,7 @@ public class EmployeeDAO {
                 account.setMobile(rs.getString("mobile"));
                 account.setGender(rs.getBoolean("gender"));
                 account.setAvatar(rs.getString("avatar"));
-                account.setDob(rs.getDate("dob"));
+                account.setDob(rs.getString("dob"));
                 account.setAddress(rs.getString("address"));
                 account.setRole_id(rs.getInt("role_id"));
                 account.setProject_role_id(rs.getInt("project_role_id"));
@@ -309,7 +309,7 @@ public class EmployeeDAO {
                 account.setMobile(rs.getString("mobile"));
                 account.setGender(rs.getBoolean("gender"));
                 account.setAvatar(rs.getString("avatar"));
-                account.setDob(rs.getDate("dob"));
+                account.setDob(rs.getString("dob"));
                 account.setAddress(rs.getString("address"));
                 account.setRole_id(rs.getInt("role_id"));
                 account.setProject_role_id(rs.getInt("project_role_id"));
