@@ -20,7 +20,7 @@ public class User {
     private String mobile;
     private boolean gender;
     private String avatar;
-    private Date dob;
+    private String dob;
     private String address;
     private int role_id;
     private int project_role_id;
@@ -42,7 +42,7 @@ public class User {
     }
     
     
-    public User(int id, String fullname, String username, String password, String email, String mobile, boolean gender, String avatar, Date dob, String address, int role_id, int project_role_id, int supervisor_id, String group_code, boolean status) {
+    public User(int id, String fullname, String username, String password, String email, String mobile, boolean gender, String avatar, String dob, String address, int role_id, int project_role_id, int supervisor_id, String group_code, boolean status) {
         this.id = id;
         this.fullname = fullname;
         this.username = username;
@@ -124,11 +124,11 @@ public class User {
         this.avatar = avatar;
     }
 
-    public Date getDob() {
+    public String getDob() {
         return dob;
     }
 
-    public void setDob(Date dob) {
+    public void setDob(String dob) {
         this.dob = dob;
     }
 

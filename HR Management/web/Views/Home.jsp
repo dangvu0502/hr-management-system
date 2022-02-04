@@ -212,28 +212,27 @@
                                                 <h4>${sessionScope.account.username}</h4>
                                             </figcaption>
                                             <img class="img-rounded" src="../userimg/${sessionScope.account.avatar}" alt="avatar" style="width:200px">
-                                            <input name="fileName" onchange="downloadImage()" class="file-upload" type="file" multiple accept="image/*" id="file">
+                                            <input name="fileName" onchange="downloadImage()" class="file-upload" type="file" multiple accept="image/*" id="file" value="${sessionScope.account.avatar}">
                                             <button class="btn btn-primary btn-addon btn-sm"><label for="file">Choose Photo</label></button>
                                         </figure>
                                     </div>
                                     <div class="col-md-9">
                                         <div class="col-md-8 col-md-6">
                                             <input name="username" type="hidden" value="${sessionScope.account.username}">
-                                            <div class="col-md"><label class="labels">Date of birth</label><input type="date" class="form-control" value="" disabled=""></div>
-
                                             <div class="col-md"><label class="labels">Full name</label><input name="fullname" type="text" class="form-control" value="${sessionScope.account.fullname}"></div>
-                                            <div class="col-md"><label class="labels">Address</label><input type="text" class="form-control" value="" disabled=""></div>
+                                            <div class="col-md"><label class="labels">Date of birth</label><input name="dob" type="date" class="form-control" value="${sessionScope.account.dob}" ></div>
+                                            <div class="col-md"><label class="labels">Address</label><input name="address" type="text" class="form-control" value="${sessionScope.account.address}" ></div>
                                             <input id="password1" type="hidden" class="form-control" value="${sessionScope.account.password}">
                                         </div>
                                         <div class="col-md-8 col-md-6">
                                             <div class="col-md"><label class="labels">Sex</label>
-                                                <select class="form-control" disabled="">
-                                                    <option value="">Male</option>
-                                                    <option value="">Female</option>
+                                                <select class="form-control" name="gender">
+                                                    <option value="1" ${sessionScope.account.gender eq '1'?"selected":""}>Male</option>
+                                                    <option value="0" ${sessionScope.account.gender eq '0'?"selected":""}>Female</option>
                                                 </select>
                                             </div>
-                                            <div class="col-md"><label class="labels">Email</label><input type="email" class="form-control" value="" disabled=""></div>
-                                            <div class="col-md"><label class="labels">Phone number</label><input type="tel" class="form-control" value="" disabled=""></div>
+                                            <div class="col-md"><label class="labels">Email</label><input name="email" type="email" class="form-control" value="${sessionScope.account.email}" disabled="" ></div>
+                                            <div class="col-md"><label class="labels">Phone number</label><input name="mobile" type="tel" class="form-control" value="${sessionScope.account.mobile}" ></div>
                                             <div class="col-md"><label class="labels">Password</label><input id="password2" name="password" type="password" class="form-control" value="" required=""></div>
 
                                         </div>

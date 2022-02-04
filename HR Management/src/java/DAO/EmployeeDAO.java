@@ -245,21 +245,6 @@ public class EmployeeDAO {
 //        }
     }
 
-    public void UpdateProfile(String fullname, String avatar, String username) {
-        try {
-            //mo ket noi
-            String sql = "update hr_system.employee set fullname = ?, avatar = ? where username =?";
-            con = new DBContext().getConnection();
-            ps = con.prepareStatement(sql);
-            ps.setString(1, fullname);
-            ps.setString(2, avatar);
-            ps.setString(3, username);
-            ps.executeUpdate();
-
-        } catch (Exception ex) {
-            ex.printStackTrace(System.out);
-        }
-    }
 
     public User login(String username, String password) {
 
@@ -283,7 +268,7 @@ public class EmployeeDAO {
                 account.setMobile(rs.getString("mobile"));
                 account.setGender(rs.getBoolean("gender"));
                 account.setAvatar(rs.getString("avatar"));
-                account.setDob(rs.getDate("dob"));
+                account.setDob(rs.getString("dob"));
                 account.setAddress(rs.getString("address"));
                 account.setRole_id(rs.getInt("role_id"));
                 account.setProject_role_id(rs.getInt("project_role_id"));
@@ -323,7 +308,7 @@ public class EmployeeDAO {
                 account.setMobile(rs.getString("mobile"));
                 account.setGender(rs.getBoolean("gender"));
                 account.setAvatar(rs.getString("avatar"));
-                account.setDob(rs.getDate("dob"));
+                account.setDob(rs.getString("dob"));
                 account.setAddress(rs.getString("address"));
                 account.setRole_id(rs.getInt("role_id"));
                 account.setProject_role_id(rs.getInt("project_role_id"));

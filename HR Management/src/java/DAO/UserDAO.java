@@ -10,6 +10,7 @@ import Models.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Date;
 
 /**
  *
@@ -34,5 +35,44 @@ public class UserDAO {
             System.out.println("Error: " + e.getMessage());
         }
         return null;
+    }
+    public void UpdateProfile(String fullname, String avatar, String mobile, Boolean gender, String dob, String address, String username) {
+        try {
+            //mo ket noi
+            String sql = "update `hr_system_v2`.`user` set fullname = ?, mobile = ?, gender = ?, dob = ?, address = ?, avatar = ? where username =?";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, fullname);
+            ps.setString(2, mobile);
+            ps.setBoolean(3, gender);
+//            ps.setDate(5, new java.sql.Date(dob.getTime()));
+            ps.setString(4, dob);
+            ps.setString(5, address);
+            ps.setString(6, avatar);
+            ps.setString(7, username);
+            ps.executeUpdate();
+
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+    }
+    public void UpdateProfileAvtNull(String fullname, String mobile, Boolean gender, String dob, String address, String username) {
+        try {
+            //mo ket noi
+            String sql = "update `hr_system_v2`.`user` set fullname = ?, mobile = ?, gender = ?, dob = ?, address = ? where username =?";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, fullname);
+            ps.setString(2, mobile);
+            ps.setBoolean(3, gender);
+//            ps.setDate(5, new java.sql.Date(dob.getTime()));
+            ps.setString(4, dob);
+            ps.setString(5, address);
+            ps.setString(6, username);
+            ps.executeUpdate();
+
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
     }
 }
