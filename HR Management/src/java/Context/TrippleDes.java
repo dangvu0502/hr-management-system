@@ -61,17 +61,14 @@ public class TrippleDes {
         return decryptedText;
     }
 
-
+//
 //    public static void main(String args []) throws Exception
 //    {
 //        TrippleDes td= new TrippleDes();
 //
-//        String target="imparator";
-//        String encrypted=td.encrypt(target);
-//        String decrypted=td.decrypt(encrypted);
+//        String decrypted=td.decrypt("fEnanKoqVc5+UgQPJrzQrMPsgEIoAqtHWHcfGEt3MCA=");
 //
-//        System.out.println("String To Encrypt: "+ target);
-//        System.out.println("Encrypted String: " + encrypted);
+// 
 //        System.out.println("Decrypted String: " + decrypted);
 //
 //    }

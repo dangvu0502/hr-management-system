@@ -94,16 +94,15 @@ public class UserRegisterController extends HttpServlet {
             boolean gender = request.getParameter("gender").equals("male") ? true : false;
             String password = trippleDes.encrypt(request.getParameter("password"));
             User user = new User(fullname, password, email, mobile, gender);
+            
             // check user email exist in databse
-
             if (userDAO.checkEmailExist(email) != null) {
                 response.sendRedirect("UserRegister?error=2");
             } else {
-                String message = trippleDes.encrypt(email+"|"+SendEmail.getRandom());
+                String message = trippleDes.encrypt(email+" "+SendEmail.getRandom());
                 //check if the email send successfully
                 if (SendEmail.send(email, "Verify Link", "http://localhost:8080/HR_Management/VerifyUserEmail?key="+message)) {
-                    HttpSession session = request.getSession();
-                    session.setAttribute("trippleDes", trippleDes);
+                    response.sendRedirect("Views/VerifyUserEmailView.jsp");
                 } else {
                     out.println("Failed to send verification email");
                 }
