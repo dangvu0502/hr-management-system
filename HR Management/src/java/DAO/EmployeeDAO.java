@@ -6,6 +6,7 @@
 package DAO;
 
 import Context.DBContext;
+import Models.Employee;
 import Models.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

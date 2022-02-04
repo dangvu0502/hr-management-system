@@ -42,8 +42,8 @@ public class GroupListController extends HttpServlet {
             request.setAttribute("page", page);
             GroupDAO gDAO = new GroupDAO();
             int count = gDAO.totalGroup();
-            int endPage = count/5;
-            if (endPage % 5 != 0) endPage++;
+            int endPage = count/3;
+            if (endPage % 3 != 0) endPage++;
             request.setAttribute("endP", endPage);
             Vector<Group> g = new Vector();
             if (setting_type == null || input == null) {
@@ -51,10 +51,10 @@ public class GroupListController extends HttpServlet {
             } else {
                 g = gDAO.getGroupBySearch(setting_type, input);
             }
-            request.setAttribute("listAG", g);
+            request.setAttribute("listG", g);
             request.getRequestDispatcher("Views/GroupView.jsp").forward(request, response);
         } catch (Exception e) {
-            System.out.println("ádfasdfasdfasd" + e.getMessage());
+            System.out.println("Noooo" + e.getMessage());
         }
         
     }

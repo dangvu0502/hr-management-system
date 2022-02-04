@@ -29,7 +29,7 @@ public class GroupDAO {
             String sql = "SELECT * FROM hr_system_v2.group limit 3 offset ?";
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
-            ps.setInt(1, (page - 1) * 5);
+            ps.setInt(1, (page - 1) * 3);
             rs = ps.executeQuery();
             while (rs.next()) {
                 Group g = new Group();
@@ -49,7 +49,6 @@ public class GroupDAO {
     }
 
     public int totalGroup() {
-        int total = 0;
         try {
             //mo ket noi
             String sql = "SELECT count(*) FROM hr_system_v2.group";
@@ -57,7 +56,7 @@ public class GroupDAO {
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
-               total = rs.getInt(1);
+               return rs.getInt(1);
             }
         } catch (Exception e) {
             e.printStackTrace(System.out);

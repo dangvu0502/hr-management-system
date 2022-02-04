@@ -360,7 +360,7 @@
                                             <td>${g.status}</td>
                                             <td>${g.description}</td>
                                             <td>${g.parent_group_code}</td>
-                                            <td>${g.parent_group_code}</td>
+
                                             <td>
                                                 <div style="background-color: orangered; border-radius:25px;margin-bottom: 2rem;text-align: center; padding: 0.4rem;"><a style="color: white; font-weight:700; " id="delete" onclick="deleteByID('${e.employee_id}');" href="#">Delete </a></div>
                                                 <div style="background-color: #f9d21a;border-radius:25px;text-align: center;padding: 0.4rem;"><a style="color: white;  font-weight:700; " class="edit" href="" onclick="dialogOpen('${e.username}', '${e.fullname}', '${e.employee_id}', '${e.type_id}', '${e.status}', '${e.email}', '${e.password}');
