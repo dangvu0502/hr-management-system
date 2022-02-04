@@ -87,28 +87,23 @@ public class UserRegisterController extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         try (PrintWriter out = response.getWriter();) {
             UserDAO userDAO = new UserDAO();
-            TrippleDes td = new TrippleDes();
+            TrippleDes trippleDes = new TrippleDes();
             String fullname = request.getParameter("fullname");
             String email = request.getParameter("email");
             String mobile = request.getParameter("mobile");
             boolean gender = request.getParameter("gender").equals("male") ? true : false;
-            String password = td.encrypt(request.getParameter("password"));
+            String password = trippleDes.encrypt(request.getParameter("password"));
             User user = new User(fullname, password, email, mobile, gender);
-            boolean isExist = userDAO.checkEmailExist(email) != null ;
-            log(isExist+" ");
-            // check user name or email exist in databse
-            // boolean isExist = eDAO.checkEmailExist(email) != null || eDAO.checkUsernameExist(username) != null;
+            // check user email exist in databse
+
             if (userDAO.checkEmailExist(email) != null) {
                 response.sendRedirect("UserRegister?error=2");
             } else {
-                //String code = SendEmail.getRandom();
-                String message = td.encrypt(email);
+                String message = trippleDes.encrypt(email+"|"+SendEmail.getRandom());
                 //check if the email send successfully
-                if (SendEmail.send(email, "Verify Code", message)) {
+                if (SendEmail.send(email, "Verify Link", "http://localhost:8080/HR_Management/VerifyUserEmail?key="+message)) {
                     HttpSession session = request.getSession();
-                   // session.setAttribute("code", code);
-                    session.setAttribute("user", user);
-                    response.sendRedirect("Views/VerifyUserEmailView.jsp");
+                    session.setAttribute("trippleDes", trippleDes);
                 } else {
                     out.println("Failed to send verification email");
                 }

@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Context.TrippleDes;
 import DAO.EmployeeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -59,7 +60,25 @@ public class VerifyUserEmailController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try {
+            PrintWriter out = response.getWriter();
+            HttpSession session = request.getSession();
+            TrippleDes trippleDes = new TrippleDes();
+            String message = (String) session.getAttribute("link");
+            String key = request.getParameter("key");
+         
+            String email = trippleDes.decrypt("ok");
+//            if (request.getParameter("key") != null) {
+//                out.println(trippleDes.decrypt(request.getParameter("key")));
+//            } else {
+//                out.println("error");
+//            }
+        out.println(key);
+        out.println("email: "+email);
+           // out.println(trippleDes.decrypt(message));
+        } catch (Exception ex) {
 
+        }
     }
 
     /**
