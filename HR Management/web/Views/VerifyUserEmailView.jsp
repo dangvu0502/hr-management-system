@@ -42,28 +42,8 @@
                     <div class="col-lg-6 ">
                         <section class="panel">
                             <header class="panel-heading text-center">
-                                We already send verify code to your mail
+                                Thank you, we already send verify link to your mail
                             </header>
-                            <c:if test="${verifyMessage != null}">
-                                <div class="error alert alert-danger" role="alert">
-                                    <p class="mb-0">${verifyMessage}</p>
-                                </div>
-                            </c:if>
-                            <div class="panel-body">
-                                <form action="../VerifyUserEmail" method="POST" role="form">
-                                    <div class="row">
-                                        <div class="col-lg-2"></div>
-                                        <div class="col-lg-8">
-                                            <div class="row ">
-                                                <div class="form-group col-lg-8">
-                                                    <input type="text" class="form-control"  name="authcode" >
-                                                </div>
-                                                <button type="submit" class="btn btn-primary">Confirm Code</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
                         </section>
                     </div>
                 </div>
