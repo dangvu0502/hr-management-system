@@ -371,7 +371,7 @@
                                 </table>
                                 <div class="table-foot">
                                     <ul class="pagination pagination-sm no-margin pull-right">
-                                        <c:forEach begin="1" end="${totalPage}" var="p">
+                                        <c:forEach begin="1" end="${endP}" var="p">
                                             <li class="${p==page?"active":""}"><a href="grouplist?page=${p}">${p}</a></li>
                                         </c:forEach>
                                     </ul>

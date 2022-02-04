@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 /**
  *
@@ -18,75 +19,76 @@ import java.util.List;
  */
 public class GroupDAO {
 
+    Connection con;
+    PreparedStatement ps;
+    ResultSet rs;
 
-
-    public ArrayList<Group> getAll() {
+    public Vector<Group> getGroupList(int page) {
+        Vector vec = new Vector();
         try {
-            ArrayList<Group> list = new ArrayList<>();
-            //mo ket noi
-            Connection conn = new DBContext().getConnection();
-            String sql = "SELECT * FROM hr_system_v2.group";
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
+            String sql = "SELECT * FROM hr_system_v2.group limit 3 offset ?";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, (page - 1) * 5);
+            rs = ps.executeQuery();
             while (rs.next()) {
-                Group group = new Group();
-                group.setCode(rs.getString("code"));
-                group.setManager_id(rs.getInt("manager_id"));
-                group.setName(rs.getString("name"));
-                group.setStatus(rs.getBoolean("status"));
-                group.setDescription(rs.getString("description"));
-                group.setParent_group_code(rs.getString("parent_group_code"));
-                group.setDelete(rs.getBoolean("delete"));
-                list.add(group);
+                Group g = new Group();
+                g.setCode(rs.getString(1));
+                g.setManager_id(rs.getInt(2));
+                g.setName(rs.getString(3));
+                g.setStatus(rs.getBoolean(4));
+                g.setDescription(rs.getString(5));
+                g.setParent_group_code(rs.getString(6));
+                g.setDelete(rs.getBoolean(7));
+                vec.add(g);
             }
-            return list;
         } catch (Exception e) {
-            e.printStackTrace(System.out);
+            System.out.println("Error: " + e.getMessage());
         }
-        return null;
+        return vec;
     }
 
-
-    public List<Group> getAllPaging(int pageIndex, int pageSize) {
-            try {
-            List<Group> list = new ArrayList<>();
-            //mo ket noi
-            Connection conn = new DBContext().getConnection();
-            String sql = "SELECT * FROM hr_system_v2.group LIMIT ?, ?";
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, pageIndex);
-            ps.setInt(2, pageSize);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Group group = new Group();
-                group.setCode(rs.getString("code"));
-                group.setManager_id(rs.getInt("manager_id"));
-                group.setName(rs.getString("name"));
-                group.setStatus(rs.getBoolean("status"));
-                group.setDescription(rs.getString("description"));
-                group.setParent_group_code(rs.getString("parent_group_code"));
-                group.setDelete(rs.getBoolean("delete"));
-                list.add(group);
-            }
-            return list;
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
-        }
-        return null;    
-    }
-     public int totalGroup() {
+    public int totalGroup() {
+        int total = 0;
         try {
             //mo ket noi
-            Connection conn = new DBContext().getConnection();
             String sql = "SELECT count(*) FROM hr_system_v2.group";
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
             while (rs.next()) {
-                return rs.getInt(1);
+               total = rs.getInt(1);
             }
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }
         return 0;
     }
+      public Vector<Group> getGroupBySearch(String setting_type, String input) {
+        Vector vec = new Vector();
+        try {
+            String sql = "SELECT * FROM hr_system_v2.group"
+                    + " where " + setting_type + " = ?";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, input);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Group g = new Group();
+                g.setCode(rs.getString(1));
+                g.setManager_id(rs.getInt(2));
+                g.setName(rs.getString(3));
+                g.setStatus(rs.getBoolean(4));
+                g.setDescription(rs.getString(5));
+                g.setParent_group_code(rs.getString(6));
+                g.setDelete(rs.getBoolean(7));
+                vec.add(g);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+       }
+        return vec;
+    }
+    
+    
 }

@@ -4,11 +4,11 @@
  */
 package Controller;
 
+import DAO.EmployeeDAO;
 import DAO.GroupDAO;
 import Models.Group;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
+import java.util.Vector;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,31 +34,28 @@ public class GroupListController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-        final int PAGE_SIZE = 3;
-        int page = 1;
-        if(request.getParameter("page") != null){
-            page = Integer.parseInt(request.getParameter("page"));
+        try {
+            String setting_type = request.getParameter("type");
+            String input = request.getParameter("input");
+            String page = request.getParameter("page");
+            if (page == null) page = "1";
+            request.setAttribute("page", page);
+            GroupDAO gDAO = new GroupDAO();
+            int count = gDAO.totalGroup();
+            int endPage = count/5;
+            if (endPage % 5 != 0) endPage++;
+            request.setAttribute("endP", endPage);
+            Vector<Group> g = new Vector();
+            if (setting_type == null || input == null) {
+                g = gDAO.getGroupList(Integer.parseInt(page));
+            } else {
+                g = gDAO.getGroupBySearch(setting_type, input);
+            }
+            request.setAttribute("listAG", g);
+            request.getRequestDispatcher("Views/GroupView.jsp").forward(request, response);
+        } catch (Exception e) {
+            System.out.println("ádfasdfasdfasd" + e.getMessage());
         }
-        GroupDAO groupDAO = new GroupDAO();
-        int totalGroup =  groupDAO.totalGroup();
-        int totalPage = totalGroup / PAGE_SIZE;
-        if(totalGroup % PAGE_SIZE != 0){
-            totalPage++;
-        }
-        List<Group> listG = groupDAO.getAll();
-        List<Group> list = groupDAO.getAllPaging(page, PAGE_SIZE);
-        
-        //setdata cho jsp
-        request.setAttribute("page", page);
-        request.setAttribute("totalPage", totalPage);
-        request.setAttribute("listG", listG);
-        request.setAttribute("list", list);
-        request.getSession().setAttribute("backToUrl", "grouplist?page=" + page);
-        request.getRequestDispatcher("Views/GroupView.jsp").forward(request, response);
-        
-    }
         
     }
 
