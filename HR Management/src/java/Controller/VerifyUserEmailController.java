@@ -6,7 +6,6 @@
 package Controller;
 
 import DAO.EmployeeDAO;
-import Models.Employee;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
