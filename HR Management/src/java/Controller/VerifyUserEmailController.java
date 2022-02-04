@@ -5,8 +5,8 @@
  */
 package Controller;
 
+import Context.TrippleDes;
 import DAO.EmployeeDAO;
-import Models.Employee;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
@@ -60,7 +60,16 @@ public class VerifyUserEmailController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try {
+            PrintWriter out = response.getWriter();
+            TrippleDes trippleDes = new TrippleDes();
+            String key = request.getQueryString().substring(4);
+            out.println(trippleDes.decrypt(key).split(" ")[0].trim());
 
+            // out.println(trippleDes.decrypt(message));
+        } catch (Exception ex) {
+
+        }
     }
 
     /**
@@ -78,13 +87,13 @@ public class VerifyUserEmailController extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession();
-            Employee employee = (Employee) session.getAttribute("employee");
+//            Employee employee = (Employee) session.getAttribute("employee");
             String code = (String) session.getAttribute("code");
             code = code.trim();
             String authCode = (String) request.getParameter("authcode");
             if (authCode.equals(code)) {
                 EmployeeDAO eDAO = new EmployeeDAO();
-                eDAO.addEmployee(employee);
+//                eDAO.addEmployee(employee);
                 request.setAttribute("verifyMessage", "Register Successfully");
             } else {
 //                out.println("error back to login|" + authCode + "|" + code);

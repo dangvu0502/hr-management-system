@@ -27,10 +27,21 @@ public class User {
     private int supervisor_id;
     private String group_code;
     private boolean status;
+    private boolean verified;
     
     public User() {
     }
 
+    
+    public User(String fullname, String password, String email, String mobile, boolean gender) {
+        this.fullname = fullname;
+        this.password = password;
+        this.email = email;
+        this.mobile = mobile;
+        this.gender = gender;
+    }
+    
+    
     public User(int id, String fullname, String username, String password, String email, String mobile, boolean gender, String avatar, Date dob, String address, int role_id, int project_role_id, int supervisor_id, String group_code, boolean status) {
         this.id = id;
         this.fullname = fullname;
@@ -167,6 +178,14 @@ public class User {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+    
+      public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
     }
     
 }

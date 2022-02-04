@@ -15,7 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import Models.Employee;
+import Models.User;
 import java.io.File;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -107,12 +107,12 @@ public class EditProfileController extends HttpServlet {
             String password = request.getParameter("password");
             HttpSession session = request.getSession();
 
-            Employee employee = (Employee) session.getAttribute("account"); //EMPLOYEE!!!!
-            if (employee.getPassword().equals(password)) {
+            User user = (User) session.getAttribute("account"); //EMPLOYEE!!!!
+            if (user.getPassword().equals(password)) {
 
-                    employee.setFullname(fullname);
-                    employee.setAvatar(avatar);
-                session.setAttribute("account", employee);
+                    user.setFullname(fullname);
+                    user.setAvatar(avatar);
+                session.setAttribute("account", user);
 
                 dao.UpdateProfile(fullname, avatar, username);
                 request.setAttribute("error", "success");
