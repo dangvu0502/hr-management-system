@@ -41,9 +41,13 @@
                     <div  class="col-lg-3"></div>
                     <div class="col-lg-6 ">
                         <section class="panel">
-                            <header class="panel-heading text-center">
+                            
+                            <div class='wrapper text-center'>
+                                <header class="panel-heading text-center">
                                 Thank you, we already send verify link to your mail
                             </header>
+                            <a href="../login" class="btn btn-primary btn-group-lg active" role="button" aria-pressed="true">Back to login</a>
+                            </div>
                         </section>
                     </div>
                 </div>
