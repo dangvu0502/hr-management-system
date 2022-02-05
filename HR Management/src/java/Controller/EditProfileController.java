@@ -114,7 +114,7 @@ public class EditProfileController extends HttpServlet {
             String password = request.getParameter("password");
             HttpSession session = request.getSession();
 
-            User user = (User) session.getAttribute("account"); //EMPLOYEE!!!!
+            User user = (User) session.getAttribute("account"); 
             if (user.getPassword().equals(password)) {
 
                 user.setFullname(fullname);
@@ -129,10 +129,10 @@ public class EditProfileController extends HttpServlet {
                     user.setAvatar(avatar);
                     dao.UpdateProfile(fullname, avatar, mobile, gender, dob, address, username);
                 }
-                request.setAttribute("error", "success");
+//                request.setAttribute("error", "success");
                 response.sendRedirect("Views/Home.jsp");
             } else {
-                request.setAttribute("error", "danger");
+//                request.setAttribute("error", "danger");
                 response.sendRedirect("Views/Home.jsp");
             }
 

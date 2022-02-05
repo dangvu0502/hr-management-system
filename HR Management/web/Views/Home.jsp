@@ -163,6 +163,7 @@
                     if (acc != null) {
                 %>
                 <div class="navbar-nav ml-auto">
+                    <a href="../ChangePassword" class="nav-item nav-link" data-toggle="modal" data-target="#passModal">Change password</a>
                     <a href="../EditProfile" data-toggle="modal" data-target="#myModal">  <img
                             src="../userimg/${sessionScope.account.avatar}"
                             alt="Avatar" width="50" height="50"
@@ -204,7 +205,7 @@
                             <h4 class="modal-title">Edit Profile</h4>
                         </div>
                         <div class="modal-body">
-                            <form action="../EditProfile" id="frm" method="POST">
+                            <form action="../EditProfile" method="POST">
                                 <div class="row">
                                     <div class="col-md-3">
                                         <figure class="text-center">
@@ -249,25 +250,45 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div id="password" class="tab-pane fade">
-                    <form action="ChangePassword" method="POST">
-                        <div class="row mt-5">
-                            <input name="username" type="hidden" value="">
-    
-                            <div class="col-md-8">
-                                <div class="col-md-4 col-md-offset-7"><label class="labels">Old Password</label><input name="oldpass" type="password" class="form-control" required=""></div>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="col-md-4 col-md-offset-7"><label class="labels">New Password</label><input name="newpass" type="password" class="form-control" required=""></div>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="col-md-4 col-md-offset-7"><label class="labels">Confirm Password</label><input name="renewpass" type="password" class="form-control" required=""></div>
-                            </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="modal fade" id="passModal" role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Change Password</h4>
                         </div>
-                        <input name="test" type="hidden" value="1">
-                        <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Submit Change</button></div>
-                    </form>
-                </div> -->
+                        <figure class="text-center">
+                            <figcaption>
+                                <h4>${sessionScope.account.fullname}</h4>
+                            </figcaption>
+                            <img class="img-rounded" src="../userimg/${sessionScope.account.avatar}" alt="avatar" style="width:200px">
+                        </figure>
+                        <div class="modal-body">
+                            <form action="../ChangePassword" method="POST">
+                                <div class="row justify-content-md-center">
+                                    <div class="col-5">
+                                        <input name="username" type="hidden" value="${sessionScope.account.username}">
+                                        <input id="oldpassword1" value="${sessionScope.account.password}" hidden="">
+                                        <div class="col-md-auto"><label class="labels">Old Password</label><input id="oldpassword" name="oldpassword" type="password" class="form-control" value="" required=""></div>
+                                        <div class="col-md"><label class="labels">New Password</label><input id="newpassword" name="newpassword" type="password" class="form-control" value="" required=""></div>
+                                        <div class="col-md"><label class="labels">Confirm Password</label><input id="conpassword" name="conpassword" type="password" class="form-control" value="" required=""></div>
+                                    </div>
+
+
+
+                                </div>
+
+                                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit" onclick="checkPasswordChange()">Save Password</button></div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- Footer -->
@@ -396,14 +417,32 @@
                                         var password1 = document.getElementById('password1').value;
                                         var password2 = document.getElementById('password2').value;
                                         if (password1 == password2) {
-                                            alert("Successful change your information");
+                                            alert("Successful change your information!!");
                                         } else {
-                                            alert("Wrong password");
+                                            alert("Wrong password!!");
                                         }
 //            document.getElementById('frm').submit()
                                     }
                                     /** CHECK EDIT PROFILE**/
 
+                                    /** CHECK CHANGE PASSWORD**/
+                                    function checkPasswordChange() {
+                                        var oldpassword = document.getElementById('oldpassword').value;
+                                        var oldpassword1 = document.getElementById('oldpassword1').value;
+                                        var newpassword = document.getElementById('newpassword').value;
+                                        var conpassword = document.getElementById('conpassword').value;
+                                        if (oldpassword == oldpassword1) {
+                                            if(newpassword == conpassword){
+                                                alert("Successful update your new password!!");
+                                            }else{
+                                                alert("Wrong confirm password");
+                                            }
+                                        } else {
+                                            alert("Wrong old password!!");
+                                        }
+                                    }
+                                    /** CHECK CHANGE PASSWORD**/
+                                    
                                     /** DOWNLOAD IMAGE**/
                                     function downloadImage() {
                                         var file = document.getElementById('file')
