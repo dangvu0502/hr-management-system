@@ -41,7 +41,6 @@
                     <div  class="col-lg-3"></div>
                     <div class="col-lg-6 ">
                         <section class="panel">
-                            
                             <div class='wrapper text-center'>
                                 <header class="panel-heading text-center">
                                 Thank you, we already send verify link to your mail
