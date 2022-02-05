@@ -6,7 +6,8 @@
 package Controller;
 
 import Context.TrippleDes;
-import DAO.EmployeeDAO;
+import DAO.UserDAO;
+import Models.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
@@ -62,11 +63,13 @@ public class VerifyUserEmailController extends HttpServlet {
             throws ServletException, IOException {
         try {
             PrintWriter out = response.getWriter();
+            UserDAO userDAO = new UserDAO();
             TrippleDes trippleDes = new TrippleDes();
-            String key = request.getQueryString().substring(4);
-            out.println(trippleDes.decrypt(key).split(" ")[0].trim());
-
-            // out.println(trippleDes.decrypt(message));
+            String key = request.getQueryString();
+            String email = trippleDes.decrypt(key).split(" ")[0].trim();
+            User user = userDAO.searchUserByEmail(email);
+            userDAO.setVerified(user);
+            out.print(user.getId()+"ok");
         } catch (Exception ex) {
 
         }
@@ -83,28 +86,9 @@ public class VerifyUserEmailController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            HttpSession session = request.getSession();
-//            Employee employee = (Employee) session.getAttribute("employee");
-            String code = (String) session.getAttribute("code");
-            code = code.trim();
-            String authCode = (String) request.getParameter("authcode");
-            if (authCode.equals(code)) {
-                EmployeeDAO eDAO = new EmployeeDAO();
-//                eDAO.addEmployee(employee);
-                request.setAttribute("verifyMessage", "Register Successfully");
-            } else {
-//                out.println("error back to login|" + authCode + "|" + code);
-                request.setAttribute("verifyMessage", "Invalid Code");
-            }
-            session.removeAttribute("code");
-            session.removeAttribute("employee");
-            request.getRequestDispatcher("login").forward(request, response);
-        } catch (Exception ex) {
-            Logger.getLogger(VerifyUserEmailController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        PrintWriter out = response.getWriter();
+      
+            out.print("error");
     }
 
     /**

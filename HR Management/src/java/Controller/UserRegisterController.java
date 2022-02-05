@@ -96,12 +96,13 @@ public class UserRegisterController extends HttpServlet {
             User user = new User(fullname, password, email, mobile, gender);
             
             // check user email exist in databse
-            if (userDAO.checkEmailExist(email) != null) {
+            if (userDAO.searchUserByEmail(email) != null) {
                 response.sendRedirect("UserRegister?error=2");
             } else {
                 String message = trippleDes.encrypt(email+" "+SendEmail.getRandom());
                 //check if the email send successfully
-                if (SendEmail.send(email, "Verify Link", "http://localhost:8080/HR_Management/VerifyUserEmail?key="+message)) {
+                if (SendEmail.send(email, "Verify Link", "http://localhost:8080/HR_Management/VerifyUserEmail?"+message)) {
+                    userDAO.addUser(user);
                     response.sendRedirect("Views/VerifyUserEmailView.jsp");
                 } else {
                     out.println("Failed to send verification email");
