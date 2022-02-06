@@ -42,7 +42,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UserRegisterController</servlet-name>
-        <url-pattern>/UserRegister</url-pattern>
+        <url-pattern>/UserRegister/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>VerifyUserEmailController</servlet-name>

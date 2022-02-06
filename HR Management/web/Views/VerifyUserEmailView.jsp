@@ -42,9 +42,10 @@
                     <div class="col-lg-6 ">
                         <section class="panel">
                             <div class='wrapper text-center'>
-                                <header class="panel-heading text-center">
-                                Thank you, we already send verify link to your mail
+                             <header class="panel-heading text-center">
+                                Well done
                             </header>
+                                <p>Your account is verified. But you still need approval to access this site</p>
                             <a href="../login" class="btn btn-primary btn-group-lg active" role="button" aria-pressed="true">Back to login</a>
                             </div>
                         </section>

@@ -135,7 +135,7 @@
         <script>
 
                                                     /** HIDE ALERT**/
-                                                    $(document).keypress(function (e) {
+                                                    $(document).click(function (e) {
                                                         $('.error').hide();
                                                     });
                                                     /** HIDE ALERT**/
