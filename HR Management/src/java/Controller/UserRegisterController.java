@@ -110,8 +110,8 @@ public class UserRegisterController extends HttpServlet {
             String mobile = request.getParameter("mobile");
             boolean gender = request.getParameter("gender").equals("male") ? true : false;
             String password = trippleDes.encrypt(request.getParameter("password"));
-            User user = new User(fullname, password, email, mobile, gender);
-            // check user email exist in databse
+            User user = new User(fullname,username, password, email, mobile, gender);
+            // check user email or username existed in database
             if (userDAO.searchUserByEmail(email) != null) {
                 request.getSession().setAttribute("message", "Email existed");
                 response.sendRedirect("../UserRegister");

@@ -92,7 +92,7 @@ public class UserDAO {
     public int addUser(User user) throws Exception {
         int rows = 0;
         try {
-            String sql = "INSERT INTO `hr_system_v2`.`user` (`fullname`,`email`,`mobile`,`gender`,`password`) VALUES (?,?,?,?,?)";
+            String sql = "INSERT INTO `hr_system_v2`.`user` (`fullname`,`email`,`mobile`,`gender`,`password`,`username`) VALUES (?,?,?,?,?,?)";
             con = new DBContext().getConnection();
             con.setAutoCommit(false);
             ps = con.prepareStatement(sql);
@@ -101,6 +101,7 @@ public class UserDAO {
             ps.setString(3, user.getMobile());
             ps.setBoolean(4, user.isGender());
             ps.setString(5, user.getPassword());
+            ps.setString(6, user.getUsername());
             rows = ps.executeUpdate();
             con.commit();
         } catch (Exception e) {

@@ -32,16 +32,19 @@ public class User {
     public User() {
     }
 
-  
-
-    
-    public User(String fullname, String password, String email, String mobile, boolean gender) {
+    public User(String fullname, String username, String password, String email, String mobile, boolean gender) {
         this.fullname = fullname;
+        this.username = username;
         this.password = password;
         this.email = email;
         this.mobile = mobile;
         this.gender = gender;
     }
+
+  
+
+    
+   
     
     
     public User(int id, String fullname, String username, String password, String email, String mobile, boolean gender, String avatar, String dob, String address, int role_id, int project_role_id, int supervisor_id, String group_code, boolean status) {
