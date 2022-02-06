@@ -43,9 +43,9 @@
                         <section class="panel">
                             <div class="wrapper text-center ">
                                 <header class="panel-heading text-center text-black">
-                                    Well done
+                                    Register Successfully
                                 </header>
-                                <p>Your account is verified. But you still need approval to access this site</p>
+                                <p>Please check your email, we already send verify link to you</p>
                                 <a href="../login" class="btn btn-primary btn-group-lg active" role="button" aria-pressed="true">Back to login</a>
                             </div>
                         </section>

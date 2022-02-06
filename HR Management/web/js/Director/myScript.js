@@ -1,8 +1,5 @@
 
-$(document).keypress(function (e) {
-$('.error').hide();
-});
-                              
+
 
 function password_show_hide() {
     var x = document.getElementById("password");

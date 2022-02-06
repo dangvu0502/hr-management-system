@@ -76,7 +76,7 @@
                                             </div>
                                             <div class="row">
                                                 <div class="form-group col-lg-12">
-                                                    
+
                                                     <label for="male">Male</label>
                                                     <input type="radio" name="gender" id="male" value="male" checked> &nbsp &nbsp &nbsp
                                                     <label for="female">Female</label>
@@ -104,7 +104,7 @@
 
 
                                             <div class=" form-group row col-lg-12 text-center">
-                                                <button type="submit" id="submit-btn" class="btn btn-info" onclick="ansValidation(event)">Register</button>
+                                                <button type="submit" id="submit-btn" class="btn btn-info"  >Register</button>
                                             </div>
                                             <div class="row ">
                                                 <div class="col-lg-3"></div>
@@ -139,6 +139,8 @@
                                                         $('.error').hide();
                                                     });
                                                     /** HIDE ALERT**/
+                                                 
+
         </script>
     </body>
 </html>

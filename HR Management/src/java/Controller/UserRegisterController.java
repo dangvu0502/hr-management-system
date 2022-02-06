@@ -121,7 +121,7 @@ public class UserRegisterController extends HttpServlet {
                 //check if the email send successfully
                 if (SendEmail.send(email, "Verify Link", "http://localhost:8080/HR_Management/UserRegister/Verified?" + message)) {
                     userDAO.addUser(user);
-                    response.sendRedirect("login");
+                    response.sendRedirect("Views/RegisterSuccessView.jsp");
                 } else {
                     out.println("Failed to send verification email");
                 }
@@ -135,14 +135,14 @@ public class UserRegisterController extends HttpServlet {
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            PrintWriter out = response.getWriter();
+           // PrintWriter out = response.getWriter();
             UserDAO userDAO = new UserDAO();
             TrippleDes trippleDes = new TrippleDes();
             String key = request.getQueryString();
             String email = trippleDes.decrypt(key).split(" ")[0].trim();
             User user = userDAO.searchUserByEmail(email);
             userDAO.setVerified(user);
-            out.print(user.getId()+"ok");
+            response.sendRedirect("../Views/VerifyUserEmailView.jsp");
         } catch (Exception ex) {
             log(ex.getMessage());
         }
