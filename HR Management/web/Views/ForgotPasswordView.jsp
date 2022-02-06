@@ -65,9 +65,14 @@
                                                 </div>
                                             </div>
                                             <div class=" form-group row col-lg-12 text-center">
-                                                <button type="submit" id="submit-btn" class="btn btn-info"  >Submit</button>
+                                                <button type="submit" id="submit-btn" class="btn btn-info" > Submit</button>
                                             </div>
-                                       
+                                            <div class="row ">
+                                                <div class="col-lg-4"></div>
+                                                <div class="col-lg-8">
+                                                    <p> <a href="login"> &nbsp &nbsp Back to login</a></p>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </form>

@@ -81,7 +81,7 @@
 
                                                 </div>
                                                 <div class="form-group col-lg-6">
-                                                    <a href="forgot-password.jsp">Forgot Password </a>
+                                                    <a href="ForgotPassword">Forgot Password </a>
                                                 </div>
                                             </div>
 

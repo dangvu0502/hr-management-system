@@ -42,9 +42,9 @@ public class ForgotPasswordController extends HttpServlet {
 //        out.println(action);
         try {
             switch (action) {
-//                case "/Verified":
-//                    verified(request, response);
-//                    break;
+                case "/Verified":
+                    verified(request, response);
+                    break;
                 case "/CheckEmail":
                     checkEmail(request, response);
                     break;
@@ -100,13 +100,25 @@ public class ForgotPasswordController extends HttpServlet {
             request.getSession().setAttribute("message", "Email does not exist");
             response.sendRedirect("../ForgotPassword");
         } else {
+            response.sendRedirect("../ForgotPassword/Verified");
+        }
+    }
+    
+     private void verified(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        response.setContentType("text/html;charset=UTF-8");
+        try {
+            PrintWriter out = response.getWriter();
+            out.println("ok");
 
+        } catch (Exception ex) {
+            log(ex.getMessage());
         }
     }
 
     private void view(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        response.setContentType("text/html;charset=UTF-8");
+       response.setContentType("text/html;charset=UTF-8");
        request.getRequestDispatcher("Views/ForgotPasswordView.jsp").forward(request, response);
     }
 
