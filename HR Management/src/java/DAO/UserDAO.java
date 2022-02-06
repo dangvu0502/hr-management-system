@@ -11,7 +11,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 
 /**
  *
@@ -22,7 +21,7 @@ public class UserDAO {
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
-    
+
     public User searchUserByUsername(String username) throws Exception {
         try {
             String sql = "SELECT * FROM hr_system_v2.user WHERE username = ? ";
@@ -178,9 +177,8 @@ public class UserDAO {
             ex.printStackTrace(System.out);
         }
     }
-    
+
 //    public static void main(String[] args) throws Exception {
-//        UserDAO userDAO = new UserDAO();
-//        System.out.println(userDAO.searchUserByEmail("dangvu0502@gmail.com").equals(userDAO.searchUserByUsername("dangvu0502")));
+//
 //    }
 }

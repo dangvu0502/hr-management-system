@@ -12,6 +12,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.Vector;
 
 /**
@@ -64,7 +67,7 @@ public class EmployeeDAO {
         ps.setInt(2, employee_id);
         ps.executeUpdate();
     }
-    
+
     public void deleteByID(int id) {
         try {
             String sql = "delete from hr_system.employee where employee_id = ?";
@@ -189,8 +192,8 @@ public class EmployeeDAO {
         }
         return rows;
     }
-    
-       public boolean addEmployeeFull(Employee employee) throws Exception {
+
+    public boolean addEmployeeFull(Employee employee) throws Exception {
         Connection connection = null;
         PreparedStatement ps = null;
         int check = 0;
@@ -238,14 +241,11 @@ public class EmployeeDAO {
     }
 
     public static void main(String[] args) throws Exception {
-        EmployeeDAO eDAO = new EmployeeDAO();
-//         System.out.println(eDAO.addEmployee(new Employee("test","test","test","test@gmail.com")));
-//        Vector<Employee> e = eDAO.getEmployeeList();
-//        for (Employee s : e) {
-//            System.out.println(s.getFullname());
-//        }
+        LocalDateTime actualDateTime = LocalDateTime
+                .of(2018, Month.JUNE, 25, 5, 0);
+        LocalDateTime expectedDateTime = LocalDateTime.
+                of(2018, Month.JUNE, 25, 10, 0);
     }
-
 
     public User login(String username, String password) {
 
