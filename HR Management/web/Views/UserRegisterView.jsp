@@ -52,7 +52,7 @@
                                 </div>
                             </c:if>
                             <div class="panel-body">
-                                <form action="UserRegister" method="POST" role="form" onsubmit="return isValid">
+                                <form action="UserRegister/Register" method="POST" role="form" onsubmit="return isValid">
                                     <div class="row">
                                         <div class="col-lg-2"></div>
                                         <div class="col-lg-8">

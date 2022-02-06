@@ -37,7 +37,7 @@ public class UserRegisterController extends HttpServlet {
      */
     private UserDAO userDAO;
     private TrippleDes trippleDes;
-    
+
     public void init() {
         userDAO = new UserDAO();
         try {
@@ -46,26 +46,24 @@ public class UserRegisterController extends HttpServlet {
             Logger.getLogger(UserRegisterController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String action = request.getPathInfo() == null ? "" : request.getPathInfo();
-        String method = request.getMethod();
         //PrintWriter out = response.getWriter();
         //out.println(action+" "+method);
         try {
-            if (method.equalsIgnoreCase("GET")) {
-                switch (action) {
-                    case "/Verified":
-                        verified(request, response);
-                        break;
-                    default:
-                        view(request, response);
-                        break;
-                }
-            }  if (method.equalsIgnoreCase("POST")) {
-                register(request, response);
+            switch (action) {
+                case "/Verified":
+                    verified(request, response);
+                    break;
+                case "/Register":
+                    register(request, response);
+                    break;
+                default:
+                    view(request, response);
+                    break;
             }
         } catch (Exception ex) {
             log(ex.getMessage());
@@ -100,7 +98,7 @@ public class UserRegisterController extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
-    
+
     private void register(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
@@ -121,7 +119,7 @@ public class UserRegisterController extends HttpServlet {
                 //check if the email send successfully
                 if (SendEmail.send(email, "Verify Link", "http://localhost:8080/HR_Management/UserRegister/Verified?" + message)) {
                     userDAO.addUser(user);
-                    response.sendRedirect("Views/RegisterSuccessView.jsp");
+                    response.sendRedirect("../Views/RegisterSuccessView.jsp");
                 } else {
                     out.println("Failed to send verification email");
                 }
@@ -130,12 +128,12 @@ public class UserRegisterController extends HttpServlet {
             log(ex.getMessage());
         }
     }
-    
+
     private void verified(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
         try {
-           // PrintWriter out = response.getWriter();
+            // PrintWriter out = response.getWriter();
             UserDAO userDAO = new UserDAO();
             TrippleDes trippleDes = new TrippleDes();
             String key = request.getQueryString();
@@ -147,11 +145,11 @@ public class UserRegisterController extends HttpServlet {
             log(ex.getMessage());
         }
     }
-    
+
     private void view(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
         request.getRequestDispatcher("Views/UserRegisterView.jsp").forward(request, response);
     }
-    
+
 }
