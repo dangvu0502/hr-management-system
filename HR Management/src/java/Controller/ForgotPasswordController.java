@@ -5,9 +5,15 @@
  */
 package Controller;
 
+import Context.SendEmail;
+import Context.TrippleDes;
 import DAO.UserDAO;
+import Models.User;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,9 +35,15 @@ public class ForgotPasswordController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     private UserDAO userDAO;
+    private TrippleDes trippleDes;
 
     public void init() {
         userDAO = new UserDAO();
+        try {
+            trippleDes = new TrippleDes();
+        } catch (Exception ex) {
+            Logger.getLogger(UserRegisterController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -42,11 +54,14 @@ public class ForgotPasswordController extends HttpServlet {
 //        out.println(action);
         try {
             switch (action) {
-                case "/Verified":
-                    verified(request, response);
+                case "/CheckUsernameAndEmail":
+                    checkUsernameAndEmail(request, response);
                     break;
-                case "/Check":
-                    check(request, response);
+                case "/ResetPassword":
+                    resetPassword(request, response);
+                    break;
+                case "/NewPassword":
+                    newPassword(request, response);
                     break;
                 default:
                     view(request, response);
@@ -91,36 +106,68 @@ public class ForgotPasswordController extends HttpServlet {
      *
      * @return a String containing servlet description
      */
-    private void check(HttpServletRequest request, HttpServletResponse response)
+    private void checkUsernameAndEmail(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
         String username = request.getParameter("username");
         String email = request.getParameter("email");
-        if (!userDAO.searchUserByEmail(email).equals(userDAO.searchUserByUsername(username))) {
+        User user1 = userDAO.searchUserByEmail(email);
+        User user2 = userDAO.searchUserByUsername(username);
+        if (user1 == null || user2 == null || !user1.equals(user2)) {
             //HttpSession session = request.getSession();
             request.getSession().setAttribute("message", "Account does not exist");
             response.sendRedirect("../ForgotPassword");
         } else {
-            response.sendRedirect("../ForgotPassword/Verified");
+            PrintWriter out = response.getWriter();
+            LocalDateTime now = LocalDateTime.now();
+            String message = trippleDes.encrypt(email + " " + now.toString());
+            //check if the email send successfully
+            if (SendEmail.send(email, "Password Reset Link", "http://localhost:8080/HR_Management/ForgotPassword/ResetPassword?" + message)) {
+                out.println("Send verification email successfully");
+            } else {
+                out.println("Failed to send verification email");
+            }
         }
     }
-    
-     private void verified(HttpServletRequest request, HttpServletResponse response)
+
+    private void resetPassword(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
         try {
+            LocalDateTime now = LocalDateTime.now();
             PrintWriter out = response.getWriter();
-            out.println("ok");
-
+            String encrypt = request.getQueryString();
+            String[] decrypt = trippleDes.decrypt(encrypt).split(" ");
+            String email = decrypt[0];
+            LocalDateTime time = LocalDateTime.parse(decrypt[1]);
+            if (time.plusMinutes(30).isAfter(now)) {
+                request.getSession().setAttribute("user", userDAO.searchUserByEmail(email));
+                response.sendRedirect("../Views/NewPasswordView.jsp");
+            } else {
+                out.println("Expired");
+                out.println(time);
+                out.println(now);
+            }
         } catch (Exception ex) {
             log(ex.getMessage());
         }
     }
 
+    private void newPassword(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        response.setContentType("text/html;charset=UTF-8");
+        User user = (User) request.getSession().getAttribute("user");
+        String password = trippleDes.encrypt(request.getParameter("password"));
+        request.getSession().removeAttribute("user");
+        PrintWriter out = response.getWriter();
+        out.println(password);
+      
+    }
+
     private void view(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-       response.setContentType("text/html;charset=UTF-8");
-       request.getRequestDispatcher("Views/ForgotPasswordView.jsp").forward(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        request.getRequestDispatcher("Views/ForgotPasswordView.jsp").forward(request, response);
     }
 
 }

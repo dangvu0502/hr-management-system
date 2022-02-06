@@ -138,8 +138,6 @@ public class UserRegisterController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try {
             // PrintWriter out = response.getWriter();
-            UserDAO userDAO = new UserDAO();
-            TrippleDes trippleDes = new TrippleDes();
             String key = request.getQueryString();
             String email = trippleDes.decrypt(key).split(" ")[0].trim();
             User user = userDAO.searchUserByEmail(email);

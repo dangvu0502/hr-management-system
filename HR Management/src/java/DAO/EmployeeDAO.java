@@ -241,10 +241,12 @@ public class EmployeeDAO {
     }
 
     public static void main(String[] args) throws Exception {
-        LocalDateTime actualDateTime = LocalDateTime
-                .of(2018, Month.JUNE, 25, 5, 0);
-        LocalDateTime expectedDateTime = LocalDateTime.
-                of(2018, Month.JUNE, 25, 10, 0);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+        LocalDateTime now = LocalDateTime.now(); 
+        String s1 = now.toString();
+        String s2 = now.toString();
+        System.out.println(s1);
+        System.out.println(s1.equalsIgnoreCase(s2));
     }
 
     public User login(String username, String password) {
