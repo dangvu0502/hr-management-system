@@ -63,6 +63,12 @@
                                                     <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Enter your name" required>
                                                 </div>
                                             </div>
+                                            <div class="row ">
+                                                <div class="form-group col-lg-12">
+                                                    <label for="username">Username</label>
+                                                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
+                                                </div>
+                                            </div>
                                             <div class="row">
                                                 <div class="form-group col-lg-12">
                                                     <label for="email">Email address</label>

@@ -105,6 +105,7 @@ public class UserRegisterController extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         try (PrintWriter out = response.getWriter();) {
             String fullname = request.getParameter("fullname");
+            String username = request.getParameter("username");
             String email = request.getParameter("email");
             String mobile = request.getParameter("mobile");
             boolean gender = request.getParameter("gender").equals("male") ? true : false;
@@ -114,7 +115,10 @@ public class UserRegisterController extends HttpServlet {
             if (userDAO.searchUserByEmail(email) != null) {
                 request.getSession().setAttribute("message", "Email existed");
                 response.sendRedirect("../UserRegister");
-            } else {
+            }else if(userDAO.searchUserByUsername(username) != null){
+                request.getSession().setAttribute("message", "Username existed");
+                response.sendRedirect("../UserRegister");
+            }else {
                 String message = trippleDes.encrypt(email + " " + SendEmail.getRandom());
                 //check if the email send successfully
                 if (SendEmail.send(email, "Verify Link", "http://localhost:8080/HR_Management/UserRegister/Verified?" + message)) {
@@ -145,6 +149,8 @@ public class UserRegisterController extends HttpServlet {
             log(ex.getMessage());
         }
     }
+    
+
 
     private void view(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
