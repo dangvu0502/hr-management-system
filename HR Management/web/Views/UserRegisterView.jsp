@@ -50,6 +50,7 @@
                                     <h4 class="alert-heading">Error</h4><hr>
                                     <p class="mb-0">${message}</p>
                                 </div>
+                                <c:remove var="message" scope="session" /> 
                             </c:if>
                             <div class="panel-body">
                                 <form action="UserRegister/Register" method="POST" role="form" onsubmit="return isValid">

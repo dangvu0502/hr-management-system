@@ -112,8 +112,8 @@ public class UserRegisterController extends HttpServlet {
             User user = new User(fullname, password, email, mobile, gender);
             // check user email exist in databse
             if (userDAO.searchUserByEmail(email) != null) {
-                request.setAttribute("message", "Email is exist");
-                request.getRequestDispatcher("/Views/UserRegisterView.jsp").forward(request, response);
+                request.getSession().setAttribute("message", "Email existed");
+                response.sendRedirect("../UserRegister");
             } else {
                 String message = trippleDes.encrypt(email + " " + SendEmail.getRandom());
                 //check if the email send successfully

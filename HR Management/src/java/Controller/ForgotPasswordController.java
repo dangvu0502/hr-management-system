@@ -97,8 +97,7 @@ public class ForgotPasswordController extends HttpServlet {
         String email = request.getParameter("email");
         if (userDAO.searchUserByEmail(email) == null) {
             //HttpSession session = request.getSession();
-            request.getSession().setAttribute("message", "Email is not exist");
-            request.getSession().setMaxInactiveInterval(1);
+            request.getSession().setAttribute("message", "Email does not exist");
             response.sendRedirect("../ForgotPassword");
         } else {
 
