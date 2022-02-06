@@ -45,8 +45,8 @@ public class ForgotPasswordController extends HttpServlet {
                 case "/Verified":
                     verified(request, response);
                     break;
-                case "/CheckEmail":
-                    checkEmail(request, response);
+                case "/Check":
+                    check(request, response);
                     break;
                 default:
                     view(request, response);
@@ -91,13 +91,14 @@ public class ForgotPasswordController extends HttpServlet {
      *
      * @return a String containing servlet description
      */
-    private void checkEmail(HttpServletRequest request, HttpServletResponse response)
+    private void check(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
+        String username = request.getParameter("username");
         String email = request.getParameter("email");
-        if (userDAO.searchUserByEmail(email) == null) {
+        if (!userDAO.searchUserByEmail(email).equals(userDAO.searchUserByUsername(username))) {
             //HttpSession session = request.getSession();
-            request.getSession().setAttribute("message", "Email does not exist");
+            request.getSession().setAttribute("message", "Account does not exist");
             response.sendRedirect("../ForgotPassword");
         } else {
             response.sendRedirect("../ForgotPassword/Verified");

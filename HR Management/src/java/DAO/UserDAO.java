@@ -178,4 +178,9 @@ public class UserDAO {
             ex.printStackTrace(System.out);
         }
     }
+    
+//    public static void main(String[] args) throws Exception {
+//        UserDAO userDAO = new UserDAO();
+//        System.out.println(userDAO.searchUserByEmail("dangvu0502@gmail.com").equals(userDAO.searchUserByUsername("dangvu0502")));
+//    }
 }

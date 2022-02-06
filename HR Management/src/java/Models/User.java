@@ -6,6 +6,7 @@
 package Models;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  *
@@ -39,13 +40,7 @@ public class User {
         this.email = email;
         this.mobile = mobile;
         this.gender = gender;
-    }
-
-  
-
-    
-   
-    
+    } 
     
     public User(int id, String fullname, String username, String password, String email, String mobile, boolean gender, String avatar, String dob, String address, int role_id, int project_role_id, int supervisor_id, String group_code, boolean status) {
         this.id = id;
@@ -211,5 +206,92 @@ public class User {
     public void setVerified(boolean verified) {
         this.verified = verified;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + this.id;
+        hash = 53 * hash + Objects.hashCode(this.fullname);
+        hash = 53 * hash + Objects.hashCode(this.username);
+        hash = 53 * hash + Objects.hashCode(this.password);
+        hash = 53 * hash + Objects.hashCode(this.email);
+        hash = 53 * hash + Objects.hashCode(this.mobile);
+        hash = 53 * hash + (this.gender ? 1 : 0);
+        hash = 53 * hash + Objects.hashCode(this.avatar);
+        hash = 53 * hash + Objects.hashCode(this.dob);
+        hash = 53 * hash + Objects.hashCode(this.address);
+        hash = 53 * hash + this.role_id;
+        hash = 53 * hash + this.project_role_id;
+        hash = 53 * hash + this.supervisor_id;
+        hash = 53 * hash + Objects.hashCode(this.group_code);
+        hash = 53 * hash + (this.status ? 1 : 0);
+        hash = 53 * hash + (this.verified ? 1 : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final User other = (User) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (this.gender != other.gender) {
+            return false;
+        }
+        if (this.role_id != other.role_id) {
+            return false;
+        }
+        if (this.project_role_id != other.project_role_id) {
+            return false;
+        }
+        if (this.supervisor_id != other.supervisor_id) {
+            return false;
+        }
+        if (this.status != other.status) {
+            return false;
+        }
+        if (this.verified != other.verified) {
+            return false;
+        }
+        if (!Objects.equals(this.fullname, other.fullname)) {
+            return false;
+        }
+        if (!Objects.equals(this.username, other.username)) {
+            return false;
+        }
+        if (!Objects.equals(this.password, other.password)) {
+            return false;
+        }
+        if (!Objects.equals(this.email, other.email)) {
+            return false;
+        }
+        if (!Objects.equals(this.mobile, other.mobile)) {
+            return false;
+        }
+        if (!Objects.equals(this.avatar, other.avatar)) {
+            return false;
+        }
+        if (!Objects.equals(this.dob, other.dob)) {
+            return false;
+        }
+        if (!Objects.equals(this.address, other.address)) {
+            return false;
+        }
+        if (!Objects.equals(this.group_code, other.group_code)) {
+            return false;
+        }
+        return true;
+    }
+
+   
     
 }
