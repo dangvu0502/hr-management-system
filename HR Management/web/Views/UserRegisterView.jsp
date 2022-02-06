@@ -108,8 +108,6 @@
                                                     <span> <input type="checkbox" onclick="password_show_hide()">Show Password </span>
                                                 </div>
                                             </div>
-
-
                                             <div class=" form-group row col-lg-12 text-center">
                                                 <button type="submit" id="submit-btn" class="btn btn-info"  >Register</button>
                                             </div>
