@@ -129,4 +129,19 @@ public class UserDAO {
 //        UserDAO userDAO = new UserDAO();
 //        System.out.println(userDAO.searchUserByEmail("dangvu0502@gmail.com"));
 //    }
+
+    public void ChangePassword(String newpassword, String username) {
+        try {
+            //mo ket noi
+            String sql = "update `hr_system_v2`.`user` set password = ? where username =?";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, newpassword);
+            ps.setString(2, username);
+            ps.executeUpdate();
+
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+    }
 }
