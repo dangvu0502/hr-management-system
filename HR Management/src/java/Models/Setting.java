@@ -15,12 +15,12 @@ public class Setting {
     private int type_id;
     private String setting_name;
     private String setting_value;
-    private boolean status;
+    private int status;
 
     public Setting() {
     }
 
-    public Setting(int id, int type_id, String setting_name, String setting_value, boolean status) {
+    public Setting(int id, int type_id, String setting_name, String setting_value, int status) {
         this.id = id;
         this.type_id = type_id;
         this.setting_name = setting_name;
@@ -60,11 +60,11 @@ public class Setting {
         this.setting_value = setting_value;
     }
 
-    public boolean isStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(int status) {
         this.status = status;
     }
     
