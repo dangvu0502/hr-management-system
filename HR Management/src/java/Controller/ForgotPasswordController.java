@@ -181,8 +181,10 @@ public class ForgotPasswordController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.getRequestDispatcher("Views/ForgotPasswordView.jsp").forward(request, response);
     }
-
-    private String sendEmaiSuccessfully
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="sendEmailSuccessfully and changePasswordSuccessfully HTML">
+    private final String sendEmaiSuccessfully
             = "<!DOCTYPE html>\n"
             + "<html>\n"
             + "    <head>\n"
@@ -247,7 +249,7 @@ public class ForgotPasswordController extends HttpServlet {
             + "    </script>\n"
             + "</html>";
 
-    private String changePasswordSuccessfully
+    private final String changePasswordSuccessfully
             = "<!DOCTYPE html>\n"
             + "<html>\n"
             + "    <head>\n"
@@ -311,5 +313,5 @@ public class ForgotPasswordController extends HttpServlet {
             + "  \n"
             + "    </script>\n"
             + "</html>";
-
+// </editor-fold>
 }
