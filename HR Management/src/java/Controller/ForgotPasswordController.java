@@ -169,7 +169,8 @@ public class ForgotPasswordController extends HttpServlet {
         String password = trippleDes.encrypt(request.getParameter("password"));
         request.getSession().removeAttribute("user");
         PrintWriter out = response.getWriter();
-        out.println(password);
+        userDAO.setNewPassword(user, password);
+        out.println(password+" "+user.getId());
       
     }
 

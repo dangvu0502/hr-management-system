@@ -117,6 +117,19 @@ public class UserDAO {
         ps.setInt(1, user.getId());
         ps.executeUpdate();
     }
+    
+    public void setNewPassword(User user, String password)  {
+      try{
+        String sql = "UPDATE `hr_system_v2`.`user` SET `password` = ? WHERE (`id` = ?)";
+        con = new DBContext().getConnection();
+        ps = con.prepareStatement(sql);
+        ps.setString(1, password);
+        ps.setInt(2, user.getId());
+        ps.executeUpdate();
+      }catch(Exception ex){
+          System.out.println(ex.getMessage());
+      }
+    }
 
     public void UpdateProfile(String fullname, String avatar, String mobile, Boolean gender, String dob, String address, String username) {
         try {
