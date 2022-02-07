@@ -5,7 +5,7 @@
  */
 package Controller;
 
-import DAO.EmployeeDAO;
+import DAO.SettingDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -41,11 +41,11 @@ public class StatusController extends HttpServlet {
             if (page == null) {
                 page = "1";
             }
-            int s = Integer.parseInt(status);
+            int st = Integer.parseInt(status);
             int i = Integer.parseInt(employee_id);
-            EmployeeDAO e = new EmployeeDAO();
-            e.editStatus(s, i);
-            response.sendRedirect("SettingListController?page=" + page + "");
+            SettingDAO s = new SettingDAO();
+            s.editStatus(st, i);
+            response.sendRedirect("SettingController?page=" + page + "");
         } catch (Exception e) {
             System.out.println("Error " + e.getMessage());
         }
