@@ -143,9 +143,10 @@
                     <a class="nav-item nav-link active" href="#"
                        >Home <span class="sr-only">(current)</span></a
                     >
-                    <c:if test="${sessionScope.account.role_id == 0}"> 
+                    <c:if test="${sessionScope.account.role_id == 1}"> 
                         <a class="nav-item nav-link" href="../SettingListController">Setting List</a>
                         <a class="nav-item nav-link" href="../grouplist">Group List</a>
+                        <a class="nav-item nav-link" href="../NewUser">New User</a>
                     </c:if>
                     <a class="nav-item nav-link" href="#">Our Team</a>
 
