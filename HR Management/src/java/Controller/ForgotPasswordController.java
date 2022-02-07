@@ -112,23 +112,24 @@ public class ForgotPasswordController extends HttpServlet {
     private void checkUsernameAndEmail(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
-        String username = request.getParameter("username");
-        String email = request.getParameter("email");
-        User user1 = userDAO.searchUserByEmail(email);
-        User user2 = userDAO.searchUserByUsername(username);
-        if (user1 == null || user2 == null || !user1.equals(user2)) {
-            //HttpSession session = request.getSession();
-            request.getSession().setAttribute("message", "Account does not exist");
-            response.sendRedirect("../ForgotPassword");
-        } else {
-            PrintWriter out = response.getWriter();
-            LocalDateTime now = LocalDateTime.now();
-            String message = trippleDes.encrypt(email + " " + now.toString());
-            //check if the email send successfully
-            if (SendEmail.send(email, "Password Reset Link", "http://localhost:8080/HR_Management/ForgotPassword/ResetPassword?" + message)) {
-                out.println("Send verification email successfully");
+        try (PrintWriter out = response.getWriter();) {
+            String username = request.getParameter("username");
+            String email = request.getParameter("email");
+            User user1 = userDAO.searchUserByEmail(email);
+            User user2 = userDAO.searchUserByUsername(username);
+            if (user1 == null || user2 == null || !user1.equals(user2)) {
+                //HttpSession session = request.getSession();
+                request.getSession().setAttribute("message", "Account does not exist");
+                response.sendRedirect("../ForgotPassword");
             } else {
-                out.println("Failed to send verification email");
+                LocalDateTime now = LocalDateTime.now();
+                String message = trippleDes.encrypt(email + " " + now.toString());
+                //check if the email send successfully
+                if (SendEmail.send(email, "Password Reset Link", "http://localhost:8080/HR_Management/ForgotPassword/ResetPassword?" + message)) {
+                    out.println(sendEmaiSuccessfully);
+                } else {
+                    out.println("Failed to send verification email");
+                }
             }
         }
     }
@@ -155,7 +156,7 @@ public class ForgotPasswordController extends HttpServlet {
             log(ex.getMessage());
         }
     }
-    
+
     private void newPassword(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
@@ -165,13 +166,14 @@ public class ForgotPasswordController extends HttpServlet {
     private void setNewPassword(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
-        User user = (User) request.getSession().getAttribute("user");
-        String password = trippleDes.encrypt(request.getParameter("password"));
-        request.getSession().removeAttribute("user");
-        PrintWriter out = response.getWriter();
-        userDAO.setNewPassword(user, password);
-        out.println(password+" "+user.getId());
-      
+        try (PrintWriter out = response.getWriter();) {
+            User user = (User) request.getSession().getAttribute("user");
+            String password = trippleDes.encrypt(request.getParameter("password"));
+            request.getSession().removeAttribute("user");
+            userDAO.setNewPassword(user, password);
+            out.println(changePasswordSuccessfully);
+        }
+
     }
 
     private void view(HttpServletRequest request, HttpServletResponse response)
@@ -179,5 +181,135 @@ public class ForgotPasswordController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.getRequestDispatcher("Views/ForgotPasswordView.jsp").forward(request, response);
     }
+
+    private String sendEmaiSuccessfully
+            = "<!DOCTYPE html>\n"
+            + "<html>\n"
+            + "    <head>\n"
+            + "        <meta charset=\"UTF-8\">\n"
+            + "        <title>Verify Email</title>\n"
+            + "        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>\n"
+            + "        <meta name=\"description\" content=\"Developed By M Abdur Rokib Promy\">\n"
+            + "        <meta name=\"keywords\" content=\"Admin, Bootstrap 3, Template, Theme, Responsive\">\n"
+            + "        <!-- bootstrap 3.0.2 -->\n"
+            + "        <link href=\"../css/bootstrap.min.css\" rel=\"stylesheet\" type=\"text/css\" />\n"
+            + "        <!-- font Awesome -->\n"
+            + "        <link href=\"../css/font-awesome.min.css\" rel=\"stylesheet\" type=\"text/css\" />\n"
+            + "        <!-- Ionicons -->\n"
+            + "        <link href=\"../css/ionicons.min.css\" rel=\"stylesheet\" type=\"text/css\" />\n"
+            + "\n"
+            + "        <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>\n"
+            + "        <!-- Theme style -->\n"
+            + "        <link href=\"../css/style.css\" rel=\"stylesheet\" type=\"text/css\" />\n"
+            + "\n"
+            + "\n"
+            + "        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->\n"
+            + "        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->\n"
+            + "        <!--[if lt IE 9]>\n"
+            + "          <script src=\"https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js\"></script>\n"
+            + "          <script src=\"https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js\"></script>\n"
+            + "        <![endif]-->\n"
+            + "    </head>\n"
+            + "    <body class=\"skin-black\">\n"
+            + "        <div class=\"wrapper row-offcanvas row-offcanvas-left\">\n"
+            + "\n"
+            + "            <!-- Main content -->\n"
+            + "            <section class=\"content\">\n"
+            + "                <div class=\"row\">\n"
+            + "                    <div  class=\"col-lg-3\"></div>\n"
+            + "                    <div class=\"col-lg-6  \">\n"
+            + "                        <section class=\"panel\">\n"
+            + "                            <div class=\"wrapper text-center \">\n"
+            + "                                <header class=\"panel-heading text-center text-black\">\n"
+            + "                                    Well done\n"
+            + "                                </header>\n"
+            + "                                <p>Please check your email, we already send reset password link to you</p>\n"
+            + "                                <a href=\"../login\" class=\"btn btn-primary btn-group-lg active\" role=\"button\" aria-pressed=\"true\">Back to login</a>\n"
+            + "                            </div>\n"
+            + "                        </section>\n"
+            + "                    </div>\n"
+            + "                </div>\n"
+            + "            </section>\n"
+            + "\n"
+            + "        </div>\n"
+            + "\n"
+            + "    </body>\n"
+            + "    <!-- jQuery 2.0.2 -->\n"
+            + "    <script src=\"http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js\"></script>\n"
+            + "    <script src=\"js/jquery.min.js\" type=\"text/javascript\"></script>\n"
+            + "\n"
+            + "\n"
+            + "\n"
+            + "    <script>\n"
+            + "\n"
+            + "    \n"
+            + "  \n"
+            + "    </script>\n"
+            + "</html>";
+
+    private String changePasswordSuccessfully
+            = "<!DOCTYPE html>\n"
+            + "<html>\n"
+            + "    <head>\n"
+            + "        <meta charset=\"UTF-8\">\n"
+            + "        <title>Verify Email</title>\n"
+            + "        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>\n"
+            + "        <meta name=\"description\" content=\"Developed By M Abdur Rokib Promy\">\n"
+            + "        <meta name=\"keywords\" content=\"Admin, Bootstrap 3, Template, Theme, Responsive\">\n"
+            + "        <!-- bootstrap 3.0.2 -->\n"
+            + "        <link href=\"../css/bootstrap.min.css\" rel=\"stylesheet\" type=\"text/css\" />\n"
+            + "        <!-- font Awesome -->\n"
+            + "        <link href=\"../css/font-awesome.min.css\" rel=\"stylesheet\" type=\"text/css\" />\n"
+            + "        <!-- Ionicons -->\n"
+            + "        <link href=\"../css/ionicons.min.css\" rel=\"stylesheet\" type=\"text/css\" />\n"
+            + "\n"
+            + "        <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>\n"
+            + "        <!-- Theme style -->\n"
+            + "        <link href=\"../css/style.css\" rel=\"stylesheet\" type=\"text/css\" />\n"
+            + "\n"
+            + "\n"
+            + "        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->\n"
+            + "        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->\n"
+            + "        <!--[if lt IE 9]>\n"
+            + "          <script src=\"https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js\"></script>\n"
+            + "          <script src=\"https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js\"></script>\n"
+            + "        <![endif]-->\n"
+            + "    </head>\n"
+            + "    <body class=\"skin-black\">\n"
+            + "        <div class=\"wrapper row-offcanvas row-offcanvas-left\">\n"
+            + "\n"
+            + "            <!-- Main content -->\n"
+            + "            <section class=\"content\">\n"
+            + "                <div class=\"row\">\n"
+            + "                    <div  class=\"col-lg-3\"></div>\n"
+            + "                    <div class=\"col-lg-6  \">\n"
+            + "                        <section class=\"panel\">\n"
+            + "                            <div class=\"wrapper text-center \">\n"
+            + "                                <header class=\"panel-heading text-center text-black\">\n"
+            + "                                    Well done\n"
+            + "                                </header>\n"
+            + "                                <p>Now you can login with new password</p>\n"
+            + "                                <a href=\"../login\" class=\"btn btn-primary btn-group-lg active\" role=\"button\" aria-pressed=\"true\">Back to login</a>\n"
+            + "                            </div>\n"
+            + "                        </section>\n"
+            + "                    </div>\n"
+            + "                </div>\n"
+            + "            </section>\n"
+            + "\n"
+            + "        </div>\n"
+            + "\n"
+            + "    </body>\n"
+            + "    <!-- jQuery 2.0.2 -->\n"
+            + "    <script src=\"http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js\"></script>\n"
+            + "    <script src=\"js/jquery.min.js\" type=\"text/javascript\"></script>\n"
+            + "\n"
+            + "\n"
+            + "\n"
+            + "    <script>\n"
+            + "\n"
+            + "    \n"
+            + "  \n"
+            + "    </script>\n"
+            + "</html>";
 
 }
