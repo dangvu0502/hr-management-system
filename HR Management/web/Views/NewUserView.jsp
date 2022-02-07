@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Register</title>
+        <title>New User</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
@@ -43,7 +43,7 @@
                     <div class="col-lg-6 ">
                         <section class="panel">
                             <header class="panel-heading text-center">
-                                Sign Up
+                                New User
                             </header>
                             <c:if test="${message != null}">
                                 <div class="error alert alert-danger" role="alert">
@@ -53,10 +53,16 @@
                                 <c:remove var="message" scope="session" /> 
                             </c:if>
                             <div class="panel-body">
-                                <form action="UserRegister/Register" method="POST" role="form" onsubmit="return isValid">
+                                <form action="" method="POST" role="form" onsubmit="return isValid">
                                     <div class="row">
                                         <div class="col-lg-2"></div>
                                         <div class="col-lg-8">
+                                            <div class="row ">
+                                                <div class="form-group col-lg-12">
+                                                    <label for="group-code">Group code</label>
+                                                    <input type="text" class="form-control" id="group-code" name="group-code" placeholder="Enter group code" required>
+                                                </div>
+                                            </div>
                                             <div class="row ">
                                                 <div class="form-group col-lg-12">
                                                     <label for="fullname">Full name</label>
@@ -82,42 +88,34 @@
                                                 </div>
                                             </div>
                                             <div class="row">
+
                                                 <div class="form-group col-lg-12">
-                                                    <span class="text-bold" >Choose Gender:  &nbsp &nbsp 
-                                                    <label for="male">Male</label>
-                                                    <input type="radio" name="gender" id="male" value="male" checked> &nbsp &nbsp &nbsp
-                                                    <label for="female">Female</label>
-                                                    <input type="radio" name="gender" id="female" value="female">
+                                                    <span class="text-bold" >Choose Gender  &nbsp &nbsp 
+                                                        <label for="male">Male</label>
+                                                        <input type="radio" name="gender" id="male" value="male" checked> &nbsp &nbsp &nbsp
+                                                        <label for="female">Female</label>
+                                                        <input type="radio" name="gender" id="female" value="female">
                                                     </span>
                                                 </div>
                                             </div>
-                                            <div class="row ">
-                                                <div class="form-group col-lg-12">
-                                                    <label for="password">Password</label>
-                                                    <input type="password" class="form-control" id="password" name="password" onkeyup="checkEqual()" placeholder="Enter your password"  required >
-                                                </div>
-                                            </div>
-                                            <div class="row ">
-                                                <div class="form-group col-lg-12">
-                                                    <label for="confirm-password">Confirm Password</label>
-                                                    <input type="password" class="form-control" id="confirm-password" onkeyup="checkEqual()" placeholder="Confirm your password" required >
-                                                    <span id='message'></span>
-                                                </div>
-                                            </div>
+                                            
                                             <div class="row">
-                                                <div class="form-group col-lg-12">
-                                                    <span> <input type="checkbox" onclick="password_show_hide()">Show Password </span>
+                                                <div class="form-group col-lg-6">
+                                                    <label for="system-role">System Role </label>
+                                                    <select class="form-control text-bold" aria-label="" id="system-role" name="system-role">
+                                                        <option selected>Choose system role</option>
+                                                        <option value="1">One</option>
+                                                        <option value="2">Two</option>
+                                                        <option value="3">Three</option>
+                                                    </select>  
                                                 </div>
                                             </div>
+
                                             <div class=" form-group row col-lg-12 text-center">
-                                                <button type="submit" id="submit-btn" class="btn btn-info"  >Register</button>
+                                                <br>
+                                                <button type="submit" id="submit-btn" class="btn btn-info"  >Add new user</button>
                                             </div>
-                                            <div class="row ">
-                                                <div class="col-lg-3"></div>
-                                                <div class="col-lg-8">
-                                                    <p>Already have a account? &nbsp &nbsp  &nbsp  <a href="login">Login</a></p>
-                                                </div>
-                                            </div>
+
                                         </div>
                                     </div>
                                 </form>
@@ -135,17 +133,20 @@
 
         <!-- Bootstrap -->
         <script src="js/bootstrap.min.js" type="text/javascript"></script>
+
         <!-- Director App -->
         <script src="js/Director/app.js" type="text/javascript"></script>
         <script src="js/Director/myScript.js" type="text/javascript"></script>
+
+
         <script>
 
-                                                    /** HIDE ALERT**/
-                                                    $(document).click(function (e) {
-                                                        $('.error').hide();
-                                                    });
-                                                    /** HIDE ALERT**/
-                                                 
+                                    /** HIDE ALERT**/
+                                    $(document).click(function (e) {
+                                        $('.error').hide();
+                                    });
+                                    /** HIDE ALERT**/
+
 
         </script>
     </body>

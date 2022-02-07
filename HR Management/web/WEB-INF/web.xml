@@ -36,6 +36,10 @@
         <servlet-name>ForgotPasswordController</servlet-name>
         <servlet-class>Controller.ForgotPasswordController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>NewUserController</servlet-name>
+        <servlet-class>Controller.NewUserController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>EditProfileController</servlet-name>
         <url-pattern>/EditProfile</url-pattern>
@@ -67,6 +71,10 @@
     <servlet-mapping>
         <servlet-name>ForgotPasswordController</servlet-name>
         <url-pattern>/ForgotPassword/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NewUserController</servlet-name>
+        <url-pattern>/NewUser/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
