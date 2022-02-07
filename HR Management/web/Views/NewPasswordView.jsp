@@ -53,7 +53,7 @@
                                 <c:remove var="message" scope="session" /> 
                             </c:if>
                             <div class="panel-body">
-                                <form action="../ForgotPassword/NewPassword" method="POST" role="form" onsubmit="return isValid">
+                                <form action="../ForgotPassword/SetNewPassword" method="POST" role="form" onsubmit="return isValid">
                                     <div class="row">
                                         <div class="col-lg-2"></div>
                                         <div class="col-lg-8">

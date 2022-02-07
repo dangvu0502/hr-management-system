@@ -61,6 +61,12 @@ public class UserRegisterController extends HttpServlet {
                 case "/Register":
                     register(request, response);
                     break;
+                case "/RegisterSuccess":
+                    registerSuccess(request, response);
+                    break;
+                case "/VerifySuccess":
+                    verifySuccess(request, response);
+                    break;
                 default:
                     view(request, response);
                     break;
@@ -110,20 +116,20 @@ public class UserRegisterController extends HttpServlet {
             String mobile = request.getParameter("mobile");
             boolean gender = request.getParameter("gender").equals("male") ? true : false;
             String password = trippleDes.encrypt(request.getParameter("password"));
-            User user = new User(fullname,username, password, email, mobile, gender);
+            User user = new User(fullname, username, password, email, mobile, gender);
             // check user email or username existed in database
             if (userDAO.searchUserByEmail(email) != null) {
                 request.getSession().setAttribute("message", "Email existed");
                 response.sendRedirect("../UserRegister");
-            }else if(userDAO.searchUserByUsername(username) != null){
+            } else if (userDAO.searchUserByUsername(username) != null) {
                 request.getSession().setAttribute("message", "Username existed");
                 response.sendRedirect("../UserRegister");
-            }else {
+            } else {
                 String message = trippleDes.encrypt(email + " " + SendEmail.getRandom());
                 //check if the email send successfully
                 if (SendEmail.send(email, "Verify Link", "http://localhost:8080/HR_Management/UserRegister/Verified?" + message)) {
                     userDAO.addUser(user);
-                    response.sendRedirect("../Views/RegisterSuccessView.jsp");
+                    response.sendRedirect("../UserRegister/RegisterSuccess");
                 } else {
                     out.println("Failed to send verification email");
                 }
@@ -142,13 +148,23 @@ public class UserRegisterController extends HttpServlet {
             String email = trippleDes.decrypt(key).split(" ")[0].trim();
             User user = userDAO.searchUserByEmail(email);
             userDAO.setVerified(user);
-            response.sendRedirect("../Views/VerifyUserEmailView.jsp");
+            response.sendRedirect("../UserRegister/VerifySuccess");
         } catch (Exception ex) {
             log(ex.getMessage());
         }
     }
-    
 
+    private void verifySuccess(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        response.setContentType("text/html;charset=UTF-8");
+        request.getRequestDispatcher("../Views/VerifyUserEmailView.jsp").forward(request, response);
+    }
+
+    private void registerSuccess(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        response.setContentType("text/html;charset=UTF-8");
+        request.getRequestDispatcher("../Views/RegisterSuccessView.jsp").forward(request, response);
+    }
 
     private void view(HttpServletRequest request, HttpServletResponse response)
             throws Exception {

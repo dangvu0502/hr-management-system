@@ -60,6 +60,9 @@ public class ForgotPasswordController extends HttpServlet {
                 case "/ResetPassword":
                     resetPassword(request, response);
                     break;
+                case "/SetNewPassword":
+                    setNewPassword(request, response);
+                    break;
                 case "/NewPassword":
                     newPassword(request, response);
                     break;
@@ -142,7 +145,7 @@ public class ForgotPasswordController extends HttpServlet {
             LocalDateTime time = LocalDateTime.parse(decrypt[1]);
             if (time.plusMinutes(30).isAfter(now)) {
                 request.getSession().setAttribute("user", userDAO.searchUserByEmail(email));
-                response.sendRedirect("../Views/NewPasswordView.jsp");
+                response.sendRedirect("../ForgotPassword/NewPassword");
             } else {
                 out.println("Expired");
                 out.println(time);
@@ -152,8 +155,14 @@ public class ForgotPasswordController extends HttpServlet {
             log(ex.getMessage());
         }
     }
-
+    
     private void newPassword(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        response.setContentType("text/html;charset=UTF-8");
+        request.getRequestDispatcher("../Views/NewPasswordView.jsp").forward(request, response);
+    }
+
+    private void setNewPassword(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
         User user = (User) request.getSession().getAttribute("user");
