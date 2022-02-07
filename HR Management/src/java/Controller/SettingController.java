@@ -6,8 +6,9 @@
 package Controller;
 
 import DAO.SettingDAO;
+import Models.Setting;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.Vector;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Kha Chinh
  */
-@WebServlet(name = "StatusController", urlPatterns = {"/StatusController"})
-public class StatusController extends HttpServlet {
+@WebServlet(name = "SettingController", urlPatterns = {"/SettingController"})
+public class SettingController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,21 +34,25 @@ public class StatusController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            String status = request.getParameter("status");
-            String employee_id = request.getParameter("id");
+        try {
             String page = request.getParameter("page");
             if (page == null) {
                 page = "1";
             }
-            int st = Integer.parseInt(status);
-            int i = Integer.parseInt(employee_id);
-            SettingDAO s = new SettingDAO();
-            s.editStatus(st, i);
-            response.sendRedirect("SettingController?page=" + page + "");
+            request.setAttribute("page", page);
+            SettingDAO sDAO = new SettingDAO();
+            int count = sDAO.getTotalSetting();
+            int endPage = count / 5;
+            if (endPage % 3 != 0) {
+                endPage++;
+            }
+            request.setAttribute("endP", endPage);
+            Vector<Setting> s = new Vector();
+            s = sDAO.getSettingList(Integer.parseInt(page));
+            request.setAttribute("listS", s);
+            request.getRequestDispatcher("Views/SettingList_1.jsp").forward(request, response);
         } catch (Exception e) {
-            System.out.println("Error " + e.getMessage());
+            System.out.println("ádfasdfasdfasd" + e.getMessage());
         }
     }
 
