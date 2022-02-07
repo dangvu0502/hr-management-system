@@ -75,7 +75,7 @@ public class ForgotPasswordController extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="Click on the + sign on the left to see details">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -175,13 +175,14 @@ public class ForgotPasswordController extends HttpServlet {
         }
 
     }
-
+    
     private void view(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
         request.getRequestDispatcher("Views/ForgotPasswordView.jsp").forward(request, response);
     }
     
+    //</editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="sendEmailSuccessfully and changePasswordSuccessfully HTML">
     private final String sendEmaiSuccessfully

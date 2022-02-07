@@ -76,7 +76,7 @@ public class UserRegisterController extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="Click on the + sign on the left to see details">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -171,5 +171,6 @@ public class UserRegisterController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.getRequestDispatcher("Views/UserRegisterView.jsp").forward(request, response);
     }
+     //</editor-fold>
 
 }
