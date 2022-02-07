@@ -190,6 +190,47 @@ public class UserDAO {
             ex.printStackTrace(System.out);
         }
     }
+    public User login(String username, String password) {
+
+        try {
+            //mo ket noi
+            Connection conn = new DBContext().getConnection();
+            String sql = "SELECT * FROM hr_system_v2.user where (username =? or email = ?) and password=?";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, username);
+            ps.setString(2, username);
+            ps.setString(3, password);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                User account = new User();
+                account.setId(rs.getInt("id"));
+                account.setFullname(rs.getString("fullname"));
+                account.setUsername(rs.getString("username"));
+                account.setPassword(rs.getString("password"));
+                account.setEmail(rs.getString("email"));
+                account.setMobile(rs.getString("mobile"));
+                account.setGender(rs.getBoolean("gender"));
+                account.setAvatar(rs.getString("avatar"));
+                account.setDob(rs.getString("dob"));
+                account.setAddress(rs.getString("address"));
+                account.setRole_id(rs.getInt("role_id"));
+                account.setProject_role_id(rs.getInt("project_role_id"));
+                account.setSupervisor_id(rs.getInt("supervisor_id"));
+                account.setGroup_code(rs.getString("group_code"));
+                account.setStatus(rs.getBoolean("status"));
+                if (password.equals(account.getPassword())) {
+                    System.out.println("password true");
+                    return account;
+                }
+                System.out.println("password false");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+
+        return null;
+    }
 
 //    public static void main(String[] args) throws Exception {
 //

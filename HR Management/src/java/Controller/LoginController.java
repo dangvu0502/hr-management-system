@@ -103,7 +103,7 @@ public class LoginController extends HttpServlet {
         String verifyMessage = (String) request.getAttribute("verifyMessage");
         String warning = null;
 
-        User account = new EmployeeDAO().login(username, password);
+        User account = new UserDAO().login(username, password);
         if (account == null && verifyMessage == null) {
             request.setAttribute("err", "Login failed");
             request.getRequestDispatcher("Views/login.jsp").forward(request, response);
@@ -115,6 +115,7 @@ public class LoginController extends HttpServlet {
                 request.setAttribute("err", "You do not have access to this website");
                 request.getRequestDispatcher("Views/login.jsp").forward(request, response);
             } else {
+                account.setPassword(trippleDes.decrypt(account.getPassword()));
                 request.getSession().setAttribute("account", account); //lưu trên ss
                 response.sendRedirect("Views/Home.jsp");
             }

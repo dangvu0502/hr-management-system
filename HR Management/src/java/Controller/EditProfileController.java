@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Context.TrippleDes;
 import DAO.EmployeeDAO;
 import DAO.UserDAO;
 import java.io.IOException;
@@ -39,6 +40,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
  *
  * @author Egamorft
  */
+
 public class EditProfileController extends HttpServlet {
 
     /**
@@ -50,6 +52,17 @@ public class EditProfileController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+     private UserDAO userDAO;
+    private TrippleDes trippleDes;
+
+    public void init() {
+        userDAO = new UserDAO();
+        try {
+            trippleDes = new TrippleDes();
+        } catch (Exception ex) {
+            Logger.getLogger(UserRegisterController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
         response.setContentType("text/html;charset=UTF-8");
@@ -111,7 +124,7 @@ public class EditProfileController extends HttpServlet {
             String mobile = request.getParameter("mobile");
             String avatar = request.getParameter("fileName");
             String username = request.getParameter("username");
-            String password = request.getParameter("password");
+            String password = trippleDes.encrypt(request.getParameter("password"));
             HttpSession session = request.getSession();
 
             User user = (User) session.getAttribute("account"); 

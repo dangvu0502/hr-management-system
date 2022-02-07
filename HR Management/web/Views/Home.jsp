@@ -5,7 +5,7 @@
 --%>
 <%@page import="Models.User"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="Models.Employee"%>
+<%@page import="Context.TrippleDes"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -135,7 +135,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <% Models.User acc = (User) session.getAttribute("account");
-
+                TrippleDes td = new TrippleDes();
             %>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <!-- If User Log-in -->
@@ -420,7 +420,7 @@
                                         if (password1 == password2) {
                                             alert("Successful change your information!!");
                                         } else {
-                                            alert("Wrong password!!");
+                                            alert(password1 + "Wrong password");
                                         }
 //            document.getElementById('frm').submit()
                                     }
