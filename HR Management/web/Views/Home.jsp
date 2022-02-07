@@ -420,7 +420,7 @@
                                         if (password1 == password2) {
                                             alert("Successful change your information!!");
                                         } else {
-                                            alert(password1 + "Wrong password");
+                                            alert( "Wrong password");
                                         }
 //            document.getElementById('frm').submit()
                                     }
