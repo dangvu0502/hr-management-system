@@ -74,37 +74,20 @@ public class AccountController extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="Click on the + sign on the left to see details">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
-    
-    
 
+    
+    // <editor-fold defaultstate="collapsed" desc="Register and RegisterVerify">
     private void setVerified(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
@@ -173,6 +156,9 @@ public class AccountController extends HttpServlet {
         request.getRequestDispatcher("/Views/UserRegisterView.jsp").forward(request, response);
     }
 
+    //</editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Forgot Password and New Password">
     private void newPassword(HttpServletRequest request, HttpServletResponse response, String method)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
@@ -278,10 +264,8 @@ public class AccountController extends HttpServlet {
         //out.println(request.getContextPath());
         request.getRequestDispatcher("/Views/ForgotPasswordView.jsp").forward(request, response);
     }
-
     //</editor-fold>
-    
-    
+   
     // <editor-fold defaultstate="collapsed" desc="HTML message">
     private String registerSuccess
             = "<!DOCTYPE html>\n"
