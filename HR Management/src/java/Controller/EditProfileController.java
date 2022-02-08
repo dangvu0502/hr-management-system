@@ -60,7 +60,7 @@ public class EditProfileController extends HttpServlet {
         try {
             trippleDes = new TrippleDes();
         } catch (Exception ex) {
-            Logger.getLogger(UserRegisterController.class.getName()).log(Level.SEVERE, null, ex);
+           // Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)

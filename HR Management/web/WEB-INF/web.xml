@@ -9,13 +9,10 @@
         <servlet-class>Controller.SettingListController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>UserRegisterController</servlet-name>
-        <servlet-class>Controller.UserRegisterController</servlet-class>
+        <servlet-name>AccountController</servlet-name>
+        <servlet-class>Controller.AccountController</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>VerifyUserRegisterEmailController</servlet-name>
-        <servlet-class>Controller.VerifyUserRegisterEmailController</servlet-class>
-    </servlet>
+
     <servlet>
         <servlet-name>VerifyUserEmailController</servlet-name>
         <servlet-class>Controller.VerifyUserEmailController</servlet-class>
@@ -49,8 +46,8 @@
         <url-pattern>/SettingListController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>UserRegisterController</servlet-name>
-        <url-pattern>/UserRegister/*</url-pattern>
+        <servlet-name>AccountController</servlet-name>
+        <url-pattern>/Account/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>VerifyUserEmailController</servlet-name>
