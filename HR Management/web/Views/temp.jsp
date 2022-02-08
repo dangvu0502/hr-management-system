@@ -43,7 +43,7 @@
                     <div class="col-lg-6 ">
                         <section class="panel">
                             <header class="panel-heading text-center">
-                                Forgot Password
+                                Link Expired
                             </header>
                             <c:if test="${message != null}">
                                 <div class="error alert alert-danger" role="alert">
@@ -53,33 +53,21 @@
                                 <c:remove var="message" scope="session" /> 
                             </c:if>
                             <div class="panel-body">
-                                <form action="../Account/NewPassword" method="POST" role="form" onsubmit="return isValid">
+                                <form action="../Account/ForgotPassword" method="GET" role="form" onsubmit="return isValid">
                                     <div class="row">
                                         <div class="col-lg-2"></div>
                                         <div class="col-lg-8">
-                                            <div class="row ">
-                                                <div class="form-group col-lg-12">
-                                                    <label for="password">Password</label>
-                                                    <input type="password" class="form-control" id="password" name="password" onkeyup="checkEqual()" placeholder="Enter your password"  required >
-                                                </div>
+                                            <div class=" form-group text-center">
+                                                <button type="submit" id="submit-btn" class="btn btn-info" >Resend</button>
                                             </div>
                                             <div class="row ">
-                                                <div class="form-group col-lg-12">
-                                                    <label for="confirm-password">Confirm Password</label>
-                                                    <input type="password" class="form-control" id="confirm-password" onkeyup="checkEqual()" placeholder="Confirm your password" required >
-                                                    <span id='message'></span>
+                                                <div class="col-lg-4"></div>
+                                                <div class="col-lg-8">
+                                                    <p> <a href="../login"> &nbsp  &nbsp  &nbsp  &nbsp &nbsp Back to login</a></p>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="form-group col-lg-12">
-                                                    <span> <input type="checkbox" onclick="password_show_hide()">Show Password </span>
-                                                </div>
-                                            </div>
-                                            <div class=" form-group row col-lg-12 text-center">
-                                                <button type="submit" id="submit-btn" class="btn btn-info" > Submit</button>
-                                            </div>
-                                           
                                         </div>
+
                                     </div>
                                 </form>
 
@@ -101,12 +89,12 @@
         <script src="../js/Director/myScript.js" type="text/javascript"></script>
         <script>
 
-                                                    /** HIDE ALERT**/
-                                                    $(document).click(function (e) {
-                                                        $('.error').hide();
-                                                    });
-                                                    /** HIDE ALERT**/
-                                                 
+                                    /** HIDE ALERT**/
+                                    $(document).click(function (e) {
+                                        $('.error').hide();
+                                    });
+                                    /** HIDE ALERT**/
+
 
         </script>
     </body>

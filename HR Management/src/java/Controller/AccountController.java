@@ -62,8 +62,8 @@ public class AccountController extends HttpServlet {
                 case "/ForgotPassword":
                     forgotPassword(request, response, method);
                     break;
-                case "/ResetPassword":
-                    resetPassword(request, response, method);
+                case "/NewPassword":
+                    newPassword(request, response, method);
                     break;
                 default:
                     out.println(action + " " + method);
@@ -102,6 +102,8 @@ public class AccountController extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
+    
+    
 
     private void setVerified(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
@@ -171,19 +173,19 @@ public class AccountController extends HttpServlet {
         request.getRequestDispatcher("/Views/UserRegisterView.jsp").forward(request, response);
     }
 
-    private void resetPassword(HttpServletRequest request, HttpServletResponse response, String method)
+    private void newPassword(HttpServletRequest request, HttpServletResponse response, String method)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter();) {
             if (method.equalsIgnoreCase("post")) {
-                resetPasswordImplement(request, response);
+                newPasswordImplement(request, response);
             } else if (method.equalsIgnoreCase("get")) {
                 User user = isValid(request, response);
                 if (user != null) {
                     request.getSession().setAttribute("user", user);
-                    showResetPasswordView(request, response);
+                    showNewPasswordView(request, response);
                 } else {
-                    out.println("Expired");
+                    out.println(linkExpired);
                 }
             }
         } catch (Exception ex) {
@@ -209,7 +211,7 @@ public class AccountController extends HttpServlet {
         return null;
     }
 
-    private void resetPasswordImplement(HttpServletRequest request, HttpServletResponse response)
+    private void newPasswordImplement(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter();) {
@@ -221,7 +223,7 @@ public class AccountController extends HttpServlet {
         }
     }
 
-    private void showResetPasswordView(HttpServletRequest request, HttpServletResponse response)
+    private void showNewPasswordView(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
         //PrintWriter out = response.getWriter();
@@ -260,7 +262,7 @@ public class AccountController extends HttpServlet {
                 LocalDateTime now = LocalDateTime.now();
                 String message = trippleDes.encrypt(email + " " + now.toString());
                 //check if the email send successfully
-                if (SendEmail.send(email, "Password Reset Link", "http://localhost:8080/HR_Management/Account/ResetPassword?" + message)) {
+                if (SendEmail.send(email, "Password Reset Link", "http://localhost:8080/HR_Management/Account/NewPassword?" + message)) {
                     out.println(sendEmaiSuccessfully);
                 } else {
                     out.println("Failed to send verification email");
@@ -278,7 +280,9 @@ public class AccountController extends HttpServlet {
     }
 
     //</editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="registerSuccess and verifySuccess HTML">
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="HTML message">
     private String registerSuccess
             = "<!DOCTYPE html>\n"
             + "<html>\n"
@@ -345,6 +349,8 @@ public class AccountController extends HttpServlet {
             + "</html>\n"
             + "\n"
             + "";
+    
+    
     private String verifySuccess
             = "<!DOCTYPE html>\n"
             + "<html>\n"
@@ -411,9 +417,8 @@ public class AccountController extends HttpServlet {
             + "</html>\n"
             + "\n"
             + "";
-    //</editor-fold>
     
-    // <editor-fold defaultstate="collapsed" desc="sendEmailSuccessfully and changePasswordSuccessfully HTML">
+
     private final String sendEmaiSuccessfully
             = "<!DOCTYPE html>\n"
             + "<html>\n"
@@ -543,5 +548,97 @@ public class AccountController extends HttpServlet {
             + "  \n"
             + "    </script>\n"
             + "</html>";
+    
+    private String linkExpired = 
+"<!DOCTYPE html>\n" +
+"<html>\n" +
+"    <head>\n" +
+"        <meta charset=\"UTF-8\">\n" +
+"        <title>Forgot Password</title>\n" +
+"        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>\n" +
+"        <meta name=\"description\" content=\"Developed By M Abdur Rokib Promy\">\n" +
+"        <meta name=\"keywords\" content=\"Admin, Bootstrap 3, Template, Theme, Responsive\">\n" +
+"        <!-- bootstrap 3.0.2 -->\n" +
+"        <link href=\"../css/bootstrap.min.css\" rel=\"stylesheet\" type=\"text/css\" />\n" +
+"        <!-- font Awesome -->\n" +
+"        <link href=\"../css/font-awesome.min.css\" rel=\"stylesheet\" type=\"text/css\" />\n" +
+"        <!-- Ionicons -->\n" +
+"        <link href=\"../css/ionicons.min.css\" rel=\"stylesheet\" type=\"text/css\" />\n" +
+"\n" +
+"        <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>\n" +
+"        <!-- Theme style -->\n" +
+"        <link href=\"../css/style.css\" rel=\"stylesheet\" type=\"text/css\" />\n" +
+"\n" +
+"\n" +
+"        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->\n" +
+"        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->\n" +
+"        <!--[if lt IE 9]>\n" +
+"          <script src=\"https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js\"></script>\n" +
+"          <script src=\"https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js\"></script>\n" +
+"        <![endif]-->\n" +
+"    </head>\n" +
+"    <body class=\"skin-black\">\n" +
+"        <div class=\"wrapper row-offcanvas row-offcanvas-left\">\n" +
+"\n" +
+"            <!-- Main content -->\n" +
+"            <section class=\"content\">\n" +
+"                <div class=\"row\">\n" +
+"                    <div  class=\"col-lg-3\"></div>\n" +
+"                    <div class=\"col-lg-6 \">\n" +
+"                        <section class=\"panel\">\n" +
+"                            <header class=\"panel-heading text-center\">\n" +
+"                                Link Expired\n" +
+"                            </header>\n" +
+"                            "+
+"                            <div class=\"panel-body\">\n" +
+"                                <form action=\"../Account/ForgotPassword\" method=\"GET\" role=\"form\" onsubmit=\"return isValid\">\n" +
+"                                    <div class=\"row\">\n" +
+"                                        <div class=\"col-lg-2\"></div>\n" +
+"                                        <div class=\"col-lg-8\">\n" +
+"                                            <div class=\" form-group text-center\">\n" +
+"                                                <button type=\"submit\" id=\"submit-btn\" class=\"btn btn-info\" >Resend</button>\n" +
+"                                            </div>\n" +
+"                                            <div class=\"row \">\n" +
+"                                                <div class=\"col-lg-4\"></div>\n" +
+"                                                <div class=\"col-lg-8\">\n" +
+"                                                    <p> <a href=\"../login\"> &nbsp  &nbsp  &nbsp  &nbsp &nbsp Back to login</a></p>\n" +
+"                                                </div>\n" +
+"                                            </div>\n" +
+"                                        </div>\n" +
+"\n" +
+"                                    </div>\n" +
+"                                </form>\n" +
+"\n" +
+"                            </div>\n" +
+"                        </section>\n" +
+"                    </div>\n" +
+"                </div>\n" +
+"            </section>\n" +
+"\n" +
+"        </div>\n" +
+"        <!-- jQuery 2.0.2 -->\n" +
+"        <script src=\"http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js\"></script>\n" +
+"        <script src=\"../js/jquery.min.js\" type=\"text/javascript\"></script>\n" +
+"\n" +
+"        <!-- Bootstrap -->\n" +
+"        <script src=\"../js/bootstrap.min.js\" type=\"text/javascript\"></script>\n" +
+"        <!-- Director App -->\n" +
+"        <script src=\"../js/Director/app.js\" type=\"text/javascript\"></script>\n" +
+"        <script src=\"../js/Director/myScript.js\" type=\"text/javascript\"></script>\n" +
+"        <script>\n" +
+"\n" +
+"                                    /** HIDE ALERT**/\n" +
+"                                    $(document).click(function (e) {\n" +
+"                                        $('.error').hide();\n" +
+"                                    });\n" +
+"                                    /** HIDE ALERT**/\n" +
+"\n" +
+"\n" +
+"        </script>\n" +
+"    </body>\n" +
+"</html>\n" +
+"\n" +
+"";
+    
 // </editor-fold>
 }
