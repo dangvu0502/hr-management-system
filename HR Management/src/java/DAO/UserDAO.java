@@ -88,7 +88,7 @@ public class UserDAO {
         return null;
     }
 
-    public int addUser(User user) throws Exception {
+    public int addNewAccount(User user) throws Exception {
         int rows = 0;
         try {
             String sql = "INSERT INTO `hr_system_v2`.`user` (`fullname`,`email`,`mobile`,`gender`,`password`,`username`) VALUES (?,?,?,?,?,?)";
@@ -101,6 +101,33 @@ public class UserDAO {
             ps.setBoolean(4, user.isGender());
             ps.setString(5, user.getPassword());
             ps.setString(6, user.getUsername());
+            rows = ps.executeUpdate();
+            con.commit();
+        } catch (Exception e) {
+            con.rollback();
+            System.err.println("Error: " + e.getMessage());
+        }
+        return rows;
+    }
+    
+    public int addNewUser(User user) throws Exception {
+        int rows = 0;
+        try {
+            String sql = "INSERT INTO `hr_system_v2`.`user` (`fullname`,`email`,`mobile`,`gender`,`password`,`username`"
+                    + ",`status`,`verified`,`group_code`,`role_id`) VALUES (?,?,?,?,?,?,?,?,?,?)";
+            con = new DBContext().getConnection();
+            con.setAutoCommit(false);
+            ps = con.prepareStatement(sql);
+            ps.setString(1, user.getFullname());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getMobile());
+            ps.setBoolean(4, user.isGender());
+            ps.setString(5, user.getPassword());
+            ps.setString(6, user.getUsername());
+            ps.setBoolean(7, user.isStatus());
+            ps.setBoolean(8, user.isVerified());
+            ps.setString(9, user.getGroup_code());
+            ps.setInt(10, user.getRole_id());
             rows = ps.executeUpdate();
             con.commit();
         } catch (Exception e) {

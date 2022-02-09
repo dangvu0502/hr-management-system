@@ -127,7 +127,7 @@ public class AccountController extends HttpServlet {
             String mobile = request.getParameter("mobile");
             boolean gender = request.getParameter("gender").equals("male");
             String password = trippleDes.encrypt(request.getParameter("password"));
-            User user = new User(fullname, username, password, email, mobile, gender);
+            User account = new User(fullname, username, password, email, mobile, gender);
             // check user email or username existed in database
             if (userDAO.searchUserByEmail(email) != null) {
                 request.getSession().setAttribute("message", "Email existed");
@@ -139,7 +139,7 @@ public class AccountController extends HttpServlet {
                 String message = trippleDes.encrypt(email + " " + SendEmail.getRandom());
                 //check if the email send successfully
                 if (SendEmail.send(email, "Verify Link", "http://localhost:8080/HR_Management/Account/RegisterVerify?" + message)) {
-                    userDAO.addUser(user);
+                    userDAO.addNewAccount(account);
                     out.println(registerSuccess);
                 } else {
                     out.println("Failed to send verification email");
