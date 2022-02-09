@@ -104,6 +104,7 @@ public class UserController extends HttpServlet {
             boolean status = true;
             boolean verified = true;
             //   out.println(groupcode+" "+fullname+" "+username+" "+email+" "+mobile+" "+gender+" "+role_id);
+            User user = new User(fullname, username, password, email, mobile, gender, groupcode, status, verified, roleId);
             // check user email or username existed in database
            if (userDAO.searchUserByUsername(username) != null) {
                 request.getSession().setAttribute("usernameErrorMessage", "Username existed");
@@ -113,10 +114,11 @@ public class UserController extends HttpServlet {
                 response.sendRedirect("../User/NewUser");
             } else {
                 //check if the email send successfully
-                if (SendEmail.send(email, "User infor", passwordRaw)) {
-                    userDAO.addNewUser(new User(fullname, username, password, email, mobile, gender, groupcode, status, verified, roleId));
-                    request.getSession().setAttribute("successMessage", "Add New User Successfully");
-                    response.sendRedirect("../User/NewUser");
+                if (SendEmail.send(email, "User infor", userInforEmail(user))) {
+//                    userDAO.addNewUser(user);
+//                    request.getSession().setAttribute("successMessage", "Add New User Successfully");
+//                    response.sendRedirect("../User/NewUser");
+                out.println(userInforEmail(user));
                 } else {
                     out.println("Failed to send Email");
                 }
@@ -129,6 +131,189 @@ public class UserController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
         request.getRequestDispatcher("/Views/NewUserView.jsp").forward(request, response);
+    }
+    
+    private String userInforEmail(User user)
+            throws Exception {
+        return  // <editor-fold defaultstate="collapsed" desc="HTML email">        
+                "\n" +
+"<!DOCTYPE html>\n" +
+"<html>\n" +
+"    <head>\n" +
+"        <link href=\"//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css\" rel=\"stylesheet\" id=\"bootstrap-css\">\n" +
+"        <script src=\"//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js\"></script>\n" +
+"        <script src=\"//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js\"></script>\n" +
+"        <style>\n" +
+"            body {\n" +
+"                background-color: #e9ecef;\n" +
+"            }\n" +
+"\n" +
+"            .mainbox {\n" +
+"                background-color: #e9ecef;\n" +
+"                margin: auto;\n" +
+"                height: 600px;\n" +
+"                width: 600px;\n" +
+"                position: relative;\n" +
+"            }\n" +
+"\n" +
+"            .err {\n" +
+"                color: #ffffff;\n" +
+"                font-family: 'Nunito Sans', sans-serif;\n" +
+"                font-size: 11rem;\n" +
+"                position:absolute;\n" +
+"                left: 20%;\n" +
+"                top: 8%;\n" +
+"            }\n" +
+"\n" +
+"            .far {\n" +
+"                position: absolute;\n" +
+"                font-size: 8.5rem;\n" +
+"                left: 42%;\n" +
+"                top: 15%;\n" +
+"                color: #ffffff;\n" +
+"            }\n" +
+"\n" +
+"            .err2 {\n" +
+"                color: #ffffff;\n" +
+"                font-family: 'Nunito Sans', sans-serif;\n" +
+"                font-size: 11rem;\n" +
+"                position:absolute;\n" +
+"                left: 68%;\n" +
+"                top: 8%;\n" +
+"            }\n" +
+"\n" +
+"            .msg {\n" +
+"                text-align: center;\n" +
+"                font-family: 'Nunito Sans', sans-serif;\n" +
+"                font-size: 1.6rem;\n" +
+"                position:absolute;\n" +
+"                left: 16%;\n" +
+"                top: 45%;\n" +
+"                width: 75%;\n" +
+"            }\n" +
+"\n" +
+"            a {\n" +
+"                text-decoration: none;\n" +
+"                color: white;\n" +
+"            }\n" +
+"\n" +
+"            a:hover {\n" +
+"                text-decoration: underline;\n" +
+"            }\n" +
+"\n" +
+"        </style>\n" +
+"    </head>\n" +
+"    <body>\n" +
+"        <div class=\"container\">\n" +
+"            <div class=\"main-body\">\n" +
+"\n" +
+"                <!-- Breadcrumb -->\n" +
+"                <nav aria-label=\"breadcrumb\" class=\"main-breadcrumb\">\n" +
+"                    <ol class=\"breadcrumb\">\n" +
+"                        <li></li>\n" +
+"                        <li></li>\n" +
+"                        <li> </li>\n" +
+"                    </ol>\n" +
+"                </nav>\n" +
+"                <!-- /Breadcrumb -->\n" +
+"\n" +
+"                <div class=\"row gutters-sm\">\n" +
+"                    <div class=\"col-md-2 mb-3\">\n" +
+"\n" +
+"\n" +
+"                    </div>\n" +
+"                    <div class=\"col-md-8\">\n" +
+"                        <div class=\"card mb-3\">\n" +
+"                            <div class=\"card-body\">\n" +
+"                                <div class=\"row\">\n" +
+"                                    <div class=\"col-sm-3\">\n" +
+"                                        <h6 class=\"mb-0\">Group Code</h6>\n" +
+"                                    </div>\n" +
+"                                    <div class=\"col-sm-9 text-secondary\">\n" +
+"\n" +user.getGroup_code() +
+"                                    </div>\n" +
+"                                </div>\n" +
+"                                <hr>\n" +
+"                                <div class=\"row\">\n" +
+"                                    <div class=\"col-sm-3\">\n" +
+"                                        <h6 class=\"mb-0\">Full Name</h6>\n" +
+"                                    </div>\n" +
+"                                    <div class=\"col-sm-9 text-secondary\">\n" +
+"\n" + user.getFullname() +
+"                                    </div>\n" +
+"                                </div>\n" +
+"                                <hr>\n" +
+"                                <div class=\"row\">\n" +
+"                                    <div class=\"col-sm-3\">\n" +
+"                                        <h6 class=\"mb-0\">Username</h6>\n" +
+"                                    </div>\n" +
+"                                    <div class=\"col-sm-9 text-secondary\">\n" +
+"\n" + user.getUsername() +
+"                                    </div>\n" +
+"                                </div>\n" +
+"                                <hr>\n" +
+"                                <div class=\"row\">\n" +
+"                                    <div class=\"col-sm-3\">\n" +
+"                                        <h6 class=\"mb-0\">Email</h6>\n" +
+"                                    </div>\n" +
+"                                    <div class=\"col-sm-9 text-secondary\">\n" +
+"\n" + user.getEmail() +
+"                                    </div>\n" +
+"                                </div>\n" +
+"                                <hr>\n" +
+"                                <div class=\"row\">\n" +
+"                                    <div class=\"col-sm-3\">\n" +
+"                                        <h6 class=\"mb-0\">Mobile</h6>\n" +
+"                                    </div>\n" +
+"                                    <div class=\"col-sm-9 text-secondary\">\n" +
+"\n" + user.getMobile() +
+"                                    </div>\n" +
+"                                </div>\n" +
+"                                <hr>\n" +
+"                                <div class=\"row\">\n" +
+"                                    <div class=\"col-sm-3\">\n" +
+"                                        <h6 class=\"mb-0\">Gender</h6>\n" +
+"                                    </div>\n" +
+"                                    <div class=\"col-sm-9 text-secondary\">\n" +
+"\n" + (user.isGender() == true ? "Male" : "Female") +
+"                                    </div>\n" +
+"                                </div>\n" +
+"                                <hr>\n" +
+"                                <div class=\"row\">\n" +
+"                                    <div class=\"col-sm-3\">\n" +
+"                                        <h6 class=\"mb-0\">System role</h6>\n" +
+"                                    </div>\n" +
+"                                    <div class=\"col-sm-9 text-secondary\">\n" +
+"\n" + user.getRole_id() + 
+"                                    </div>\n" +
+"                                </div>\n" +
+"                                <hr>\n" +
+"                                <div class=\"row\">\n" +
+"                                    <div class=\"col-sm-3\">\n" +
+"                                        <h6 class=\"mb-0\">Password</h6>\n" +
+"                                    </div>\n" +
+"                                    <div class=\"col-sm-9 text-secondary\">\n" +
+"\n" + user.getPassword() +
+"                                    </div>\n" +
+"                                </div>\n" +
+"                                <hr>\n" +
+"                                <div class=\"row\">\n" +
+"                                    <div class=\"col-sm-12 text-center\">\n" +
+"                                        <a class=\"btn btn-info \" target=\"__blank\" href=\"\">Click here to change password</a>\n" +
+"                                    </div>\n" +
+"                                </div>\n" +
+"                            </div>\n" +
+"                        </div>\n" +
+"                    </div>\n" +
+"                </div>\n" +
+"\n" +
+"            </div>\n" +
+"        </div>\n" +
+"    </body>\n" +
+"</html>\n" +
+"\n" +
+"";
+        // </editor-fold>
     }
 
 // </editor-fold>
@@ -215,5 +400,6 @@ public class UserController extends HttpServlet {
             + "";
     //</editor-fold>
    
+
     // </editor-fold>
 }

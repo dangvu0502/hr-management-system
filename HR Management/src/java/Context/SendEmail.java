@@ -69,7 +69,7 @@ public class SendEmail {
             message.setFrom(new InternetAddress(fromEmail));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
             message.setSubject(sub);
-            message.setContent(msg, "text/html");
+            message.setContent(msg, "text/html; charset=utf-8");
 
             /* Transport class is used to deliver the message to the recipients */
             Transport.send(message);
