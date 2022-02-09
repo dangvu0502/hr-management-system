@@ -95,28 +95,29 @@ public class UserController extends HttpServlet {
             String groupcode = request.getParameter("group-code");
             String fullname = request.getParameter("fullname");
             String username = request.getParameter("username");
-            String passwordRaw =  SendEmail.getRandom();
-            String password =  trippleDes.encrypt(passwordRaw);
+            String passwordRaw = SendEmail.getRandom();
+            String password = trippleDes.encrypt(passwordRaw);
             String email = request.getParameter("email");
             String mobile = request.getParameter("mobile");
             boolean gender = request.getParameter("gender").equals("male");
             int roleId = Integer.parseInt(request.getParameter("system-role"));
             boolean status = true;
             boolean verified = true;
-        //   out.println(groupcode+" "+fullname+" "+username+" "+email+" "+mobile+" "+gender+" "+role_id);
+            //   out.println(groupcode+" "+fullname+" "+username+" "+email+" "+mobile+" "+gender+" "+role_id);
             // check user email or username existed in database
             if (userDAO.searchUserByEmail(email) != null) {
-                request.getSession().setAttribute("message", "Email existed");
+                request.getSession().setAttribute("emailErrorMessage", "Email existed");
                 response.sendRedirect("../User/NewUser");
             } else if (userDAO.searchUserByUsername(username) != null) {
-                request.getSession().setAttribute("message", "Username existed");
+                request.getSession().setAttribute("usernameErrorMessage", "Username existed");
                 response.sendRedirect("../User/NewUser");
             } else {
                 //check if the email send successfully
-                if (SendEmail.send(email, "User infor",passwordRaw)) {
-                    userDAO.addNewUser(new User(fullname, username, password, email, mobile, gender, groupcode, status, verified,roleId));
-                    out.println("Add succcess");
-                }else{
+                if (SendEmail.send(email, "User infor", passwordRaw)) {
+                    userDAO.addNewUser(new User(fullname, username, password, email, mobile, gender, groupcode, status, verified, roleId));
+                    request.getSession().setAttribute("successMessage", "Add New User Successfully");
+                    response.sendRedirect("../User/NewUser");
+                } else {
                     out.println("Failed to send Email");
                 }
             }
@@ -131,4 +132,6 @@ public class UserController extends HttpServlet {
     }
 
 // </editor-fold>
+   
+          
 }
