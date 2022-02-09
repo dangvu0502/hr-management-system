@@ -105,11 +105,11 @@ public class UserController extends HttpServlet {
             boolean verified = true;
             //   out.println(groupcode+" "+fullname+" "+username+" "+email+" "+mobile+" "+gender+" "+role_id);
             // check user email or username existed in database
-            if (userDAO.searchUserByEmail(email) != null) {
-                request.getSession().setAttribute("emailErrorMessage", "Email existed");
-                response.sendRedirect("../User/NewUser");
-            } else if (userDAO.searchUserByUsername(username) != null) {
+           if (userDAO.searchUserByUsername(username) != null) {
                 request.getSession().setAttribute("usernameErrorMessage", "Username existed");
+                response.sendRedirect("../User/NewUser");
+            } else if (userDAO.searchUserByEmail(email) != null) {
+                request.getSession().setAttribute("emailErrorMessage", "Email existed");
                 response.sendRedirect("../User/NewUser");
             } else {
                 //check if the email send successfully

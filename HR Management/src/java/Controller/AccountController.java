@@ -129,13 +129,13 @@ public class AccountController extends HttpServlet {
             String password = trippleDes.encrypt(request.getParameter("password"));
             User account = new User(fullname, username, password, email, mobile, gender);
             // check user email or username existed in database
-            if (userDAO.searchUserByEmail(email) != null) {
-                request.getSession().setAttribute("message", "Email existed");
+            if (userDAO.searchUserByUsername(username) != null) {
+                request.getSession().setAttribute("usernameErrorMessage", "Username existed");
                 response.sendRedirect("../Account/Register");
-            } else if (userDAO.searchUserByUsername(username) != null) {
-                request.getSession().setAttribute("message", "Username existed");
+            }else if (userDAO.searchUserByEmail(email) != null) {
+                request.getSession().setAttribute("emailErrorMessage", "Email existed");
                 response.sendRedirect("../Account/Register");
-            } else {
+            }else {
                 String message = trippleDes.encrypt(email + " " + SendEmail.getRandom());
                 //check if the email send successfully
                 if (SendEmail.send(email, "Verify Link", "http://localhost:8080/HR_Management/Account/RegisterVerify?" + message)) {

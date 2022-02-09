@@ -67,12 +67,20 @@
                                                 <div class="form-group col-lg-12">
                                                     <label for="username">Username</label>
                                                     <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
+                                                     <c:if test="${usernameErrorMessage != null}">
+                                                        <p class="message text-danger">${usernameErrorMessage}</p>
+                                                        <c:remove var="usernameErrorMessage" scope="session" /> 
+                                                    </c:if>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="form-group col-lg-12">
                                                     <label for="email">Email address</label>
                                                     <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+                                                     <c:if test="${emailErrorMessage != null}">
+                                                        <p class="message text-danger">${emailErrorMessage}</p>
+                                                        <c:remove var="emailErrorMessage" scope="session" /> 
+                                                    </c:if>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -142,7 +150,7 @@
 
                                                     /** HIDE ALERT**/
                                                     $(document).click(function (e) {
-                                                        $('.error').hide();
+                                                        $('.message').hide();
                                                     });
                                                     /** HIDE ALERT**/
                                                  
