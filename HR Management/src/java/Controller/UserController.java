@@ -115,9 +115,9 @@ public class UserController extends HttpServlet {
             } else {
                 //check if the email send successfully
                 if (SendEmail.send(email, "User infor", userInforEmail(user))) {
-//                    userDAO.addNewUser(user);
-//                    request.getSession().setAttribute("successMessage", "Add New User Successfully");
-//                    response.sendRedirect("../User/NewUser");
+                    userDAO.addNewUser(user);
+                    request.getSession().setAttribute("successMessage", "Add New User Successfully");
+
                 out.println(userInforEmail(user));
                 } else {
                     out.println("Failed to send Email");
@@ -144,175 +144,112 @@ public class UserController extends HttpServlet {
 "        <script src=\"//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js\"></script>\n" +
 "        <script src=\"//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js\"></script>\n" +
 "        <style>\n" +
-"            body {\n" +
-"                background-color: #e9ecef;\n" +
+"            * {\n" +
+"                box-sizing: border-box;\n" +
 "            }\n" +
 "\n" +
-"            .mainbox {\n" +
-"                background-color: #e9ecef;\n" +
-"                margin: auto;\n" +
-"                height: 600px;\n" +
-"                width: 600px;\n" +
-"                position: relative;\n" +
+"            /* Style inputs */\n" +
+"            input[type=text], select, textarea {\n" +
+"                width: 100%;\n" +
+"                padding: 12px;\n" +
+"                border: 1px solid #ccc;\n" +
+"                margin-top: 6px;\n" +
+"                margin-bottom: 16px;\n" +
+"                resize: vertical;\n" +
 "            }\n" +
 "\n" +
-"            .err {\n" +
-"                color: #ffffff;\n" +
-"                font-family: 'Nunito Sans', sans-serif;\n" +
-"                font-size: 11rem;\n" +
-"                position:absolute;\n" +
-"                left: 20%;\n" +
-"                top: 8%;\n" +
-"            }\n" +
-"\n" +
-"            .far {\n" +
-"                position: absolute;\n" +
-"                font-size: 8.5rem;\n" +
-"                left: 42%;\n" +
-"                top: 15%;\n" +
-"                color: #ffffff;\n" +
-"            }\n" +
-"\n" +
-"            .err2 {\n" +
-"                color: #ffffff;\n" +
-"                font-family: 'Nunito Sans', sans-serif;\n" +
-"                font-size: 11rem;\n" +
-"                position:absolute;\n" +
-"                left: 68%;\n" +
-"                top: 8%;\n" +
-"            }\n" +
-"\n" +
-"            .msg {\n" +
-"                text-align: center;\n" +
-"                font-family: 'Nunito Sans', sans-serif;\n" +
-"                font-size: 1.6rem;\n" +
-"                position:absolute;\n" +
-"                left: 16%;\n" +
-"                top: 45%;\n" +
-"                width: 75%;\n" +
-"            }\n" +
-"\n" +
-"            a {\n" +
-"                text-decoration: none;\n" +
+"            input[type=submit] {\n" +
+"                background-color: #23b7e5;\n" +
 "                color: white;\n" +
+"                padding: 12px 20px;\n" +
+"                border: none;\n" +
+"                cursor: pointer;\n" +
 "            }\n" +
 "\n" +
-"            a:hover {\n" +
-"                text-decoration: underline;\n" +
+"            input[type=submit]:hover {\n" +
+"                background-color: #23b7e5;\n" +
 "            }\n" +
 "\n" +
+"            /* Style the container/contact section */\n" +
+"            .container {\n" +
+"                border-radius: 5px;\n" +
+"                background-color: #f2f2f2;\n" +
+"                padding: 10px;\n" +
+"            }\n" +
+"\n" +
+"            /* Create two columns that float next to eachother */\n" +
+"            .column {\n" +
+"                float: left;\n" +
+"                width: 50%;\n" +
+"                margin-top: 6px;\n" +
+"                padding: 20px;\n" +
+"            }\n" +
+"\n" +
+"            .column-hidden {\n" +
+"                float: left;\n" +
+"                width: 25%;\n" +
+"                margin-top: 6px;\n" +
+"                padding: 20px;\n" +
+"            }\n" +
+"\n" +
+"            /* Clear floats after the columns */\n" +
+"            .row:after {\n" +
+"                content: \"\";\n" +
+"                display: table;\n" +
+"                clear: both;\n" +
+"            }\n" +
+"\n" +
+"\n" +
+"            .jander2{\n" +
+"                font-weight: bold;\n" +
+"            }\n" +
+"\n" +
+"            /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */\n" +
+"            @media screen and (max-width: 600px) {\n" +
+"                .column, input[type=submit] {\n" +
+"                    width: 100%;\n" +
+"                    margin-top: 0;\n" +
+"                }\n" +
+"            }\n" +
 "        </style>\n" +
 "    </head>\n" +
-"    <body>\n" +
+"    <body class=\"bg-light\">\n" +
 "        <div class=\"container\">\n" +
-"            <div class=\"main-body\">\n" +
-"\n" +
-"                <!-- Breadcrumb -->\n" +
-"                <nav aria-label=\"breadcrumb\" class=\"main-breadcrumb\">\n" +
-"                    <ol class=\"breadcrumb\">\n" +
-"                        <li></li>\n" +
-"                        <li></li>\n" +
-"                        <li> </li>\n" +
-"                    </ol>\n" +
-"                </nav>\n" +
-"                <!-- /Breadcrumb -->\n" +
-"\n" +
-"                <div class=\"row gutters-sm\">\n" +
-"                    <div class=\"col-md-2 mb-3\">\n" +
-"\n" +
-"\n" +
-"                    </div>\n" +
-"                    <div class=\"col-md-8\">\n" +
-"                        <div class=\"card mb-3\">\n" +
-"                            <div class=\"card-body\">\n" +
-"                                <div class=\"row\">\n" +
-"                                    <div class=\"col-sm-3\">\n" +
-"                                        <h6 class=\"mb-0\">Group Code</h6>\n" +
-"                                    </div>\n" +
-"                                    <div class=\"col-sm-9 text-secondary\">\n" +
-"\n" +user.getGroup_code() +
-"                                    </div>\n" +
-"                                </div>\n" +
-"                                <hr>\n" +
-"                                <div class=\"row\">\n" +
-"                                    <div class=\"col-sm-3\">\n" +
-"                                        <h6 class=\"mb-0\">Full Name</h6>\n" +
-"                                    </div>\n" +
-"                                    <div class=\"col-sm-9 text-secondary\">\n" +
-"\n" + user.getFullname() +
-"                                    </div>\n" +
-"                                </div>\n" +
-"                                <hr>\n" +
-"                                <div class=\"row\">\n" +
-"                                    <div class=\"col-sm-3\">\n" +
-"                                        <h6 class=\"mb-0\">Username</h6>\n" +
-"                                    </div>\n" +
-"                                    <div class=\"col-sm-9 text-secondary\">\n" +
-"\n" + user.getUsername() +
-"                                    </div>\n" +
-"                                </div>\n" +
-"                                <hr>\n" +
-"                                <div class=\"row\">\n" +
-"                                    <div class=\"col-sm-3\">\n" +
-"                                        <h6 class=\"mb-0\">Email</h6>\n" +
-"                                    </div>\n" +
-"                                    <div class=\"col-sm-9 text-secondary\">\n" +
-"\n" + user.getEmail() +
-"                                    </div>\n" +
-"                                </div>\n" +
-"                                <hr>\n" +
-"                                <div class=\"row\">\n" +
-"                                    <div class=\"col-sm-3\">\n" +
-"                                        <h6 class=\"mb-0\">Mobile</h6>\n" +
-"                                    </div>\n" +
-"                                    <div class=\"col-sm-9 text-secondary\">\n" +
-"\n" + user.getMobile() +
-"                                    </div>\n" +
-"                                </div>\n" +
-"                                <hr>\n" +
-"                                <div class=\"row\">\n" +
-"                                    <div class=\"col-sm-3\">\n" +
-"                                        <h6 class=\"mb-0\">Gender</h6>\n" +
-"                                    </div>\n" +
-"                                    <div class=\"col-sm-9 text-secondary\">\n" +
-"\n" + (user.isGender() == true ? "Male" : "Female") +
-"                                    </div>\n" +
-"                                </div>\n" +
-"                                <hr>\n" +
-"                                <div class=\"row\">\n" +
-"                                    <div class=\"col-sm-3\">\n" +
-"                                        <h6 class=\"mb-0\">System role</h6>\n" +
-"                                    </div>\n" +
-"                                    <div class=\"col-sm-9 text-secondary\">\n" +
-"\n" + user.getRole_id() + 
-"                                    </div>\n" +
-"                                </div>\n" +
-"                                <hr>\n" +
-"                                <div class=\"row\">\n" +
-"                                    <div class=\"col-sm-3\">\n" +
-"                                        <h6 class=\"mb-0\">Password</h6>\n" +
-"                                    </div>\n" +
-"                                    <div class=\"col-sm-9 text-secondary\">\n" +
-"\n" + user.getPassword() +
-"                                    </div>\n" +
-"                                </div>\n" +
-"                                <hr>\n" +
-"                                <div class=\"row\">\n" +
-"                                    <div class=\"col-sm-12 text-center\">\n" +
-"                                        <a class=\"btn btn-info \" target=\"__blank\" href=\"\">Click here to change password</a>\n" +
-"                                    </div>\n" +
-"                                </div>\n" +
-"                            </div>\n" +
-"                        </div>\n" +
+"            <div style=\"text-align:center\">\n" +
+"                <h2>User information</h2>\n" +
+"            </div>\n" +
+"            <div class=\"row\">\n" +
+"                <div class=\"column-hidden\">\n" +
+"                </div>\n" +
+"                <div class=\"column\">\n" +
+"                    <label for=\"group-code\">Group Code</label>\n" +
+"                    <input class=\"jander2\" type=\"text\" id=\"group-code\" value=\""+user.getGroup_code()+"\" disabled=\"\">\n" +"<br>"+
+"                    <label for=\"fullname\">Full Name</label>\n" +
+"                    <input class=\"jander2\"  type=\"text\" id=\"fullname\" name=\"fullname\" value=\""+user.getFullname()+"\" disabled=\"\">\n" +"<br>"+
+"                    <label for=\"username\">User Name</label>\n" +
+"                    <input class=\"jander2\" type=\"text\" id=\"username\" name=\"username\" value=\""+user.getUsername()+"\" disabled=\"\">\n" +"<br>"+
+"                    <label for=\"email\">Email</label>\n" +
+"                    <input class=\"jander2\" type=\"text\" id=\"email\" name=\"email\" value=\""+user.getEmail()+"\" disabled=\"\">\n" +"<br>"+
+"                    <label for=\"mobile\">Mobile</label>\n" +
+"                    <input class=\"jander2\" type=\"text\" id=\"mobile\" name=\"mobile\" value=\""+user.getMobile()+"\" disabled=\"\">\n" +"<br>"+
+"                    <label for=\"gender\">Gender</label>\n" +
+"                    <input  class=\"jander2\" type=\"text\" id=\"gender\" name=\"gender\" value=\""+(user.isGender() == true ? "Male" : "Female")+"\" disabled=\"\">\n" +"<br>"+
+"                    <label for=\"system-role\">System Role</label>\n" +
+"                    <input class=\"jander2\" type=\"text\" id=\"system-role\" name=\"system-role\" value=\""+user.getRole_id()+"\" disabled=\"\">\n" +"<br>"+
+"                    <label for=\"password\">Password</label>\n" +
+"                    <input class=\"jander2\" type=\"text\" id=\"password\" name=\"password\" value=\""+user.getPassword()+"\" disabled=\"\">\n" +"<br>"+
+"                    <div >\n" +
+"                        <input  type=\"submit\" value=\"Click here to change password\">\n" +
 "                    </div>\n" +
 "                </div>\n" +
-"\n" +
 "            </div>\n" +
 "        </div>\n" +
 "    </body>\n" +
 "</html>\n" +
 "\n" +
 "";
+
+
         // </editor-fold>
     }
 

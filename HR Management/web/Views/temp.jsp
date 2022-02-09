@@ -6,169 +6,104 @@
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <style>
-            body {
-                background-color: #e9ecef;
+            * {
+                box-sizing: border-box;
             }
 
-            .mainbox {
-                background-color: #e9ecef;
-                margin: auto;
-                height: 600px;
-                width: 600px;
-                position: relative;
+            /* Style inputs */
+            input[type=text], select, textarea {
+                width: 100%;
+                padding: 12px;
+                border: 1px solid #ccc;
+                margin-top: 6px;
+                margin-bottom: 16px;
+                resize: vertical;
             }
 
-            .err {
-                color: #ffffff;
-                font-family: 'Nunito Sans', sans-serif;
-                font-size: 11rem;
-                position:absolute;
-                left: 20%;
-                top: 8%;
-            }
-
-            .far {
-                position: absolute;
-                font-size: 8.5rem;
-                left: 42%;
-                top: 15%;
-                color: #ffffff;
-            }
-
-            .err2 {
-                color: #ffffff;
-                font-family: 'Nunito Sans', sans-serif;
-                font-size: 11rem;
-                position:absolute;
-                left: 68%;
-                top: 8%;
-            }
-
-            .msg {
-                text-align: center;
-                font-family: 'Nunito Sans', sans-serif;
-                font-size: 1.6rem;
-                position:absolute;
-                left: 16%;
-                top: 45%;
-                width: 75%;
-            }
-
-            a {
-                text-decoration: none;
+            input[type=submit] {
+                background-color: #23b7e5;
                 color: white;
+                padding: 12px 20px;
+                border: none;
+                cursor: pointer;
             }
 
-            a:hover {
-                text-decoration: underline;
+            input[type=submit]:hover {
+                background-color: #23b7e5;
             }
 
+            /* Style the container/contact section */
+            .container {
+                border-radius: 5px;
+                background-color: #f2f2f2;
+                padding: 10px;
+            }
+
+            /* Create two columns that float next to eachother */
+            .column {
+                float: left;
+                width: 50%;
+                margin-top: 6px;
+                padding: 20px;
+            }
+
+            .column-hidden {
+                float: left;
+                width: 25%;
+                margin-top: 6px;
+                padding: 20px;
+            }
+
+            /* Clear floats after the columns */
+            .row:after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+
+
+            .jander2{
+                font-weight: bold;
+            }
+
+            /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+            @media screen and (max-width: 600px) {
+                .column, input[type=submit] {
+                    width: 100%;
+                    margin-top: 0;
+                }
+            }
         </style>
     </head>
-    <body>
+    <body class="bg-light">
         <div class="container">
-            <div class="main-body">
-
-                <!-- Breadcrumb -->
-                <nav aria-label="breadcrumb" class="main-breadcrumb">
-                    <ol class="breadcrumb">
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ol>
-                </nav>
-                <!-- /Breadcrumb -->
-
-                <div class="row gutters-sm">
-                    <div class="col-md-2 mb-3">
-
-
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card mb-3">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Group Code</h6>
-                                    </div>
-                                    <div class="col-sm-9 text-secondary">
-
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Full Name</h6>
-                                    </div>
-                                    <div class="col-sm-9 text-secondary">
-
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">User name</h6>
-                                    </div>
-                                    <div class="col-sm-9 text-secondary">
-
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Email</h6>
-                                    </div>
-                                    <div class="col-sm-9 text-secondary">
-
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Mobile</h6>
-                                    </div>
-                                    <div class="col-sm-9 text-secondary">
-
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Gender</h6>
-                                    </div>
-                                    <div class="col-sm-9 text-secondary">
-
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">System role</h6>
-                                    </div>
-                                    <div class="col-sm-9 text-secondary">
-
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Password</h6>
-                                    </div>
-                                    <div class="col-sm-9 text-secondary">
-
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-sm-12 text-center">
-                                        <a class="btn btn-info " target="__blank" href="">Click here to change password</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            <div style="text-align:center">
+                <h2>User information</h2>
+            </div>
+            <div class="row">
+                <div class="column-hidden">
+                </div>
+                <div class="column">
+                    <label for="group-code">Group Code</label>
+                    <input class="jander2" type="text" id="group-code" value="ok" disabled="">
+                    <label for="fullname">Full Name</label>
+                    <input class="jander2"  type="text" id="fullname" name="fullname" value="ok" disabled="">
+                    <label for="username">User Name</label>
+                    <input class="jander2" type="text" id="username" name="username" value="ok" disabled="">
+                    <label for="email">Email</label>
+                    <input class="jander2" type="text" id="email" name="email" value="ok" disabled="">
+                    <label for="mobile">Mobile</label>
+                    <input class="jander2" type="text" id="mobile" name="mobile" value="ok" disabled="">
+                    <label for="gender">Gender</label>
+                    <input  class="jander2" type="text" id="gender" name="gender" value="ok" disabled="">
+                    <label for="system-role">System Role</label>
+                    <input class="jander2" type="text" id="system-role" name="system-role" value="ok" disabled="">
+                    <label for="password">Password</label>
+                    <input class="jander2" type="text" id="password" name="password" value="ok" disabled="">
+                    <div style="text-align:center;">
+                        <input  type="submit" value="Click here to change password">
                     </div>
                 </div>
-
             </div>
         </div>
     </body>
