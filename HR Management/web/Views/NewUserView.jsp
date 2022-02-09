@@ -53,7 +53,7 @@
                                 <c:remove var="message" scope="session" /> 
                             </c:if>
                             <div class="panel-body">
-                                <form action="" method="POST" role="form" onsubmit="return isValid">
+                                <form action="" method="POST" role="form" onsubmit="return chooseRole">
                                     <div class="row">
                                         <div class="col-lg-2"></div>
                                         <div class="col-lg-8">
@@ -98,20 +98,24 @@
                                                     </span>
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="row">
-                                                <div class="form-group col-lg-6" >
-                                                    <label for="system-role">System Role </label>
-                                                    <select class="form-control text-bold" aria-label="" id="system-role" name="system-role">
-                                                        <option selected>Choose system role</option>
-                                                        <option value="1">One</option>
-                                                        <option value="2">Two</option>
-                                                        <option value="3">Three</option>
-                                                    </select>  
+                                                <div class="form-group form-inline col-lg-6" >
+                                                    <span style="white-space: nowrap">
+                                                        <label for="system-role">System Role  &nbsp &nbsp &nbsp </label>
+                                                        <select class="form-control text-bold" aria-label="" id="system-role" name="system-role" onchange="val()">
+                                                            <option value="0" selected></option>
+                                                            <option value="1">Admin </option>
+                                                            <option value="2">Manager</option>
+                                                            <option value="3">Hr</option>
+                                                            <option value="3">Staff</option>
+                                                        </select>
+                                                    </span>
+
                                                 </div>
                                             </div>
-                                            
-                                            
+
+
 
                                             <div class=" form-group row col-lg-12 text-center">
                                                 <br>
@@ -149,7 +153,14 @@
                                     });
                                     /** HIDE ALERT**/
 
-
+                                    var chooseRole = false;
+                                    function val() {
+                                        var value = document.getElementById("system-role").value;
+                                        if (value != 0 )
+                                            chooseRole = true;
+                                        else
+                                            chooseRole = false;
+                                    }
         </script>
     </body>
 </html>
