@@ -146,7 +146,7 @@
                     <c:if test="${sessionScope.account.role_id == 1}"> 
                         <a class="nav-item nav-link" href="../SettingListController">Setting List</a>
                         <a class="nav-item nav-link" href="../grouplist">Group List</a>
-                        <a class="nav-item nav-link" href="../NewUser">New User</a>
+                        <a class="nav-item nav-link" href="../User/NewUser">New User</a>
                     </c:if>
                     <a class="nav-item nav-link" href="#">Our Team</a>
 
@@ -156,7 +156,7 @@
                 %>
                 <div class="navbar-nav ml-auto">
                     <a class="nav-item nav-link" href="../login">Login</a>
-                    <a class="nav-item nav-link " href="../UserRegister">Sign Up</a>
+                    <a class="nav-item nav-link " href="../Account/Register">Sign Up</a>
                 </div>
                 <%}%>
                 <!--       If User Loggin Successfully-->

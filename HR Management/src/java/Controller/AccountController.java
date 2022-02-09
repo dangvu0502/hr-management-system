@@ -66,7 +66,7 @@ public class AccountController extends HttpServlet {
                     newPassword(request, response, method);
                     break;
                 default:
-                    out.println(action + " " + method);
+                    out.println(pageNotFound);
                     break;
             }
         } catch (Exception ex) {
@@ -79,14 +79,13 @@ public class AccountController extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
-    
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    
     // <editor-fold defaultstate="collapsed" desc="Register and RegisterVerify">
     private void setVerified(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
@@ -132,10 +131,10 @@ public class AccountController extends HttpServlet {
             if (userDAO.searchUserByUsername(username) != null) {
                 request.getSession().setAttribute("usernameErrorMessage", "Username existed");
                 response.sendRedirect("../Account/Register");
-            }else if (userDAO.searchUserByEmail(email) != null) {
+            } else if (userDAO.searchUserByEmail(email) != null) {
                 request.getSession().setAttribute("emailErrorMessage", "Email existed");
                 response.sendRedirect("../Account/Register");
-            }else {
+            } else {
                 String message = trippleDes.encrypt(email + " " + SendEmail.getRandom());
                 //check if the email send successfully
                 if (SendEmail.send(email, "Verify Link", "http://localhost:8080/HR_Management/Account/RegisterVerify?" + message)) {
@@ -265,8 +264,10 @@ public class AccountController extends HttpServlet {
         request.getRequestDispatcher("/Views/ForgotPasswordView.jsp").forward(request, response);
     }
     //</editor-fold>
-   
-    // <editor-fold defaultstate="collapsed" desc="HTML message">
+
+    // <editor-fold defaultstate="collapsed" desc="HTML">
+    
+    // <editor-fold defaultstate="collapsed" desc="RegisterSuccess">
     private String registerSuccess
             = "<!DOCTYPE html>\n"
             + "<html>\n"
@@ -333,8 +334,9 @@ public class AccountController extends HttpServlet {
             + "</html>\n"
             + "\n"
             + "";
-    
-    
+    //</editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="VerifySuccess">
     private String verifySuccess
             = "<!DOCTYPE html>\n"
             + "<html>\n"
@@ -401,8 +403,9 @@ public class AccountController extends HttpServlet {
             + "</html>\n"
             + "\n"
             + "";
-    
+    //</editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="sendEmaiSuccessfully">
     private final String sendEmaiSuccessfully
             = "<!DOCTYPE html>\n"
             + "<html>\n"
@@ -467,7 +470,9 @@ public class AccountController extends HttpServlet {
             + "  \n"
             + "    </script>\n"
             + "</html>";
+    //</editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="changePasswordSuccessfully">
     private final String changePasswordSuccessfully
             = "<!DOCTYPE html>\n"
             + "<html>\n"
@@ -532,97 +537,180 @@ public class AccountController extends HttpServlet {
             + "  \n"
             + "    </script>\n"
             + "</html>";
-    
-    private String linkExpired = 
-"<!DOCTYPE html>\n" +
-"<html>\n" +
-"    <head>\n" +
-"        <meta charset=\"UTF-8\">\n" +
-"        <title>Forgot Password</title>\n" +
-"        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>\n" +
-"        <meta name=\"description\" content=\"Developed By M Abdur Rokib Promy\">\n" +
-"        <meta name=\"keywords\" content=\"Admin, Bootstrap 3, Template, Theme, Responsive\">\n" +
-"        <!-- bootstrap 3.0.2 -->\n" +
-"        <link href=\"../css/bootstrap.min.css\" rel=\"stylesheet\" type=\"text/css\" />\n" +
-"        <!-- font Awesome -->\n" +
-"        <link href=\"../css/font-awesome.min.css\" rel=\"stylesheet\" type=\"text/css\" />\n" +
-"        <!-- Ionicons -->\n" +
-"        <link href=\"../css/ionicons.min.css\" rel=\"stylesheet\" type=\"text/css\" />\n" +
-"\n" +
-"        <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>\n" +
-"        <!-- Theme style -->\n" +
-"        <link href=\"../css/style.css\" rel=\"stylesheet\" type=\"text/css\" />\n" +
-"\n" +
-"\n" +
-"        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->\n" +
-"        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->\n" +
-"        <!--[if lt IE 9]>\n" +
-"          <script src=\"https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js\"></script>\n" +
-"          <script src=\"https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js\"></script>\n" +
-"        <![endif]-->\n" +
-"    </head>\n" +
-"    <body class=\"skin-black\">\n" +
-"        <div class=\"wrapper row-offcanvas row-offcanvas-left\">\n" +
-"\n" +
-"            <!-- Main content -->\n" +
-"            <section class=\"content\">\n" +
-"                <div class=\"row\">\n" +
-"                    <div  class=\"col-lg-3\"></div>\n" +
-"                    <div class=\"col-lg-6 \">\n" +
-"                        <section class=\"panel\">\n" +
-"                            <header class=\"panel-heading text-center\">\n" +
-"                                Link Expired\n" +
-"                            </header>\n" +
-"                            "+
-"                            <div class=\"panel-body\">\n" +
-"                                <form action=\"../Account/ForgotPassword\" method=\"GET\" role=\"form\" onsubmit=\"return isValid\">\n" +
-"                                    <div class=\"row\">\n" +
-"                                        <div class=\"col-lg-2\"></div>\n" +
-"                                        <div class=\"col-lg-8\">\n" +
-"                                            <div class=\" form-group text-center\">\n" +
-"                                                <button type=\"submit\" id=\"submit-btn\" class=\"btn btn-info\" >Resend</button>\n" +
-"                                            </div>\n" +
-"                                            <div class=\"row \">\n" +
-"                                                <div class=\"col-lg-4\"></div>\n" +
-"                                                <div class=\"col-lg-8\">\n" +
-"                                                    <p> <a href=\"../login\"> &nbsp  &nbsp  &nbsp  &nbsp &nbsp Back to login</a></p>\n" +
-"                                                </div>\n" +
-"                                            </div>\n" +
-"                                        </div>\n" +
-"\n" +
-"                                    </div>\n" +
-"                                </form>\n" +
-"\n" +
-"                            </div>\n" +
-"                        </section>\n" +
-"                    </div>\n" +
-"                </div>\n" +
-"            </section>\n" +
-"\n" +
-"        </div>\n" +
-"        <!-- jQuery 2.0.2 -->\n" +
-"        <script src=\"http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js\"></script>\n" +
-"        <script src=\"../js/jquery.min.js\" type=\"text/javascript\"></script>\n" +
-"\n" +
-"        <!-- Bootstrap -->\n" +
-"        <script src=\"../js/bootstrap.min.js\" type=\"text/javascript\"></script>\n" +
-"        <!-- Director App -->\n" +
-"        <script src=\"../js/Director/app.js\" type=\"text/javascript\"></script>\n" +
-"        <script src=\"../js/Director/myScript.js\" type=\"text/javascript\"></script>\n" +
-"        <script>\n" +
-"\n" +
-"                                    /** HIDE ALERT**/\n" +
-"                                    $(document).click(function (e) {\n" +
-"                                        $('.error').hide();\n" +
-"                                    });\n" +
-"                                    /** HIDE ALERT**/\n" +
-"\n" +
-"\n" +
-"        </script>\n" +
-"    </body>\n" +
-"</html>\n" +
-"\n" +
-"";
-    
-// </editor-fold>
+    //</editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="linkExpired">
+    private String linkExpired
+            = "<!DOCTYPE html>\n"
+            + "<html>\n"
+            + "    <head>\n"
+            + "        <meta charset=\"UTF-8\">\n"
+            + "        <title>Forgot Password</title>\n"
+            + "        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>\n"
+            + "        <meta name=\"description\" content=\"Developed By M Abdur Rokib Promy\">\n"
+            + "        <meta name=\"keywords\" content=\"Admin, Bootstrap 3, Template, Theme, Responsive\">\n"
+            + "        <!-- bootstrap 3.0.2 -->\n"
+            + "        <link href=\"../css/bootstrap.min.css\" rel=\"stylesheet\" type=\"text/css\" />\n"
+            + "        <!-- font Awesome -->\n"
+            + "        <link href=\"../css/font-awesome.min.css\" rel=\"stylesheet\" type=\"text/css\" />\n"
+            + "        <!-- Ionicons -->\n"
+            + "        <link href=\"../css/ionicons.min.css\" rel=\"stylesheet\" type=\"text/css\" />\n"
+            + "\n"
+            + "        <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>\n"
+            + "        <!-- Theme style -->\n"
+            + "        <link href=\"../css/style.css\" rel=\"stylesheet\" type=\"text/css\" />\n"
+            + "\n"
+            + "\n"
+            + "        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->\n"
+            + "        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->\n"
+            + "        <!--[if lt IE 9]>\n"
+            + "          <script src=\"https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js\"></script>\n"
+            + "          <script src=\"https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js\"></script>\n"
+            + "        <![endif]-->\n"
+            + "    </head>\n"
+            + "    <body class=\"skin-black\">\n"
+            + "        <div class=\"wrapper row-offcanvas row-offcanvas-left\">\n"
+            + "\n"
+            + "            <!-- Main content -->\n"
+            + "            <section class=\"content\">\n"
+            + "                <div class=\"row\">\n"
+            + "                    <div  class=\"col-lg-3\"></div>\n"
+            + "                    <div class=\"col-lg-6 \">\n"
+            + "                        <section class=\"panel\">\n"
+            + "                            <header class=\"panel-heading text-center\">\n"
+            + "                                Link Expired\n"
+            + "                            </header>\n"
+            + "                            "
+            + "                            <div class=\"panel-body\">\n"
+            + "                                <form action=\"../Account/ForgotPassword\" method=\"GET\" role=\"form\" onsubmit=\"return isValid\">\n"
+            + "                                    <div class=\"row\">\n"
+            + "                                        <div class=\"col-lg-2\"></div>\n"
+            + "                                        <div class=\"col-lg-8\">\n"
+            + "                                            <div class=\" form-group text-center\">\n"
+            + "                                                <button type=\"submit\" id=\"submit-btn\" class=\"btn btn-info\" >Resend</button>\n"
+            + "                                            </div>\n"
+            + "                                            <div class=\"row \">\n"
+            + "                                                <div class=\"col-lg-4\"></div>\n"
+            + "                                                <div class=\"col-lg-8\">\n"
+            + "                                                    <p> <a href=\"../login\"> &nbsp  &nbsp  &nbsp  &nbsp &nbsp Back to login</a></p>\n"
+            + "                                                </div>\n"
+            + "                                            </div>\n"
+            + "                                        </div>\n"
+            + "\n"
+            + "                                    </div>\n"
+            + "                                </form>\n"
+            + "\n"
+            + "                            </div>\n"
+            + "                        </section>\n"
+            + "                    </div>\n"
+            + "                </div>\n"
+            + "            </section>\n"
+            + "\n"
+            + "        </div>\n"
+            + "        <!-- jQuery 2.0.2 -->\n"
+            + "        <script src=\"http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js\"></script>\n"
+            + "        <script src=\"../js/jquery.min.js\" type=\"text/javascript\"></script>\n"
+            + "\n"
+            + "        <!-- Bootstrap -->\n"
+            + "        <script src=\"../js/bootstrap.min.js\" type=\"text/javascript\"></script>\n"
+            + "        <!-- Director App -->\n"
+            + "        <script src=\"../js/Director/app.js\" type=\"text/javascript\"></script>\n"
+            + "        <script src=\"../js/Director/myScript.js\" type=\"text/javascript\"></script>\n"
+            + "        <script>\n"
+            + "\n"
+            + "                                    /** HIDE ALERT**/\n"
+            + "                                    $(document).click(function (e) {\n"
+            + "                                        $('.error').hide();\n"
+            + "                                    });\n"
+            + "                                    /** HIDE ALERT**/\n"
+            + "\n"
+            + "\n"
+            + "        </script>\n"
+            + "    </body>\n"
+            + "</html>\n"
+            + "\n"
+            + "";
+    //</editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="pageNotFound">
+    private String pageNotFound = "\n"
+            + "<!DOCTYPE html>\n"
+            + "<html>\n"
+            + "    <head>\n"
+            + "        <link href=\"https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600;900&display=swap\" rel=\"stylesheet\">\n"
+            + "        <script src=\"https://kit.fontawesome.com/4b9ba14b0f.js\" crossorigin=\"anonymous\"></script>\n"
+            + "        <style>\n"
+            + "            body {\n"
+            + "                background-color: #95c2de;\n"
+            + "            }\n"
+            + "\n"
+            + "            .mainbox {\n"
+            + "                background-color: #95c2de;\n"
+            + "                margin: auto;\n"
+            + "                height: 600px;\n"
+            + "                width: 600px;\n"
+            + "                position: relative;\n"
+            + "            }\n"
+            + "\n"
+            + "            .err {\n"
+            + "                color: #ffffff;\n"
+            + "                font-family: 'Nunito Sans', sans-serif;\n"
+            + "                font-size: 11rem;\n"
+            + "                position:absolute;\n"
+            + "                left: 20%;\n"
+            + "                top: 8%;\n"
+            + "            }\n"
+            + "\n"
+            + "            .far {\n"
+            + "                position: absolute;\n"
+            + "                font-size: 8.5rem;\n"
+            + "                left: 42%;\n"
+            + "                top: 15%;\n"
+            + "                color: #ffffff;\n"
+            + "            }\n"
+            + "\n"
+            + "            .err2 {\n"
+            + "                color: #ffffff;\n"
+            + "                font-family: 'Nunito Sans', sans-serif;\n"
+            + "                font-size: 11rem;\n"
+            + "                position:absolute;\n"
+            + "                left: 68%;\n"
+            + "                top: 8%;\n"
+            + "            }\n"
+            + "\n"
+            + "            .msg {\n"
+            + "                text-align: center;\n"
+            + "                font-family: 'Nunito Sans', sans-serif;\n"
+            + "                font-size: 1.6rem;\n"
+            + "                position:absolute;\n"
+            + "                left: 16%;\n"
+            + "                top: 45%;\n"
+            + "                width: 75%;\n"
+            + "            }\n"
+            + "\n"
+            + "            a {\n"
+            + "                text-decoration: none;\n"
+            + "                color: white;\n"
+            + "            }\n"
+            + "\n"
+            + "            a:hover {\n"
+            + "                text-decoration: underline;\n"
+            + "            }\n"
+            + "\n"
+            + "        </style>\n"
+            + "    </head>\n"
+            + "    <body>\n"
+            + "        <div class=\"mainbox\">\n"
+            + "            <div class=\"err\">4</div>\n"
+            + "            <i class=\"far fa-question-circle fa-spin\"></i>\n"
+            + "            <div class=\"err2\">4</div>\n"
+            + "            <div class=\"msg\">Maybe this page moved? Got deleted? Is hiding out in quarantine? Never existed in the first place?<p>Let's go <a href=\"#\">home</a> and try from there.</p></div>\n"
+            + "        </div>\n"
+            + "    </body>\n"
+            + "</html>\n"
+            + "\n"
+            + "";
+    //</editor-fold>
+
+    // </editor-fold>
 }

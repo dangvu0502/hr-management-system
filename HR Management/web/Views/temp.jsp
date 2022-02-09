@@ -1,58 +1,76 @@
-<%-- 
-    Document   : Test
-    Created on : Jan 12, 2022, 8:30:25 AM
-    Author     : dangGG
---%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
-        <title>Forgot Password</title>
-        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-        <meta name="description" content="Developed By M Abdur Rokib Promy">
-        <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
-        <!-- bootstrap 3.0.2 -->
-        <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <!-- font Awesome -->
-        <link href="../css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-        <!-- Ionicons -->
-        <link href="../css/ionicons.min.css" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600;900&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/4b9ba14b0f.js" crossorigin="anonymous"></script>
+        <style>
+            body {
+                background-color: #95c2de;
+            }
 
-        <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
-        <!-- Theme style -->
-        <link href="../css/style.css" rel="stylesheet" type="text/css" />
+            .mainbox {
+                background-color: #95c2de;
+                margin: auto;
+                height: 600px;
+                width: 600px;
+                position: relative;
+            }
 
+            .err {
+                color: #ffffff;
+                font-family: 'Nunito Sans', sans-serif;
+                font-size: 11rem;
+                position:absolute;
+                left: 20%;
+                top: 8%;
+            }
 
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-          <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-        <![endif]-->
+            .far {
+                position: absolute;
+                font-size: 8.5rem;
+                left: 42%;
+                top: 15%;
+                color: #ffffff;
+            }
+
+            .err2 {
+                color: #ffffff;
+                font-family: 'Nunito Sans', sans-serif;
+                font-size: 11rem;
+                position:absolute;
+                left: 68%;
+                top: 8%;
+            }
+
+            .msg {
+                text-align: center;
+                font-family: 'Nunito Sans', sans-serif;
+                font-size: 1.6rem;
+                position:absolute;
+                left: 16%;
+                top: 45%;
+                width: 75%;
+            }
+
+            a {
+                text-decoration: none;
+                color: white;
+            }
+
+            a:hover {
+                text-decoration: underline;
+            }
+
+        </style>
     </head>
-    <body class="skin-black">
-          <script>
-                alert("Add new user successfully");
-            </script>
-    </body> 
-        <!-- jQuery 2.0.2 -->
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-        <script src="../js/jquery.min.js" type="text/javascript"></script>
-
-        <!-- Bootstrap -->
-        <script src="../js/bootstrap.min.js" type="text/javascript"></script>
-        <!-- Director App -->
-        <script src="../js/Director/app.js" type="text/javascript"></script>
-        <script src="../js/Director/myScript.js" type="text/javascript"></script>
-        <script>
-
-                              
-
-
-        </script>
+    <body>
+        <div class="mainbox">
+            <div class="err">4</div>
+            <i class="far fa-question-circle fa-spin"></i>
+            <div class="err2">4</div>
+            <div class="msg">Maybe this page moved? Got deleted? Is hiding out in quarantine? Never existed in the first place?<p>Let's go <a href="#">home</a> and try from there.</p></div>
+        </div>
     </body>
 </html>
 

@@ -57,7 +57,7 @@ public class UserController extends HttpServlet {
                     newUser(request, response, method);
                     break;
                 default:
-
+                    out.println(pageNotFound);
                     break;
             }
         } catch (Exception ex) {
@@ -132,6 +132,88 @@ public class UserController extends HttpServlet {
     }
 
 // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="HTML">
+    
+    // <editor-fold defaultstate="collapsed" desc="pageNotFound">
+    private String pageNotFound = "\n"
+            + "<!DOCTYPE html>\n"
+            + "<html>\n"
+            + "    <head>\n"
+            + "        <link href=\"https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600;900&display=swap\" rel=\"stylesheet\">\n"
+            + "        <script src=\"https://kit.fontawesome.com/4b9ba14b0f.js\" crossorigin=\"anonymous\"></script>\n"
+            + "        <style>\n"
+            + "            body {\n"
+            + "                background-color: #95c2de;\n"
+            + "            }\n"
+            + "\n"
+            + "            .mainbox {\n"
+            + "                background-color: #95c2de;\n"
+            + "                margin: auto;\n"
+            + "                height: 600px;\n"
+            + "                width: 600px;\n"
+            + "                position: relative;\n"
+            + "            }\n"
+            + "\n"
+            + "            .err {\n"
+            + "                color: #ffffff;\n"
+            + "                font-family: 'Nunito Sans', sans-serif;\n"
+            + "                font-size: 11rem;\n"
+            + "                position:absolute;\n"
+            + "                left: 20%;\n"
+            + "                top: 8%;\n"
+            + "            }\n"
+            + "\n"
+            + "            .far {\n"
+            + "                position: absolute;\n"
+            + "                font-size: 8.5rem;\n"
+            + "                left: 42%;\n"
+            + "                top: 15%;\n"
+            + "                color: #ffffff;\n"
+            + "            }\n"
+            + "\n"
+            + "            .err2 {\n"
+            + "                color: #ffffff;\n"
+            + "                font-family: 'Nunito Sans', sans-serif;\n"
+            + "                font-size: 11rem;\n"
+            + "                position:absolute;\n"
+            + "                left: 68%;\n"
+            + "                top: 8%;\n"
+            + "            }\n"
+            + "\n"
+            + "            .msg {\n"
+            + "                text-align: center;\n"
+            + "                font-family: 'Nunito Sans', sans-serif;\n"
+            + "                font-size: 1.6rem;\n"
+            + "                position:absolute;\n"
+            + "                left: 16%;\n"
+            + "                top: 45%;\n"
+            + "                width: 75%;\n"
+            + "            }\n"
+            + "\n"
+            + "            a {\n"
+            + "                text-decoration: none;\n"
+            + "                color: white;\n"
+            + "            }\n"
+            + "\n"
+            + "            a:hover {\n"
+            + "                text-decoration: underline;\n"
+            + "            }\n"
+            + "\n"
+            + "        </style>\n"
+            + "    </head>\n"
+            + "    <body>\n"
+            + "        <div class=\"mainbox\">\n"
+            + "            <div class=\"err\">4</div>\n"
+            + "            <i class=\"far fa-question-circle fa-spin\"></i>\n"
+            + "            <div class=\"err2\">4</div>\n"
+            + "            <div class=\"msg\">Maybe this page moved? Got deleted? Is hiding out in quarantine? Never existed in the first place?<p>Let's go <a href=\"#\">home</a> and try from there.</p></div>\n"
+            + "        </div>\n"
+            + "    </body>\n"
+            + "</html>\n"
+            + "\n"
+            + "";
+    //</editor-fold>
    
-          
+    // </editor-fold>
 }
