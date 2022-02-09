@@ -53,6 +53,9 @@ public class AccountController extends HttpServlet {
             String action = request.getPathInfo() == null ? "" : request.getPathInfo();
             String method = request.getMethod();
             switch (action) {
+                case "/Login":
+                    login(request, response, method);
+                    break;
                 case "/Register":
                     register(request, response, method);
                     break;
@@ -85,7 +88,63 @@ public class AccountController extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
+// <editor-fold defaultstate="collapsed" desc="Login">
+    private void login(HttpServletRequest request, HttpServletResponse response, String method)
+            throws Exception {
+        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter();) {
+            if (method.equalsIgnoreCase("post")) {
+                loginImplement(request, response);
+            } else if (method.equalsIgnoreCase("get")) {
+                showLoginView(request, response);
+            }
+        } catch (Exception ex) {
+            log(ex.getMessage());
+        }
+    }
 
+        
+
+    private void loginImplement(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
+        try (PrintWriter out = response.getWriter();) {
+            String username = request.getParameter("username");
+            String password = trippleDes.encrypt(request.getParameter("password"));
+            String verifyMessage = (String) request.getAttribute("verifyMessage");
+            String warning = null;
+
+            User account = new UserDAO().login(username, password);
+            if (account == null && verifyMessage == null) {
+                request.setAttribute("err", "Login failed");
+                request.getRequestDispatcher("Views/Login.jsp").forward(request, response);
+            } else if (account == null && verifyMessage != null) {
+                request.setAttribute("verifyMessage", verifyMessage);
+                request.getRequestDispatcher("Views/Login.jsp").forward(request, response);
+            } else if (account != null) {
+                if (!account.isStatus()) {
+                    request.setAttribute("err", "You do not have access to this website");
+                    request.getRequestDispatcher("Views/Login.jsp").forward(request, response);
+                } else {
+                    account.setPassword(trippleDes.decrypt(account.getPassword()));
+                    request.getSession().setAttribute("account", account); //lưu trên ss
+                    response.sendRedirect("../Views/Home.jsp");
+                }
+            }
+        }
+    }
+
+    private void showLoginView(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        response.setContentType("text/html;charset=UTF-8");
+        //PrintWriter out = response.getWriter();
+        //out.println(request.getContextPath());
+        request.getRequestDispatcher("/Views/Login.jsp").forward(request, response);
+    }
+
+    //</editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Register and RegisterVerify">
     private void setVerified(HttpServletRequest request, HttpServletResponse response)
             throws Exception {

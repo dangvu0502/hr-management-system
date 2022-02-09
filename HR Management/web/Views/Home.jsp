@@ -155,7 +155,7 @@
                 <%                    if (acc == null) {
                 %>
                 <div class="navbar-nav ml-auto">
-                    <a class="nav-item nav-link" href="../login">Login</a>
+                    <a class="nav-item nav-link" href="../Account/Login">Login</a>
                     <a class="nav-item nav-link " href="../Account/Register">Sign Up</a>
                 </div>
                 <%}%>
