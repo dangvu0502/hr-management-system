@@ -11,13 +11,16 @@ import DAO.UserDAO;
 import Models.User;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -89,6 +92,7 @@ public class AccountController extends HttpServlet {
         processRequest(request, response);
     }
 // <editor-fold defaultstate="collapsed" desc="Login">
+
     private void login(HttpServletRequest request, HttpServletResponse response, String method)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
@@ -104,8 +108,6 @@ public class AccountController extends HttpServlet {
         }
     }
 
-        
-
     private void loginImplement(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
@@ -119,16 +121,23 @@ public class AccountController extends HttpServlet {
             User account = new UserDAO().login(username, password);
             if (account == null && verifyMessage == null) {
                 request.setAttribute("err", "Login failed");
-                request.getRequestDispatcher("Views/Login.jsp").forward(request, response);
+                request.getRequestDispatcher("../Views/Login.jsp").forward(request, response);
             } else if (account == null && verifyMessage != null) {
                 request.setAttribute("verifyMessage", verifyMessage);
-                request.getRequestDispatcher("Views/Login.jsp").forward(request, response);
+                request.getRequestDispatcher("../Views/Login.jsp").forward(request, response);
             } else if (account != null) {
                 if (!account.isStatus()) {
                     request.setAttribute("err", "You do not have access to this website");
-                    request.getRequestDispatcher("Views/Login.jsp").forward(request, response);
+                    request.getRequestDispatcher("../Views/Login.jsp").forward(request, response);
                 } else {
+                    HttpSession session = request.getSession();
                     account.setPassword(trippleDes.decrypt(account.getPassword()));
+                    String pattern = "yyyy-MM-dd";
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+                    Date date1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(account.getDob());
+                    String date = simpleDateFormat.format(date1);
+                    account.setDob(date);
+                    session.setAttribute("account", account);
                     request.getSession().setAttribute("account", account); //lưu trên ss
                     response.sendRedirect("../Views/Home.jsp");
                 }
@@ -215,7 +224,6 @@ public class AccountController extends HttpServlet {
     }
 
     //</editor-fold>
-    
     // <editor-fold defaultstate="collapsed" desc="Forgot Password and New Password">
     private void newPassword(HttpServletRequest request, HttpServletResponse response, String method)
             throws Exception {
@@ -325,7 +333,6 @@ public class AccountController extends HttpServlet {
     //</editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="HTML">
-    
     // <editor-fold defaultstate="collapsed" desc="RegisterSuccess">
     private String registerSuccess
             = "<!DOCTYPE html>\n"
