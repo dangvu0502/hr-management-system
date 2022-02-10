@@ -93,6 +93,13 @@ public class User {
         this.verified = verified;
     }
 
+    public User(String fullname, String email) {
+        this.fullname = fullname;
+        this.email = email;
+    }
+
+    
+
     public int getId() {
         return id;
     }

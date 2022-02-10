@@ -5,8 +5,15 @@
  */
 package Controller;
 
+import DAO.ContractDAO;
+import DAO.EmployeeDAO;
+import Models.Contract;
+import Models.Employee;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -87,10 +94,70 @@ public class ContractController extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="ContractDetails">
     private void ContractDetails(HttpServletRequest request, HttpServletResponse response, String method) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter();) {
+            if (method.equalsIgnoreCase("post")) {
+                contractImplement(request, response);
+            } else if (method.equalsIgnoreCase("get")) {
+                showContractView(request, response);
+            }
+        } catch (Exception ex) {
+            log(ex.getMessage());
+        }
+    }
+
+    private void contractImplement(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String setting_type = request.getParameter("type");
+        String txtSearch = request.getParameter("txt");
+        String page = request.getParameter("page");
+        ContractDAO cDAO = new ContractDAO();
+        List<Contract> c = new ArrayList<>();
+        if (setting_type == null || txtSearch == null) {
+            c = cDAO.getContractList(Integer.parseInt(page));
+        } else {
+            c = cDAO.getContractBySearch(setting_type, txtSearch);
+            request.setAttribute("setting_type", setting_type);
+            request.setAttribute("txtSearch", txtSearch);
+        }
+        request.setAttribute("listC", c);
+        request.getRequestDispatcher("../Views/Contract.jsp").forward(request, response);
+    }
+
+    private void showContractView(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try {
+            String setting_type = request.getParameter("type");
+            String txtSearch = request.getParameter("txt");
+            String page = request.getParameter("page");
+            if (page == null) {
+                page = "1";
+            }
+            request.setAttribute("page", page);
+            ContractDAO cDAO = new ContractDAO();
+            int count = cDAO.getTotalContract();
+            int endPage = count / 2;
+            if (endPage % 2 != 0) {
+                endPage++;
+            }
+            request.setAttribute("endP", endPage);
+            List<Contract> c = new ArrayList<>();
+            c = cDAO.getContractList(Integer.parseInt(page));
+            request.setAttribute("listC", c);
+//            List<Contract> c = new ArrayList<>();
+//            if (setting_type == null || input == null) {
+//                c = cDAO.getContractList(Integer.parseInt(page));
+//            } else {
+//                c = cDAO.getContractBySearch(setting_type, input);
+//            }
+//            request.setAttribute("listC", c);
+            request.getRequestDispatcher("../Views/Contract.jsp").forward(request, response);
+        } catch (Exception e) {
+            System.out.println("Error" + e.getMessage());
+        }
     }
     //</editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="pageNotFound">
     private String pageNotFound = "\n"
             + "<!DOCTYPE html>\n"
@@ -170,4 +237,5 @@ public class ContractController extends HttpServlet {
             + "\n"
             + "";
     //</editor-fold>
+
 }
