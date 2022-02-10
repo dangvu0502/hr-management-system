@@ -6,11 +6,9 @@
 package Controller;
 
 import Context.TrippleDes;
-import DAO.EmployeeDAO;
 import DAO.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -18,23 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Models.User;
-import java.io.File;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
-import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 /**
  *
@@ -124,11 +106,9 @@ public class EditProfileController extends HttpServlet {
             String mobile = request.getParameter("mobile");
             String avatar = request.getParameter("fileName");
             String username = request.getParameter("username");
-            String password = trippleDes.encrypt(request.getParameter("password"));
             HttpSession session = request.getSession();
 
             User user = (User) session.getAttribute("account"); 
-            if (user.getPassword().equals(password)) {
 
                 user.setFullname(fullname);
                 user.setAddress(address);
@@ -144,10 +124,6 @@ public class EditProfileController extends HttpServlet {
                 }
 //                request.setAttribute("error", "success");
                 response.sendRedirect("Views/Home.jsp");
-            } else {
-//                request.setAttribute("error", "danger");
-                response.sendRedirect("Views/Home.jsp");
-            }
 
 //                response.sendRedirect("EditProfile");
         } catch (Exception ex) {

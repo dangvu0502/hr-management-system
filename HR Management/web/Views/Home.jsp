@@ -206,7 +206,7 @@
                             <h4 class="modal-title">Edit Profile</h4>
                         </div>
                         <div class="modal-body">
-                            <form action="../EditProfile" method="POST">
+                            <form action="../User/EditProfile" method="POST">
                                 <div class="row">
                                     <div class="col-md-3">
                                         <figure class="text-center">
@@ -219,23 +219,18 @@
                                         </figure>
                                     </div>
                                     <div class="col-md-9">
-                                        <div class="col-md-8 col-md-6">
+                                        <div class="col-md-8">
                                             <input name="username" type="hidden" value="${sessionScope.account.username}">
-                                            <div class="col-md"><label class="labels">Full name</label><input name="fullname" type="text" class="form-control" value="${sessionScope.account.fullname}"></div>
-                                            <div class="col-md"><label class="labels">Date of birth</label><input name="dob" type="date" class="form-control" value="${sessionScope.account.dob}" ></div>
-                                            <div class="col-md"><label class="labels">Address</label><input name="address" type="text" class="form-control" value="${sessionScope.account.address}" ></div>
-                                            <input id="password1" type="hidden" class="form-control" value="${sessionScope.account.password}">
-                                        </div>
-                                        <div class="col-md-8 col-md-6">
-                                            <div class="col-md"><label class="labels">Sex</label>
-                                                <select class="form-control" name="gender">
-                                                    <option value="1" ${sessionScope.account.gender eq '1'?"selected":""}>Male</option>
-                                                    <option value="0" ${sessionScope.account.gender eq '0'?"selected":""}>Female</option>
-                                                </select>
+                                            <div class="col-md"><label class="labels">Full name</label><input name="fullname" type="text" class="form-control" value="${sessionScope.account.fullname}" required=""></div>
+                                            <div class="col-md"><label class="labels">Date of birth</label><input name="dob" type="date" class="form-control" value="${sessionScope.account.dob}" required=""></div>
+                                            <div class="col-md"><label class="labels">Address</label><input name="address" type="text" class="form-control" value="${sessionScope.account.address}" required="" ></div>
+                                            <div class="col-md"><label class="labels">Sex</label></br>
+                                                <label class="labels" for="1">Male</label>&nbsp&nbsp<input id="1" value="true" name="gender" type="radio" ${sessionScope.account.gender == 'true'?'checked':''} >
+                                                <label class="labels" for="0">Female</label>&nbsp&nbsp<input id="0" value="false" name="gender" type="radio" ${sessionScope.account.gender == 'false'?'checked':''} >
+
                                             </div>
-                                            <div class="col-md"><label class="labels">Email</label><input name="email" type="email" class="form-control" value="${sessionScope.account.email}" disabled="" ></div>
-                                            <div class="col-md"><label class="labels">Phone number</label><input name="mobile" type="tel" class="form-control" value="${sessionScope.account.mobile}" ></div>
-                                            <div class="col-md"><label class="labels">Password</label><input id="password2" name="password" type="password" class="form-control" value="" required=""></div>
+                                            <div class="col-md"><label class="labels">Email</label><input name="email" type="email" class="form-control" value="${sessionScope.account.email}" disabled=""></div>
+                                            <div class="col-md"><label class="labels">Phone number</label><input name="mobile" type="tel" class="form-control" value="${sessionScope.account.mobile}" required="" ></div>
 
                                         </div>
 
@@ -243,7 +238,7 @@
 
                                 </div>
 
-                                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit" onclick="checkPassword()">Save Profile</button></div>
+                                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit" onchange="checkPassword()">Save Profile</button></div>
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -415,14 +410,7 @@
 
                                     /** CHECK EDIT PROFILE**/
                                     function checkPassword() {
-                                        var password1 = document.getElementById('password1').value;
-                                        var password2 = document.getElementById('password2').value;
-                                        if (password1 == password2) {
-                                            alert("Successful change your information!!");
-                                        } else {
-                                            alert( "Wrong password");
-                                        }
-//            document.getElementById('frm').submit()
+                                        alert("Successful change your information!!");
                                     }
                                     /** CHECK EDIT PROFILE**/
 
@@ -433,9 +421,9 @@
                                         var newpassword = document.getElementById('newpassword').value;
                                         var conpassword = document.getElementById('conpassword').value;
                                         if (oldpassword == oldpassword1) {
-                                            if(newpassword == conpassword){
+                                            if (newpassword == conpassword) {
                                                 alert("Successful update your new password!!");
-                                            }else{
+                                            } else {
                                                 alert("Wrong confirm password");
                                             }
                                         } else {
@@ -443,7 +431,7 @@
                                         }
                                     }
                                     /** CHECK CHANGE PASSWORD**/
-                                    
+
                                     /** DOWNLOAD IMAGE**/
                                     function downloadImage() {
                                         var file = document.getElementById('file')
