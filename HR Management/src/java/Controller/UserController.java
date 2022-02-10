@@ -61,6 +61,9 @@ public class UserController extends HttpServlet {
                 case "/EditProfile":
                     editprofile(request, response, method);
                     break;
+                case "/ChangePassword":
+                    changepassword(request, response, method);
+                    break;
                 default:
                     out.println(pageNotFound);
                     break;
@@ -83,7 +86,6 @@ public class UserController extends HttpServlet {
     }
 
     // <editor-fold defaultstate="collapsed" desc="New User">
-    
     private void newUser(HttpServletRequest request, HttpServletResponse response, String method)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
@@ -93,7 +95,7 @@ public class UserController extends HttpServlet {
             newUserImplement(request, response);
         }
     }
-  
+
     private void newUserImplement(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
@@ -102,7 +104,7 @@ public class UserController extends HttpServlet {
             String groupcode = request.getParameter("group-code");
             String fullname = request.getParameter("fullname");
             String username = request.getParameter("username");
-          
+
             String email = request.getParameter("email");
             String mobile = request.getParameter("mobile");
             boolean gender = request.getParameter("gender").equals("male");
@@ -120,9 +122,9 @@ public class UserController extends HttpServlet {
                 response.sendRedirect("../User/NewUser");
             } else {
                 //check if the email send successfully
-                 LocalDateTime now = LocalDateTime.now();
+                LocalDateTime now = LocalDateTime.now();
                 String message = trippleDes.encrypt(email + " " + now.plusYears(999999).toString());
-                if (SendEmail.send(email, "User infor", userInforEmail(user,"http://localhost:8080/HR_Management/Account/NewPassword?"+message))) {
+                if (SendEmail.send(email, "User infor", userInforEmail(user, "http://localhost:8080/HR_Management/Account/NewPassword?" + message))) {
                     userDAO.addNewUser(user);
                     request.getSession().setAttribute("successMessage", "Add New User Successfully");
                     response.sendRedirect("../User/NewUser");
@@ -164,34 +166,34 @@ public class UserController extends HttpServlet {
                 + "  </tr>\n"
                 + "  <tr>\n"
                 + "    <td>Group Code</td>\n"
-                + "    <td>"+user.getGroup_code()+" </td>\n"
+                + "    <td>" + user.getGroup_code() + " </td>\n"
                 + "  </tr>\n"
                 + "  <tr>\n"
                 + "    <td>Full name</td>\n"
-                + "    <td>"+user.getFullname()+"  </td>\n"
+                + "    <td>" + user.getFullname() + "  </td>\n"
                 + "  </tr>\n"
                 + "  <tr>\n"
                 + "    <td>Username</td>\n"
-                + "    <td>"+user.getUsername()+"  </td>\n"
+                + "    <td>" + user.getUsername() + "  </td>\n"
                 + "  </tr>\n"
                 + "  <tr>\n"
                 + "    <td>Email</td>\n"
-                + "    <td>"+user.getEmail()+"  </td>\n"
+                + "    <td>" + user.getEmail() + "  </td>\n"
                 + "  </tr>\n"
                 + "  <tr>\n"
                 + "    <td>Mobile</td>\n"
-                + "    <td>"+user.getMobile()+"  </td>\n"
+                + "    <td>" + user.getMobile() + "  </td>\n"
                 + "  </tr>\n"
                 + "  <tr>\n"
                 + "    <td>Gender</td>\n"
-                + "    <td>"+(user.isGender() == true ? "Male" : "Female")+"  </td>\n"
+                + "    <td>" + (user.isGender() == true ? "Male" : "Female") + "  </td>\n"
                 + "  </tr>\n"
                 + "  <tr>\n"
                 + "    <td>System Role</td>\n"
-                + "    <td>"+user.getRole_id()+"</td>\n"
+                + "    <td>" + user.getRole_id() + "</td>\n"
                 + "  </tr>\n"
                 + "  <tr>\n"
-                + "    <td  colspan=\"2\">Click here to set up your password:"+link+"</td>\n"
+                + "    <td  colspan=\"2\">Click here to set up your password:" + link + "</td>\n"
                 + "  </tr>\n"
                 + "</table>\n"
                 + "\n"
@@ -203,6 +205,7 @@ public class UserController extends HttpServlet {
 
 // </editor-fold>
     
+    // <editor-fold defaultstate="collapsed" desc="EditProfile">
     private void editprofile(HttpServletRequest request, HttpServletResponse response, String method) {
         response.setContentType("text/html;charset=UTF-8");
         response.setContentType("text/html;charset=UTF-8");
@@ -215,8 +218,7 @@ public class UserController extends HttpServlet {
         }
     }
 
-    private void editProfileImplement(HttpServletRequest request, HttpServletResponse response) {
-        try {
+    private void editProfileImplement(HttpServletRequest request, HttpServletResponse response) throws IOException {
             /* TODO output your page here. You may use following sample code. */
 
             response.setContentType("text/html;charset=UTF-8");
@@ -253,10 +255,8 @@ public class UserController extends HttpServlet {
             response.sendRedirect("../Views/Home.jsp");
 
 //                response.sendRedirect("EditProfile");
-        } catch (Exception ex) {
-            Logger.getLogger(EditProfileController.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
+    //</editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="HTML">
     // <editor-fold defaultstate="collapsed" desc="pageNotFound">
@@ -339,5 +339,43 @@ public class UserController extends HttpServlet {
             + "";
     //</editor-fold>
 
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="ChangePassword">
+    private void changepassword(HttpServletRequest request, HttpServletResponse response, String method) {
+        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter();) {
+            if (method.equalsIgnoreCase("post")) {
+                changePasswordImplement(request, response);
+            }
+        } catch (Exception ex) {
+            log(ex.getMessage());
+        }
+    }
+
+    private void changePasswordImplement(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        UserDAO dao = new UserDAO();
+        String username = request.getParameter("username");
+        String oldpassword = trippleDes.encrypt(request.getParameter("oldpassword"));
+        String newpassword = trippleDes.encrypt(request.getParameter("newpassword"));
+        String conpassword = trippleDes.encrypt(request.getParameter("conpassword"));
+
+//        User user = (User) session.getAttribute("account");
+        User account = new UserDAO().login(username, oldpassword);
+        if (account != null) {
+            if (newpassword.equals(conpassword)) {
+                HttpSession session = request.getSession();
+                account.setPassword(trippleDes.decrypt(account.getPassword()));
+                request.getSession().setAttribute("account", account);
+                dao.ChangePassword(newpassword, username);
+                response.sendRedirect("../Views/Home.jsp");
+            } else {
+                response.sendRedirect("../Views/Home.jsp");
+            }
+        } else {
+            response.sendRedirect("../Views/Home.jsp");
+        }
+    }
     // </editor-fold>
 }

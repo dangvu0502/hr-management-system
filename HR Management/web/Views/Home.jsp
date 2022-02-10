@@ -148,6 +148,9 @@
                         <a class="nav-item nav-link" href="../grouplist">Group List</a>
                         <a class="nav-item nav-link" href="../User/NewUser">New User</a>
                     </c:if>
+                    <c:if test="${sessionScope.account.role_id == 2}"> 
+                        <a class="nav-item nav-link" href="../Contract/Details">Contract</a>
+                    </c:if>
                     <a class="nav-item nav-link" href="#">Our Team</a>
 
                 </div>
@@ -263,7 +266,7 @@
                             <img class="img-rounded" src="../userimg/${sessionScope.account.avatar}" alt="avatar" style="width:200px">
                         </figure>
                         <div class="modal-body">
-                            <form action="../ChangePassword" method="POST">
+                            <form action="../User/ChangePassword" method="POST">
                                 <div class="row justify-content-md-center">
                                     <div class="col-5">
                                         <input name="username" type="hidden" value="${sessionScope.account.username}">
