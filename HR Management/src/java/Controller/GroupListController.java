@@ -35,7 +35,7 @@ public class GroupListController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            String setting_type = request.getParameter("type");
+            String group_type = request.getParameter("type");
             String input = request.getParameter("input");
             String page = request.getParameter("page");
             if (page == null) page = "1";
@@ -46,10 +46,10 @@ public class GroupListController extends HttpServlet {
             if (endPage % 3 != 0) endPage++;
             request.setAttribute("endP", endPage);
             Vector<Group> g = new Vector();
-            if (setting_type == null || input == null) {
+            if (group_type == null || input == null || input.isEmpty()) {
                 g = gDAO.getGroupList(Integer.parseInt(page));
             } else {
-                g = gDAO.getGroupBySearch(setting_type, input);
+                g = gDAO.getGroupBySearch(group_type, input);
             }
             request.setAttribute("listG", g);
             request.getRequestDispatcher("Views/GroupView.jsp").forward(request, response);

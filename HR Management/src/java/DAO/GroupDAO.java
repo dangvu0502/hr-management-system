@@ -63,11 +63,11 @@ public class GroupDAO {
         }
         return 0;
     }
-      public Vector<Group> getGroupBySearch(String setting_type, String input) {
+      public Vector<Group> getGroupBySearch(String group_type, String input) {
         Vector vec = new Vector();
         try {
             String sql = "SELECT * FROM hr_system_v2.group"
-                    + " where " + setting_type + " = ?";
+                    + " where " + group_type + " = ?";
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
             ps.setString(1, input);
@@ -81,6 +81,7 @@ public class GroupDAO {
                 g.setDescription(rs.getString(5));
                 g.setParent_group_code(rs.getString(6));
                 g.setDelete(rs.getBoolean(7));
+                g.setUpdate_date(rs.getDate(8));
                 vec.add(g);
             }
         } catch (Exception e) {
