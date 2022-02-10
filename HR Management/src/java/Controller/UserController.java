@@ -91,7 +91,7 @@ public class UserController extends HttpServlet {
             newUserImplement(request, response);
         }
     }
-
+    // <editor-fold defaultstate="collapsed" desc="New User">
     private void newUserImplement(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
@@ -201,6 +201,7 @@ public class UserController extends HttpServlet {
     }
 
 // </editor-fold>
+    
     private void editprofile(HttpServletRequest request, HttpServletResponse response, String method) {
         response.setContentType("text/html;charset=UTF-8");
         response.setContentType("text/html;charset=UTF-8");
