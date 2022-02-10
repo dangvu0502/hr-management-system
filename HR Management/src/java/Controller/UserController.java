@@ -204,6 +204,8 @@ public class UserController extends HttpServlet {
     }
 
 // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="EditProfile">
     private void editprofile(HttpServletRequest request, HttpServletResponse response, String method) {
         response.setContentType("text/html;charset=UTF-8");
         response.setContentType("text/html;charset=UTF-8");
@@ -254,6 +256,7 @@ public class UserController extends HttpServlet {
 
 //                response.sendRedirect("EditProfile");
     }
+    //</editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="HTML">
     // <editor-fold defaultstate="collapsed" desc="pageNotFound">
@@ -337,6 +340,8 @@ public class UserController extends HttpServlet {
     //</editor-fold>
 
     // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="ChangePassword">
     private void changepassword(HttpServletRequest request, HttpServletResponse response, String method) {
         response.setContentType("text/html;charset=UTF-8");
         response.setContentType("text/html;charset=UTF-8");
@@ -372,4 +377,5 @@ public class UserController extends HttpServlet {
             response.sendRedirect("../Views/Home.jsp");
         }
     }
+    // </editor-fold>
 }

@@ -28,6 +28,10 @@
         <servlet-name>UserController</servlet-name>
         <servlet-class>Controller.UserController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ContractController</servlet-name>
+        <servlet-class>Controller.ContractController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SettingListController</servlet-name>
         <url-pattern>/SettingListController</url-pattern>
@@ -55,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>UserController</servlet-name>
         <url-pattern>/User/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ContractController</servlet-name>
+        <url-pattern>/Contract/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
