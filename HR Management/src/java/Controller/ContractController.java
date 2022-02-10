@@ -108,15 +108,27 @@ public class ContractController extends HttpServlet {
     }
 
     private void contractImplement(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         String setting_type = request.getParameter("type");
         String txtSearch = request.getParameter("txt");
         String page = request.getParameter("page");
+        if (page == null) {
+            page = "1";
+        }
+        request.setAttribute("page", page);
         ContractDAO cDAO = new ContractDAO();
+        int count = cDAO.getTotalContract();
+        int endPage = count / 2;
+        if (endPage % 2 != 0) {
+            endPage++;
+        }
+        request.setAttribute("endP", endPage);
         List<Contract> c = new ArrayList<>();
         if (setting_type == null || txtSearch == null) {
             c = cDAO.getContractList(Integer.parseInt(page));
         } else {
-            c = cDAO.getContractBySearch(setting_type, txtSearch);
+            c = cDAO.getContractBySearch(setting_type, txtSearch, Integer.parseInt(page));
             request.setAttribute("setting_type", setting_type);
             request.setAttribute("txtSearch", txtSearch);
         }
@@ -125,6 +137,7 @@ public class ContractController extends HttpServlet {
     }
 
     private void showContractView(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
         try {
             String setting_type = request.getParameter("type");
