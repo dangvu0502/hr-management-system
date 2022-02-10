@@ -336,6 +336,7 @@ public class AccountController extends HttpServlet {
     //</editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="HTML">
+    
     // <editor-fold defaultstate="collapsed" desc="RegisterSuccess">
     private String registerSuccess
             = "<!DOCTYPE html>\n"

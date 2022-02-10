@@ -11,6 +11,7 @@ import DAO.UserDAO;
 import Models.User;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -118,7 +119,9 @@ public class UserController extends HttpServlet {
                 response.sendRedirect("../User/NewUser");
             } else {
                 //check if the email send successfully
-                if (SendEmail.send(email, "User infor", userInforEmail(user))) {
+                 LocalDateTime now = LocalDateTime.now();
+                String message = trippleDes.encrypt(email + " " + now.toString());
+                if (SendEmail.send(email, "User infor", userInforEmail(user,"http://localhost:8080/HR_Management/Account/NewPassword?"+message))) {
                     userDAO.addNewUser(user);
                     request.getSession().setAttribute("successMessage", "Add New User Successfully");
                     response.sendRedirect("../User/NewUser");
@@ -137,126 +140,122 @@ public class UserController extends HttpServlet {
         request.getRequestDispatcher("/Views/NewUserView.jsp").forward(request, response);
     }
 
-    private String userInforEmail(User user)
+    private String userInforEmail(User user, String link)
             throws Exception {
         return // <editor-fold defaultstate="collapsed" desc="HTML email">        
-                "\n"
-                + "<!DOCTYPE html>\n"
+                "<!DOCTYPE html>\n"
                 + "<html>\n"
-                + "    <head>\n"
-                + "        <link href=\"//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css\" rel=\"stylesheet\" id=\"bootstrap-css\">\n"
-                + "        <script src=\"//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js\"></script>\n"
-                + "        <script src=\"//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js\"></script>\n"
-                + "        <style>\n"
-                + "            * {\n"
-                + "                box-sizing: border-box;\n"
-                + "            }\n"
-                + "\n"
-                + "            /* Style inputs */\n"
-                + "            input[type=text], select, textarea {\n"
-                + "                width: 100%;\n"
-                + "                padding: 12px;\n"
-                + "                border: 1px solid #ccc;\n"
-                + "                margin-top: 6px;\n"
-                + "                margin-bottom: 16px;\n"
-                + "                resize: vertical;\n"
-                + "            }\n"
-                + "\n"
-                + "            input[type=submit] {\n"
-                + "                background-color: #23b7e5;\n"
-                + "                color: white;\n"
-                + "                padding: 12px 20px;\n"
-                + "                border: none;\n"
-                + "                cursor: pointer;\n"
-                + "            }\n"
-                + "\n"
-                + "            input[type=submit]:hover {\n"
-                + "                background-color: #23b7e5;\n"
-                + "            }\n"
-                + "\n"
-                + "            /* Style the container/contact section */\n"
-                + "            .container {\n"
-                + "                border-radius: 5px;\n"
-                + "                background-color: #f2f2f2;\n"
-                + "                padding: 10px;\n"
-                + "            }\n"
-                + "\n"
-                + "            /* Create two columns that float next to eachother */\n"
-                + "            .column {\n"
-                + "                float: left;\n"
-                + "                width: 50%;\n"
-                + "                margin-top: 6px;\n"
-                + "                padding: 20px;\n"
-                + "            }\n"
-                + "\n"
-                + "            .column-hidden {\n"
-                + "                float: left;\n"
-                + "                width: 25%;\n"
-                + "                margin-top: 6px;\n"
-                + "                padding: 20px;\n"
-                + "            }\n"
-                + "\n"
-                + "            /* Clear floats after the columns */\n"
-                + "            .row:after {\n"
-                + "                content: \"\";\n"
-                + "                display: table;\n"
-                + "                clear: both;\n"
-                + "            }\n"
+                + "<head>\n"
+                + "<style>\n"
+                + "table, th, td {\n"
+                + "  border: 1px solid black;\n"
+                + "   border-collapse: collapse;\n"
+                + "}\n"
+                + "</style>\n"
+                + "</head>\n"
+                + "<body>\n"
                 + "\n"
                 + "\n"
-                + "            .jander2{\n"
-                + "                font-weight: bold;\n"
-                + "            }\n"
                 + "\n"
-                + "            /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */\n"
-                + "            @media screen and (max-width: 600px) {\n"
-                + "                .column, input[type=submit] {\n"
-                + "                    width: 100%;\n"
-                + "                    margin-top: 0;\n"
-                + "                }\n"
-                + "            }\n"
-                + "        </style>\n"
-                + "    </head>\n"
-                + "    <body class=\"bg-light\">\n"
-                + "        <div class=\"container\">\n"
-                + "            <div style=\"text-align:center\">\n"
-                + "                <h2>User information</h2>\n"
-                + "            </div>\n"
-                + "            <div class=\"row\">\n"
-                + "                <div class=\"column-hidden\">\n"
-                + "                </div>\n"
-                + "                <div class=\"column\">\n"
-                + "                    <label for=\"group-code\">Group Code</label>\n"
-                + "                    <input class=\"jander2\" type=\"text\" id=\"group-code\" value=\"" + user.getGroup_code() + "\" disabled=\"\">\n" + "<br>"
-                + "                    <label for=\"fullname\">Full Name</label>\n"
-                + "                    <input class=\"jander2\"  type=\"text\" id=\"fullname\" name=\"fullname\" value=\"" + user.getFullname() + "\" disabled=\"\">\n" + "<br>"
-                + "                    <label for=\"username\">User Name</label>\n"
-                + "                    <input class=\"jander2\" type=\"text\" id=\"username\" name=\"username\" value=\"" + user.getUsername() + "\" disabled=\"\">\n" + "<br>"
-                + "                    <label for=\"email\">Email</label>\n"
-                + "                    <input class=\"jander2\" type=\"text\" id=\"email\" name=\"email\" value=\"" + user.getEmail() + "\" disabled=\"\">\n" + "<br>"
-                + "                    <label for=\"mobile\">Mobile</label>\n"
-                + "                    <input class=\"jander2\" type=\"text\" id=\"mobile\" name=\"mobile\" value=\"" + user.getMobile() + "\" disabled=\"\">\n" + "<br>"
-                + "                    <label for=\"gender\">Gender</label>\n"
-                + "                    <input  class=\"jander2\" type=\"text\" id=\"gender\" name=\"gender\" value=\"" + (user.isGender() == true ? "Male" : "Female") + "\" disabled=\"\">\n" + "<br>"
-                + "                    <label for=\"system-role\">System Role</label>\n"
-                + "                    <input class=\"jander2\" type=\"text\" id=\"system-role\" name=\"system-role\" value=\"" + user.getRole_id() + "\" disabled=\"\">\n" + "<br>"
-                + "                    <label for=\"password\">Password</label>\n"
-                + "                    <input class=\"jander2\" type=\"text\" id=\"password\" name=\"password\" value=\"" + user.getPassword() + "\" disabled=\"\">\n" + "<br>"
-                + "                    <div >\n"
-                + "                        <input  type=\"submit\" value=\"Click here to change password\">\n"
-                + "                    </div>\n"
-                + "                </div>\n"
-                + "            </div>\n"
-                + "        </div>\n"
-                + "    </body>\n"
-                + "</html>\n"
+                + "<table>\n"
+                + "  <tr>\n"
+                + "    <th colspan=\"2\">User infor</th>\n"
+                + "  </tr>\n"
+                + "  <tr>\n"
+                + "    <td>Group Code</td>\n"
+                + "    <td>"+user.getGroup_code()+" </td>\n"
+                + "  </tr>\n"
+                + "  <tr>\n"
+                + "    <td>Full name</td>\n"
+                + "    <td>"+user.getFullname()+"  </td>\n"
+                + "  </tr>\n"
+                + "  <tr>\n"
+                + "    <td>Username</td>\n"
+                + "    <td>"+user.getUsername()+"  </td>\n"
+                + "  </tr>\n"
+                + "  <tr>\n"
+                + "    <td>Email</td>\n"
+                + "    <td>"+user.getEmail()+"  </td>\n"
+                + "  </tr>\n"
+                + "  <tr>\n"
+                + "    <td>Mobile</td>\n"
+                + "    <td>"+user.getMobile()+"  </td>\n"
+                + "  </tr>\n"
+                + "  <tr>\n"
+                + "    <td>Gender</td>\n"
+                + "    <td>"+(user.isGender() == true ? "Male" : "Female")+"  </td>\n"
+                + "  </tr>\n"
+                + "  <tr>\n"
+                + "    <td>System Role</td>\n"
+                + "    <td>"+user.getRole_id()+"</td>\n"
+                + "  </tr>\n"
+                + "  <tr>\n"
+                + "    <td  colspan=\"2\">Click here to set up your password:"+link+"</td>\n"
+                + "  </tr>\n"
+                + "</table>\n"
                 + "\n"
-                + "";
+                + "</body>\n"
+                + "</html>";
 
         // </editor-fold>
     }
 
 // </editor-fold>
+    private void editprofile(HttpServletRequest request, HttpServletResponse response, String method) {
+        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter();) {
+            if (method.equalsIgnoreCase("post")) {
+                editProfileImplement(request, response);
+            }
+        } catch (Exception ex) {
+            log(ex.getMessage());
+        }
+    }
+
+    private void editProfileImplement(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            /* TODO output your page here. You may use following sample code. */
+
+            response.setContentType("text/html;charset=UTF-8");
+            response.setCharacterEncoding("UTF-8");
+            request.setCharacterEncoding("UTF-8");
+
+            UserDAO dao = new UserDAO();
+
+            String fullname = request.getParameter("fullname");
+            String dob = request.getParameter("dob");
+            String address = request.getParameter("address");
+            Boolean gender = Boolean.parseBoolean(request.getParameter("gender"));
+//            String email = request.getParameter("email");
+            String mobile = request.getParameter("mobile");
+            String avatar = request.getParameter("fileName");
+            String username = request.getParameter("username");
+            HttpSession session = request.getSession();
+
+            User user = (User) session.getAttribute("account");
+
+            user.setFullname(fullname);
+            user.setAddress(address);
+            user.setDob(dob);
+            user.setGender(gender);
+            user.setMobile(mobile);
+            session.setAttribute("account", user);
+            if (avatar.isEmpty()) {
+                dao.UpdateProfileAvtNull(fullname, mobile, gender, dob, address, username);
+            } else {
+                user.setAvatar(avatar);
+                dao.UpdateProfile(fullname, avatar, mobile, gender, dob, address, username);
+            }
+//                request.setAttribute("error", "success");
+            response.sendRedirect("../Views/Home.jsp");
+
+//                response.sendRedirect("EditProfile");
+        } catch (Exception ex) {
+            Logger.getLogger(EditProfileController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     // <editor-fold defaultstate="collapsed" desc="HTML">
     // <editor-fold defaultstate="collapsed" desc="pageNotFound">
     private String pageNotFound = "\n"
@@ -339,59 +338,4 @@ public class UserController extends HttpServlet {
     //</editor-fold>
 
     // </editor-fold>
-
-    private void editprofile(HttpServletRequest request, HttpServletResponse response, String method) {
-        response.setContentType("text/html;charset=UTF-8");
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter();) {
-            if (method.equalsIgnoreCase("post")) {
-                editProfileImplement(request, response);
-            }
-        } catch (Exception ex) {
-            log(ex.getMessage());
-        }
-    }
-
-    private void editProfileImplement(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            /* TODO output your page here. You may use following sample code. */
-
-            response.setContentType("text/html;charset=UTF-8");
-            response.setCharacterEncoding("UTF-8");
-            request.setCharacterEncoding("UTF-8");
-
-            UserDAO dao = new UserDAO();
-
-            String fullname = request.getParameter("fullname");
-            String dob = request.getParameter("dob");
-            String address = request.getParameter("address");
-            Boolean gender = Boolean.parseBoolean(request.getParameter("gender"));
-//            String email = request.getParameter("email");
-            String mobile = request.getParameter("mobile");
-            String avatar = request.getParameter("fileName");
-            String username = request.getParameter("username");
-            HttpSession session = request.getSession();
-
-            User user = (User) session.getAttribute("account"); 
-
-                user.setFullname(fullname);
-                user.setAddress(address);
-                user.setDob(dob);
-                user.setGender(gender);
-                user.setMobile(mobile);
-                session.setAttribute("account", user);
-                if (avatar.isEmpty()) {
-                    dao.UpdateProfileAvtNull(fullname, mobile, gender, dob, address, username);
-                } else {
-                    user.setAvatar(avatar);
-                    dao.UpdateProfile(fullname, avatar, mobile, gender, dob, address, username);
-                }
-//                request.setAttribute("error", "success");
-                response.sendRedirect("../Views/Home.jsp");
-
-//                response.sendRedirect("EditProfile");
-        } catch (Exception ex) {
-            Logger.getLogger(EditProfileController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 }
