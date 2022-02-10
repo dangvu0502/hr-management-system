@@ -82,6 +82,8 @@ public class UserController extends HttpServlet {
         processRequest(request, response);
     }
 
+    // <editor-fold defaultstate="collapsed" desc="New User">
+    
     private void newUser(HttpServletRequest request, HttpServletResponse response, String method)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
@@ -91,7 +93,7 @@ public class UserController extends HttpServlet {
             newUserImplement(request, response);
         }
     }
-    // <editor-fold defaultstate="collapsed" desc="New User">
+  
     private void newUserImplement(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
@@ -100,8 +102,7 @@ public class UserController extends HttpServlet {
             String groupcode = request.getParameter("group-code");
             String fullname = request.getParameter("fullname");
             String username = request.getParameter("username");
-            String passwordRaw = SendEmail.getRandom();
-            String password = trippleDes.encrypt(passwordRaw);
+          
             String email = request.getParameter("email");
             String mobile = request.getParameter("mobile");
             boolean gender = request.getParameter("gender").equals("male");
@@ -109,7 +110,7 @@ public class UserController extends HttpServlet {
             boolean status = true;
             boolean verified = true;
             //   out.println(groupcode+" "+fullname+" "+username+" "+email+" "+mobile+" "+gender+" "+role_id);
-            User user = new User(fullname, username, password, email, mobile, gender, groupcode, status, verified, roleId);
+            User user = new User(fullname, username, email, mobile, gender, groupcode, status, verified, roleId);
             // check user email or username existed in database
             if (userDAO.searchUserByUsername(username) != null) {
                 request.getSession().setAttribute("usernameErrorMessage", "Username existed");
@@ -120,7 +121,7 @@ public class UserController extends HttpServlet {
             } else {
                 //check if the email send successfully
                  LocalDateTime now = LocalDateTime.now();
-                String message = trippleDes.encrypt(email + " " + now.toString());
+                String message = trippleDes.encrypt(email + " " + now.plusYears(999999).toString());
                 if (SendEmail.send(email, "User infor", userInforEmail(user,"http://localhost:8080/HR_Management/Account/NewPassword?"+message))) {
                     userDAO.addNewUser(user);
                     request.getSession().setAttribute("successMessage", "Add New User Successfully");

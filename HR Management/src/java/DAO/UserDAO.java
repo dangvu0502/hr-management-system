@@ -113,8 +113,8 @@ public class UserDAO {
     public int addNewUser(User user) throws Exception {
         int rows = 0;
         try {
-            String sql = "INSERT INTO `hr_system_v2`.`user` (`fullname`,`email`,`mobile`,`gender`,`password`,`username`"
-                    + ",`status`,`verified`,`group_code`,`role_id`) VALUES (?,?,?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO `hr_system_v2`.`user` (`fullname`,`email`,`mobile`,`gender`,`username`"
+                    + ",`status`,`verified`,`group_code`,`role_id`) VALUES (?,?,?,?,?,?,?,?,?)";
             con = new DBContext().getConnection();
             con.setAutoCommit(false);
             ps = con.prepareStatement(sql);
@@ -122,12 +122,11 @@ public class UserDAO {
             ps.setString(2, user.getEmail());
             ps.setString(3, user.getMobile());
             ps.setBoolean(4, user.isGender());
-            ps.setString(5, user.getPassword());
-            ps.setString(6, user.getUsername());
-            ps.setBoolean(7, user.isStatus());
-            ps.setBoolean(8, user.isVerified());
-            ps.setString(9, user.getGroup_code());
-            ps.setInt(10, user.getRole_id());
+            ps.setString(5, user.getUsername());
+            ps.setBoolean(6, user.isStatus());
+            ps.setBoolean(7, user.isVerified());
+            ps.setString(8, user.getGroup_code());
+            ps.setInt(9, user.getRole_id());
             rows = ps.executeUpdate();
             con.commit();
         } catch (Exception e) {

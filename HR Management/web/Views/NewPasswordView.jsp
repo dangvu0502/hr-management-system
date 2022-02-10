@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Forgot Password</title>
+        <title>New Password</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
@@ -43,7 +43,7 @@
                     <div class="col-lg-6 ">
                         <section class="panel">
                             <header class="panel-heading text-center">
-                                Forgot Password
+                                New Password
                             </header>
                             <c:if test="${message != null}">
                                 <div class="error alert alert-danger" role="alert">

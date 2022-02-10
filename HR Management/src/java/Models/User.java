@@ -42,11 +42,10 @@ public class User {
         this.gender = gender;
     } 
 
-    public User(String fullname, String username, String password, String email, String mobile, boolean gender, String group_code, boolean status, boolean verified, int role_id) {
+    public User(String fullname, String username,  String email, String mobile, boolean gender, String group_code, boolean status, boolean verified, int role_id) {
         this.role_id = role_id;
         this.fullname = fullname;
         this.username = username;
-        this.password = password;
         this.email = email;
         this.mobile = mobile;
         this.gender = gender;
