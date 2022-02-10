@@ -81,7 +81,7 @@
 
                                                 </div>
                                                 <div class="form-group col-lg-6">
-                                                    <a href="Account/ForgotPassword">Forgot Password </a>
+                                                    <a href="../Account/ForgotPassword">Forgot Password </a>
                                                 </div>
                                             </div>
 
@@ -92,7 +92,7 @@
                                             <div class="row ">
                                                 <div class="col-lg-3"></div>
                                                 <div class="col-lg-8">
-                                                    <p>Do not have an account? &nbsp &nbsp  &nbsp  <a href="Account/Register">SignUp</a></p>
+                                                    <p>Do not have an account? &nbsp &nbsp  &nbsp  <a href="../Account/Register">SignUp</a></p>
                                                 </div>
                                             </div>
                                         </div>

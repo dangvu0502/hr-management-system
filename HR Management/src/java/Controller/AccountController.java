@@ -91,7 +91,7 @@ public class AccountController extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
-// <editor-fold defaultstate="collapsed" desc="Login">
+    // <editor-fold defaultstate="collapsed" desc="Login">
 
     private void login(HttpServletRequest request, HttpServletResponse response, String method)
             throws Exception {
@@ -376,7 +376,7 @@ public class AccountController extends HttpServlet {
             + "                                    Register Successfully\n"
             + "                                </header>\n"
             + "                                <p>Please check your email, we already send verify link to you</p>\n"
-            + "                                <a href=\"../login\" class=\"btn btn-primary btn-group-lg active\" role=\"button\" aria-pressed=\"true\">Back to login</a>\n"
+            + "                                <a href=\"../Account/Login\" class=\"btn btn-primary btn-group-lg active\" role=\"button\" aria-pressed=\"true\">Back to login</a>\n"
             + "                            </div>\n"
             + "                        </section>\n"
             + "                    </div>\n"
@@ -445,7 +445,7 @@ public class AccountController extends HttpServlet {
             + "                                    Well done\n"
             + "                                </header>\n"
             + "                                <p>Your account is verified. But you still need approval to access this site</p>\n"
-            + "                                <a href=\"../login\" class=\"btn btn-primary btn-group-lg active\" role=\"button\" aria-pressed=\"true\">Back to login</a>\n"
+            + "                                <a href=\"../Account/Login\" class=\"btn btn-primary btn-group-lg active\" role=\"button\" aria-pressed=\"true\">Back to login</a>\n"
             + "                            </div>\n"
             + "                        </section>\n"
             + "                    </div>\n"
@@ -514,7 +514,7 @@ public class AccountController extends HttpServlet {
             + "                                    Well done\n"
             + "                                </header>\n"
             + "                                <p>Please check your email, we already send reset password link to you</p>\n"
-            + "                                <a href=\"../login\" class=\"btn btn-primary btn-group-lg active\" role=\"button\" aria-pressed=\"true\">Back to login</a>\n"
+            + "                                <a href=\"../Account/Login\" class=\"btn btn-primary btn-group-lg active\" role=\"button\" aria-pressed=\"true\">Back to login</a>\n"
             + "                            </div>\n"
             + "                        </section>\n"
             + "                    </div>\n"
@@ -581,7 +581,7 @@ public class AccountController extends HttpServlet {
             + "                                    Well done\n"
             + "                                </header>\n"
             + "                                <p>Now you can login with new password</p>\n"
-            + "                                <a href=\"../login\" class=\"btn btn-primary btn-group-lg active\" role=\"button\" aria-pressed=\"true\">Back to login</a>\n"
+            + "                                <a href=\"../Account/Login\" class=\"btn btn-primary btn-group-lg active\" role=\"button\" aria-pressed=\"true\">Back to login</a>\n"
             + "                            </div>\n"
             + "                        </section>\n"
             + "                    </div>\n"
@@ -658,7 +658,7 @@ public class AccountController extends HttpServlet {
             + "                                            <div class=\"row \">\n"
             + "                                                <div class=\"col-lg-4\"></div>\n"
             + "                                                <div class=\"col-lg-8\">\n"
-            + "                                                    <p> <a href=\"../login\"> &nbsp  &nbsp  &nbsp  &nbsp &nbsp Back to login</a></p>\n"
+            + "                                                    <p> <a href=\"../Account/Login\"> &nbsp  &nbsp  &nbsp  &nbsp &nbsp Back to login</a></p>\n"
             + "                                                </div>\n"
             + "                                            </div>\n"
             + "                                        </div>\n"

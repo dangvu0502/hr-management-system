@@ -75,7 +75,7 @@
                                             <div class="row ">
                                                 <div class="col-lg-4"></div>
                                                 <div class="col-lg-8">
-                                                    <p> <a href="../login"> &nbsp &nbsp Back to login</a></p>
+                                                    <p> <a href="../Account/Login"> &nbsp &nbsp Back to login</a></p>
                                                 </div>
                                             </div>
                                         </div>
