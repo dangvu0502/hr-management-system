@@ -347,6 +347,7 @@
                                         <th style="width: 150px;">Action</th>
                                     </tr>
                                     <c:forEach items="${listE}" var="e">
+                                        
                                         <tr>
                                             <td>${e.employee_id}</td>
                                             <td><img src="${e.avatar}" width = "80px" height="80px"></td>

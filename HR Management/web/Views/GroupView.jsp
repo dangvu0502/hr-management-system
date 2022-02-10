@@ -315,12 +315,12 @@
                                 <header class="panel-heading">
                                     Filter
                                 </header>
-                                <form action="SettingListController" method="post">
+                                <form action="grouplist" method="post">
                                     <div class="form-row">
                                         <div class="form-group col-md-3">
                                             <select class="form-control" name="type">
-                                                <option value="employee_id">ID</option>
-                                                <option value="username">User Name</option>
+                                                <option value="code">Code</option>
+                                                <option value="name">Name</option>
                                                 <option value="fullname">Full Name</option>
                                                 <option value="email">Email</option>
                                                 <option value="type_name">Type</option>
@@ -358,7 +358,12 @@
                                             <td>${g.code}</td>
                                             <td>${g.manager_id}</td>
                                             <td>${g.name}</td>
-                                            <td>${g.status}</td>
+                                            <td>
+                                                <c:if test = "${g.status}"> <span>Non-BA</span></c:if>
+                                                <c:if test = "${!g.status}"><span>BA</span></c:if>
+                                            </td>
+                                            
+                                            
                                             <td>${g.description}</td>
                                             <td>${g.parent_group_code}</td>
 
@@ -373,7 +378,7 @@
                                 <div class="table-foot">
                                     <ul class="pagination pagination-sm no-margin pull-right">
                                         <c:forEach begin="1" end="${endP}" var="p">
-                                            <li class="${p==page?"active":""}"><a href="grouplist?page=${p}">${p}</a></li>
+                                             <li><a href="grouplist?page=${p}">${p}</a></li>
                                         </c:forEach>
                                     </ul>
                                 </div>
@@ -458,7 +463,7 @@
                                                     });
                                                     function deleteByID(id) {
                                                         if (confirm("Do you really want to delete profile?")) {
-                                                            window.location = "SettingDetailController?typef=delete" + "&id=" + id;
+                                                            window.location = "grouplist?typef=delete" + "&id=" + id;
                                                         }
                                                     }
                                                     function dialogOpen(name, fullname, id, type_id, status, email, pw) {

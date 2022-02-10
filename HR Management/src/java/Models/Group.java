@@ -4,6 +4,8 @@
  */
 package Models;
 
+import java.util.Date;
+
 /**
  *
  * @author quocb
@@ -16,6 +18,7 @@ public class Group {
     private String description;
     private String parent_group_code;
     private boolean delete;
+    private Date update_date;
 
     public String getCode() {
         return code;
@@ -73,7 +76,15 @@ public class Group {
         this.delete = delete;
     }
 
-    public Group(String code, int manager_id, String name, boolean status, String description, String parent_group_code, boolean delete) {
+    public Date getUpdate_date() {
+        return update_date;
+    }
+
+    public void setUpdate_date(Date update_date) {
+        this.update_date = update_date;
+    }
+
+    public Group(String code, int manager_id, String name, boolean status, String description, String parent_group_code, boolean delete, Date update_date) {
         this.code = code;
         this.manager_id = manager_id;
         this.name = name;
@@ -81,9 +92,12 @@ public class Group {
         this.description = description;
         this.parent_group_code = parent_group_code;
         this.delete = delete;
+        this.update_date = update_date;
     }
 
     public Group() {
     }
+
+    
    
 }
