@@ -263,11 +263,11 @@
                             <img class="img-rounded" src="../userimg/${sessionScope.account.avatar}" alt="avatar" style="width:200px">
                         </figure>
                         <div class="modal-body">
-                            <form action="../ChangePassword" method="POST">
+                            <form action="../User/ChangePassword" method="POST">
                                 <div class="row justify-content-md-center">
                                     <div class="col-5">
                                         <input name="username" type="hidden" value="${sessionScope.account.username}">
-                                        <input id="oldpassword1" value="${sessionScope.account.password}" hidden="">
+                                        <input id="oldpassword1" value="${td.ecrypt(sessionScope.account.password)}" hidden="">
                                         <div class="col-md-auto"><label class="labels">Old Password</label><input id="oldpassword" name="oldpassword" type="password" class="form-control" value="" required=""></div>
                                         <div class="col-md"><label class="labels">New Password</label><input id="newpassword" name="newpassword" type="password" class="form-control" value="" required=""></div>
                                         <div class="col-md"><label class="labels">Confirm Password</label><input id="conpassword" name="conpassword" type="password" class="form-control" value="" required=""></div>
