@@ -91,9 +91,8 @@ public class AccountController extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
-    
-    // <editor-fold defaultstate="collapsed" desc="Login">
 
+    // <editor-fold defaultstate="collapsed" desc="Login">
     private void login(HttpServletRequest request, HttpServletResponse response, String method)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
@@ -155,7 +154,6 @@ public class AccountController extends HttpServlet {
     }
 
     //</editor-fold>
-    
     // <editor-fold defaultstate="collapsed" desc="Register and RegisterVerify">
     private void setVerified(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
@@ -226,7 +224,6 @@ public class AccountController extends HttpServlet {
     }
 
     //</editor-fold>
-    
     // <editor-fold defaultstate="collapsed" desc="Forgot Password and New Password">
     private void newPassword(HttpServletRequest request, HttpServletResponse response, String method)
             throws Exception {
@@ -235,10 +232,19 @@ public class AccountController extends HttpServlet {
             if (method.equalsIgnoreCase("post")) {
                 newPasswordImplement(request, response);
             } else if (method.equalsIgnoreCase("get")) {
-                User user = isValid(request, response);
+                String encrypt = request.getQueryString();
+                String[] decrypt = trippleDes.decrypt(encrypt).split(" ");
+                String email = decrypt[0];
+                LocalDateTime time = LocalDateTime.parse(decrypt[1]);
+                String type = decrypt[2];
+                User user = userOnTime(request, response, email, time);
                 if (user != null) {
-                    request.getSession().setAttribute("user", user);
-                    showNewPasswordView(request, response);
+                   if (type.equalsIgnoreCase("ForgotPassword") || user.getPassword() == null && type.equalsIgnoreCase("NewUser")){
+                        request.getSession().setAttribute("user", user);
+                        showNewPasswordView(request, response);
+                   }else{
+                        out.println("Something went wrong!!!");
+                   }    
                 } else {
                     out.println(linkExpired);
                 }
@@ -248,15 +254,11 @@ public class AccountController extends HttpServlet {
         }
     }
 
-    private User isValid(HttpServletRequest request, HttpServletResponse response)
+    private User userOnTime(HttpServletRequest request, HttpServletResponse response, String email, LocalDateTime time)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
         try {
             LocalDateTime now = LocalDateTime.now();
-            String encrypt = request.getQueryString();
-            String[] decrypt = trippleDes.decrypt(encrypt).split(" ");
-            String email = decrypt[0];
-            LocalDateTime time = LocalDateTime.parse(decrypt[1]);
             if (time.plusMinutes(30).isAfter(now)) {
                 return userDAO.searchUserByEmail(email);
             }
@@ -315,7 +317,7 @@ public class AccountController extends HttpServlet {
                 response.sendRedirect("../Account/ForgotPassword");
             } else {
                 LocalDateTime now = LocalDateTime.now();
-                String message = trippleDes.encrypt(email + " " + now.toString());
+                String message = trippleDes.encrypt(email + " " + now.toString() + " " + "ForgotPassword");
                 //check if the email send successfully
                 if (SendEmail.send(email, "Password Reset Link", "http://localhost:8080/HR_Management/Account/NewPassword?" + message)) {
                     out.println(sendEmaiSuccessfully);
@@ -336,7 +338,6 @@ public class AccountController extends HttpServlet {
     //</editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="HTML">
-    
     // <editor-fold defaultstate="collapsed" desc="RegisterSuccess">
     private String registerSuccess
             = "<!DOCTYPE html>\n"
