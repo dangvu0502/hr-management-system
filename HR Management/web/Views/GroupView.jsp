@@ -17,15 +17,15 @@
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
         <!-- bootstrap 3.0.2 -->
-        <link href="css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../css/bootstrap.min.css" rel="stylesheet" />
         <!-- font Awesome -->
-        <link href="css/font-awesome.min.css" rel="stylesheet" />
+        <link href="../css/font-awesome.min.css" rel="stylesheet" />
         <!-- Ionicons -->
-        <link href="css/ionicons.min.css" rel="stylesheet" />
+        <link href="../css/ionicons.min.css" rel="stylesheet" />
         <!-- google font -->
         <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' />
         <!-- Theme style -->
-        <link href="css/style.css" rel="stylesheet"/>
+        <link href="../css/style.css" rel="stylesheet"/>
         <link href="../css/dialog.css" rel="stylesheet" type="text/css"/>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -37,7 +37,7 @@
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
         <header class="header">
-            <a href="Views/Home.jsp" class="logo">
+            <a href="../Views/Home.jsp" class="logo">
                 <!-- Add the class icon to your logo image or logo icon to add the margining -->
                 Home
             </a>
@@ -378,7 +378,7 @@
                                 <div class="table-foot">
                                     <ul class="pagination pagination-sm no-margin pull-right">
                                         <c:forEach begin="1" end="${endP}" var="p">
-                                             <li><a href="grouplist?page=${p}">${p}</a></li>
+                                             <li><a href="../Group/GroupList?page=${p}">${p}</a></li>
                                         </c:forEach>
                                     </ul>
                                 </div>
