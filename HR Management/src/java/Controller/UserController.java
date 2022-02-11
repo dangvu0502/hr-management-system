@@ -124,7 +124,7 @@ public class UserController extends HttpServlet {
             } else {
                 //check if the email send successfully
                 LocalDateTime now = LocalDateTime.now();
-                String message = trippleDes.encrypt(email + " " + now.plusYears(999999).toString());
+                String message = trippleDes.encrypt(email + " " + now.plusYears(999999).toString() + " " + "NewUser");
                 if (SendEmail.send(email, "User infor", userInforEmail(user, "http://localhost:8080/HR_Management/Account/NewPassword?" + message))) {
                     userDAO.addNewUser(user);
                     request.getSession().setAttribute("successMessage", "Add New User Successfully");
