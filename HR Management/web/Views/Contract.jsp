@@ -100,8 +100,9 @@
                                         <a id="opener" href="#" style="color: white;">Add</a>    
                                     </div>
                                 </div>
-                                <table class="table table-bordered">
-                                    <tr>
+                                <c:if test="${listC==null||listC.size()==0}"><h3 style="color: red">Not found !!</h3></c:if>
+                                    <table class="table table-bordered">
+                                        <tr ${listC==null||listC.size()==0 ?'hidden':'' }>
                                         <th style="width: 10px">ID</th>
                                         <th>Full name</th>
                                         <th>Email</th>
@@ -119,12 +120,10 @@
                                             <td>${c.endDate}</td>
                                             <td>
                                                 <c:if test = "${c.status == 0}">
-                                                    <span class="badge bg-red">Deactivate</span>
-                                                    <div><a href="StatusController?status=${e.status}&id=${e.employee_id}&page=${page}">switch</a></div>
+                                                    <span class="badge bg-red">Contract Expired</span>
                                                 </c:if>
                                                 <c:if test = "${c.status == 1}">
-                                                    <span class="badge bg-green">Activate</span>
-                                                    <div><a href="StatusController?status=${e.status}&id=${e.employee_id}&page=${page}">switch</a></div>
+                                                    <span class="badge bg-green">On contract</span>
                                                 </c:if>
                                             </td>
                                             <td>
@@ -135,8 +134,8 @@
                                         </tr>
                                     </c:forEach>
                                 </table>
-                                <div class="table-foot">
-                                    <ul class="pagination pagination-sm no-margin pull-right">
+                                <div class="table-foot" ${listC==null||listC.size()==0 ?'hidden':'' } > 
+                                    <ul class="pagination pagination-sm no-margin pull-right" >
                                         <c:forEach begin="1" end="${endP}" var="p">
                                             <li><a href="../Contract/Details?page=${p}">${p}</a></li>
                                             </c:forEach>
@@ -214,7 +213,7 @@
                                                             }
                                                         });
                                                         $("#opener").click(function () {
-                                                            
+
                                                             $("#dialog").dialog('open');
                                                         });
                                                         $(".edit").click(function () {
@@ -279,7 +278,7 @@
                                                         {
                                                             alert('Edit Fail');
                                                         }
-                                                        
+
                                                     }
         </script>
     </body>

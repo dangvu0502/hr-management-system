@@ -154,6 +154,7 @@ public class AccountController extends HttpServlet {
     }
 
     //</editor-fold>
+    
     // <editor-fold defaultstate="collapsed" desc="Register and RegisterVerify">
     private void setVerified(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
@@ -224,6 +225,7 @@ public class AccountController extends HttpServlet {
     }
 
     //</editor-fold>
+    
     // <editor-fold defaultstate="collapsed" desc="Forgot Password and New Password">
     private void newPassword(HttpServletRequest request, HttpServletResponse response, String method)
             throws Exception {

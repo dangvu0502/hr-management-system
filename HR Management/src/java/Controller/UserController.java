@@ -205,6 +205,7 @@ public class UserController extends HttpServlet {
     }
 
 // </editor-fold>
+    
     // <editor-fold defaultstate="collapsed" desc="EditProfile">
     private void editprofile(HttpServletRequest request, HttpServletResponse response, String method) {
         response.setContentType("text/html;charset=UTF-8");
@@ -340,6 +341,7 @@ public class UserController extends HttpServlet {
     //</editor-fold>
 
     // </editor-fold>
+    
     // <editor-fold defaultstate="collapsed" desc="ChangePassword">
     private void changepassword(HttpServletRequest request, HttpServletResponse response, String method) {
         response.setContentType("text/html;charset=UTF-8");
@@ -374,11 +376,11 @@ public class UserController extends HttpServlet {
             }
         }
     }
-    // </editor-fold>
 
     private void showChangePasswordView(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException, ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
         request.getRequestDispatcher("/Views/ChangePassword.jsp").forward(request, response);
     }
+    // </editor-fold>
 }

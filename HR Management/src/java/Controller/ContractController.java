@@ -7,6 +7,7 @@ package Controller;
 
 import DAO.ContractDAO;
 import DAO.EmployeeDAO;
+import DAO.SettingDAO;
 import Models.Contract;
 import Models.Employee;
 import java.io.IOException;
@@ -250,5 +251,6 @@ public class ContractController extends HttpServlet {
             + "\n"
             + "";
     //</editor-fold>
+
 
 }
