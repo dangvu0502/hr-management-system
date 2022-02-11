@@ -29,18 +29,19 @@ public class SettingDAO {
         Vector vec = new Vector();
         try {
             String sql = "SELECT * FROM hr_system_v2.setting\n"
-                    + "limit 3 offset ?";
+                    + "limit 5 offset ?";
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
-            ps.setInt(1, (page - 1) * 3);
+            ps.setInt(1, (page - 1) * 5);
             rs = ps.executeQuery();
             while (rs.next()) {
                 Setting e = new Setting();
                 e.setId(rs.getInt(1));
-                e.setType_id(rs.getInt(2));
-                e.setSetting_name(rs.getString(3));
-                e.setSetting_value(rs.getString(4));
-                e.setStatus(rs.getInt(5));
+                e.setType(rs.getString(2));
+                e.setValue(rs.getString(3));
+                e.setStatus(rs.getBoolean(4));
+                e.setOrder(rs.getInt(5));
+                e.setNote(rs.getString(6));
                 vec.add(e);
             }
         } catch (Exception e) {
