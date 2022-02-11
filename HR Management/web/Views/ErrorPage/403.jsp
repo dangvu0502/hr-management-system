@@ -73,7 +73,9 @@
     <body>
       
         <div class="mainbox">
-            <div class="err">Oops</div>
-            <div class="msg">Something went wrong!!!<p>Let's go <a href="<%=link%>">home</a></p></div>
+            <div class="err">4</div>
+            <i class="far fa-question-circle fa-spin"></i>
+            <div class="err2">3</div>
+            <div class="msg">Forbidden<p>Let's go <a href="<%=link%>">home</a></p></div>
         </div>
 </html>
