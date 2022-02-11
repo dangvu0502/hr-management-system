@@ -7,6 +7,7 @@ package Controller;
 
 import Context.SendEmail;
 import Context.TrippleDes;
+import DAO.SettingDAO;
 import DAO.UserDAO;
 import Models.User;
 import java.io.IOException;
@@ -65,7 +66,7 @@ public class UserController extends HttpServlet {
                     changepassword(request, response, method);
                     break;
                 default:
-                    out.println(pageNotFound);
+                    response.sendError(404);
                     break;
             }
         } catch (Exception ex) {
@@ -90,6 +91,8 @@ public class UserController extends HttpServlet {
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
         if (method.equalsIgnoreCase("get")) {
+            SettingDAO st = new SettingDAO();
+            request.getSession().setAttribute("roles", st.getAllRole());
             showNewUserView(request, response);
         } else {
             newUserImplement(request, response);
@@ -104,7 +107,6 @@ public class UserController extends HttpServlet {
             String groupcode = request.getParameter("group-code");
             String fullname = request.getParameter("fullname");
             String username = request.getParameter("username");
-
             String email = request.getParameter("email");
             String mobile = request.getParameter("mobile");
             boolean gender = request.getParameter("gender").equals("male");
@@ -145,6 +147,7 @@ public class UserController extends HttpServlet {
 
     private String userInforEmail(User user, String link)
             throws Exception {
+         SettingDAO st = new SettingDAO();
         return // <editor-fold defaultstate="collapsed" desc="HTML email">        
                 "<!DOCTYPE html>\n"
                 + "<html>\n"
@@ -190,7 +193,7 @@ public class UserController extends HttpServlet {
                 + "  </tr>\n"
                 + "  <tr>\n"
                 + "    <td>System Role</td>\n"
-                + "    <td>" + user.getRole_id() + "</td>\n"
+                + "    <td>" +st.getAllRole().get(user.getRole_id()) + "</td>\n"
                 + "  </tr>\n"
                 + "  <tr>\n"
                 + "    <td  colspan=\"2\">Click here to set up your password:" + link + "</td>\n"

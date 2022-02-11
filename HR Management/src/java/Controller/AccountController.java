@@ -72,7 +72,7 @@ public class AccountController extends HttpServlet {
                     newPassword(request, response, method);
                     break;
                 default:
-                    out.println(pageNotFound);
+                    response.sendError(404);
                     break;
             }
         } catch (Exception ex) {
@@ -154,7 +154,6 @@ public class AccountController extends HttpServlet {
     }
 
     //</editor-fold>
-    
     // <editor-fold defaultstate="collapsed" desc="Register and RegisterVerify">
     private void setVerified(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
@@ -163,8 +162,12 @@ public class AccountController extends HttpServlet {
             String key = request.getQueryString();
             String email = trippleDes.decrypt(key).split(" ")[0].trim();
             User user = userDAO.searchUserByEmail(email);
-            userDAO.setVerified(user);
-            out.println(verifySuccess);
+            if (user.isVerified() == false) {
+                userDAO.setVerified(user);
+                out.println(verifySuccess);
+            } else {
+                out.println("Some thing went wrong!!");
+            }
         } catch (Exception ex) {
             log(ex.getMessage());
         }
@@ -225,7 +228,6 @@ public class AccountController extends HttpServlet {
     }
 
     //</editor-fold>
-    
     // <editor-fold defaultstate="collapsed" desc="Forgot Password and New Password">
     private void newPassword(HttpServletRequest request, HttpServletResponse response, String method)
             throws Exception {
@@ -241,12 +243,12 @@ public class AccountController extends HttpServlet {
                 String type = decrypt[2];
                 User user = userOnTime(request, response, email, time);
                 if (user != null) {
-                   if (user.getPassword() == null &&  (type.equalsIgnoreCase("ForgotPassword") || type.equalsIgnoreCase("NewUser"))){
+                    if (user.getPassword() == null && (type.equalsIgnoreCase("ForgotPassword") || type.equalsIgnoreCase("NewUser"))) {
                         request.getSession().setAttribute("user", user);
                         showNewPasswordView(request, response);
-                   }else{
+                    } else {
                         out.println("Something went wrong!!!");
-                   }    
+                    }
                 } else {
                     out.println(linkExpired);
                 }

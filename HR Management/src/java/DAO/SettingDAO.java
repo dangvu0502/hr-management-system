@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 
 /**
@@ -75,12 +77,29 @@ public class SettingDAO {
         ps.setInt(2, setting_id);
         ps.executeUpdate();
     }
+    
+    public HashMap<Integer,String> getAllRole() {
+        HashMap<Integer,String> role = new HashMap<>();
+        try {
+            String sql = "SELECT * FROM hr_system_v2.role;";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                role.put(rs.getInt(1),rs.getString(2));
+            }
+            return role;
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return null;
+    }
 
     public static void main(String[] args) {
-        SettingDAO sDAO = new SettingDAO();
-        Vector<Setting> s = sDAO.getSettingList(1);
-        for (Setting a : s) {
-            System.out.println(a.getStatus());
+        SettingDAO st = new SettingDAO();
+        HashMap<Integer,String> role = st.getAllRole();
+        for(Map.Entry entry : role.entrySet()){
+            System.out.println(entry.getKey()+" "+entry.getValue());
         }
     }
 }

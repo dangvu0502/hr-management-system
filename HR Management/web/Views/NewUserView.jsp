@@ -112,10 +112,9 @@
                                                         <label for="system-role">System Role  &nbsp &nbsp &nbsp </label>
                                                         <select class="form-control text-bold" aria-label="" id="system-role" name="system-role" onchange="val()">
                                                             <option value="0" selected></option>
-                                                            <option value="1">Admin </option>
-                                                            <option value="2">Manager</option>
-                                                            <option value="3">Hr</option>
-                                                            <option value="3">Staff</option>
+                                                            <c:forEach var="role" items="${roles}">
+                                                                <option value="${role.key}">${role.value} </option>
+                                                            </c:forEach>
                                                         </select>
                                                     </span>
 
