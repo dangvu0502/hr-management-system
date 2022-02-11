@@ -57,7 +57,7 @@ public class UserController extends HttpServlet {
             String method = request.getMethod();
             switch (action) {
                 case "/NewUser":
-                    newUser(request, response, method);
+                   // newUser(request, response, method);
                     break;
                 case "/EditProfile":
                     editprofile(request, response, method);

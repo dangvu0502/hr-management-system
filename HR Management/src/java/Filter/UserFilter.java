@@ -109,8 +109,22 @@ public class UserFilter implements Filter {
         HttpServletRequest req =  (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response; 
         User account = (User) req.getSession().getAttribute("account");
-        if(account == null || account.getRole_id() != 1){
+        PrintWriter out = res.getWriter();
+        if(account == null){
             res.sendRedirect(req.getContextPath()+"/Account/Login");
+        }else{
+            String action = req.getPathInfo() == null ? "" : req.getPathInfo();
+            switch (action) {
+                case "/NewUser":
+                    if(account.getRole_id() != 1) res.sendError(403);
+                    break;
+                case "/EditProfile":
+                    break;
+                case "/ChangePassword":
+                    break;
+                default:
+                     break;
+            }
         }
         
         
