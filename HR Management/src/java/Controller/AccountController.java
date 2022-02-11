@@ -239,7 +239,7 @@ public class AccountController extends HttpServlet {
                 String type = decrypt[2];
                 User user = userOnTime(request, response, email, time);
                 if (user != null) {
-                   if (user.getPassword() == null &&  type.equalsIgnoreCase("ForgotPassword") || user.getPassword() == null && type.equalsIgnoreCase("NewUser")){
+                   if (user.getPassword() == null &&  (type.equalsIgnoreCase("ForgotPassword") || type.equalsIgnoreCase("NewUser"))){
                         request.getSession().setAttribute("user", user);
                         showNewPasswordView(request, response);
                    }else{
@@ -550,7 +550,7 @@ public class AccountController extends HttpServlet {
             + "<html>\n"
             + "    <head>\n"
             + "        <meta charset=\"UTF-8\">\n"
-            + "        <title>Verify Email</title>\n"
+            + "        <title>New Password</title>\n"
             + "        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>\n"
             + "        <meta name=\"description\" content=\"Developed By M Abdur Rokib Promy\">\n"
             + "        <meta name=\"keywords\" content=\"Admin, Bootstrap 3, Template, Theme, Responsive\">\n"
