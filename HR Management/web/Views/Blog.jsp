@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -188,28 +189,39 @@
             <div class="main_WrapperContent">
                 <div class="Blog_list">
                     <div class="row">
-                        <div class="col-lg-6">
-                            <img
-                                class="img-fluid"
-                                src="https://1.bp.blogspot.com/-Az_2DYAbtNI/X6yyinSmerI/AAAAAAAADbw/AYAOC_dN6VoUqSl5R96JB7-3y_owsXzZwCLcBGAsYHQ/w330-h270-p-k-no-nu/m1%2B%25281%2529.jpg"
-                                alt=""
-                                />
-                        </div>
-                        <div class="col-lg-6">
-                            <p class="Category">Category ----- BEAUTY</p>
-                            <h4 class="Tittle">
-                                Looking Better in Photos Based on the body Type
-                            </h4>
-                            <p class="Briefs_info text-muted">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab aspe
-                            </p>
-                            <button class="btn btn-primary" type="button">
-                                More Details
-                            </button>
-                        </div>
+                        <c:forEach items="${listE}" var="e">
+                            <div>${e}</div>
+                            <div class="col-lg-6">
+                                <img
+                                    class="img-fluid"
+                                    src="${e.thumnail_Image}"
+                                    alt=""
+                                    />
+                            </div>
+                            <div class="col-lg-6">
+                                <p class="Category">Category ----- ${e.Category}</p>
+                                <h4 class="Tittle">
+                                    ${e.Tittle}
+                                </h4>
+                                <p class="Briefs_info text-muted">
+                                    ${e.brieft}
+                                </p>
+                                <button class="btn btn-primary" type="button" >
+                                    <a href=" BLogDetailsController?Slug=${e.slug}">More Details</a>
+                                </button>
+                            </div>
+                            <hr />
+                        </c:forEach>
                     </div>
                 </div>
-                <hr />
+
+                <!--                <div class="table-foot">
+                                    <ul class="pagination pagination-sm no-margin pull-right">
+                <%--<c:forEach begin="1" end="${endP}" var="p">--%>
+                    <li><a href="SettingListController?page=${p}">${p}</a></li>
+                <%--</c:forEach>--%>
+        </ul>
+    </div>-->
             </div>
             <!-- Main-Wrapper -->
         </section>
