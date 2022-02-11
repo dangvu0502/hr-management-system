@@ -64,14 +64,15 @@ public class GroupDAO {
         }
         return 0;
     }
-      public Vector<Group> getGroupBySearch(String group_type, String input) {
+      public Vector<Group> getGroupBySearch(String input) {
         Vector vec = new Vector();
         try {
             String sql = "SELECT * FROM hr_system_v2.group"
-                    + " where " + group_type + " = ?";
+                    + " where code like '%?%' or name like '%?%'";
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
-            ps.setString(1, input);
+            ps.setString(1, "%" +input+ "%");
+            ps.setString(2,  "%" +input+ "%");
             rs = ps.executeQuery();
             while (rs.next()) {
                 Group g = new Group();

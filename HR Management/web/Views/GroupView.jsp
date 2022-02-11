@@ -315,7 +315,7 @@
                                 <header class="panel-heading">
                                     Filter
                                 </header>
-                                <form action="grouplist" method="post">
+                                <form action="GroupList" method="post">
                                     <div class="form-row">
                                         <div class="form-group col-md-3">
                                             <select class="form-control" name="type">
@@ -328,10 +328,10 @@
                                             </select>                                            
                                         </div>
                                         <div class="form-group col-md-7">
-                                            <input class="form-control" type="text" placeholder="Input..." name="input">
+                                            <input class="form-control" type="text" value="${txtS}" placeholder="Input..." name="input">
                                         </div>
                                         <div class="form-group col-md-2">
-                                            <input type="submit" class="btn btn-info" value="Search">
+                                            <input type="submit" name="input" class="btn btn-info" value="Search">
                                         </div>
                                     </div>
                                 </form>
