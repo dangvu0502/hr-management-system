@@ -239,7 +239,7 @@ public class AccountController extends HttpServlet {
                 String type = decrypt[2];
                 User user = userOnTime(request, response, email, time);
                 if (user != null) {
-                   if (type.equalsIgnoreCase("ForgotPassword") || user.getPassword() == null && type.equalsIgnoreCase("NewUser")){
+                   if (user.getPassword() == null &&  type.equalsIgnoreCase("ForgotPassword") || user.getPassword() == null && type.equalsIgnoreCase("NewUser")){
                         request.getSession().setAttribute("user", user);
                         showNewPasswordView(request, response);
                    }else{
@@ -316,6 +316,7 @@ public class AccountController extends HttpServlet {
                 request.getSession().setAttribute("message", "Account does not exist");
                 response.sendRedirect("../Account/ForgotPassword");
             } else {
+                userDAO.setNewPassword(user1, null);
                 LocalDateTime now = LocalDateTime.now();
                 String message = trippleDes.encrypt(email + " " + now.toString() + " " + "ForgotPassword");
                 //check if the email send successfully
