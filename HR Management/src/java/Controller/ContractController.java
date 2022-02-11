@@ -182,7 +182,7 @@ public class ContractController extends HttpServlet {
     }
     //</editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="ContractDetails">
+    // <editor-fold defaultstate="collapsed" desc="ContractAdd">
     private void ContractAdd(HttpServletRequest request, HttpServletResponse response, String method) throws ServletException, IOException {
         try (PrintWriter out = response.getWriter();) {
             if (method.equalsIgnoreCase("post")) {
