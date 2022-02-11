@@ -45,7 +45,7 @@ public class StatusController extends HttpServlet {
             int i = Integer.parseInt(employee_id);
             SettingDAO s = new SettingDAO();
             s.editStatus(st, i);
-            response.sendRedirect("SettingController?page=" + page + "");
+            response.sendRedirect("Setting?page=" + page);
         } catch (Exception e) {
             System.out.println("Error " + e.getMessage());
         }
