@@ -11,6 +11,7 @@ import DAO.UserDAO;
 import Models.User;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -219,40 +220,40 @@ public class UserController extends HttpServlet {
     }
 
     private void editProfileImplement(HttpServletRequest request, HttpServletResponse response) throws IOException {
-            /* TODO output your page here. You may use following sample code. */
+        /* TODO output your page here. You may use following sample code. */
 
-            response.setContentType("text/html;charset=UTF-8");
-            response.setCharacterEncoding("UTF-8");
-            request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
 
-            UserDAO dao = new UserDAO();
+        UserDAO dao = new UserDAO();
 
-            String fullname = request.getParameter("fullname");
-            String dob = request.getParameter("dob");
-            String address = request.getParameter("address");
-            Boolean gender = Boolean.parseBoolean(request.getParameter("gender"));
+        String fullname = request.getParameter("fullname");
+        String dob = request.getParameter("dob");
+        String address = request.getParameter("address");
+        Boolean gender = Boolean.parseBoolean(request.getParameter("gender"));
 //            String email = request.getParameter("email");
-            String mobile = request.getParameter("mobile");
-            String avatar = request.getParameter("fileName");
-            String username = request.getParameter("username");
-            HttpSession session = request.getSession();
+        String mobile = request.getParameter("mobile");
+        String avatar = request.getParameter("fileName");
+        String username = request.getParameter("username");
+        HttpSession session = request.getSession();
 
-            User user = (User) session.getAttribute("account");
+        User user = (User) session.getAttribute("account");
 
-            user.setFullname(fullname);
-            user.setAddress(address);
-            user.setDob(dob);
-            user.setGender(gender);
-            user.setMobile(mobile);
-            session.setAttribute("account", user);
-            if (avatar.isEmpty()) {
-                dao.UpdateProfileAvtNull(fullname, mobile, gender, dob, address, username);
-            } else {
-                user.setAvatar(avatar);
-                dao.UpdateProfile(fullname, avatar, mobile, gender, dob, address, username);
-            }
+        user.setFullname(fullname);
+        user.setAddress(address);
+        user.setDob(dob);
+        user.setGender(gender);
+        user.setMobile(mobile);
+        session.setAttribute("account", user);
+        if (avatar.isEmpty()) {
+            dao.UpdateProfileAvtNull(fullname, mobile, gender, dob, address, username);
+        } else {
+            user.setAvatar(avatar);
+            dao.UpdateProfile(fullname, avatar, mobile, gender, dob, address, username);
+        }
 //                request.setAttribute("error", "success");
-            response.sendRedirect("../Views/Home.jsp");
+        response.sendRedirect("../Views/Home.jsp");
 
 //                response.sendRedirect("EditProfile");
     }
@@ -348,6 +349,8 @@ public class UserController extends HttpServlet {
         try (PrintWriter out = response.getWriter();) {
             if (method.equalsIgnoreCase("post")) {
                 changePasswordImplement(request, response);
+            } else {
+                showChangePasswordView(request, response);
             }
         } catch (Exception ex) {
             log(ex.getMessage());
@@ -355,27 +358,29 @@ public class UserController extends HttpServlet {
     }
 
     private void changePasswordImplement(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        UserDAO dao = new UserDAO();
-        String username = request.getParameter("username");
-        String oldpassword = trippleDes.encrypt(request.getParameter("oldpassword"));
-        String newpassword = trippleDes.encrypt(request.getParameter("newpassword"));
-        String conpassword = trippleDes.encrypt(request.getParameter("conpassword"));
-
-//        User user = (User) session.getAttribute("account");
-        User account = new UserDAO().login(username, oldpassword);
-        if (account != null) {
-            if (newpassword.equals(conpassword)) {
-                HttpSession session = request.getSession();
-                account.setPassword(trippleDes.decrypt(account.getPassword()));
-                request.getSession().setAttribute("account", account);
-                dao.ChangePassword(newpassword, username);
-                response.sendRedirect("../Views/Home.jsp");
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter();) {
+            User user = (User) request.getSession().getAttribute("user");
+            String username = request.getParameter("username");
+            String oldpassword = trippleDes.encrypt(request.getParameter("oldpassword"));
+            String newpassword = trippleDes.encrypt(request.getParameter("newpassword"));
+            User account = new UserDAO().login(username, oldpassword);
+            if (account != null) {
+                request.getSession().removeAttribute("user");
+                userDAO.ChangePassword(newpassword, username);
+                request.getSession().setAttribute("message", "Change password successfully !!");
+                response.sendRedirect("../User/ChangePassword");
             } else {
-                response.sendRedirect("../Views/Home.jsp");
+                request.getSession().setAttribute("message", "Wrong old password");
+                response.sendRedirect("../User/ChangePassword");
             }
-        } else {
-            response.sendRedirect("../Views/Home.jsp");
         }
+    }
+
+    private void showChangePasswordView(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException, ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
+        request.getRequestDispatcher("/Views/ChangePassword.jsp").forward(request, response);
     }
     // </editor-fold>
 }
