@@ -86,7 +86,7 @@
                                             <div class="row">
                                                 <div class="form-group col-lg-12">
                                                     <label for="mobile">Mobile</label>
-                                                    <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Enter your mobile" required>
+                                                    <input type="text" class="form-control" id="mobile" name="mobile"  onkeyup="checkMobile()"  placeholder="Enter your mobile" required>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -109,7 +109,7 @@
                                                 <div class="form-group col-lg-12">
                                                     <label for="confirm-password">Confirm Password</label>
                                                     <input type="password" class="form-control" id="confirm-password" onkeyup="checkEqual()" placeholder="Confirm your password" required >
-                                                    <span id='message'></span>
+                                                    <span id='checkEqualMessage'></span>
                                                 </div>
                                             </div>
                                             <div class="row">

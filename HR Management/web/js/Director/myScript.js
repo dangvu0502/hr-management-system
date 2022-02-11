@@ -19,17 +19,28 @@ function checkEqual() {
     var y = document.getElementById('confirm-password');
     if (x.value.length != 0 && y.value.length != 0) {
         if (x.value == y.value) {
-            document.getElementById('message').style.color = 'green';
-            document.getElementById('message').innerHTML = 'Matching';
+            document.getElementById('checkEqualMessage').style.color = 'green';
+            document.getElementById('checkEqualMessage').innerHTML = 'Matching';
             isValid = true;
         } else {
-            document.getElementById('message').style.color = 'red';
-            document.getElementById('message').innerHTML = 'Not Matching';
+            document.getElementById('checkEqualMessage').style.color = 'red';
+            document.getElementById('checkEqualMessage').innerHTML = 'Not Matching';
             isValid = false;
         }
     } else {
-        document.getElementById('message').innerHTML = '';
+        document.getElementById('checkEqualMessage').innerHTML = '';
         isValid = false;
     }
+}
+
+function checkMobile() {
+  var mobile = document.getElementById('mobile');
+  var regex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+  if(mobile.value.match(regex)) {
+    isValid = true;
+  }
+  else {
+    alert("ok");
+  }
 }
 
