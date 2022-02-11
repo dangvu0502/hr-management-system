@@ -180,7 +180,10 @@
                         </div>
                     </div>
                 </div>
+                <!-- Popular-Post -->
             </div>
+            <!-- Side-Bar -->
+
             <!-- Main-Wrapper -->
             <div class="main_WrapperContent">
                 <div class="Blog_list">
