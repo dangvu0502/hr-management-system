@@ -12,20 +12,22 @@ package Models;
 public class Setting {
     
     private int id;
-    private int type_id;
-    private String setting_name;
-    private String setting_value;
-    private int status;
+    private String type;
+    private String value;
+    private boolean status;
+    private int order;
+    private String note;
 
     public Setting() {
     }
 
-    public Setting(int id, int type_id, String setting_name, String setting_value, int status) {
+    public Setting(int id, String type, String value, boolean status, int order, String note) {
         this.id = id;
-        this.type_id = type_id;
-        this.setting_name = setting_name;
-        this.setting_value = setting_value;
+        this.type = type;
+        this.value = value;
         this.status = status;
+        this.order = order;
+        this.note = note;
     }
 
     public int getId() {
@@ -36,37 +38,44 @@ public class Setting {
         this.id = id;
     }
 
-    public int getType_id() {
-        return type_id;
+    public String getType() {
+        return type;
     }
 
-    public void setType_id(int type_id) {
-        this.type_id = type_id;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public String getSetting_name() {
-        return setting_name;
+    public String getValue() {
+        return value;
     }
 
-    public void setSetting_name(String setting_name) {
-        this.setting_name = setting_name;
+    public void setValue(String value) {
+        this.value = value;
     }
 
-    public String getSetting_value() {
-        return setting_value;
-    }
-
-    public void setSetting_value(String setting_value) {
-        this.setting_value = setting_value;
-    }
-
-    public int getStatus() {
+    public boolean isStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
-    
-    
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
 }
