@@ -312,7 +312,7 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-3">
                                             <select class="form-control" name="type">
-                                                <option value="employee_id">ID</option>
+                                                <option value="setting_id">ID</option>
                                                 <option value="username">User Name</option>
                                                 <option value="fullname">Full Name</option>
                                                 <option value="email">Email</option>
@@ -332,43 +332,41 @@
                             <div class="panel-body">
                                 <div class="pull-right">
                                     <div class="btn btn-success">
-                                        <a id="opener" href="#" style="color: white;">Add</a>    
+                                        <a id="opener" href="#" style="color: white;">Add &nbsp;&nbsp;<span class="glyphicon glyphicon-pencil"></span></a>    
                                     </div>
                                 </div>
                                 <table class="table table-bordered">
                                     <tr>
-                                        <th style="width: 10px">ID</th>
-                                        <th>Avatar</th>
-                                        <th>User Name</th>
-                                        <th>Full Name</th>
-                                        <th>Type</th>
-                                        <th>Gmail</th>
+                                        <th style="width: 50px">ID</th>
+                                        <th style="width: 500px">Type</th>
+                                        <th style="width: 500px">Value</th>
                                         <th style="width: 150px;">Status</th>
-                                        <th style="width: 150px;">Action</th>
+                                        <th>Order</th>
+                                        <th style="width: 70px;">Action</th>
                                     </tr>
-                                    <c:forEach items="${listE}" var="e">
-                                        
+                                    <c:forEach items="${listS}" var="s">
                                         <tr>
-                                            <td>${e.employee_id}</td>
-                                            <td><img src="${e.avatar}" width = "80px" height="80px"></td>
-                                            <td>${e.username}</td>
-                                            <td>${e.fullname}</td>
-                                            <td>${e.type_name}</td>
-                                            <td>${e.email}</td>
+                                            <td>${s.id}</td>
+                                            <td>${s.type}</td>
+                                            <td>${s.value}</td>
                                             <td>
-                                                <c:if test = "${e.status == 0}">
+                                                <c:if test = "${!s.status}">
                                                     <span class="badge bg-red">Deactivate</span>
-                                                    <div><a href="StatusController?status=${e.status}&id=${e.employee_id}&page=${page}">switch</a></div>
+                                                    &nbsp;
+                                                    <a href="StatusController?status=0&id=${s.id}&page=${page}"><span class="glyphicon glyphicon-retweet"></span></a>
                                                 </c:if>
-                                                <c:if test = "${e.status == 1}">
+                                                <c:if test = "${s.status}">
                                                     <span class="badge bg-green">Activate</span>
-                                                    <div><a href="StatusController?status=${e.status}&id=${e.employee_id}&page=${page}">switch</a></div>
+                                                    &nbsp;
+                                                    <a href="StatusController?status=1&id=${s.id}&page=${page}"><span class="glyphicon glyphicon-retweet"></span></a>
                                                 </c:if>
                                             </td>
+                                            <td>${s.order}</td>
                                             <td>
-                                                <div style="background-color: orangered; border-radius:25px;margin-bottom: 2rem;text-align: center; padding: 0.4rem;"><a style="color: white; font-weight:700; " id="delete" onclick="deleteByID('${e.employee_id}');" href="#">Delete </a></div>
-                                                <div style="background-color: #f9d21a;border-radius:25px;text-align: center;padding: 0.4rem;"><a style="color: white;  font-weight:700; " class="edit" href="" onclick="dialogOpen('${e.username}', '${e.fullname}', '${e.employee_id}', '${e.type_id}', '${e.status}', '${e.email}', '${e.password}');
-                                                        return false;">Edit</a></div>
+                                                <a id="delete" onclick="deleteByID('${e.employee_id}');" href="#"><span class="glyphicon glyphicon-trash"></span></a>
+                                                &nbsp;&nbsp;
+                                                <a class="edit" href="" onclick="dialogOpen('${e.username}', '${e.fullname}', '${e.employee_id}', '${e.type_id}', '${e.status}', '${e.email}', '${e.password}');
+                                                        return false;"><span class="glyphicon glyphicon-edit"></span></a>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -376,7 +374,7 @@
                                 <div class="table-foot">
                                     <ul class="pagination pagination-sm no-margin pull-right">
                                         <c:forEach begin="1" end="${endP}" var="p">
-                                            <li><a href="SettingListController?page=${p}">${p}</a></li>
+                                            <li><a href="Setting?page=${p}">${p}</a></li>
                                             </c:forEach>
                                     </ul>
                                 </div>

@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Kha Chinh
  */
-@WebServlet(name = "SettingController", urlPatterns = {"/SettingController"})
+@WebServlet(name = "SettingController", urlPatterns = {"/Setting"})
 public class SettingController extends HttpServlet {
 
     /**
@@ -43,14 +43,14 @@ public class SettingController extends HttpServlet {
             SettingDAO sDAO = new SettingDAO();
             int count = sDAO.getTotalSetting();
             int endPage = count / 5;
-            if (endPage % 3 != 0) {
+            if (count % 5 != 0) {
                 endPage++;
             }
             request.setAttribute("endP", endPage);
-            Vector<Setting> s = new Vector();
+            Vector<Setting> s;
             s = sDAO.getSettingList(Integer.parseInt(page));
             request.setAttribute("listS", s);
-            request.getRequestDispatcher("Views/SettingList_1.jsp").forward(request, response);
+            request.getRequestDispatcher("Views/SettingList.jsp").forward(request, response);
         } catch (Exception e) {
             System.out.println("ádfasdfasdfasd" + e.getMessage());
         }
