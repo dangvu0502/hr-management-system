@@ -25,7 +25,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author quocb
  */
-@WebServlet(name = "GroupListController", urlPatterns = {"/Group"})
+@WebServlet(name = "GroupListController", urlPatterns = {"/Group/*"})
 public class GroupListController extends HttpServlet {
 
     /**
@@ -49,7 +49,7 @@ public class GroupListController extends HttpServlet {
                     groupListImplement(request, response);
                     break;
                 default:
-                    out.println(pageNotFound);
+                    response.sendError(404);
                     break;
             }
         } catch (Exception ex) {
