@@ -791,15 +791,9 @@ public class AccountController extends HttpServlet {
     //</editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Something went wrong">
-    private String somethingWentWrong = "<%-- \n"
-            + "    Document   : Error\n"
-            + "    Created on : Feb 11, 2022, 2:48:01 PM\n"
-            + "    Author     : dangGG\n"
-            + "--%>\n"
-            + "\n"
-            + "<%@page contentType=\"text/html\" pageEncoding=\"UTF-8\"%>\n"
-            + "  <%String link = request.getContextPath()+\"/Views/Home.jsp\";%>\n"
-            + "<!DOCTYPE html>\n"
+    private String somethingWentWrong =
+           
+            "<!DOCTYPE html>\n"
             + "<html>\n"
             + "    <head>\n"
             + "        <link href=\"https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600;900&display=swap\" rel=\"stylesheet\">\n"
@@ -867,7 +861,7 @@ public class AccountController extends HttpServlet {
             + "      \n"
             + "        <div class=\"mainbox\">\n"
             + "            <div class=\"err\">Oops</div>\n"
-            + "            <div class=\"msg\">Something went wrong!!!<p>Let's go <a href=\"<%=link%>\">home</a></p></div>\n"
+            + "            <div class=\"msg\">Something went wrong!!!<p>Let's go <a href=\"../Views/Home.jsp\">home</a></p></div>\n"
             + "        </div>\n"
             + "</html>\n"
             + "";
