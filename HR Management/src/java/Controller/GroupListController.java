@@ -6,20 +6,26 @@ package Controller;
 
 import DAO.EmployeeDAO;
 import DAO.GroupDAO;
+import DAO.UserDAO;
 import Models.Group;
+import Models.User;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Vector;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author quocb
  */
-@WebServlet(name = "GroupListController", urlPatterns = {"/grouplist"})
+@WebServlet(name = "GroupListController", urlPatterns = {"/Group"})
 public class GroupListController extends HttpServlet {
 
     /**
@@ -34,27 +40,20 @@ public class GroupListController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try {
-            String group_type = request.getParameter("type");
-            String input = request.getParameter("input");
-            String page = request.getParameter("page");
-            if (page == null) page = "1";
-            request.setAttribute("page", page);
-            GroupDAO gDAO = new GroupDAO();
-            int count = gDAO.totalGroup();
-            int endPage = count/3;
-            if (endPage % 3 != 0) endPage++;
-            request.setAttribute("endP", endPage);
-            Vector<Group> g = new Vector();
-            if (group_type == null || input == null || input.isEmpty()) {
-                g = gDAO.getGroupList(Integer.parseInt(page));
-            } else {
-                g = gDAO.getGroupBySearch(group_type, input);
+        request.setCharacterEncoding("utf-8");
+        try (PrintWriter out = response.getWriter();) {
+            String action = request.getPathInfo() == null ? "" : request.getPathInfo();
+            String method = request.getMethod();
+            switch (action) {
+                case "/GroupList":
+                    groupListImplement(request, response);
+                    break;
+                default:
+                    out.println(pageNotFound);
+                    break;
             }
-            request.setAttribute("listG", g);
-            request.getRequestDispatcher("Views/GroupView.jsp").forward(request, response);
-        } catch (Exception e) {
-            System.out.println("Noooo" + e.getMessage());
+        } catch (Exception ex) {
+            log(ex.getMessage());
         }
         
     }
@@ -87,15 +86,138 @@ public class GroupListController extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
+    
+    // <editor-fold defaultstate="collapsed" desc="GroupList">
+    
+//     private void groupList(HttpServletRequest request, HttpServletResponse response, String method)
+//            throws Exception {
+//        response.setContentType("text/html;charset=UTF-8");
+//        try (PrintWriter out = response.getWriter();) {
+//            if (method.equalsIgnoreCase("post")) {
+//                groupListImplement(request, response);
+//            } else if (method.equalsIgnoreCase("get")) {
+//                showGroupView(request, response);
+//            }
+//        } catch (Exception ex) {
+//            log(ex.getMessage());
+//        }
+//    }
+    private void groupListImplement(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
+        try (PrintWriter out = response.getWriter();) {
+            String group_type = request.getParameter("type");
+            String input = request.getParameter("input");
+            String page = request.getParameter("page");
+            if (page == null) page = "1";
+            request.setAttribute("page", page);
+            GroupDAO gDAO = new GroupDAO();
+            int count = gDAO.totalGroup();
+            int endPage = count/3;
+            if (endPage % 3 != 0) endPage++;
+            request.setAttribute("endP", endPage);
+            Vector<Group> g = new Vector();
+            if (group_type == null || input == null || input.isEmpty()) {
+                g = gDAO.getGroupList(Integer.parseInt(page));
+            } else {
+                g = gDAO.getGroupBySearch(group_type, input);
+            }
+            request.setAttribute("listG", g);
+            request.getRequestDispatcher("../Views/GroupView.jsp").forward(request, response);
+        }
+    }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
+    private void showGroupView(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        response.setContentType("text/html;charset=UTF-8");
+        //PrintWriter out = response.getWriter();
+        //out.println(request.getContextPath());
+        request.getRequestDispatcher("/Views/GroupView.jsp").forward(request, response);
+    }
+
+    //</editor-fold>
+  
+    // <editor-fold defaultstate="collapsed" desc="HTML">
+    // <editor-fold defaultstate="collapsed" desc="pageNotFound">
+    private String pageNotFound = "\n"
+            + "<!DOCTYPE html>\n"
+            + "<html>\n"
+            + "    <head>\n"
+            + "        <link href=\"https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600;900&display=swap\" rel=\"stylesheet\">\n"
+            + "        <script src=\"https://kit.fontawesome.com/4b9ba14b0f.js\" crossorigin=\"anonymous\"></script>\n"
+            + "        <style>\n"
+            + "            body {\n"
+            + "                background-color: #95c2de;\n"
+            + "            }\n"
+            + "\n"
+            + "            .mainbox {\n"
+            + "                background-color: #95c2de;\n"
+            + "                margin: auto;\n"
+            + "                height: 600px;\n"
+            + "                width: 600px;\n"
+            + "                position: relative;\n"
+            + "            }\n"
+            + "\n"
+            + "            .err {\n"
+            + "                color: #ffffff;\n"
+            + "                font-family: 'Nunito Sans', sans-serif;\n"
+            + "                font-size: 11rem;\n"
+            + "                position:absolute;\n"
+            + "                left: 20%;\n"
+            + "                top: 8%;\n"
+            + "            }\n"
+            + "\n"
+            + "            .far {\n"
+            + "                position: absolute;\n"
+            + "                font-size: 8.5rem;\n"
+            + "                left: 42%;\n"
+            + "                top: 15%;\n"
+            + "                color: #ffffff;\n"
+            + "            }\n"
+            + "\n"
+            + "            .err2 {\n"
+            + "                color: #ffffff;\n"
+            + "                font-family: 'Nunito Sans', sans-serif;\n"
+            + "                font-size: 11rem;\n"
+            + "                position:absolute;\n"
+            + "                left: 68%;\n"
+            + "                top: 8%;\n"
+            + "            }\n"
+            + "\n"
+            + "            .msg {\n"
+            + "                text-align: center;\n"
+            + "                font-family: 'Nunito Sans', sans-serif;\n"
+            + "                font-size: 1.6rem;\n"
+            + "                position:absolute;\n"
+            + "                left: 16%;\n"
+            + "                top: 45%;\n"
+            + "                width: 75%;\n"
+            + "            }\n"
+            + "\n"
+            + "            a {\n"
+            + "                text-decoration: none;\n"
+            + "                color: white;\n"
+            + "            }\n"
+            + "\n"
+            + "            a:hover {\n"
+            + "                text-decoration: underline;\n"
+            + "            }\n"
+            + "\n"
+            + "        </style>\n"
+            + "    </head>\n"
+            + "    <body>\n"
+            + "        <div class=\"mainbox\">\n"
+            + "            <div class=\"err\">4</div>\n"
+            + "            <i class=\"far fa-question-circle fa-spin\"></i>\n"
+            + "            <div class=\"err2\">4</div>\n"
+            + "            <div class=\"msg\">Maybe this page moved? Got deleted? Is hiding out in quarantine? Never existed in the first place?<p>Let's go <a href=\"#\">home</a> and try from there.</p></div>\n"
+            + "        </div>\n"
+            + "    </body>\n"
+            + "</html>\n"
+            + "\n"
+            + "";
+    //</editor-fold>
+   // </editor-fold>
 
 }
