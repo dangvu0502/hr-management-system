@@ -12,7 +12,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,8 +37,12 @@ public class ContractDAO {
             ps = con.prepareStatement(sql);
             ps.setInt(1, (page - 1) * 2);
             rs = ps.executeQuery();
+            String pattern = "yyyy-MM-dd";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
             while (rs.next()) {
-                Contract c = new Contract(rs.getInt(1), new User(rs.getString(2), rs.getString(3)), rs.getString(4), rs.getString(5), rs.getInt(6));
+                Contract c = new Contract(rs.getInt(1), new User(rs.getString(2), rs.getString(3)), 
+                        simpleDateFormat.format(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString(4))), 
+                        simpleDateFormat.format(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString(5))), rs.getInt(6));
                 list.add(c);
             }
         } catch (Exception e) {
@@ -65,10 +71,10 @@ public class ContractDAO {
         List<Contract> list = new ArrayList<>();
         try {
             String sql = "SELECT c.id , u.fullname, u.email, c.start_date, c.end_date, c.status FROM hr_system_v2.contract c inner join hr_system_v2.user u\n"
-                    + "on c.user_id = u.id where " +setting_type+ " LIKE ? limit 2 offset ? ";
+                    + "on c.user_id = u.id where " + setting_type + " LIKE ? limit 2 offset ? ";
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
-            ps.setString(1, "%"+ txtSearch + "%");
+            ps.setString(1, "%" + txtSearch + "%");
             ps.setInt(2, (page - 1) * 2);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -80,4 +86,22 @@ public class ContractDAO {
         }
         return list;
     }
+
+//    public Contract getAllContract() {
+//        try {
+//            //mo ket noi
+//            Connection conn = new DBContext().getConnection();
+//            String sql = "SELECT * FROM hr_system_v2.contract";
+//            ps = conn.prepareStatement(sql);
+//            rs = ps.executeQuery();
+//
+//            while (rs.next()) {
+//                Contract c = new Contract(rs.getInt(1), new User(rs.getString(2), rs.getString(3)), rs.getString(4), rs.getString(5), rs.getInt(6));
+//            }
+//        } catch (Exception ex) {
+//            ex.printStackTrace(System.out);
+//        }
+//
+//        return null;
+//    }
 }

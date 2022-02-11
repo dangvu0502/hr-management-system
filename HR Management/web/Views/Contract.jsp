@@ -57,6 +57,11 @@
                                 <i class="fa fa-glass"></i> <span>Contract Details</span>
                             </a>
                         </li>
+                        <li>
+                            <a href="../Contract/Add">
+                                <i class="fa fa-glass"></i> <span>Contract Add</span>
+                            </a>
+                        </li>
 
                     </ul>
                 </section>
@@ -97,7 +102,7 @@
                             <div class="panel-body">
                                 <div class="pull-right">
                                     <div class="btn btn-success">
-                                        <a id="opener" href="#" style="color: white;">Add</a>    
+                                        <a href="../Contract/Add" style="color: white;">Add Contract</a>    
                                     </div>
                                 </div>
                                 <c:if test="${listC==null||listC.size()==0}"><h3 style="color: red">Not found !!</h3></c:if>
@@ -127,8 +132,7 @@
                                                 </c:if>
                                             </td>
                                             <td>
-                                                <div style="background-color: orangered; border-radius:25px;margin-bottom: 2rem;text-align: center; padding: 0.4rem;"><a style="color: white; font-weight:700; " id="delete" onclick="deleteByID('${e.employee_id}');" href="#">Delete </a></div>
-                                                <div style="background-color: #f9d21a;border-radius:25px;text-align: center;padding: 0.4rem;"><a style="color: white;  font-weight:700; " class="edit" href="" onclick="dialogOpen('${e.username}', '${e.fullname}', '${e.employee_id}', '${e.type_id}', '${e.status}', '${e.email}', '${e.password}');
+                                                <div style="background-color: #f9d21a;border-radius:25px;text-align: center;padding: 0.4rem;"><a style="color: white;  font-weight:700; " class="edit" href="" onclick="dialogOpen('${c.id}', '${c.user_id.fullname}', '${c.user_id.email}', '${c.startDate}', '${c.endDate}', '${c.status}');
                                                         return false;">Edit</a></div>
                                             </td>
                                         </tr>
@@ -147,43 +151,33 @@
                 </section><!-- /.content -->
                 <!-- /.Dialog -->
                 <div id="dialog">
-                    <div style="display: flex; justify-content: center;  margin: 2rem;"><img style=" width: 100px; height: 100px;" src="https://www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png" alt="Avatar" > </div>
+                    <div style="display: flex; justify-content: center;  margin: 2rem;"><img style=" width: 100px; height: 100px;" src="../userimg/${sessionScope.account.avatar}" alt="Avatar" > </div>
                     <div style="display: flex; justify-content: space-between;margin-bottom: 2rem">
                         <div><label>ID</label></div>
                         <div style="margin-left: 4rem;"><input  disabled="true" style="border-radius:8px; " type="text" id="txtId"></div>
                     </div>
                     <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
-                        <div><label>UserName</label></div>
-                        <div  style="margin-left: 4rem;"><input style="border-radius:8px; " type="text" id="txtUserName"></div>
+                        <div><label>Full Name</label></div>
+                        <div  style="margin-left: 4rem;"><input style="border-radius:8px; " type="text" id="txtFullName" disabled=""></div>
                     </div>
                     <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
-                        <div><label>FullName</label></div>
-                        <div  style="margin-left: 4rem;"><input style="border-radius:8px; " type="text" id="txtFullName"></div>
+                        <div><label>Email</label></div>
+                        <div style="margin-left: 4rem;" ><input style="border-radius:8px; " type="text" id="txtEmail" disabled=""></div>
                     </div>
                     <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
-                        <div><label>PassWord</label></div>
-                        <div style="margin-left: 4rem;"><input style="border-radius:8px; " type="password" id="txtPassWord"></div>
+                        <div><label>Start Contract</label></div>
+                        <div style="margin-left: 4rem;" ><input style="border-radius:8px; " type="date" id="txtStartDate"></div>
                     </div>
                     <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
-                        <div><label>Gmail</label></div>
-                        <div style="margin-left: 4rem;" ><input style="border-radius:8px; " type="text" id="txtGmail"></div>
+                        <div><label>End Contract</label></div>
+                        <div style="margin-left: 4rem;" ><input style="border-radius:8px; " type="date" id="txtEndDate"></div>
                     </div>
                     <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
                         <div><label>Status</label></div>
                         <div style="padding-right: 2rem;" >
-                            <input  type="radio" name="foo" value="1" id="rbStatus" checked="checked"> <span style="margin-right: 2rem;" >Active</span>
-                            <input type="radio" name="foo" value="0" id="rbStatus"> Deactivate
-                        </div>
-                    </div>
-                    <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
-                        <div><label>Type</label></div>
-                        <div style="margin-left: 4rem;" >
-                            <select name="cbbType" id="cbbType" style="width: 215px;height: 30px;border-radius: 8px;">
-                                <option value="0">Admin</option>
-                                <option value="1">HR</option>
-                                <option value="2">Manager</option>
-                                <option value="3">Staff</option>
-                            </select>
+                            <c:forEach items="${listC}" var="c">
+                                <span class="badge ${c.status == 0?'bg-red':'bg-green'}">${c.status == 0 ? 'Contract Expired':'On contract'}</span>
+                            </c:forEach>
                         </div>
                     </div>
                 </div>
@@ -212,26 +206,16 @@
                                                                 }
                                                             }
                                                         });
-                                                        $("#opener").click(function () {
-
-                                                            $("#dialog").dialog('open');
-                                                        });
                                                         $(".edit").click(function () {
                                                             $("#dialog").dialog('open');
                                                         });
                                                     });
-                                                    function deleteByID(id) {
-                                                        if (confirm("Do you really want to delete profile?")) {
-                                                            window.location = "SettingDetailController?typef=delete" + "&id=" + id;
-                                                        }
-                                                    }
-                                                    function dialogOpen(name, fullname, id, type_id, status, email, pw) {
+                                                    function dialogOpen(id, fullname, email, startdate, enddate, status) {
                                                         $('#txtId').val(id);
-                                                        $('#txtUserName').val(name);
-                                                        $('#txtPassWord').val(pw)
-                                                        $('#txtGmail').val(email);
                                                         $('#txtFullName').val(fullname)
-                                                        $("#cbbType").val(type_id);
+                                                        $('#txtEmail').val(email);
+                                                        $('#txtStartDate').val(startdate);
+                                                        $('#txtEndDate').val(enddate);
                                                         $("[name=foo]").val([status]);
                                                         $("#dialog").dialog({
                                                             autoOpen: false,
@@ -247,22 +231,6 @@
                                                                 }
                                                             }
                                                         });
-                                                    }
-                                                    function add() {
-                                                        var id = document.getElementById("txtId").value;
-                                                        var username = document.getElementById("txtUserName").value;
-                                                        var fullname = document.getElementById("txtFullName").value;
-                                                        var password = document.getElementById("txtPassWord").value;
-                                                        var status = $('input[name = "foo"]:checked').val();
-                                                        var mail = document.getElementById("txtGmail").value;
-                                                        var typename = $('#cbbType option:selected').val();
-                                                        if (!!username && !!fullname && !!password && !!mail) {
-                                                            window.location = "SettingDetailController?typef=add" + "&id=" + id + "&username=" + username + "&fullname=" + fullname + "&password=" + password + "&status=" + status + "&mail=" + mail + "&typename=" + typename;
-                                                            alert('Add Successfull');
-                                                        } else
-                                                        {
-                                                            alert('Add Fail');
-                                                        }
                                                     }
                                                     function edit(id) {
                                                         var username = document.getElementById("txtUserName").value;
