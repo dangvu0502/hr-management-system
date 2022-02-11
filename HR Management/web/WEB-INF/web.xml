@@ -40,6 +40,10 @@
         <servlet-name>ContractController</servlet-name>
         <servlet-class>Controller.ContractController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BlogDAO</servlet-name>
+        <servlet-class>DAO.BlogDAO</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SettingListController</servlet-name>
         <url-pattern>/SettingListController</url-pattern>
@@ -71,6 +75,10 @@
     <servlet-mapping>
         <servlet-name>ContractController</servlet-name>
         <url-pattern>/Contract/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BlogDAO</servlet-name>
+        <url-pattern>/BlogDAO</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
