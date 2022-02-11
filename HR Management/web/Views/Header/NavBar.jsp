@@ -9,7 +9,7 @@
         height="150"
         width="150"
         />
-    <a class="navbar-brand" href="#"> HR Management</a>
+    <a class="navbar-brand" href="Views/Home.jsp"> HR Management</a>
     <button
         class="navbar-toggler"
         type="button"
@@ -27,8 +27,11 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <!-- If User Log-in -->
         <div class="navbar-nav ml-auto mr-auto">
-            <a class="nav-item nav-link active" href="#"
+            <a class="nav-item nav-link active" href="./Home.jsp"
                >Home <span class="sr-only">(current)</span></a
+            >
+            <a class="nav-item nav-link active" href="./Blog.jsp"
+               >Blog <span class="sr-only">(current)</span></a
             >
             <c:if test="${sessionScope.account.role_id == 1}"> 
                 <a class="nav-item nav-link" href="../SettingListController">Setting List</a>
