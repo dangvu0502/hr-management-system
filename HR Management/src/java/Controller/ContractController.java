@@ -8,17 +8,22 @@ package Controller;
 import DAO.ContractDAO;
 import DAO.EmployeeDAO;
 import DAO.SettingDAO;
+import DAO.UserDAO;
 import Models.Contract;
 import Models.Employee;
+import Models.User;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -45,8 +50,11 @@ public class ContractController extends HttpServlet {
                 case "/Details":
                     ContractDetails(request, response, method);
                     break;
+                case "/Add":
+                    ContractAdd(request, response, method);
+                    break;
                 default:
-                    out.println(pageNotFound);
+                    response.sendError(404);
                     break;
             }
         } catch (Exception ex) {
@@ -95,8 +103,6 @@ public class ContractController extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="ContractDetails">
     private void ContractDetails(HttpServletRequest request, HttpServletResponse response, String method) {
-        response.setContentType("text/html;charset=UTF-8");
-        response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter();) {
             if (method.equalsIgnoreCase("post")) {
                 contractImplement(request, response);
@@ -141,6 +147,7 @@ public class ContractController extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
         try {
+            HttpSession session = request.getSession();
             String setting_type = request.getParameter("type");
             String txtSearch = request.getParameter("txt");
             String page = request.getParameter("page");
@@ -158,13 +165,16 @@ public class ContractController extends HttpServlet {
             List<Contract> c = new ArrayList<>();
             c = cDAO.getContractList(Integer.parseInt(page));
             request.setAttribute("listC", c);
-//            List<Contract> c = new ArrayList<>();
-//            if (setting_type == null || input == null) {
-//                c = cDAO.getContractList(Integer.parseInt(page));
-//            } else {
-//                c = cDAO.getContractBySearch(setting_type, input);
-//            }
-//            request.setAttribute("listC", c);
+//            Contract contract = new ContractDAO().getAllContract();
+//            String pattern = "yyyy-MM-dd";
+//            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+//            Date startdate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(contract.getStartDate());
+//            Date enddate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(contract.getEndDate());
+//            String date1 = simpleDateFormat.format(startdate);
+//            String date2 = simpleDateFormat.format(enddate);
+//            contract.setStartDate(date1);
+//            contract.setEndDate(date2);
+//            session.setAttribute("account", contract);
             request.getRequestDispatcher("../Views/Contract.jsp").forward(request, response);
         } catch (Exception e) {
             System.out.println("Error" + e.getMessage());
@@ -172,85 +182,39 @@ public class ContractController extends HttpServlet {
     }
     //</editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="pageNotFound">
-    private String pageNotFound = "\n"
-            + "<!DOCTYPE html>\n"
-            + "<html>\n"
-            + "    <head>\n"
-            + "        <link href=\"https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600;900&display=swap\" rel=\"stylesheet\">\n"
-            + "        <script src=\"https://kit.fontawesome.com/4b9ba14b0f.js\" crossorigin=\"anonymous\"></script>\n"
-            + "        <style>\n"
-            + "            body {\n"
-            + "                background-color: #95c2de;\n"
-            + "            }\n"
-            + "\n"
-            + "            .mainbox {\n"
-            + "                background-color: #95c2de;\n"
-            + "                margin: auto;\n"
-            + "                height: 600px;\n"
-            + "                width: 600px;\n"
-            + "                position: relative;\n"
-            + "            }\n"
-            + "\n"
-            + "            .err {\n"
-            + "                color: #ffffff;\n"
-            + "                font-family: 'Nunito Sans', sans-serif;\n"
-            + "                font-size: 11rem;\n"
-            + "                position:absolute;\n"
-            + "                left: 20%;\n"
-            + "                top: 8%;\n"
-            + "            }\n"
-            + "\n"
-            + "            .far {\n"
-            + "                position: absolute;\n"
-            + "                font-size: 8.5rem;\n"
-            + "                left: 42%;\n"
-            + "                top: 15%;\n"
-            + "                color: #ffffff;\n"
-            + "            }\n"
-            + "\n"
-            + "            .err2 {\n"
-            + "                color: #ffffff;\n"
-            + "                font-family: 'Nunito Sans', sans-serif;\n"
-            + "                font-size: 11rem;\n"
-            + "                position:absolute;\n"
-            + "                left: 68%;\n"
-            + "                top: 8%;\n"
-            + "            }\n"
-            + "\n"
-            + "            .msg {\n"
-            + "                text-align: center;\n"
-            + "                font-family: 'Nunito Sans', sans-serif;\n"
-            + "                font-size: 1.6rem;\n"
-            + "                position:absolute;\n"
-            + "                left: 16%;\n"
-            + "                top: 45%;\n"
-            + "                width: 75%;\n"
-            + "            }\n"
-            + "\n"
-            + "            a {\n"
-            + "                text-decoration: none;\n"
-            + "                color: white;\n"
-            + "            }\n"
-            + "\n"
-            + "            a:hover {\n"
-            + "                text-decoration: underline;\n"
-            + "            }\n"
-            + "\n"
-            + "        </style>\n"
-            + "    </head>\n"
-            + "    <body>\n"
-            + "        <div class=\"mainbox\">\n"
-            + "            <div class=\"err\">4</div>\n"
-            + "            <i class=\"far fa-question-circle fa-spin\"></i>\n"
-            + "            <div class=\"err2\">4</div>\n"
-            + "            <div class=\"msg\">Maybe this page moved? Got deleted? Is hiding out in quarantine? Never existed in the first place?<p>Let's go <a href=\"#\">home</a> and try from there.</p></div>\n"
-            + "        </div>\n"
-            + "    </body>\n"
-            + "</html>\n"
-            + "\n"
-            + "";
-    //</editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="ContractDetails">
+    private void ContractAdd(HttpServletRequest request, HttpServletResponse response, String method) throws ServletException, IOException {
+        try (PrintWriter out = response.getWriter();) {
+            if (method.equalsIgnoreCase("post")) {
+                contractAddImplement(request, response);
+            } else if (method.equalsIgnoreCase("get")) {
+                addContractView(request, response);
+            }
+        } catch (Exception ex) {
+            log(ex.getMessage());
+        }
+    }
 
+    private void contractAddImplement(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String idStr = request.getParameter("id");
+        if (idStr == null) {
+            idStr = "-1";
+        }
+        int id = Integer.parseInt(idStr);
+        UserDAO userDAO = new UserDAO();
+        List<User> listUser = userDAO.getUserById(Integer.parseInt(idStr));
+        List<User> listU = userDAO.getUserList();
+        request.setAttribute("listU", listU);
+        request.setAttribute("listUser", listUser);
+        request.setAttribute("idSelected", id);
+        request.getRequestDispatcher("../Views/ContractAdd.jsp").forward(request, response);
 
+    }
+
+    private void addContractView(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<User> listUser = new UserDAO().getUserList();
+        request.setAttribute("listU", listUser);
+        request.getRequestDispatcher("../Views/ContractAdd.jsp").forward(request, response);
+    }
+    // </editor-fold>
 }

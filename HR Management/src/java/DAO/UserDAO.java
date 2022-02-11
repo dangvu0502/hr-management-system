@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -109,7 +111,7 @@ public class UserDAO {
         }
         return rows;
     }
-    
+
     public int addNewUser(User user) throws Exception {
         int rows = 0;
         try {
@@ -143,18 +145,18 @@ public class UserDAO {
         ps.setInt(1, user.getId());
         ps.executeUpdate();
     }
-    
-    public void setNewPassword(User user, String password)  {
-      try{
-        String sql = "UPDATE `hr_system_v2`.`user` SET `password` = ? WHERE (`id` = ?)";
-        con = new DBContext().getConnection();
-        ps = con.prepareStatement(sql);
-        ps.setString(1, password);
-        ps.setInt(2, user.getId());
-        ps.executeUpdate();
-      }catch(Exception ex){
-          System.out.println(ex.getMessage());
-      }
+
+    public void setNewPassword(User user, String password) {
+        try {
+            String sql = "UPDATE `hr_system_v2`.`user` SET `password` = ? WHERE (`id` = ?)";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, password);
+            ps.setInt(2, user.getId());
+            ps.executeUpdate();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     public void UpdateProfile(String fullname, String avatar, String mobile, Boolean gender, String dob, String address, String username) {
@@ -216,6 +218,7 @@ public class UserDAO {
             ex.printStackTrace(System.out);
         }
     }
+
     public User login(String username, String password) {
 
         try {
@@ -258,7 +261,74 @@ public class UserDAO {
         return null;
     }
 
+    public List<User> getUserList() {
+        List<User> list = new ArrayList<>();
+        try {
+            String sql = "select * from hr_system_v2.user";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                User u = new User();
+                u.setId(rs.getInt(1));
+                u.setFullname(rs.getString(2));
+                u.setUsername(rs.getString(3));
+                u.setPassword(rs.getString(4));
+                u.setEmail(rs.getString(5));
+                u.setMobile(rs.getString(6));
+                u.setGender(rs.getBoolean(7));
+                u.setAvatar(rs.getString(8));
+                u.setDob(rs.getString(9));
+                u.setAddress(rs.getString(10));
+                u.setRole_id(rs.getInt(11));
+                u.setProject_role_id(rs.getInt(12));
+                u.setSupervisor_id(rs.getInt(13));
+                u.setGroup_code(rs.getString(14));
+                u.setStatus(rs.getBoolean(15));
+                u.setVerified(rs.getBoolean(16));
+                list.add(u);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return list;
+    }
+
 //    public static void main(String[] args) throws Exception {
 //
 //    }
+
+    public List<User> getUserById(int id) {
+        List<User> list = new ArrayList<>();
+        try {
+            String sql = "select * from hr_system_v2.user where id = ?";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                User u = new User();
+                u.setId(rs.getInt(1));
+                u.setFullname(rs.getString(2));
+                u.setUsername(rs.getString(3));
+                u.setPassword(rs.getString(4));
+                u.setEmail(rs.getString(5));
+                u.setMobile(rs.getString(6));
+                u.setGender(rs.getBoolean(7));
+                u.setAvatar(rs.getString(8));
+                u.setDob(rs.getString(9));
+                u.setAddress(rs.getString(10));
+                u.setRole_id(rs.getInt(11));
+                u.setProject_role_id(rs.getInt(12));
+                u.setSupervisor_id(rs.getInt(13));
+                u.setGroup_code(rs.getString(14));
+                u.setStatus(rs.getBoolean(15));
+                u.setVerified(rs.getBoolean(16));
+                list.add(u);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return list;
+    }
 }
