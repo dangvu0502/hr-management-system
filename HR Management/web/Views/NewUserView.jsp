@@ -91,7 +91,8 @@
                                             <div class="row">
                                                 <div class="form-group col-lg-12">
                                                     <label for="mobile">Mobile</label>
-                                                    <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Enter your mobile" required>
+                                                    <input type="text" class="form-control" id="mobile" name="mobile" onkeyup="checkMobile()" placeholder="Enter your mobile" required>
+                                                     <span id='inValidPhone'></span>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -112,10 +113,9 @@
                                                         <label for="system-role">System Role  &nbsp &nbsp &nbsp </label>
                                                         <select class="form-control text-bold" aria-label="" id="system-role" name="system-role" onchange="val()">
                                                             <option value="0" selected></option>
-                                                            <option value="1">Admin </option>
-                                                            <option value="2">Manager</option>
-                                                            <option value="3">Hr</option>
-                                                            <option value="3">Staff</option>
+                                                            <c:forEach var="role" items="${roles}">
+                                                                <option value="${role.key}">${role.value} </option>
+                                                            </c:forEach>
                                                         </select>
                                                     </span>
 
@@ -168,6 +168,25 @@
                                                                 else
                                                                     chooseRole = false;
                                                             }
+                                                            
+                                                    function checkMobile() {
+                                                        var mobile = document.getElementById('mobile');
+                                                        var regex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+                                                        if (mobile == null || mobile.value.toString().length == 0){
+                                                            document.getElementById('inValidPhone').innerHTML = '';
+                                                        } else{
+                                                            
+                                                            if (mobile.value.match(regex)) {
+                                                                isValid = true;
+                                                                document.getElementById('inValidPhone').style.color = 'green';
+                                                                document.getElementById('inValidPhone').innerHTML = 'Valid';
+                                                            } else {
+                                                                isValid = false;
+                                                                document.getElementById('inValidPhone').style.color = 'red';
+                                                                document.getElementById('inValidPhone').innerHTML = 'This is not mobile';
+                                                            }
+                                                        }
+                                                    }
         </script>
     </body>
 </html>
