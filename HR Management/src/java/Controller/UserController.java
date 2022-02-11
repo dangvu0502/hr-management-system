@@ -54,7 +54,6 @@ public class UserController extends HttpServlet {
         try (PrintWriter out = response.getWriter();) {
             String action = request.getPathInfo() == null ? "" : request.getPathInfo();
             String method = request.getMethod();
-
             switch (action) {
                 case "/NewUser":
                     newUser(request, response, method);
