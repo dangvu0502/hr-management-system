@@ -260,6 +260,48 @@ public class UserController extends HttpServlet {
 //                response.sendRedirect("EditProfile");
     }
     //</editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="ChangePassword">
+    private void changepassword(HttpServletRequest request, HttpServletResponse response, String method) {
+        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter();) {
+            if (method.equalsIgnoreCase("post")) {
+                changePasswordImplement(request, response);
+            } else {
+                showChangePasswordView(request, response);
+            }
+        } catch (Exception ex) {
+            log(ex.getMessage());
+        }
+    }
+
+    private void changePasswordImplement(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter();) {
+            User user = (User) request.getSession().getAttribute("user");
+            String username = request.getParameter("username");
+            String oldpassword = trippleDes.encrypt(request.getParameter("oldpassword"));
+            String newpassword = trippleDes.encrypt(request.getParameter("newpassword"));
+            User account = new UserDAO().login(username, oldpassword);
+            if (account != null) {
+                request.getSession().removeAttribute("user");
+                userDAO.ChangePassword(newpassword, username);
+                request.getSession().setAttribute("message", "Change password successfully !!");
+                response.sendRedirect("../User/ChangePassword");
+            } else {
+                request.getSession().setAttribute("message", "Wrong old password");
+                response.sendRedirect("../User/ChangePassword");
+            }
+        }
+    }
+
+    private void showChangePasswordView(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException, ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
+        request.getRequestDispatcher("/Views/ChangePassword.jsp").forward(request, response);
+    }
+    // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="HTML">
     // <editor-fold defaultstate="collapsed" desc="pageNotFound">
@@ -342,47 +384,5 @@ public class UserController extends HttpServlet {
             + "";
     //</editor-fold>
 
-    // </editor-fold>
-    
-    // <editor-fold defaultstate="collapsed" desc="ChangePassword">
-    private void changepassword(HttpServletRequest request, HttpServletResponse response, String method) {
-        response.setContentType("text/html;charset=UTF-8");
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter();) {
-            if (method.equalsIgnoreCase("post")) {
-                changePasswordImplement(request, response);
-            } else {
-                showChangePasswordView(request, response);
-            }
-        } catch (Exception ex) {
-            log(ex.getMessage());
-        }
-    }
-
-    private void changePasswordImplement(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter();) {
-            User user = (User) request.getSession().getAttribute("user");
-            String username = request.getParameter("username");
-            String oldpassword = trippleDes.encrypt(request.getParameter("oldpassword"));
-            String newpassword = trippleDes.encrypt(request.getParameter("newpassword"));
-            User account = new UserDAO().login(username, oldpassword);
-            if (account != null) {
-                request.getSession().removeAttribute("user");
-                userDAO.ChangePassword(newpassword, username);
-                request.getSession().setAttribute("message", "Change password successfully !!");
-                response.sendRedirect("../User/ChangePassword");
-            } else {
-                request.getSession().setAttribute("message", "Wrong old password");
-                response.sendRedirect("../User/ChangePassword");
-            }
-        }
-    }
-
-    private void showChangePasswordView(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException, ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("utf-8");
-        request.getRequestDispatcher("/Views/ChangePassword.jsp").forward(request, response);
-    }
     // </editor-fold>
 }
