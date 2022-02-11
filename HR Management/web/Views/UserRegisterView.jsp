@@ -67,7 +67,7 @@
                                                 <div class="form-group col-lg-12">
                                                     <label for="username">Username</label>
                                                     <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
-                                                     <c:if test="${usernameErrorMessage != null}">
+                                                    <c:if test="${usernameErrorMessage != null}">
                                                         <p class="message text-danger">${usernameErrorMessage}</p>
                                                         <c:remove var="usernameErrorMessage" scope="session" /> 
                                                     </c:if>
@@ -77,7 +77,7 @@
                                                 <div class="form-group col-lg-12">
                                                     <label for="email">Email address</label>
                                                     <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
-                                                     <c:if test="${emailErrorMessage != null}">
+                                                    <c:if test="${emailErrorMessage != null}">
                                                         <p class="message text-danger">${emailErrorMessage}</p>
                                                         <c:remove var="emailErrorMessage" scope="session" /> 
                                                     </c:if>
@@ -86,16 +86,17 @@
                                             <div class="row">
                                                 <div class="form-group col-lg-12">
                                                     <label for="mobile">Mobile</label>
-                                                    <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Enter your mobile" required>
+                                                    <input type="text" class="form-control" id="mobile" name="mobile" onkeyup="checkMobile()" placeholder="Enter your mobile" required>
+                                                    <span id='inValidPhone'></span>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="form-group col-lg-12">
                                                     <span class="text-bold" >Choose Gender:  &nbsp &nbsp 
-                                                    <label for="male">Male</label>
-                                                    <input type="radio" name="gender" id="male" value="male" checked> &nbsp &nbsp &nbsp
-                                                    <label for="female">Female</label>
-                                                    <input type="radio" name="gender" id="female" value="female">
+                                                        <label for="male">Male</label>
+                                                        <input type="radio" name="gender" id="male" value="male" checked> &nbsp &nbsp &nbsp
+                                                        <label for="female">Female</label>
+                                                        <input type="radio" name="gender" id="female" value="female">
                                                     </span>
                                                 </div>
                                             </div>
@@ -148,12 +149,33 @@
         <script src="../js/Director/myScript.js" type="text/javascript"></script>
         <script>
 
-                                                    /** HIDE ALERT**/
-                                                    $(document).click(function (e) {
+                                                        /** HIDE ALERT**/
+                                                        $(document).click(function (e) {
                                                         $('.message').hide();
-                                                    });
-                                                    /** HIDE ALERT**/
-                                                 
+                                                        });
+                                                        /** HIDE ALERT**/
+
+
+                                                    function checkMobile() {
+                                                        var mobile = document.getElementById('mobile');
+                                                        var regex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+                                                        if (mobile == null || mobile.value.toString().length == 0){
+                                                            document.getElementById('inValidPhone').innerHTML = '';
+                                                        } else{
+                                                            
+                                                            if (mobile.value.match(regex)) {
+                                                                isValid = true;
+                                                                document.getElementById('inValidPhone').style.color = 'green';
+                                                                document.getElementById('inValidPhone').innerHTML = 'Valid';
+                                                            } else {
+                                                                isValid = false;
+                                                                document.getElementById('inValidPhone').style.color = 'red';
+                                                                document.getElementById('inValidPhone').innerHTML = 'This is not mobile';
+                                                            }
+                                                        }
+                                                    }
+
+
 
         </script>
     </body>
