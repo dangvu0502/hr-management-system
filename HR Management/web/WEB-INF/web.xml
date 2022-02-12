@@ -49,8 +49,8 @@
         <servlet-class>Controller.BlogDetailsController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>SupportTypeController</servlet-name>
-        <servlet-class>Controller.SupportTypeController</servlet-class>
+        <servlet-name>BlogSearchController</servlet-name>
+        <servlet-class>Controller.BlogSearchController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>SettingListController</servlet-name>

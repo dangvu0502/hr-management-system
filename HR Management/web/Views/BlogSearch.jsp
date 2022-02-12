@@ -152,6 +152,11 @@
                 color: #f37879;
                 text-decoration: none;
             }
+            .Error{
+                margin: 40px 0px;
+                font-weight: 800;
+                font-family: sans-serif;
+            }
         </style>
     </head>
 
@@ -168,10 +173,11 @@
             <!-- Side-Bar -->
             <div class="SideBar_Wrapper">
                 <!-- Search_Bar -->
-                <form action="BlogSearchController" method="post" class="form-inline" 
-                      style="padding: 20px 0px 20px 30px">
+                <form action="BlogSearchController" method="post" class="form-inline"  
+                      style="padding: 20px 0px 20px 30px"
+                      >
                     <div class="form-group mb-2">
-                        <select class="form-control" name="type" >
+                        <select class="form-control" name="type" value ="${txtS}" >
                             <option value="Tittle">Tittle</option>
                             <option value="Brieft">Brieft</option>
                         </select>                                            
@@ -184,7 +190,7 @@
                             id="text"
                             name="inputSearch"
                             placeholder="Search"
-                            required=""
+                            required
                             />
                     </div>
                     <button type="submit" class="btn btn-primary mb-2">Search</button>
@@ -220,6 +226,10 @@
 
             <!-- Main-Wrapper -->
             <div class="main_WrapperContent">
+                <c:if test="${IsEmpty!=null}">
+                    <h2 class="Error">${IsEmpty}</h2>
+                    <h3>0 matches for ${SearchResult}</h3>
+                </c:if>
                 <c:forEach items="${listE}" var="e">
                     <div class="Blog_list fade">
                         <div class="row">
@@ -251,7 +261,7 @@
                 <nav aria-label="Page navigation">
                     <ul class="pagination">
                         <c:forEach begin="1" end="${endP}" var="p">
-                            <li class="page-item"><a class="page-link" href="BlogController?page=${p}">${p}</a></li>
+                            <li class="page-item"><a class="page-link" href="BlogSearchController?page=${p}&Search=${Search}&Type=${Type}">${p}</a></li>
                             </c:forEach>
                     </ul>
                 </nav>

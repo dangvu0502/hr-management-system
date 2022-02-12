@@ -155,6 +155,7 @@
         <!--navbar-->    
         <%@ include file = "Header/NavBar.jsp" %>
         <!--navbar-->
+        
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <!-- https://1.bp.blogspot.com/-Az_2DYAbtNI/X6yyinSmerI/AAAAAAAADbw/AYAOC_dN6VoUqSl5R96JB7-3y_owsXzZwCLcBGAsYHQ/w330-h270-p-k-no-nu/m1%2B%25281%2529.jpg -->
@@ -163,16 +164,23 @@
             <!-- Side-Bar -->
             <div class="SideBar_Wrapper">
                 <!-- Search_Bar -->
-                <form class="form-inline" action="/BlogDetailsController" method="post">
-                    <div class="form-group mb-2"></div>
+                <form action="BlogSearchController" method="post" class="form-inline" 
+                      style="padding: 20px 0px 20px 30px">
+                    <div class="form-group mb-2">
+                        <select class="form-control" name="type" >
+                            <option value="Tittle">Tittle</option>
+                            <option value="Brieft">Brieft</option>
+                        </select>                                            
+                    </div>
                     <div class="form-group mb-2 align-center">
-                        <label for="Input Titlte" class="sr-only"></label>
+                        <label for="TittleSearch" class="sr-only"></label>
                         <input
                             type="text"
                             class="form-control"
-                            id="Search"
-                            name="Tittle"
+                            id="text"
+                            name="inputSearch"
                             placeholder="Search"
+                            required=""
                             />
                     </div>
                     <button type="submit" class="btn btn-primary mb-2">Search</button>
@@ -240,28 +248,28 @@
             </div>
             <!-- Main-Wrapper -->
             <div class="main_WrapperContent">
-                <%    BLog b =  (BLog)request.getAttribute("BlogDetails"); %>
-                <h1 class="Main_Tittle"><%=b.getTittle() %></h1>
+                <%    BLog b = (BLog) request.getAttribute("BlogDetails");%>
+                <h1 class="Main_Tittle"><%=b.getTittle()%></h1>
                 <div class="Content d-flex justify-content-between">
                     <div class="Main_Author text-muted">
-                        <i class="fa-solid fa-at"></i><%=b.getAuthor() %>
+                        <i class="fa-solid fa-at"></i><%=b.getAuthor()%>
                     </div>
                     <div class="Main_PostDate text-muted">
-                        <i class="fa-solid fa-calendar-days"></i> <%=b.getPublishDate() %>
+                        <i class="fa-solid fa-calendar-days"></i> <%=b.getPublishDate()%>
                     </div>
                 </div>
                 <div class="Main_Category text-muted">CateGory:  <%=b.getCategory()%></div>
                 <p class="Main_brieft">
-                    <%=b.getBrieft() %>
+                    <%=b.getBrieft()%>
                 </p>
                 <img
-                    src="<%=b.getThumnail_Image() %>"
+                    src="<%=b.getThumnail_Image()%>"
                     alt="Thumnail_Image"
                     class="img-responsive Main_Thumnail_Image"
                     />
                 <p class="Main_content mt-5">
-                <!--https://preview.colorlib.com/theme/andrea/images/ximage_1.jpg.pagespeed.ic.bP9m1ezc08.webp-->
-                <%=b.getContent() %>
+                    <!--https://preview.colorlib.com/theme/andrea/images/ximage_1.jpg.pagespeed.ic.bP9m1ezc08.webp-->
+                    <%=b.getContent()%>
                 </p>
             </div>
             <!-- Main-Wrapper -->

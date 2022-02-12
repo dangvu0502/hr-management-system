@@ -85,15 +85,16 @@ public class BlogDAO {
         return e;
     }
 
-    public Vector<BLog> GetBlogByTittle(String Tittle) throws ParseException {
+    public Vector<BLog> SearchBlogByTittle(int page, String Type, String Tittle) throws ParseException {
         Vector vec = new Vector();
         try {
             String sql = "SELECT  b.id,b.Slug ,b.Thumnail_image,b.Tittle,b.Brieft,c.Category_Name,b.Content,b.Author,b.PublishDate FROM hr_system_v2.blog b\n"
                     + "LEFT JOIN category c on\n"
-                    + "b.Category = c.id  where b.Tittle like ? limit 3;";
+                    + "b.Category = c.id  where b." + Type + " like ? limit 3 offset ?;";
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
-            ps.setString(1, "%" + Tittle + "%");
+            ps.setString(1, Tittle + "%");
+            ps.setInt(2, (page - 1) * 3);
             rs = ps.executeQuery();
             while (rs.next()) {
                 BLog e = new BLog();
@@ -112,6 +113,23 @@ public class BlogDAO {
             Logger.getLogger(BlogDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return vec;
+    }
+
+    public int GetTotalBlogBySearch(String Type, String Search) {
+        int total = 0;
+        try {
+            String sql = "select count(*) from hr_system_v2.blog  where blog." + Type + " like ?;";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, Search + "%");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                total = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return total;
     }
 
     public int GetTotalBlog() {

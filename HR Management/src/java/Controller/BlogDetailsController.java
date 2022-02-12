@@ -73,18 +73,6 @@ public class BlogDetailsController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            Vector<BLog> e = new Vector();
-            String Tittle = request.getParameter("Tittle");
-            BlogDAO eDAO = new BlogDAO();
-            e = eDAO.GetBlogByTittle(Tittle);
-            request.setAttribute("listE", e);
-            request.getRequestDispatcher("Views/Blog.jsp").forward(request, response);
-
-        } catch (ParseException ex) {
-            Logger.getLogger(BlogDetailsController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
     }
 
     /**

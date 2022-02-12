@@ -246,8 +246,21 @@ public class ContractController extends HttpServlet {
         request.getRequestDispatcher("../Views/ContractEdit.jsp").forward(request, response);
     }
 
-    private void contractEditImplement(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void contractEditImplement(HttpServletRequest request, HttpServletResponse response) throws IOException, Exception {
+        String id = request.getParameter("id");
+        String StartDate = request.getParameter("StartDate");
+        String EndDate = request.getParameter("EndDate");
+        ContractDAO contractDAO = new ContractDAO();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        if (sdf.parse(StartDate).before(sdf.parse(EndDate))) {
+            contractDAO.updateContract(EndDate, Integer.parseInt(id));
+            request.getSession().setAttribute("message", "Edit Contract Successfully!!");
+            response.sendRedirect("../Contract/EditContract?id=" + id);
+        } else {
+            request.getSession().setAttribute("message", "End Date must after Start Date!!");
+
+            response.sendRedirect("../Contract/EditContract?id=" + id);
+        }
     }
     // </editor-fold>
 }

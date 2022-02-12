@@ -112,20 +112,18 @@ public class ContractDAO {
 //
 //        return null;
 //    }
-    public void updateContract(String StartDate, String EndDate, int id) throws Exception {
-        String sql = "UPDATE hr_system_v2.contract SET startdate = ?, enddate = ? WHERE id= ?";
+    public void updateContract(String EndDate, int id) throws Exception {
+        String sql = "UPDATE hr_system_v2.contract SET end_date = ? WHERE id= ?";
         try (
                 Connection con = new DBContext().getConnection();
-                PreparedStatement ps = con.prepareStatement(sql)) { // user try-with-resources in java
-            ps.setString(1, StartDate);
-            ps.setString(2, EndDate);
-            ps.setInt(3, id);
+                PreparedStatement ps = con.prepareStatement(sql)) { 
+            ps.setString(1, EndDate);
+            ps.setInt(2, id);
             // execute update SQL stetement
             ps.executeUpdate();
         } catch (SQLException e) {
             throw e;
         }
-
     }
 
     public List<Contract> getOne(int id) {
@@ -143,8 +141,8 @@ public class ContractDAO {
             String pattern = "yyyy-MM-dd";
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
             while (rs.next()) {
-                Contract c = new Contract(rs.getInt(1), new User(rs.getString(2), rs.getString(3)), 
-                        simpleDateFormat.format(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString(4))), 
+                Contract c = new Contract(rs.getInt(1), new User(rs.getString(2), rs.getString(3)),
+                        simpleDateFormat.format(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString(4))),
                         simpleDateFormat.format(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString(5))), rs.getInt(6));
                 list.add(c);
             }

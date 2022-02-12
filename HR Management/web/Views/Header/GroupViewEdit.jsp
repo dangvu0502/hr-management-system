@@ -1,7 +1,7 @@
 <%-- 
-    Document   : ContractEdit
-    Created on : Feb 12, 2022, 3:03:10 PM
-    Author     : Egamorft
+    Document   : GroupViewEdit
+    Created on : Feb 12, 2022, 9:03:35 PM
+    Author     : quocb
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -80,37 +80,25 @@
                     <div class="col-lg-6 ">
                         <section class="panel">
                             <header class="panel-heading text-center">
-                                Edit Contract
+                                Edit Group
                             </header>
-                            <c:if test="${message != null}">
-                                <c:choose>
-                                    <c:when test = "${message eq 'Edit Contract Successfully!!'}">
-                                        <div class="error alert alert-success" role="alert">
-                                            <h4 class="alert-heading">Error</h4><hr>
-                                            <p class="mb-0">${message}</p>
-                                        </div>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <div class="error alert alert-danger" role="alert">
-                                            <h4 class="alert-heading">Error</h4><hr>
-                                            <p class="mb-0">${message}</p>
-                                        </div>
-                                    </c:otherwise>
-                                </c:choose>
-                                <c:remove var="message" scope="session" /> 
-                            </c:if>
                             <div class="panel-body">
-                                <form action="../Contract/EditContract" method="POST">
+                                <form action="GroupEdit" method="POST">
 
                                     <div class="row">
                                         <div class="col-lg-2"></div>
-                                        <c:forEach items="${contract}" var="c">
-                                            <input name="id" value="${c.id}" hidden="">
+                                        <c:forEach items="${group}" var="g">
                                             <div class="col-lg-8">
                                                 <div class="row ">
                                                     <div class="form-group col-lg-12">
                                                         <label for="fullname">Full name</label>
                                                         <input type="text" class="form-control" name="fullname" disabled="" value="${c.user_id.fullname}">
+                                                    </div>
+                                                </div>
+                                                <div class="row ">
+                                                    <div class="form-group col-lg-12">
+                                                        <label for="username">Username</label>
+                                                        <input type="text" class="form-control" name="username" disabled="" value="${c.user_id.getUsername()}">
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -122,8 +110,7 @@
                                                 <div class="row">
                                                     <div class="form-group col-lg-12">
                                                         <label for="StartDate">Start Date</label>
-                                                        <input type="date" class="form-control" value="${c.startDate}" disabled="">
-                                                        <input name="StartDate" value="${c.startDate}" hidden="">
+                                                        <input type="date" class="form-control" name="StartDate" value="${c.startDate}">
                                                     </div>
                                                 </div>
                                                 <div class="row">
