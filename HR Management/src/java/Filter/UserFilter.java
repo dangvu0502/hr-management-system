@@ -108,6 +108,8 @@ public class UserFilter implements Filter {
         doBeforeProcessing(request, response);
         HttpServletRequest req =  (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response; 
+        res.setContentType("text/html;charset=UTF-8");
+        req.setCharacterEncoding("utf-8");
         User account = (User) req.getSession().getAttribute("account");
         PrintWriter out = res.getWriter();
         if(account == null){
