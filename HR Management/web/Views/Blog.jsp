@@ -168,14 +168,20 @@
             <!-- Side-Bar -->
             <div class="SideBar_Wrapper">
                 <!-- Search_Bar -->
-                <form class="form-inline">
-                    <div class="form-group mb-2"></div>
+                <form action="BlogSearchController" method="post" class="form-inline" >
+                    <div class="form-group mb-2">
+                        <select class="form-control" name="type" value ="${txtS}" >
+                            <option value="Tittle">Tittle</option>
+                            <option value="Brieft">Brieft</option>
+                        </select>                                            
+                    </div>
                     <div class="form-group mb-2 align-center">
-                        <label for="inputPassword2" class="sr-only"></label>
+                        <label for="TittleSearch" class="sr-only"></label>
                         <input
-                            type="password"
+                            type="text"
                             class="form-control"
-                            id="inputPassword2"
+                            id="text"
+                            name="inputSearch"
                             placeholder="Search"
                             />
                     </div>
@@ -226,8 +232,8 @@
                             <div class="col-lg-6">
                                 <p class="Category">Category ----- ${e.category}</p>
                                 <h4 class="Tittle">
-                                    
-                                     <a href="BlogDetailsController?Slug=${e.slug}">${e.tittle}</a>
+
+                                    <a href="BlogDetailsController?Slug=${e.slug}">${e.tittle}</a>
                                 </h4>
                                 <p class="Briefs_info text-muted">
                                     ${e.brieft}

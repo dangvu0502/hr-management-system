@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-     <head>
+    <head>
         <meta charset="UTF-8">
         <title>Login</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
@@ -33,8 +33,8 @@
         <![endif]-->
     </head>
     <body class="skin-black">
+        <%--<%@ include file = "Header/NavBar.jsp" %>--%>
         <div class="wrapper row-offcanvas row-offcanvas-left">
-
             <!-- Main content -->
             <section class="content">
                 <div class="row">
@@ -122,7 +122,7 @@
                                                         $('.message').hide();
                                                     });
                                                     /** HIDE ALERT**/
-                                                 
+
 
         </script>
     </body>

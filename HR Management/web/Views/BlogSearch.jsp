@@ -1,10 +1,10 @@
 <%-- 
-    Document   : BlogDetails
-    Created on : Feb 11, 2022, 7:01:19 PM
+    Document   : Blog
+    Created on : Feb 11, 2022, 6:58:44 PM
     Author     : lehun
 --%>
 
-<%@page import="Models.BLog"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,20 +17,38 @@
             content="width=device-width, initial-scale=1, shrink-to-fit=no"
             />
 
-        <!-- Bootstrap CSS -->
         <link
             rel="stylesheet"
             href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
             integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
             crossorigin="anonymous"
             />
+        <script
+            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"
+        ></script>
+
+        <!-- cdn font awsome -->
         <link
             rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-            integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+            integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA=="
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
             />
+        <link rel="icon" href="../img/Honey Bee.png" />
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
         <script>
             $(window).on("load", function () {
@@ -91,31 +109,19 @@
                 float: left;
                 overflow: hidden;
                 width: 60%;
-                margin-top: 40px;
             }
             .SideBar_Wrapper {
                 float: right;
                 width: 35%;
-                top: 0; 
                 padding-bottom: 10px;
                 background-color: #eee;
-                position: -webkit-sticky; /* Safari */
                 position: sticky;
                 margin-top: 40px;
-                padding: 20px 20px 0px 20px;
             }
-            .col-lg-8 {
-                padding: 0px !important;
-            }
-            .Main_Tittle {
-                font-weight: bold;
-                font-size: 3rem;
+            .Tittle {
+                font-weight: 700;
                 font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
                     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-            }
-            .Main_content {
-                font-family: "Times New Roman", Times, serif;
-                font-size: 1rem;
             }
             .Blog_list {
                 margin: 40px 0px;
@@ -136,9 +142,7 @@
                 font-size: 17px;
             }
             .Category_popular_Post {
-                font-size: 17px;
-                margin-bottom: 5px;
-                padding-left: 5px;
+                font-size: 13px;
             }
             a {
                 color: inherit;
@@ -152,26 +156,32 @@
     </head>
 
     <body>
-        <!--navbar-->    
-        <%@ include file = "Header/NavBar.jsp" %>
-        <!--navbar-->
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <!-- https://1.bp.blogspot.com/-Az_2DYAbtNI/X6yyinSmerI/AAAAAAAADbw/AYAOC_dN6VoUqSl5R96JB7-3y_owsXzZwCLcBGAsYHQ/w330-h270-p-k-no-nu/m1%2B%25281%2529.jpg -->
         <!-- <div class="fade">Fade In 01</div> -->
+        <!--navbar-->    
+        <%@ include file = "Header/NavBar.jsp" %>
+        <!--navbar-->
+
         <section>
             <!-- Side-Bar -->
             <div class="SideBar_Wrapper">
                 <!-- Search_Bar -->
-                <form class="form-inline" action="/BlogController" method="post">
-                    <div class="form-group mb-2"></div>
+                <form action="BlogSearchController" method="post" class="form-inline" >
+                    <div class="form-group mb-2">
+                        <select class="form-control" name="type" value ="${txtS}" >
+                            <option value="Tittle">Tittle</option>
+                            <option value="Brieft">Brieft</option>
+                        </select>                                            
+                    </div>
                     <div class="form-group mb-2 align-center">
-                        <label for="Input Titlte" class="sr-only"></label>
+                        <label for="TittleSearch" class="sr-only"></label>
                         <input
                             type="text"
                             class="form-control"
-                            id="Search"
-                            name="Tittle"
+                            id="text"
+                            name="inputSearch"
                             placeholder="Search"
                             />
                     </div>
@@ -197,76 +207,56 @@
                                         </a>
                                     </h4>
                                     <p class="text-muted Category_popular_Post">CateGory:</p>
-                                    <div class="d-flex Category">
-                                        <span class="badge badge-pill badge-light"
-                                              ><a href="#">Light</a></span
-                                        ><span class="badge badge-pill badge-light"
-                                               ><a href="#">Light</a></span
-                                        >
-                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <hr />
-                        <div class="Blog_list">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <img
-                                        class="img-fluid"
-                                        src="https://1.bp.blogspot.com/-Az_2DYAbtNI/X6yyinSmerI/AAAAAAAADbw/AYAOC_dN6VoUqSl5R96JB7-3y_owsXzZwCLcBGAsYHQ/w330-h270-p-k-no-nu/m1%2B%25281%2529.jpg"
-                                        alt=""
-                                        />
-                                </div>
-                                <div class="col-lg-8">
-                                    <h4 class="Tittle_popular_Post">
-                                        <a href="#">
-                                            Looking Better in Photos Based on the body Type
-                                        </a>
-                                    </h4>
-                                    <p class="text-muted Category_popular_Post">CateGory:</p>
-                                    <div class="d-flex Category">
-                                        <span class="badge badge-pill badge-light"
-                                              ><a href="#">Light</a></span
-                                        ><span class="badge badge-pill badge-light"
-                                               ><a href="#">Light</a></span
-                                        >
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <hr />
                     </div>
                 </div>
+                <!-- Popular-Post -->
             </div>
+            <!-- Side-Bar -->
+
             <!-- Main-Wrapper -->
             <div class="main_WrapperContent">
-                <%    BLog b =  (BLog)request.getAttribute("BlogDetails"); %>
-                <h1 class="Main_Tittle"><%=b.getTittle() %></h1>
-                <div class="Content d-flex justify-content-between">
-                    <div class="Main_Author text-muted">
-                        <i class="fa-solid fa-at"></i><%=b.getAuthor() %>
+                <c:forEach items="${listE}" var="e">
+                    <div class="Blog_list fade">
+                        <div class="row">
+
+                            <div class="col-lg-6">
+                                <img
+                                    class="img-fluid"
+                                    src="${e.thumnail_Image}"
+                                    alt=""
+                                    />
+                            </div>
+                            <div class="col-lg-6">
+                                <p class="Category">Category ----- ${e.category}</p>
+                                <h4 class="Tittle">
+
+                                    <a href="BlogDetailsController?Slug=${e.slug}">${e.tittle}</a>
+                                </h4>
+                                <p class="Briefs_info text-muted">
+                                    ${e.brieft}
+                                </p>
+                                <button class="btn btn-primary" type="button" >
+                                    <a href="BlogDetailsController?Slug=${e.slug}">More Details</a>
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="Main_PostDate text-muted">
-                        <i class="fa-solid fa-calendar-days"></i> <%=b.getPublishDate() %>
-                    </div>
-                </div>
-                <div class="Main_Category text-muted">CateGory:  <%=b.getCategory()%></div>
-                <p class="Main_brieft">
-                    <%=b.getBrieft() %>
-                </p>
-                <img
-                    src="<%=b.getThumnail_Image() %>"
-                    alt="Thumnail_Image"
-                    class="img-responsive Main_Thumnail_Image"
-                    />
-                <p class="Main_content mt-5">
-                <!--https://preview.colorlib.com/theme/andrea/images/ximage_1.jpg.pagespeed.ic.bP9m1ezc08.webp-->
-                <%=b.getContent() %>
-                </p>
+                    <hr/>
+                </c:forEach>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <c:forEach begin="1" end="${endP}" var="p">
+                            <li class="page-item"><a class="page-link" href="BlogSearchController?page=${p}&Search=${Search}&Type=${Type}">${p}</a></li>
+                            </c:forEach>
+                    </ul>
+                </nav>
             </div>
             <!-- Main-Wrapper -->
         </section>
-
+        <%@ include file = "Header/Footer.jsp" %>
         <!-- boostrap -->
         <script
             src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -283,5 +273,7 @@
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"
         ></script>
+
+
     </body>
 </html>
