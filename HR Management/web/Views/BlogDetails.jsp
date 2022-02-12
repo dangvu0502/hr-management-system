@@ -4,6 +4,7 @@
     Author     : lehun
 --%>
 
+<%@page import="Models.BLog"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -238,49 +239,28 @@
             </div>
             <!-- Main-Wrapper -->
             <div class="main_WrapperContent">
-                <h1 class="Main_Tittle">A Loving Heart is the Truest Wisdom</h1>
+                <%    BLog b =  (BLog)request.getAttribute("BlogDetails"); %>
+                <h1 class="Main_Tittle"><%=b.getTittle() %></h1>
                 <div class="Content d-flex justify-content-between">
                     <div class="Main_Author text-muted">
-                        <i class="fa-solid fa-at"></i> Hungflash
+                        <i class="fa-solid fa-at"></i><%=b.getAuthor() %>
                     </div>
                     <div class="Main_PostDate text-muted">
-                        <i class="fa-solid fa-calendar-days"></i> june 28, 2019
+                        <i class="fa-solid fa-calendar-days"></i> <%=b.getPublishDate() %>
                     </div>
                 </div>
-                <div class="Main_Category text-muted">CateGory: Gamming</div>
+                <div class="Main_Category text-muted">CateGory:  <%=b.getCategory()%></div>
                 <p class="Main_brieft">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum
-                    est laborum soluta nisi, unde ipsa tenetur impedit repudiandae vel
-                    eligendi.
+                    <%=b.getBrieft() %>
                 </p>
                 <img
-                    src="https://preview.colorlib.com/theme/andrea/images/ximage_1.jpg.pagespeed.ic.bP9m1ezc08.webp"
+                    src="<%=b.getThumnail_Image() %>"
                     alt="Thumnail_Image"
                     class="img-responsive Main_Thumnail_Image"
                     />
                 <p class="Main_content mt-5">
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veniam fuga
-                    aperiam sed officia exercitationem? Id possimus repellat et alias
-                    voluptas eaque, quod laboriosam illum qui animi, enim quis non numquam
-                    modi necessitatibus tempore quae rem velit ullam asperiores accusamus.
-                    Numquam aperiam accusamus beatae in eveniet amet animi, deserunt quos
-                    repellendus, fuga nobis! Quia facere culpa, id, dolor, cumque error
-                    quos obcaecati vero autem ex architecto. Delectus iure magni modi
-                    tenetur est atque? Exercitationem, distinctio quis soluta voluptatum
-                    qui tempore minima numquam in, ad neque sit nostrum itaque, at quam
-                    fugiat placeat deleniti! Ad dignissimos repellat perspiciatis?
-                    Architecto consequuntur sed blanditiis sint soluta dignissimos iste
-                    adipisci dolor mollitia earum corporis, laboriosam ut sunt corrupti
-                    deleniti reprehenderit magnam, perspiciatis ipsum eveniet iure
-                    sapiente, sequi quidem. Illum voluptatibus dolorum est aut, impedit
-                    alias fugiat optio sunt dolor ex laboriosam numquam error maiores
-                    fuga, voluptas hic exercitationem dolores eos labore autem. Sed eaque
-                    architecto tempore neque illo nisi distinctio aliquid aspernatur odit
-                    dolorum dicta velit nam voluptates quibusdam adipisci tenetur nihil a
-                    reprehenderit quam in veritatis doloribus rerum, voluptas deserunt?
-                    Commodi quibusdam illo animi quod nisi, qui mollitia, impedit nam
-                    omnis praesentium natus explicabo atque aperiam dolorem delectus enim
-                    odit assumenda, ullam eveniet totam.
+                <!--https://preview.colorlib.com/theme/andrea/images/ximage_1.jpg.pagespeed.ic.bP9m1ezc08.webp-->
+                <%=b.getContent() %>
                 </p>
             </div>
             <!-- Main-Wrapper -->

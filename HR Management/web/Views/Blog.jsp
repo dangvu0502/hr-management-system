@@ -4,8 +4,8 @@
     Author     : lehun
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -17,13 +17,38 @@
             content="width=device-width, initial-scale=1, shrink-to-fit=no"
             />
 
-        <!-- Bootstrap CSS -->
         <link
             rel="stylesheet"
             href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
             integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
             crossorigin="anonymous"
             />
+        <script
+            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"
+        ></script>
+
+        <!-- cdn font awsome -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+            integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+            />
+        <link rel="icon" href="../img/Honey Bee.png" />
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
         <script>
             $(window).on("load", function () {
@@ -187,10 +212,10 @@
 
             <!-- Main-Wrapper -->
             <div class="main_WrapperContent">
-                <div class="Blog_list">
-                    <div class="row">
-                        <c:forEach items="${listE}" var="e">
-                            <div>${e}</div>
+                <c:forEach items="${listE}" var="e">
+                    <div class="Blog_list fade">
+                        <div class="row">
+
                             <div class="col-lg-6">
                                 <img
                                     class="img-fluid"
@@ -199,33 +224,33 @@
                                     />
                             </div>
                             <div class="col-lg-6">
-                                <p class="Category">Category ----- ${e.Category}</p>
+                                <p class="Category">Category ----- ${e.category}</p>
                                 <h4 class="Tittle">
-                                    ${e.Tittle}
+                                    
+                                     <a href="BlogDetailsController?Slug=${e.slug}">${e.tittle}</a>
                                 </h4>
                                 <p class="Briefs_info text-muted">
                                     ${e.brieft}
                                 </p>
                                 <button class="btn btn-primary" type="button" >
-                                    <a href=" BLogDetailsController?Slug=${e.slug}">More Details</a>
+                                    <a href="BlogDetailsController?Slug=${e.slug}">More Details</a>
                                 </button>
                             </div>
-                            <hr />
-                        </c:forEach>
+                        </div>
                     </div>
-                </div>
-
-                <!--                <div class="table-foot">
-                                    <ul class="pagination pagination-sm no-margin pull-right">
-                <%--<c:forEach begin="1" end="${endP}" var="p">--%>
-                    <li><a href="SettingListController?page=${p}">${p}</a></li>
-                <%--</c:forEach>--%>
-        </ul>
-    </div>-->
+                    <hr/>
+                </c:forEach>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <c:forEach begin="1" end="${endP}" var="p">
+                            <li class="page-item"><a class="page-link" href="BlogController?page=${p}">${p}</a></li>
+                            </c:forEach>
+                    </ul>
+                </nav>
             </div>
             <!-- Main-Wrapper -->
         </section>
-
+        <%@ include file = "Header/Footer.jsp" %>
         <!-- boostrap -->
         <script
             src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -242,5 +267,7 @@
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"
         ></script>
+
+
     </body>
 </html>

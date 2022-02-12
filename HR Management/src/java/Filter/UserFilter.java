@@ -108,6 +108,8 @@ public class UserFilter implements Filter {
         doBeforeProcessing(request, response);
         HttpServletRequest req =  (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response; 
+        res.setContentType("text/html;charset=UTF-8");
+        req.setCharacterEncoding("utf-8");
         User account = (User) req.getSession().getAttribute("account");
         PrintWriter out = res.getWriter();
         if(account == null){
@@ -116,7 +118,7 @@ public class UserFilter implements Filter {
             String action = req.getPathInfo() == null ? "" : req.getPathInfo();
             switch (action) {
                 case "/NewUser":
-                    if(account.getRole_id() != 1) res.sendError(403);
+                    if(account.getRole_id() != 3) res.sendError(403);
                     break;
                 case "/EditProfile":
                     break;

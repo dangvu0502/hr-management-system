@@ -131,6 +131,7 @@ public class UserDAO {
             ps.setInt(9, user.getRole_id());
             rows = ps.executeUpdate();
             con.commit();
+            System.out.println(user.getFullname());
         } catch (Exception e) {
             con.rollback();
             System.err.println("Error: " + e.getMessage());

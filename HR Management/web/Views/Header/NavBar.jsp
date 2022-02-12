@@ -36,10 +36,12 @@
             <c:if test="${sessionScope.account.role_id == 1}"> 
                 <a class="nav-item nav-link" href="../SettingListController">Setting List</a>
                 <a class="nav-item nav-link" href="../grouplist">Group List</a>
-                <a class="nav-item nav-link" href="../User/NewUser">New User</a>
             </c:if>
             <c:if test="${sessionScope.account.role_id == 2}"> 
                 <a class="nav-item nav-link" href="../Contract/Details">Contract</a>
+            </c:if>
+            <c:if test="${sessionScope.account.role_id == 3}"> 
+                 <a class="nav-item nav-link" href="../User/NewUser">New User</a>
             </c:if>
             <a class="nav-item nav-link" href="#">Our Team</a>
 

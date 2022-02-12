@@ -82,7 +82,7 @@ public class SettingDAO {
     public HashMap<Integer,String> getAllRole() {
         HashMap<Integer,String> role = new HashMap<>();
         try {
-            String sql = "SELECT * FROM hr_system_v2.role;";
+            String sql = "SELECT setting.order, setting.value FROM hr_system_v2.setting where setting.type = 'role';";
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
