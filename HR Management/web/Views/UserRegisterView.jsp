@@ -33,6 +33,7 @@
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
     </head>
+    
     <body class="skin-black">
         <div class="wrapper row-offcanvas row-offcanvas-left">
 
@@ -60,17 +61,18 @@
                                             <div class="row ">
                                                 <div class="form-group col-lg-12">
                                                     <label for="fullname">Full name</label>
-                                                    <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Enter your name" required>
+                                                    <input type="text" class="form-control" id="fullname" name="fullname"  placeholder="Enter your name" required>
                                                 </div>
                                             </div>
                                             <div class="row ">
                                                 <div class="form-group col-lg-12">
                                                     <label for="username">Username</label>
-                                                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
+                                                    <input type="text" class="form-control" id="username" name="username" onkeyup="checkUsername()" placeholder="Enter your username" required>
                                                     <c:if test="${usernameErrorMessage != null}">
                                                         <p class="message text-danger">${usernameErrorMessage}</p>
                                                         <c:remove var="usernameErrorMessage" scope="session" /> 
                                                     </c:if>
+                                                    <span id='inValidUsername'></span>    
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -170,11 +172,29 @@
                                                             } else {
                                                                 isValid = false;
                                                                 document.getElementById('inValidPhone').style.color = 'red';
-                                                                document.getElementById('inValidPhone').innerHTML = 'This is not mobile';
+                                                                document.getElementById('inValidPhone').innerHTML = 'Not Valid';
                                                             }
                                                         }
                                                     }
-
+                                                    
+                                                    function checkUsername() {
+                                                        var username = document.getElementById('username');
+                                                        var regex = /^[a-zA-Z0-9]+$/;
+                                                        if (username== null || username.value.toString().length == 0){
+                                                            document.getElementById('inValidUsername').innerHTML = '';
+                                                        } else{
+                                                            
+                                                            if (username.value.match(regex)) {
+                                                                isValid = true;
+                                                                document.getElementById('inValidUsername').style.color = 'green';
+                                                                document.getElementById('inValidUsername').innerHTML = 'Valid';
+                                                            } else {
+                                                                isValid = false;
+                                                                document.getElementById('inValidUsername').style.color = 'red';
+                                                                document.getElementById('inValidUsername').innerHTML = 'Not Valid';
+                                                            }
+                                                        }
+                                                    }
 
 
         </script>

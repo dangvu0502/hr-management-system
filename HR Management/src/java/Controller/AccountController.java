@@ -138,6 +138,7 @@ public class AccountController extends HttpServlet {
                     String date = simpleDateFormat.format(date1);
                     account.setDob(date);
                     session.setAttribute("account", account);
+                    session.setMaxInactiveInterval(10*60);
                     request.getSession().setAttribute("account", account); //lưu trên ss
                     response.sendRedirect("../Views/Home.jsp");
                 }
@@ -239,6 +240,7 @@ public class AccountController extends HttpServlet {
                 newPasswordImplement(request, response);
             } else if (method.equalsIgnoreCase("get")) {
                 String encrypt = request.getQueryString();
+                if(encrypt == null || encrypt.isEmpty()) response.sendError(404);
                 String[] decrypt = trippleDes.decrypt(encrypt).split(" ");
                 String email = decrypt[0];
                 LocalDateTime time = LocalDateTime.parse(decrypt[1]);

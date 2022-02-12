@@ -118,7 +118,7 @@ public class UserFilter implements Filter {
             String action = req.getPathInfo() == null ? "" : req.getPathInfo();
             switch (action) {
                 case "/NewUser":
-                    if(account.getRole_id() != 1) res.sendError(403);
+                    if(account.getRole_id() != 3) res.sendError(403);
                     break;
                 case "/EditProfile":
                     break;
