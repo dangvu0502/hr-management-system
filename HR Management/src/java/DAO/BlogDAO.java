@@ -30,7 +30,9 @@ public class BlogDAO {
     public Vector<BLog> GetBlogList(int page) {
         Vector vec = new Vector();
         try {
-            String sql = "SELECT * FROM hr_system_v2.blog limit 3 offset ?;";
+            String sql = "SELECT  b.id,b.Slug ,b.Thumnail_image,b.Tittle,b.Brieft,c.Category_Name,b.Content,b.Author,b.PublishDate FROM hr_system_v2.blog b\n"
+                    + "LEFT JOIN category c on\n"
+                    + "b.Category = c.id limit 3 offset ?;";
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
             ps.setInt(1, (page - 1) * 3);
@@ -42,7 +44,7 @@ public class BlogDAO {
                 e.setThumnail_Image(rs.getString(3));
                 e.setTittle(rs.getString(4));
                 e.setBrieft(rs.getString(5));
-                e.setCategory(rs.getInt(6));
+                e.setCategory(rs.getString(6));
                 e.setContent(rs.getString(7));
                 e.setAuthor(rs.getString(8));
                 e.setPublishDate(rs.getString(9));
@@ -57,7 +59,9 @@ public class BlogDAO {
     public BLog GetBlogBySlug(String Slug) throws ParseException {
         BLog e = new BLog();
         try {
-            String sql = "SELECT * FROM hr_system_v2.blog where Slug=?;";
+            String sql = "SELECT  b.id,b.Slug ,b.Thumnail_image,b.Tittle,b.Brieft,c.Category_Name,b.Content,b.Author,b.PublishDate FROM hr_system_v2.blog b\n"
+                    + "LEFT JOIN category c on\n"
+                    + "b.Category = c.id  where b.Slug=?;";
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
             ps.setString(1, Slug);
@@ -70,7 +74,7 @@ public class BlogDAO {
                 e.setThumnail_Image(rs.getString(3));
                 e.setTittle(rs.getString(4));
                 e.setBrieft(rs.getString(5));
-                e.setCategory(rs.getInt(6));
+                e.setCategory(rs.getString(6));
                 e.setContent(rs.getString(7));
                 e.setAuthor(rs.getString(8));
                 e.setPublishDate(simpleDateFormat.format(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString(9))));
