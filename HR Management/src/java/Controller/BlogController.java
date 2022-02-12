@@ -36,7 +36,6 @@ public class BlogController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            String Tittle = request.getParameter("Tittle");
             String page = request.getParameter("page");
             if (page == null) {
                 page = "1";
@@ -84,16 +83,28 @@ public class BlogController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String page = request.getParameter("page");
+        if (page == null) {
+            page = "1";
+        }
+        request.setAttribute("page", page);
+        BlogDAO eDAO = new BlogDAO();
+        int count = eDAO.GetTotalBlog();
+        int endPage = count / 3;
+        if (endPage % 5 != 0) {
+            endPage++;
+        }
+        request.setAttribute("endP", endPage);
+        Vector<BLog> e = new Vector();
         try {
-            Vector<BLog> e = new Vector();
             String Tittle = request.getParameter("Tittle");
-            BlogDAO eDAO = new BlogDAO();
             e = eDAO.GetBlogByTittle(Tittle);
             request.setAttribute("listE", e);
             request.getRequestDispatcher("Views/Blog.jsp").forward(request, response);
         } catch (ParseException ex) {
-            Logger.getLogger(BlogDetailsController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BlogController.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
     /**

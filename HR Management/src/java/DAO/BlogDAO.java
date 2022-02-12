@@ -90,10 +90,10 @@ public class BlogDAO {
         try {
             String sql = "SELECT  b.id,b.Slug ,b.Thumnail_image,b.Tittle,b.Brieft,c.Category_Name,b.Content,b.Author,b.PublishDate FROM hr_system_v2.blog b\n"
                     + "LEFT JOIN category c on\n"
-                    + "b.Category = c.id  where b.Tittle=?;";
+                    + "b.Category = c.id  where b.Tittle like ? limit 3;";
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
-            ps.setString(1, Tittle);
+            ps.setString(1, "%" + Tittle + "%");
             rs = ps.executeQuery();
             while (rs.next()) {
                 BLog e = new BLog();
