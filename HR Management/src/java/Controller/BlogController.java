@@ -5,22 +5,21 @@
  */
 package Controller;
 
-import DAO.SettingDAO;
-import Models.Setting;
+import DAO.BlogDAO;
+import Models.BlogTEST;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Vector;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Kha Chinh
+ * @author lehun
  */
-@WebServlet(name = "SettingController", urlPatterns = {"/Setting"})
-public class SettingController extends HttpServlet {
+public class BlogController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,17 +39,17 @@ public class SettingController extends HttpServlet {
                 page = "1";
             }
             request.setAttribute("page", page);
-            SettingDAO sDAO = new SettingDAO();
-            int count = sDAO.getTotalSetting();
+            BlogDAO eDAO = new BlogDAO();
+            int count = eDAO.GetTotalBlog();
             int endPage = count / 5;
-            if (count % 5 != 0) {
+            if (endPage % 5 != 0) {
                 endPage++;
             }
             request.setAttribute("endP", endPage);
-            Vector<Setting> s;
-            s = sDAO.getSettingList(Integer.parseInt(page));
-            request.setAttribute("listS", s);
-            request.getRequestDispatcher("Views/SettingList.jsp").forward(request, response);
+            Vector<BlogTEST> e = new Vector();
+            e = eDAO.GetBlogList(Integer.parseInt(page));
+            request.setAttribute("listE", e);
+            request.getRequestDispatcher("Views/Blog.jsp").forward(request, response);
         } catch (Exception e) {
             System.out.println("ádfasdfasdfasd" + e.getMessage());
         }

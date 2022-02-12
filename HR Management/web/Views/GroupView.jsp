@@ -315,10 +315,10 @@
                                 <header class="panel-heading">
                                     Filter
                                 </header>
-                                <form action="grouplist" method="post">
+                                <form action="GroupList" method="post">
                                     <div class="form-row">
                                         <div class="form-group col-md-3">
-                                            <select class="form-control" name="type">
+                                            <select class="form-control" name="type" value ="${txtS}" >
                                                 <option value="code">Code</option>
                                                 <option value="name">Name</option>
                                                 <option value="fullname">Full Name</option>
@@ -328,10 +328,10 @@
                                             </select>                                            
                                         </div>
                                         <div class="form-group col-md-7">
-                                            <input class="form-control" type="text" placeholder="Input..." name="input">
+                                            <input class="form-control" type="text" value="${txtS}" placeholder="Input..." name="input">
                                         </div>
                                         <div class="form-group col-md-2">
-                                            <input type="submit" class="btn btn-info" value="Search">
+                                            <input type="submit" name="input" class="btn btn-info" value="Search">
                                         </div>
                                     </div>
                                 </form>
@@ -350,7 +350,7 @@
                                         <th>Status</th>
                                         <th>Description</th>
                                         <th>Parent_group_code</th>
-                                        <th>Status</th>
+                                        <th>Update Date</th>
                                         
                                     </tr>
                                     <c:forEach items="${listG}" var="g">
@@ -366,7 +366,7 @@
                                             
                                             <td>${g.description}</td>
                                             <td>${g.parent_group_code}</td>
-
+                                            <td>${g.update_date}</td>
                                             <td>
                                                 <div style="background-color: orangered; border-radius:25px;margin-bottom: 2rem;text-align: center; padding: 0.4rem;"><a style="color: white; font-weight:700; " id="delete" onclick="deleteByID('${e.employee_id}');" href="#">Delete </a></div>
                                                 <div style="background-color: #f9d21a;border-radius:25px;text-align: center;padding: 0.4rem;"><a style="color: white;  font-weight:700; " class="edit" href="" onclick="dialogOpen('${e.username}', '${e.fullname}', '${e.employee_id}', '${e.type_id}', '${e.status}', '${e.email}', '${e.password}');

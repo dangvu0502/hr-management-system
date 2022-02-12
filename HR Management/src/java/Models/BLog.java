@@ -14,14 +14,13 @@ import java.util.Date;
 public class BLog {
 
     private int id;
-
+    private String slug;
     private String thumnail_Image;
     private String Tittle;
     private String brieft;
     private int Category;
 
     private String PublishDate;
-    private String slug;
     private String content;
     private String author;
 

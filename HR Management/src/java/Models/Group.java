@@ -16,6 +16,8 @@ public class Group {
     private String name;
     private boolean status;
     private String description;
+
+    
     private String parent_group_code;
     private boolean delete;
     private Date update_date;
