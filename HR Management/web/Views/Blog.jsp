@@ -168,15 +168,20 @@
             <!-- Side-Bar -->
             <div class="SideBar_Wrapper">
                 <!-- Search_Bar -->
-                <form action="BlogController" method="post" class="form-inline" >
-                    <div class="form-group mb-2"></div>
+                <form action="BlogSearchController" method="post" class="form-inline" >
+                    <div class="form-group mb-2">
+                        <select class="form-control" name="type" value ="${txtS}" >
+                            <option value="Tittle">Tittle</option>
+                            <option value="Brieft">Brieft</option>
+                        </select>                                            
+                    </div>
                     <div class="form-group mb-2 align-center">
                         <label for="TittleSearch" class="sr-only"></label>
                         <input
                             type="text"
                             class="form-control"
                             id="text"
-                            name="Tittle"
+                            name="inputSearch"
                             placeholder="Search"
                             />
                     </div>
