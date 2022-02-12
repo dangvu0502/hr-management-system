@@ -11,9 +11,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.text.SimpleDateFormat;
 
 /**
  *
@@ -52,7 +54,7 @@ public class BlogDAO {
         return vec;
     }
 
-    public BLog GetBlogBySlug(String Slug) {
+    public BLog GetBlogBySlug(String Slug) throws ParseException {
         BLog e = new BLog();
         try {
             String sql = "SELECT * FROM hr_system_v2.blog where Slug=?;";
@@ -60,6 +62,8 @@ public class BlogDAO {
             ps = con.prepareStatement(sql);
             ps.setString(1, Slug);
             rs = ps.executeQuery();
+            String pattern = "EEEEE MMMMM, yyyy";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
             while (rs.next()) {
                 e.setId(rs.getInt(1));
                 e.setSlug(rs.getString(2));
@@ -69,7 +73,7 @@ public class BlogDAO {
                 e.setCategory(rs.getInt(6));
                 e.setContent(rs.getString(7));
                 e.setAuthor(rs.getString(8));
-                e.setPublishDate(rs.getString(9));
+                e.setPublishDate(simpleDateFormat.format(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString(9))));
             }
         } catch (SQLException ex) {
             Logger.getLogger(BlogDAO.class.getName()).log(Level.SEVERE, null, ex);
