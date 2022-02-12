@@ -18,7 +18,7 @@ public class BLog {
     private String thumnail_Image;
     private String Tittle;
     private String brieft;
-    private int Category;
+    private String Category;
 
     private String PublishDate;
     private String content;
@@ -56,11 +56,11 @@ public class BLog {
         this.brieft = brieft;
     }
 
-    public int getCategory() {
+    public String getCategory() {
         return Category;
     }
 
-    public void setCategory(int Category) {
+    public void setCategory(String Category) {
         this.Category = Category;
     }
 
@@ -99,7 +99,7 @@ public class BLog {
     public BLog() {
     }
 
-    public BLog(int id, String thumnail_Image, String Tittle, String brieft, int Category, String PublishDate, String slug, String content, String author) {
+    public BLog(int id, String thumnail_Image, String Tittle, String brieft, String Category, String PublishDate, String slug, String content, String author) {
         this.id = id;
         this.thumnail_Image = thumnail_Image;
         this.Tittle = Tittle;
