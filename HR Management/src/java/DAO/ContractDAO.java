@@ -127,4 +127,30 @@ public class ContractDAO {
         }
 
     }
+
+    public List<Contract> getOne(int id) {
+        List<Contract> list = new ArrayList<>();
+        try {
+            //mo ket noi
+            Connection conn = new DBContext().getConnection();
+            String sql = "select c.id , u.fullname, u.email, c.start_date, c.end_date, c.status \n"
+                    + "FROM hr_system_v2.contract c inner join hr_system_v2.user u\n"
+                    + "on c.user_id = u.id where c.id = ? ;";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            String pattern = "yyyy-MM-dd";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            while (rs.next()) {
+                Contract c = new Contract(rs.getInt(1), new User(rs.getString(2), rs.getString(3)), 
+                        simpleDateFormat.format(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString(4))), 
+                        simpleDateFormat.format(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString(5))), rs.getInt(6));
+                list.add(c);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+        return list;
+    }
 }

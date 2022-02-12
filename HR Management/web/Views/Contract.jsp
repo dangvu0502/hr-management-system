@@ -137,7 +137,7 @@
                                                 </c:choose>
                                             </td>
                                             <td>
-                                                <a href="../EditContract" style="color: white;  font-weight:700; " data-toggle="modal" data-target="#myModal" >
+                                                <a href="../Contract/EditContract?id=${c.id}" style="color: white;  font-weight:700; ">
                                                     <div style="background-color: #f9d21a;border-radius:25px;text-align: center;padding: 0.4rem;">Edit</div></a>
                                             </td>
                                         </tr>
@@ -155,49 +155,6 @@
                     </div>
                 </section><!-- /.content -->
                 <!-- /.Dialog -->
-
-                <div class="container">
-                    <div class="modal fade" id="myModal" role="dialog">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Edit Contract</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <form action="../Contract/Edit" method="POST">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <figure class="text-center">
-                                                    <figcaption>
-                                                        <h4>${sessionScope.account.username}</h4>
-                                                    </figcaption>
-                                                    <img class="img-rounded" src="../userimg/${sessionScope.account.avatar}" alt="avatar" style="width:200px">
-                                                </figure>
-                                            </div>
-                                            <div class="col-md-9">
-                                                <div class="col-md-8">
-                                                    <input name="username" type="hidden" value="${sessionScope.account.username}">
-                                                    <div class="col-md"><label class="labels">Full name</label><input name="fullname" type="text" class="form-control" value="" disabled=""></div>
-                                                    <div class="col-md"><label class="labels">Email</label><input name="email" type="email" class="form-control" value="" disabled=""></div>
-                                                    <div class="col-md"><label class="labels">Start Date</label><input name="StartDate" type="date" class="form-control" value="" required=""></div>
-                                                    <div class="col-md"><label class="labels">End Date</label><input name="EndDate" type="date" class="form-control" value="" required=""></div>
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-
-                                        <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save Contract</button></div>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="footer-main">
                     Copyright &copy Director, 2014
                 </div>

@@ -56,6 +56,9 @@ public class ContractController extends HttpServlet {
                 case "/Add":
                     ContractAdd(request, response, method);
                     break;
+                case "/EditContract":
+                    EditContract(request, response, method);
+                    break;
                 default:
                     response.sendError(404);
                     break;
@@ -170,7 +173,7 @@ public class ContractController extends HttpServlet {
 
             LocalDateTime now = LocalDateTime.now();
             for (int i = 0; i < c.size(); i++) {
-                
+
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 LocalDate endDate = LocalDate.parse(c.get(i).getEndDate(), formatter);
                 LocalDateTime ldt = LocalDateTime.of(endDate, LocalDateTime.now().toLocalTime());
@@ -220,6 +223,31 @@ public class ContractController extends HttpServlet {
         List<User> listUser = new UserDAO().getUserList();
         request.setAttribute("listU", listUser);
         request.getRequestDispatcher("../Views/ContractAdd.jsp").forward(request, response);
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="EditContract">
+    private void EditContract(HttpServletRequest request, HttpServletResponse response, String method) {
+        try (PrintWriter out = response.getWriter();) {
+            if (method.equalsIgnoreCase("post")) {
+                contractEditImplement(request, response);
+            } else if (method.equalsIgnoreCase("get")) {
+                editContractView(request, response);
+            }
+        } catch (Exception ex) {
+            log(ex.getMessage());
+        }
+    }
+
+    private void editContractView(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String id = request.getParameter("id");
+        List<Contract> contract = new ContractDAO().getOne(Integer.parseInt(id));
+        request.setAttribute("contract", contract);
+        request.getRequestDispatcher("../Views/ContractEdit.jsp").forward(request, response);
+    }
+
+    private void contractEditImplement(HttpServletRequest request, HttpServletResponse response) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     // </editor-fold>
 }
