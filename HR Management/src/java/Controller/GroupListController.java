@@ -4,15 +4,18 @@
  */
 package Controller;
 
+import DAO.ContractDAO;
 import DAO.EmployeeDAO;
 import DAO.GroupDAO;
 import DAO.UserDAO;
+import Models.Contract;
 import Models.Group;
 import Models.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Vector;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -48,6 +51,9 @@ public class GroupListController extends HttpServlet {
                 case "/GroupList":
                     groupListImplement(request, response);
                     break;
+                case "/GroupEdit":
+                    GroupEdit(request, response, method);
+                    break;
                 default:
                     response.sendError(404);
                     break;
@@ -55,7 +61,7 @@ public class GroupListController extends HttpServlet {
         } catch (Exception ex) {
             log(ex.getMessage());
         }
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -86,9 +92,8 @@ public class GroupListController extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
-    
+
     // <editor-fold defaultstate="collapsed" desc="GroupList">
-    
 //     private void groupList(HttpServletRequest request, HttpServletResponse response, String method)
 //            throws Exception {
 //        response.setContentType("text/html;charset=UTF-8");
@@ -110,14 +115,18 @@ public class GroupListController extends HttpServlet {
             String group_type = request.getParameter("type");
             String input = request.getParameter("input");
             String page = request.getParameter("page");
-            if (page == null) page = "1";
+            if (page == null) {
+                page = "1";
+            }
             request.setAttribute("page", page);
             GroupDAO gDAO = new GroupDAO();
             int count = gDAO.totalGroup();
-            int endPage = count/3;
-            if (endPage % 3 != 0) endPage++;
+            int endPage = count / 6;
+            if (endPage % 5 != 0) {
+                endPage++;
+            }
             request.setAttribute("endP", endPage);
-            request.setAttribute("gr",group_type);
+            request.setAttribute("gr", group_type);
             request.setAttribute("txtS", input);
             Vector<Group> g = new Vector();
             if (input == null || input.isEmpty()) {
@@ -139,7 +148,46 @@ public class GroupListController extends HttpServlet {
     }
 
     //</editor-fold>
-  
+    // <editor-fold defaultstate="collapsed" desc="GroupEdit">
+    private void GroupEdit(HttpServletRequest request, HttpServletResponse response, String method) {
+        try (PrintWriter out = response.getWriter();) {
+            if (method.equalsIgnoreCase("post")) {
+                groupEditImplement(request, response);
+            } else if (method.equalsIgnoreCase("get")) {
+                editContractView(request, response);
+            }
+        } catch (Exception ex) {
+            log(ex.getMessage());
+        }
+    }
+
+    private void editContractView(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String id = request.getParameter("id");
+        List<Contract> contract = new ContractDAO().getOne(Integer.parseInt(id));
+        request.setAttribute("contract", contract);
+        request.getRequestDispatcher("../Views/GroupViewEdit.jsp").forward(request, response);
+    }
+
+    private void groupEditImplement(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
+        try (PrintWriter out = response.getWriter();) {
+            String gcode = request.getParameter("code");
+            String gmanager_id = request.getParameter("manager_id");
+            String gname = request.getParameter("name");
+            String gstatus = request.getParameter("status");
+            String gdescription = request.getParameter("description");
+            String gparent_group_code = request.getParameter("parent_group_code");
+            String gupdate_date = request.getParameter("update_date");
+            String gid = request.getParameter("id");
+
+            GroupDAO group = new GroupDAO();
+//            group.editGroup(gcode, 0, gname, Boolean.TRUE, gdescription, gparent_group_code, gupdate_date, 0);
+            response.sendRedirect("admin");
+        }
+    }
+    //</editor-fold>
     // <editor-fold defaultstate="collapsed" desc="HTML">
     // <editor-fold defaultstate="collapsed" desc="pageNotFound">
     private String pageNotFound = "\n"
@@ -220,6 +268,6 @@ public class GroupListController extends HttpServlet {
             + "\n"
             + "";
     //</editor-fold>
-   // </editor-fold>
+    // </editor-fold>
 
 }

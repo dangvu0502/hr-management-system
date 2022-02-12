@@ -11,16 +11,23 @@ import java.util.Date;
  * @author quocb
  */
 public class Group {
+    private int id;
     private String code;
     private int manager_id;
     private String name;
     private boolean status;
     private String description;
-
-    
     private String parent_group_code;
     private boolean delete;
     private Date update_date;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getCode() {
         return code;
@@ -86,7 +93,11 @@ public class Group {
         this.update_date = update_date;
     }
 
-    public Group(String code, int manager_id, String name, boolean status, String description, String parent_group_code, boolean delete, Date update_date) {
+    public Group() {
+    }
+
+    public Group(int id, String code, int manager_id, String name, boolean status, String description, String parent_group_code, boolean delete, Date update_date) {
+        this.id = id;
         this.code = code;
         this.manager_id = manager_id;
         this.name = name;
@@ -97,8 +108,7 @@ public class Group {
         this.update_date = update_date;
     }
 
-    public Group() {
-    }
+   
 
     
    

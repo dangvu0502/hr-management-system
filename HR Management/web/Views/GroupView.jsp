@@ -369,10 +369,9 @@
                                             <td>${g.update_date}</td>
                                             <td>
                                                 &nbsp;&nbsp;
-                                                <a id="delete" onclick="deleteByID('${e.employee_id}');" href="#"><span class="glyphicon glyphicon-trash" ></span></a>
+                                                <a id="delete" href="#"><span class="glyphicon glyphicon-trash" ></span></a>
                                                 &nbsp;&nbsp;
-                                                <a class="edit" href="" onclick="dialogOpen('${e.username}', '${e.fullname}', '${e.employee_id}', '${e.type_id}', '${e.status}', '${e.email}', '${e.password}');
-                                                        return false;"><span class="glyphicon glyphicon-edit"></span></a>
+                                                <a class="edit" href="../Group/GroupEdit" ><span class="glyphicon glyphicon-edit"></span></a>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -491,38 +490,7 @@
                                                             }
                                                         });
                                                     }
-                                                    function add() {
-                                                        var id = document.getElementById("txtId").value;
-                                                        var username = document.getElementById("txtUserName").value;
-                                                        var fullname = document.getElementById("txtFullName").value;
-                                                        var password = document.getElementById("txtPassWord").value;
-                                                        var status = $('input[name = "foo"]:checked').val();
-                                                        var mail = document.getElementById("txtGmail").value;
-                                                        var typename = $('#cbbType option:selected').val();
-                                                        if (!!username && !!fullname && !!password && !!mail) {
-                                                            window.location = "SettingDetailController?typef=add" + "&id=" + id + "&username=" + username + "&fullname=" + fullname + "&password=" + password + "&status=" + status + "&mail=" + mail + "&typename=" + typename;
-                                                            alert('Add Successfull');
-                                                        } else
-                                                        {
-                                                            alert('Add Fail');
-                                                        }
-                                                    }
-                                                    function edit(id) {
-                                                        var username = document.getElementById("txtUserName").value;
-                                                        var fullname = document.getElementById("txtFullName").value;
-                                                        var password = document.getElementById("txtPassWord").value;
-                                                        var status = $('input[name = "foo"]:checked').val();
-                                                        var mail = document.getElementById("txtGmail").value;
-                                                        var typename = $('#cbbType option:selected').val();
-                                                        if (!!username && !!fullname && !!password && !!mail) {
-                                                            window.location = "SettingDetailController?typef=edit" + "&id=" + id + "&username=" + username + "&fullname=" + fullname + "&password=" + password + "&status=" + status + "&mail=" + mail + "&typename=" + typename;
-                                                            alert('Edit Successfull');
-                                                        } else
-                                                        {
-                                                            alert('Edit Fail');
-                                                        }
-                                                        
-                                                    }
+                                                   
         </script>
     </body>
 </html>
