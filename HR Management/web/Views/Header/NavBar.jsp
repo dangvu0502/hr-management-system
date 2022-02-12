@@ -1,5 +1,6 @@
 <%@page import="Models.User"%>
 <%@page import="Context.TrippleDes"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!-- NavBar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <img
@@ -34,14 +35,14 @@
             <a class="nav-item nav-link active" href="<%= request.getContextPath()%>/BlogController"
                >Blog <span class="sr-only">(current)</span></a
             >
-            <c:if test="${sessionScope.account.role_id == 1}"> 
+            <c:if test="${sessionScope.account.role_id eq 1}"> 
                 <a class="nav-item nav-link" href="<%= request.getContextPath()%>/SettingListController">Setting List</a>
                 <a class="nav-item nav-link" href="<%= request.getContextPath()%>/grouplist">Group List</a>
             </c:if>
-            <c:if test="${sessionScope.account.role_id == 2}"> 
+            <c:if test="${sessionScope.account.role_id eq 2}"> 
                 <a class="nav-item nav-link" href="<%= request.getContextPath()%>/Contract/Details">Contract</a>
             </c:if>
-            <c:if test="${sessionScope.account.role_id == 3}"> 
+            <c:if test="${sessionScope.account.role_id eq 3}"> 
                 <a class="nav-item nav-link" href="<%= request.getContextPath()%>/User/NewUser">New User</a>
             </c:if>
             <a class="nav-item nav-link" href="#">Our Team</a>
