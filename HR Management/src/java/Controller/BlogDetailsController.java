@@ -8,7 +8,7 @@ package Controller;
 import DAO.BlogDAO;
 import Models.BLog;
 import java.io.IOException;
-import java.util.Vector;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author lehun
  */
-public class BlogController extends HttpServlet {
+public class BlogDetailsController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,26 +32,11 @@ public class BlogController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try {
-            String page = request.getParameter("page");
-            if (page == null) {
-                page = "1";
-            }
-            request.setAttribute("page", page);
-            BlogDAO eDAO = new BlogDAO();
-            int count = eDAO.GetTotalBlog();
-            int endPage = count / 3;
-            if (endPage % 5 != 0) {
-                endPage++;
-            }
-            request.setAttribute("endP", endPage);
-            Vector<BLog> e = new Vector();
-            e = eDAO.GetBlogList(Integer.parseInt(page));
-            request.setAttribute("listE", e);
-            request.getRequestDispatcher("Views/Blog.jsp").forward(request, response);
-        } catch (IOException | NumberFormatException | ServletException e) {
-            System.out.println("ádfasdfasdfasd" + e.getMessage());
-        }
+        String Slug = request.getParameter("Slug");
+        BlogDAO eDAO = new BlogDAO();
+        BLog b = eDAO.GetBlogBySlug(Slug);
+        request.setAttribute("BlogDetails", b);
+        request.getRequestDispatcher("Views/BlogDetails.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

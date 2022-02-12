@@ -96,6 +96,9 @@ public class BLog {
         this.author = author;
     }
 
+    public BLog() {
+    }
+
     public BLog(int id, String thumnail_Image, String Tittle, String brieft, int Category, String PublishDate, String slug, String content, String author) {
         this.id = id;
         this.thumnail_Image = thumnail_Image;

@@ -6,11 +6,14 @@
 package DAO;
 
 import Context.DBContext;
-import Models.BlogTEST;
+import Models.BLog;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -22,25 +25,25 @@ public class BlogDAO {
     PreparedStatement ps;
     ResultSet rs;
 
-    public Vector<BlogTEST> GetBlogList(int page) {
+    public Vector<BLog> GetBlogList(int page) {
         Vector vec = new Vector();
         try {
-            String sql = "SELECT b.id,b.slug,b.thumnail_image,b.Tittle,b.brieft,c.Category_Name\n"
-                    + "FROM hr_system_v2.blog b \n"
-                    + "LEFT JOIN hr_system_v2.category c\n"
-                    + "ON b.category = c.id limit 5 offset ?;";
+            String sql = "SELECT * FROM hr_system_v2.blog limit 3 offset ?;";
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
             ps.setInt(1, (page - 1) * 3);
             rs = ps.executeQuery();
             while (rs.next()) {
-                BlogTEST e = new BlogTEST();
+                BLog e = new BLog();
                 e.setId(rs.getInt(1));
                 e.setSlug(rs.getString(2));
                 e.setThumnail_Image(rs.getString(3));
                 e.setTittle(rs.getString(4));
                 e.setBrieft(rs.getString(5));
-                e.setCategory(rs.getString(6));
+                e.setCategory(rs.getInt(6));
+                e.setContent(rs.getString(7));
+                e.setAuthor(rs.getString(8));
+                e.setPublishDate(rs.getString(9));
                 vec.add(e);
             }
         } catch (Exception e) {
@@ -48,7 +51,33 @@ public class BlogDAO {
         }
         return vec;
     }
-       public int GetTotalBlog() {
+
+    public BLog GetBlogBySlug(String Slug) {
+        BLog e = new BLog();
+        try {
+            String sql = "SELECT * FROM hr_system_v2.blog where Slug=?;";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, Slug);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                e.setId(rs.getInt(1));
+                e.setSlug(rs.getString(2));
+                e.setThumnail_Image(rs.getString(3));
+                e.setTittle(rs.getString(4));
+                e.setBrieft(rs.getString(5));
+                e.setCategory(rs.getInt(6));
+                e.setContent(rs.getString(7));
+                e.setAuthor(rs.getString(8));
+                e.setPublishDate(rs.getString(9));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BlogDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return e;
+    }
+
+    public int GetTotalBlog() {
         int total = 0;
         try {
             String sql = "select count(*) from hr_system_v2.blog";

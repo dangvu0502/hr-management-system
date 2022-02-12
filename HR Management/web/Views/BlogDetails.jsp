@@ -4,6 +4,7 @@
     Author     : lehun
 --%>
 
+<%@page import="Models.BLog"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -238,10 +239,11 @@
             </div>
             <!-- Main-Wrapper -->
             <div class="main_WrapperContent">
+                <%    BLog b =  (BLog)request.getAttribute("BlogDetails"); %>
                 <h1 class="Main_Tittle">A Loving Heart is the Truest Wisdom</h1>
                 <div class="Content d-flex justify-content-between">
                     <div class="Main_Author text-muted">
-                        <i class="fa-solid fa-at"></i> Hungflash
+                        <i class="fa-solid fa-at"></i><%=b.getAuthor() %>
                     </div>
                     <div class="Main_PostDate text-muted">
                         <i class="fa-solid fa-calendar-days"></i> june 28, 2019
