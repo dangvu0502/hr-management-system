@@ -26,6 +26,9 @@
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     </head>
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
@@ -124,16 +127,18 @@
                                             <td>${c.startDate}</td>
                                             <td>${c.endDate}</td>
                                             <td>
-                                                <c:if test = "${c.status == 0}">
-                                                    <span class="badge bg-red">Contract Expired</span>
-                                                </c:if>
-                                                <c:if test = "${c.status == 1}">
-                                                    <span class="badge bg-green">On contract</span>
-                                                </c:if>
+                                                <c:choose>
+                                                    <c:when test = "${c.status == 0}">
+                                                        <span class="badge bg-red">Contract Expired</span>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <span class="badge bg-green">On contract</span>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </td>
                                             <td>
-                                                <div style="background-color: #f9d21a;border-radius:25px;text-align: center;padding: 0.4rem;"><a style="color: white;  font-weight:700; " class="edit" href="" onclick="dialogOpen('${c.id}', '${c.user_id.fullname}', '${c.user_id.email}', '${c.startDate}', '${c.endDate}', '${c.status}');
-                                                        return false;">Edit</a></div>
+                                                <a href="../EditContract" style="color: white;  font-weight:700; " data-toggle="modal" data-target="#myModal" >
+                                                    <div style="background-color: #f9d21a;border-radius:25px;text-align: center;padding: 0.4rem;">Edit</div></a>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -150,34 +155,46 @@
                     </div>
                 </section><!-- /.content -->
                 <!-- /.Dialog -->
-                <div id="dialog">
-                    <div style="display: flex; justify-content: center;  margin: 2rem;"><img style=" width: 100px; height: 100px;" src="../userimg/${sessionScope.account.avatar}" alt="Avatar" > </div>
-                    <div style="display: flex; justify-content: space-between;margin-bottom: 2rem">
-                        <div><label>ID</label></div>
-                        <div style="margin-left: 4rem;"><input  disabled="true" style="border-radius:8px; " type="text" id="txtId"></div>
-                    </div>
-                    <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
-                        <div><label>Full Name</label></div>
-                        <div  style="margin-left: 4rem;"><input style="border-radius:8px; " type="text" id="txtFullName" disabled=""></div>
-                    </div>
-                    <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
-                        <div><label>Email</label></div>
-                        <div style="margin-left: 4rem;" ><input style="border-radius:8px; " type="text" id="txtEmail" disabled=""></div>
-                    </div>
-                    <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
-                        <div><label>Start Contract</label></div>
-                        <div style="margin-left: 4rem;" ><input style="border-radius:8px; " type="date" id="txtStartDate"></div>
-                    </div>
-                    <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
-                        <div><label>End Contract</label></div>
-                        <div style="margin-left: 4rem;" ><input style="border-radius:8px; " type="date" id="txtEndDate"></div>
-                    </div>
-                    <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
-                        <div><label>Status</label></div>
-                        <div style="padding-right: 2rem;" >
-                            <c:forEach items="${listC}" var="c">
-                                <span class="badge ${c.status == 0?'bg-red':'bg-green'}">${c.status == 0 ? 'Contract Expired':'On contract'}</span>
-                            </c:forEach>
+
+                <div class="container">
+                    <div class="modal fade" id="myModal" role="dialog">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Edit Contract</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="../Contract/Edit" method="POST">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <figure class="text-center">
+                                                    <figcaption>
+                                                        <h4>${sessionScope.account.username}</h4>
+                                                    </figcaption>
+                                                    <img class="img-rounded" src="../userimg/${sessionScope.account.avatar}" alt="avatar" style="width:200px">
+                                                </figure>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <div class="col-md-8">
+                                                    <input name="username" type="hidden" value="${sessionScope.account.username}">
+                                                    <div class="col-md"><label class="labels">Full name</label><input name="fullname" type="text" class="form-control" value="" disabled=""></div>
+                                                    <div class="col-md"><label class="labels">Email</label><input name="email" type="email" class="form-control" value="" disabled=""></div>
+                                                    <div class="col-md"><label class="labels">Start Date</label><input name="StartDate" type="date" class="form-control" value="" required=""></div>
+                                                    <div class="col-md"><label class="labels">End Date</label><input name="EndDate" type="date" class="form-control" value="" required=""></div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save Contract</button></div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -191,63 +208,6 @@
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
         <script type="text/javascript">
-                                                    $(function () {
-                                                        $("#dialog").dialog({
-                                                            autoOpen: false,
-                                                            title: "Add",
-                                                            width: 'auto',
-                                                            height: 'auto',
-                                                            buttons: {
-                                                                Submit: function () {
-                                                                    add();
-                                                                },
-                                                                Close: function () {
-                                                                    $(this).dialog('close');
-                                                                }
-                                                            }
-                                                        });
-                                                        $(".edit").click(function () {
-                                                            $("#dialog").dialog('open');
-                                                        });
-                                                    });
-                                                    function dialogOpen(id, fullname, email, startdate, enddate, status) {
-                                                        $('#txtId').val(id);
-                                                        $('#txtFullName').val(fullname)
-                                                        $('#txtEmail').val(email);
-                                                        $('#txtStartDate').val(startdate);
-                                                        $('#txtEndDate').val(enddate);
-                                                        $("[name=foo]").val([status]);
-                                                        $("#dialog").dialog({
-                                                            autoOpen: false,
-                                                            title: "Edit",
-                                                            width: 'auto',
-                                                            height: 'auto',
-                                                            buttons: {
-                                                                Submit: function () {
-                                                                    edit(id);
-                                                                },
-                                                                Close: function () {
-                                                                    $(this).dialog('close');
-                                                                }
-                                                            }
-                                                        });
-                                                    }
-                                                    function edit(id) {
-                                                        var username = document.getElementById("txtUserName").value;
-                                                        var fullname = document.getElementById("txtFullName").value;
-                                                        var password = document.getElementById("txtPassWord").value;
-                                                        var status = $('input[name = "foo"]:checked').val();
-                                                        var mail = document.getElementById("txtGmail").value;
-                                                        var typename = $('#cbbType option:selected').val();
-                                                        if (!!username && !!fullname && !!password && !!mail) {
-                                                            window.location = "SettingDetailController?typef=edit" + "&id=" + id + "&username=" + username + "&fullname=" + fullname + "&password=" + password + "&status=" + status + "&mail=" + mail + "&typename=" + typename;
-                                                            alert('Edit Successfull');
-                                                        } else
-                                                        {
-                                                            alert('Edit Fail');
-                                                        }
-
-                                                    }
         </script>
     </body>
 </html>

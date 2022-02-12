@@ -31,7 +31,7 @@ public class ContractDAO {
         List<Contract> list = new ArrayList<>();
         try {
             String sql = "SELECT c.id, u.fullname, u.email, c.start_date, c.end_date, c.status \n"
-                    + "FROM hr_system_v2.contract c, hr_system_v2.user u \n"
+                    + "FROM hr_system_v2.contract c inner join hr_system_v2.user u \n"
                     + "where c.user_id = u.id limit 2 offset ?;";
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
@@ -40,8 +40,8 @@ public class ContractDAO {
             String pattern = "yyyy-MM-dd";
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
             while (rs.next()) {
-                Contract c = new Contract(rs.getInt(1), new User(rs.getString(2), rs.getString(3)), 
-                        simpleDateFormat.format(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString(4))), 
+                Contract c = new Contract(rs.getInt(1), new User(rs.getString(2), rs.getString(3)),
+                        simpleDateFormat.format(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString(4))),
                         simpleDateFormat.format(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString(5))), rs.getInt(6));
                 list.add(c);
             }
@@ -87,6 +87,14 @@ public class ContractDAO {
         return list;
     }
 
+    public void setStatus(Contract contract) throws SQLException {
+        String sql = "UPDATE `hr_system_v2`.`contract` SET `status` = '1' WHERE (`id` = ?)";
+        con = new DBContext().getConnection();
+        ps = con.prepareStatement(sql);
+        ps.setInt(1, contract.getId());
+        ps.executeUpdate();
+    }
+
 //    public Contract getAllContract() {
 //        try {
 //            //mo ket noi
@@ -104,4 +112,19 @@ public class ContractDAO {
 //
 //        return null;
 //    }
+    public void updateContract(String StartDate, String EndDate, int id) throws Exception {
+        String sql = "UPDATE hr_system_v2.contract SET startdate = ?, enddate = ? WHERE id= ?";
+        try (
+                Connection con = new DBContext().getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) { // user try-with-resources in java
+            ps.setString(1, StartDate);
+            ps.setString(2, EndDate);
+            ps.setInt(3, id);
+            // execute update SQL stetement
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw e;
+        }
+
+    }
 }

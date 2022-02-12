@@ -162,7 +162,7 @@
                                             <div class="col-md"><label class="labels">Full name</label><input name="fullname" type="text" class="form-control" value="${sessionScope.account.fullname}" required=""></div>
                                             <div class="col-md"><label class="labels">Date of birth</label><input name="dob" type="date" class="form-control" value="${sessionScope.account.dob}" required=""></div>
                                             <div class="col-md"><label class="labels">Address</label><input name="address" type="text" class="form-control" value="${sessionScope.account.address}" required="" ></div>
-                                            <div class="col-md"><label class="labels">Sex</label></br>
+                                            <div class="col-md"></br>
                                                 <label class="labels" for="1">Male</label>&nbsp&nbsp<input id="1" value="true" name="gender" type="radio" ${sessionScope.account.gender == 'true'?'checked':''} >
                                                 <label class="labels" for="0">Female</label>&nbsp&nbsp<input id="0" value="false" name="gender" type="radio" ${sessionScope.account.gender == 'false'?'checked':''} >
 

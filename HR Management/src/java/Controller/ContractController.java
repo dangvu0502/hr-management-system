@@ -15,6 +15,9 @@ import Models.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -164,17 +167,19 @@ public class ContractController extends HttpServlet {
             request.setAttribute("endP", endPage);
             List<Contract> c = new ArrayList<>();
             c = cDAO.getContractList(Integer.parseInt(page));
+
+            LocalDateTime now = LocalDateTime.now();
+            for (int i = 0; i < c.size(); i++) {
+                
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDate endDate = LocalDate.parse(c.get(i).getEndDate(), formatter);
+                LocalDateTime ldt = LocalDateTime.of(endDate, LocalDateTime.now().toLocalTime());
+                if (ldt.isAfter(now)) {
+                    c.get(i).setStatus('1');
+                    cDAO.setStatus(c.get(i));
+                }
+            }
             request.setAttribute("listC", c);
-//            Contract contract = new ContractDAO().getAllContract();
-//            String pattern = "yyyy-MM-dd";
-//            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-//            Date startdate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(contract.getStartDate());
-//            Date enddate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(contract.getEndDate());
-//            String date1 = simpleDateFormat.format(startdate);
-//            String date2 = simpleDateFormat.format(enddate);
-//            contract.setStartDate(date1);
-//            contract.setEndDate(date2);
-//            session.setAttribute("account", contract);
             request.getRequestDispatcher("../Views/Contract.jsp").forward(request, response);
         } catch (Exception e) {
             System.out.println("Error" + e.getMessage());
