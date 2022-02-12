@@ -137,8 +137,8 @@
                                                 </c:choose>
                                             </td>
                                             <td>
-                                                <a href="../Contract/EditContract?id=${c.id}" style="color: white;  font-weight:700; ">
-                                                    <div style="background-color: #f9d21a;border-radius:25px;text-align: center;padding: 0.4rem;">Edit</div></a>
+                                                <a href="../Contract/EditContract?id=${c.id}" style="${c.status == 0?'pointer-events: none; color: #ccc':''};color: white;  font-weight:700; " class="disabled">
+                                                    <div style="${c.status == 0?'background-color: gray':'background-color: #f9d21a'};border-radius:25px;text-align: center;padding: 0.4rem;">Edit</div></a>
                                             </td>
                                         </tr>
                                     </c:forEach>
