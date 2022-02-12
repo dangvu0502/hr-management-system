@@ -91,17 +91,7 @@ public class GroupDAO {
        }
         return vec;
     }
-    public static void main(String[] args) {
-        GroupDAO g = new GroupDAO();
-        Vector<Group> gr = new Vector();
-        if(gr != null){
-            gr =  g.getGroupBySearch("a");
-        }else
-        {
-            System.out.println("Not");
-        }
-        
-    }
+
             
     
 }

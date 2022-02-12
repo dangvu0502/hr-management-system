@@ -117,9 +117,10 @@ public class GroupListController extends HttpServlet {
             int endPage = count/3;
             if (endPage % 3 != 0) endPage++;
             request.setAttribute("endP", endPage);
+            request.setAttribute("gr",group_type);
             request.setAttribute("txtS", input);
             Vector<Group> g = new Vector();
-            if (group_type == null || input == null || input.isEmpty()) {
+            if (input == null || input.isEmpty()) {
                 g = gDAO.getGroupList(Integer.parseInt(page));
             } else {
                 g = gDAO.getGroupBySearch(input);

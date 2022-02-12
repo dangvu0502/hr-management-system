@@ -318,7 +318,7 @@
                                 <form action="GroupList" method="post">
                                     <div class="form-row">
                                         <div class="form-group col-md-3">
-                                            <select class="form-control" name="type">
+                                            <select class="form-control" name="type" value ="${txtS}" >
                                                 <option value="code">Code</option>
                                                 <option value="name">Name</option>
                                                 <option value="fullname">Full Name</option>
@@ -327,14 +327,13 @@
                                                 <option value="status">Status</option>
                                             </select>                                            
                                         </div>
-                                        
-                                    </div>
-                                    <div class="form-group col-md-7">
+                                        <div class="form-group col-md-7">
                                             <input class="form-control" type="text" value="${txtS}" placeholder="Input..." name="input">
                                         </div>
                                         <div class="form-group col-md-2">
                                             <input type="submit" name="input" class="btn btn-info" value="Search">
                                         </div>
+                                    </div>
                                 </form>
                             </div>
                             <div class="panel-body">
