@@ -163,14 +163,15 @@
             <!-- Side-Bar -->
             <div class="SideBar_Wrapper">
                 <!-- Search_Bar -->
-                <form class="form-inline">
+                <form class="form-inline" action="/BlogDetailsController" method="post">
                     <div class="form-group mb-2"></div>
                     <div class="form-group mb-2 align-center">
-                        <label for="inputPassword2" class="sr-only"></label>
+                        <label for="Input Titlte" class="sr-only"></label>
                         <input
-                            type="password"
+                            type="text"
                             class="form-control"
-                            id="inputPassword2"
+                            id="Search"
+                            name="Tittle"
                             placeholder="Search"
                             />
                     </div>

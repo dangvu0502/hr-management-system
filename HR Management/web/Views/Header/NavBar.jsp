@@ -30,7 +30,7 @@
             <a class="nav-item nav-link active" href="./Home.jsp"
                >Home <span class="sr-only">(current)</span></a
             >
-            <a class="nav-item nav-link active" href="./Blog.jsp"
+            <a class="nav-item nav-link active" href="../BlogController"
                >Blog <span class="sr-only">(current)</span></a
             >
             <c:if test="${sessionScope.account.role_id == 1}"> 

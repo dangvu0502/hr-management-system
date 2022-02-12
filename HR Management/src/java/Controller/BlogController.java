@@ -8,7 +8,10 @@ package Controller;
 import DAO.BlogDAO;
 import Models.BLog;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -33,6 +36,7 @@ public class BlogController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
+            String Tittle = request.getParameter("Tittle");
             String page = request.getParameter("page");
             if (page == null) {
                 page = "1";
@@ -80,7 +84,16 @@ public class BlogController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            Vector<BLog> e = new Vector();
+            String Tittle = request.getParameter("Tittle");
+            BlogDAO eDAO = new BlogDAO();
+            e = eDAO.GetBlogByTittle(Tittle);
+            request.setAttribute("listE", e);
+            request.getRequestDispatcher("Views/Blog.jsp").forward(request, response);
+        } catch (ParseException ex) {
+            Logger.getLogger(BlogDetailsController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

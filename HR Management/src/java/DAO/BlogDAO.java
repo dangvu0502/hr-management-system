@@ -85,6 +85,35 @@ public class BlogDAO {
         return e;
     }
 
+    public Vector<BLog> GetBlogByTittle(String Tittle) throws ParseException {
+        Vector vec = new Vector();
+        try {
+            String sql = "SELECT  b.id,b.Slug ,b.Thumnail_image,b.Tittle,b.Brieft,c.Category_Name,b.Content,b.Author,b.PublishDate FROM hr_system_v2.blog b\n"
+                    + "LEFT JOIN category c on\n"
+                    + "b.Category = c.id  where b.Tittle=?;";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, Tittle);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                BLog e = new BLog();
+                e.setId(rs.getInt(1));
+                e.setSlug(rs.getString(2));
+                e.setThumnail_Image(rs.getString(3));
+                e.setTittle(rs.getString(4));
+                e.setBrieft(rs.getString(5));
+                e.setCategory(rs.getString(6));
+                e.setContent(rs.getString(7));
+                e.setAuthor(rs.getString(8));
+                e.setPublishDate(rs.getString(9));
+                vec.add(e);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BlogDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vec;
+    }
+
     public int GetTotalBlog() {
         int total = 0;
         try {

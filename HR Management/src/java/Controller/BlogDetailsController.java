@@ -10,6 +10,7 @@ import Models.BLog;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -73,10 +74,17 @@ public class BlogDetailsController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            processRequest(request, response);
+            Vector<BLog> e = new Vector();
+            String Tittle = request.getParameter("Tittle");
+            BlogDAO eDAO = new BlogDAO();
+            e = eDAO.GetBlogByTittle(Tittle);
+            request.setAttribute("listE", e);
+            request.getRequestDispatcher("Views/Blog.jsp").forward(request, response);
+
         } catch (ParseException ex) {
             Logger.getLogger(BlogDetailsController.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
     /**
