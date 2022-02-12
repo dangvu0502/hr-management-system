@@ -83,11 +83,11 @@
                                 Edit Group
                             </header>
                             <div class="panel-body">
-                                <form action="../Group/GroupEdit" method="POST">
+                                <form action="GroupEdit" method="POST">
 
                                     <div class="row">
                                         <div class="col-lg-2"></div>
-                                        <c:forEach items="${contract}" var="c">
+                                        <c:forEach items="${group}" var="g">
                                             <div class="col-lg-8">
                                                 <div class="row ">
                                                     <div class="form-group col-lg-12">

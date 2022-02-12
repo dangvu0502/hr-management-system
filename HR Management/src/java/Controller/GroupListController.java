@@ -52,7 +52,7 @@ public class GroupListController extends HttpServlet {
                     groupListImplement(request, response);
                     break;
                 case "/GroupEdit":
-                    GroupEdit(request, response, method);
+                    groupEditImplement(request, response);
                     break;
                 default:
                     response.sendError(404);
@@ -144,27 +144,27 @@ public class GroupListController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         //PrintWriter out = response.getWriter();
         //out.println(request.getContextPath());
-        request.getRequestDispatcher("/Views/GroupView.jsp").forward(request, response);
+        request.getRequestDispatcher("../Views/GroupView.jsp").forward(request, response);
     }
 
     //</editor-fold>
     // <editor-fold defaultstate="collapsed" desc="GroupEdit">
-    private void GroupEdit(HttpServletRequest request, HttpServletResponse response, String method) {
-        try (PrintWriter out = response.getWriter();) {
-            if (method.equalsIgnoreCase("post")) {
-                groupEditImplement(request, response);
-            } else if (method.equalsIgnoreCase("get")) {
-                editContractView(request, response);
-            }
-        } catch (Exception ex) {
-            log(ex.getMessage());
-        }
-    }
+//    private void GroupEdit(HttpServletRequest request, HttpServletResponse response, String method) {
+//        try (PrintWriter out = response.getWriter();) {
+//            if (method.equalsIgnoreCase("post")) {
+//                groupEditImplement(request, response);
+//            } else if (method.equalsIgnoreCase("get")) {
+//                editGroupView(request, response);
+//            }
+//        } catch (Exception ex) {
+//            log(ex.getMessage());
+//        }
+//    }
 
-    private void editContractView(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = request.getParameter("id");
-        List<Contract> contract = new ContractDAO().getOne(Integer.parseInt(id));
-        request.setAttribute("contract", contract);
+    private void editGroupView(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        String gid = request.getParameter("id");
+//        List<Group> group = new GroupDAO().getOne(Integer.parseInt(gid));
+//        request.setAttribute("group", group);
         request.getRequestDispatcher("../Views/GroupViewEdit.jsp").forward(request, response);
     }
 
@@ -176,15 +176,15 @@ public class GroupListController extends HttpServlet {
             String gcode = request.getParameter("code");
             String gmanager_id = request.getParameter("manager_id");
             String gname = request.getParameter("name");
-            String gstatus = request.getParameter("status");
+            Boolean gstatus = Boolean.parseBoolean(request.getParameter("status"));
             String gdescription = request.getParameter("description");
             String gparent_group_code = request.getParameter("parent_group_code");
             String gupdate_date = request.getParameter("update_date");
             String gid = request.getParameter("id");
-
+            request.getRequestDispatcher("../Views/GroupViewEdit.jsp").forward(request, response);
             GroupDAO group = new GroupDAO();
-//            group.editGroup(gcode, 0, gname, Boolean.TRUE, gdescription, gparent_group_code, gupdate_date, 0);
-            response.sendRedirect("admin");
+            group.editGroup(gcode, Integer.parseInt(gmanager_id), gname, gstatus, gdescription, gparent_group_code, gupdate_date, Integer.parseInt(gid));
+//            response.sendRedirect("GroupList");
         }
     }
     //</editor-fold>
