@@ -55,7 +55,7 @@ public class BlogSearchController extends HttpServlet {
         try {
             Vector<BLog> e = new Vector();
 
-            e = eDAO.SearchBlogByTittle(Integer.parseInt(page),Type, Search);
+            e = eDAO.SearchBlogByTittle(Integer.parseInt(page), Type, Search);
             request.setAttribute("listE", e);
             request.getRequestDispatcher("Views/BlogSearch.jsp").forward(request, response);
         } catch (ParseException ex) {
@@ -109,7 +109,14 @@ public class BlogSearchController extends HttpServlet {
         try {
             Vector<BLog> e = new Vector();
 
-            e = eDAO.SearchBlogByTittle(Integer.parseInt(page),Type, Search);
+            e = eDAO.SearchBlogByTittle(Integer.parseInt(page), Type, Search);
+            if (e.isEmpty()) {
+                String Error = "Search Not Found";
+                request.setAttribute("IsEmpty", Error);
+                request.setAttribute("SearchResult", Search);
+                request.getRequestDispatcher("Views/BlogSearch.jsp").forward(request, response);
+                return;
+            }
             request.setAttribute("listE", e);
             request.getRequestDispatcher("Views/BlogSearch.jsp").forward(request, response);
         } catch (ParseException ex) {
