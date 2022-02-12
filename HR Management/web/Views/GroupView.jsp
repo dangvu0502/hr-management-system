@@ -339,7 +339,7 @@
                             <div class="panel-body">
                                 <div class="pull-right">
                                     <div class="btn btn-success">
-                                        <a id="opener" href="#" style="color: white;">Add</a>    
+                                        <a id="opener" href="#" style="color: white;">Add &nbsp;&nbsp;<span class="glyphicon glyphicon-pencil"></span></a>    
                                     </div>
                                 </div>
                                 <table class="table table-bordered">
@@ -368,9 +368,11 @@
                                             <td>${g.parent_group_code}</td>
                                             <td>${g.update_date}</td>
                                             <td>
-                                                <div style="background-color: orangered; border-radius:25px;margin-bottom: 2rem;text-align: center; padding: 0.4rem;"><a style="color: white; font-weight:700; " id="delete" onclick="deleteByID('${e.employee_id}');" href="#">Delete </a></div>
-                                                <div style="background-color: #f9d21a;border-radius:25px;text-align: center;padding: 0.4rem;"><a style="color: white;  font-weight:700; " class="edit" href="" onclick="dialogOpen('${e.username}', '${e.fullname}', '${e.employee_id}', '${e.type_id}', '${e.status}', '${e.email}', '${e.password}');
-                                                        return false;">Edit</a></div>
+                                                &nbsp;&nbsp;
+                                                <a id="delete" onclick="deleteByID('${e.employee_id}');" href="#"><span class="glyphicon glyphicon-trash" ></span></a>
+                                                &nbsp;&nbsp;
+                                                <a class="edit" href="" onclick="dialogOpen('${e.username}', '${e.fullname}', '${e.employee_id}', '${e.type_id}', '${e.status}', '${e.email}', '${e.password}');
+                                                        return false;"><span class="glyphicon glyphicon-edit"></span></a>
                                             </td>
                                         </tr>
                                     </c:forEach>
