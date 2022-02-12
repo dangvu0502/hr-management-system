@@ -48,6 +48,10 @@
         <servlet-name>BlogDetailsController</servlet-name>
         <servlet-class>Controller.BlogDetailsController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BlogSearchController</servlet-name>
+        <servlet-class>Controller.BlogSearchController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SettingListController</servlet-name>
         <url-pattern>/SettingListController</url-pattern>
@@ -87,6 +91,10 @@
     <servlet-mapping>
         <servlet-name>BlogDetailsController</servlet-name>
         <url-pattern>/BlogDetailsController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BlogSearchController</servlet-name>
+        <url-pattern>/BlogSearchController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
