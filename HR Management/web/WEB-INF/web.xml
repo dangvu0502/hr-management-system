@@ -93,8 +93,8 @@
         <url-pattern>/BlogDetailsController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>BlogSearchController</servlet-name>
-        <url-pattern>/BlogSearchController</url-pattern>
+        <servlet-name>SupportTypeController</servlet-name>
+        <url-pattern>/SupportTypeController/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

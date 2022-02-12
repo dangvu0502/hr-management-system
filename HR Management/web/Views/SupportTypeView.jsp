@@ -1,3 +1,10 @@
+<%-- 
+    Document   : SupportTypeView
+    Created on : Jan 30, 2022, 9:30:43 PM
+    Author     : hide
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -30,7 +37,7 @@
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
         <header class="header">
-            <a href="Views/Home.jsp" class="logo">
+            <a href="../Views/Home.jsp" class="logo">
                 <!-- Add the class icon to your logo image or logo icon to add the margining -->
                 Home
             </a>
@@ -302,18 +309,18 @@
                     <div class="row">
                         <div class="panel">
                             <header class="panel-heading">
-                                Setting List
+                                Support Type List
                             </header>
                             <div class="panel-body" style="width: 50%;">
                                 <header class="panel-heading">
                                     Filter
                                 </header>
-                                <form action="Setting" method="post">
+                                <form action="grouplist" method="post">
                                     <div class="form-row">
                                         <div class="form-group col-md-3">
                                             <select class="form-control" name="type">
-                                                <option value="setting_id">ID</option>
-                                                <option value="username">User Name</option>
+                                                <option value="code">Code</option>
+                                                <option value="name">Name</option>
                                                 <option value="fullname">Full Name</option>
                                                 <option value="email">Email</option>
                                                 <option value="type_name">Type</option>
@@ -332,40 +339,32 @@
                             <div class="panel-body">
                                 <div class="pull-right">
                                     <div class="btn btn-success">
-                                        <a id="opener" href="#" style="color: white;">Add &nbsp;&nbsp;<span class="glyphicon glyphicon-pencil"></span></a>    
+                                        <a id="opener" href="#" style="color: white;">Add</a>    
                                     </div>
                                 </div>
                                 <table class="table table-bordered">
                                     <tr>
-                                        <th style="width: 50px">ID</th>
-                                        <th style="width: 500px">Type</th>
-                                        <th style="width: 500px">Value</th>
-                                        <th>Order</th>
-                                        <th style="width: 150px;">Status</th>
-                                        <th style="width: 70px;">Action</th>
+                                        <th style="width: 10px">id</th>
+                                        <th>Name</th>
+                                        <th>In Charge</th>
+                                        <th>Email</th>
+                                        <th>Status</th>
                                     </tr>
                                     <c:forEach items="${listS}" var="s">
                                         <tr>
                                             <td>${s.id}</td>
-                                            <td>${s.type}</td>
-                                            <td>${s.value}</td>
-                                            <td>${s.order}</td>
+                                            <td>${s.name}</td>
+                                            <td>${s.in_charge_group}</td>
+                                            <td>${s.email}</td>
                                             <td>
-                                                <c:if test = "${!s.status}">
-                                                    <span class="badge bg-red">Deactivate</span>
-                                                    &nbsp;
-                                                    <a href="StatusController?status=0&id=${s.id}&page=${page}"><span class="glyphicon glyphicon-retweet"></span></a>
-                                                </c:if>
-                                                <c:if test = "${s.status}">
-                                                    <span class="badge bg-green">Activate</span>
-                                                    &nbsp;
-                                                    <a href="StatusController?status=1&id=${s.id}&page=${page}"><span class="glyphicon glyphicon-retweet"></span></a>
-                                                </c:if>
-                                            </td>
-                                            <td>
-                                                <a id="delete" onclick="deleteByID('${e.employee_id}');" href="#"><span class="glyphicon glyphicon-trash"></span></a>
-                                                &nbsp;&nbsp;
-                                                <a class="edit" href="../SettingController/EditView?id=${s.id}&type=${s.type}&value=${s.value}&order=${s.order}&status=${s.status}&note=${s.note}" return false;"><span class="glyphicon glyphicon-edit"></span></a>
+                                                <c:if test = "${s.status}"> <span>Active</span></c:if>
+                                                <c:if test = "${!s.status}"><span>Deactivate</span></c:if>
+                                                </td>
+                                                <td>
+                                                <div>
+                                                    <a id="delete" onclick="deleteByID('${e.employee_id}');" href="#"><span class="glyphicon glyphicon-trash"></span></a>
+                                                    &nbsp;&nbsp;
+                                                    <a href="../SupportTypeController/SupportTypeEdit?id=${s.id}&name=${s.name}&incharge=${s.in_charge_group}&email=${s.email}&status=${s.status}&description=${s.description}" <span class="glyphicon glyphicon-edit"></span></a></div>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -373,7 +372,7 @@
                                 <div class="table-foot">
                                     <ul class="pagination pagination-sm no-margin pull-right">
                                         <c:forEach begin="1" end="${endP}" var="p">
-                                            <li><a href="Setting?page=${p}">${p}</a></li>
+                                            <li><a href="../SupportTypeController/SupportType?page=${p}">${p}</a></li>
                                             </c:forEach>
                                     </ul>
                                 </div>
@@ -433,6 +432,89 @@
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
         <script type="text/javascript">
+                                                    $(function () {
+                                                        $("#dialog").dialog({
+                                                            autoOpen: false,
+                                                            title: "Add",
+                                                            width: 'auto',
+                                                            height: 'auto',
+                                                            buttons: {
+                                                                Submit: function () {
+                                                                    add();
+                                                                },
+                                                                Close: function () {
+                                                                    $(this).dialog('close');
+                                                                }
+                                                            }
+                                                        });
+                                                        $("#opener").click(function () {
+
+                                                            $("#dialog").dialog('open');
+                                                        });
+                                                        $(".edit").click(function () {
+                                                            $("#dialog").dialog('open');
+                                                        });
+                                                    });
+                                                    function deleteByID(id) {
+                                                        if (confirm("Do you really want to delete profile?")) {
+                                                            window.location = "grouplist?typef=delete" + "&id=" + id;
+                                                        }
+                                                    }
+                                                    function dialogOpen(name, fullname, id, type_id, status, email, pw) {
+                                                        $('#txtId').val(id);
+                                                        $('#txtUserName').val(name);
+                                                        $('#txtPassWord').val(pw)
+                                                        $('#txtGmail').val(email);
+                                                        $('#txtFullName').val(fullname)
+                                                        $("#cbbType").val(type_id);
+                                                        $("[name=foo]").val([status]);
+                                                        $("#dialog").dialog({
+                                                            autoOpen: false,
+                                                            title: "Edit",
+                                                            width: 'auto',
+                                                            height: 'auto',
+                                                            buttons: {
+                                                                Submit: function () {
+                                                                    edit(id);
+                                                                },
+                                                                Close: function () {
+                                                                    $(this).dialog('close');
+                                                                }
+                                                            }
+                                                        });
+                                                    }
+                                                    function add() {
+                                                        var id = document.getElementById("txtId").value;
+                                                        var username = document.getElementById("txtUserName").value;
+                                                        var fullname = document.getElementById("txtFullName").value;
+                                                        var password = document.getElementById("txtPassWord").value;
+                                                        var status = $('input[name = "foo"]:checked').val();
+                                                        var mail = document.getElementById("txtGmail").value;
+                                                        var typename = $('#cbbType option:selected').val();
+                                                        if (!!username && !!fullname && !!password && !!mail) {
+                                                            window.location = "SettingDetailController?typef=add" + "&id=" + id + "&username=" + username + "&fullname=" + fullname + "&password=" + password + "&status=" + status + "&mail=" + mail + "&typename=" + typename;
+                                                            alert('Add Successfull');
+                                                        } else
+                                                        {
+                                                            alert('Add Fail');
+                                                        }
+                                                    }
+                                                    function edit(id) {
+                                                        var username = document.getElementById("txtUserName").value;
+                                                        var fullname = document.getElementById("txtFullName").value;
+                                                        var password = document.getElementById("txtPassWord").value;
+                                                        var status = $('input[name = "foo"]:checked').val();
+                                                        var mail = document.getElementById("txtGmail").value;
+                                                        var typename = $('#cbbType option:selected').val();
+                                                        if (!!username && !!fullname && !!password && !!mail) {
+                                                            window.location = "SettingDetailController?typef=edit" + "&id=" + id + "&username=" + username + "&fullname=" + fullname + "&password=" + password + "&status=" + status + "&mail=" + mail + "&typename=" + typename;
+                                                            alert('Edit Successfull');
+                                                        } else
+                                                        {
+                                                            alert('Edit Fail');
+                                                        }
+
+                                                    }
         </script>
     </body>
 </html>
