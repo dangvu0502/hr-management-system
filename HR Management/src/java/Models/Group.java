@@ -16,6 +16,11 @@ public class Group {
     private String name;
     private boolean status;
     private String description;
+
+    @Override
+    public String toString() {
+        return "Group{" + "code=" + code + ", manager_id=" + manager_id + ", name=" + name + ", status=" + status + ", description=" + description + ", parent_group_code=" + parent_group_code + ", delete=" + delete + ", update_date=" + update_date + '}';
+    }
     private String parent_group_code;
     private boolean delete;
     private Date update_date;

@@ -327,13 +327,14 @@
                                                 <option value="status">Status</option>
                                             </select>                                            
                                         </div>
-                                        <div class="form-group col-md-7">
+                                        
+                                    </div>
+                                    <div class="form-group col-md-7">
                                             <input class="form-control" type="text" value="${txtS}" placeholder="Input..." name="input">
                                         </div>
                                         <div class="form-group col-md-2">
                                             <input type="submit" name="input" class="btn btn-info" value="Search">
                                         </div>
-                                    </div>
                                 </form>
                             </div>
                             <div class="panel-body">

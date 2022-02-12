@@ -68,11 +68,11 @@ public class GroupDAO {
         Vector vec = new Vector();
         try {
             String sql = "SELECT * FROM hr_system_v2.group"
-                    + " where code like '%?%' or name like '%?%'";
+                    + " where code like ? or name like ?";
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
             ps.setString(1, "%" +input+ "%");
-            ps.setString(2,  "%" +input+ "%");
+            ps.setString(2, "%" +input+ "%");
             rs = ps.executeQuery();
             while (rs.next()) {
                 Group g = new Group();
@@ -87,10 +87,21 @@ public class GroupDAO {
                 vec.add(g);
             }
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("Error1: " + e.getMessage());
        }
         return vec;
     }
-    
+    public static void main(String[] args) {
+        GroupDAO g = new GroupDAO();
+        Vector<Group> gr = new Vector();
+        if(gr != null){
+            gr =  g.getGroupBySearch("a");
+        }else
+        {
+            System.out.println("Not");
+        }
+        
+    }
+            
     
 }
