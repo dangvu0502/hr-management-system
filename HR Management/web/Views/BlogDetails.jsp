@@ -246,7 +246,7 @@
                         <i class="fa-solid fa-at"></i><%=b.getAuthor() %>
                     </div>
                     <div class="Main_PostDate text-muted">
-                        <i class="fa-solid fa-calendar-days"></i><%=b.getPublishDate() %>
+                        <i class="fa-solid fa-calendar-days"></i> <%=b.getPublishDate() %>
                     </div>
                 </div>
                 <div class="Main_Category text-muted">CateGory:  <%=b.getCategory()%></div>
