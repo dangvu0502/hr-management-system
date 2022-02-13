@@ -92,13 +92,13 @@
                                                 <div class="row ">
                                                     <div class="form-group col-lg-12">
                                                         <label for="fullname">Full name</label>
-                                                        <input type="text" class="form-control" name="code" disabled="" value="${c.id.code}">
+                                                        <input type="text" class="form-control" name="code" disabled="" value="${g.id.code}">
                                                     </div>
                                                 </div>
                                                       <div class="row ">
                                                     <div class="form-group col-lg-12">
                                                         <label for="username">Username</label>
-                                                        <input type="text" class="form-control" name="manager_id" disabled="" value="${c.id.manager_id}">
+                                                        <input type="text" class="form-control" name="manager_id" disabled="" value="${g.id.manager_id}">
                                                     </div>
                                                 </div>
                                                 <div class="row ">

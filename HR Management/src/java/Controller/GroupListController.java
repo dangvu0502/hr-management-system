@@ -52,7 +52,7 @@ public class GroupListController extends HttpServlet {
                     groupListImplement(request, response);
                     break;
                 case "/GroupEdit":
-                    GroupEdit(request, response,method);
+                    GroupEdit(request, response, method);
                     break;
                 default:
                     response.sendError(404);
