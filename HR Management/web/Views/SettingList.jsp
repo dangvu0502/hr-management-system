@@ -354,12 +354,12 @@
                                                 <c:if test = "${!s.status}">
                                                     <span class="badge bg-red">Deactivate</span>
                                                     &nbsp;
-                                                    <a href="StatusController?status=0&id=${s.id}&page=${page}"><span class="glyphicon glyphicon-retweet"></span></a>
+                                                    <a href="../SettingController/Status?status=0&id=${s.id}&page=${page}"><span class="glyphicon glyphicon-retweet"></span></a>
                                                 </c:if>
                                                 <c:if test = "${s.status}">
                                                     <span class="badge bg-green">Activate</span>
                                                     &nbsp;
-                                                    <a href="StatusController?status=1&id=${s.id}&page=${page}"><span class="glyphicon glyphicon-retweet"></span></a>
+                                                    <a href="../SettingController/Status?status=1&id=${s.id}&page=${page}"><span class="glyphicon glyphicon-retweet"></span></a>
                                                 </c:if>
                                             </td>
                                             <td>
