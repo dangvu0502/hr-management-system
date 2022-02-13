@@ -147,7 +147,7 @@
                                             <th>Status</th>
                                             <th></th>
                                         </tr>
-                                        <tr>
+                                        <tr  onclick="window.open('http://localhost:8080/HR_Management/Views/TimesheetListView.jsp','_blank')">
                                             <td>1</td>
                                             <td>20222-02-02</td>
                                             <td>Online meeting</td>
@@ -156,9 +156,8 @@
                                             <td>1:30</td>
                                             <td><span class="label label-success">Approved</span></td>
                                             <td><a href="#" class="btn btn-md btn-default"><i class="fa fa-trash-o"></i></a></td>
-
                                         </tr>
-                                        <tr>
+                                        <tr onclick="window.open('http://localhost:8080/HR_Management/Views/TimesheetListView.jsp','_blank')">
                                             <td>2</td>
                                             <td>20222-02-02</td>
                                             <td>Online meeting</td>
@@ -168,7 +167,7 @@
                                             <td><span class="label label-danger">Rejected</span></td>
                                             <td><a href="#" class="btn btn-md btn-default"><i class="fa fa-trash-o"></i></a></td>
                                         </tr>
-                                        <tr>
+                                        <tr onclick="window.open('http://localhost:8080/HR_Management/Views/TimesheetListView.jsp','_blank')">
                                             <td>3</td>
                                             <td>20222-02-02</td>
                                             <td>Online meeting</td>
