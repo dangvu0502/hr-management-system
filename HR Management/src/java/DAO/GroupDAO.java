@@ -181,27 +181,28 @@ public class GroupDAO {
         }
         return vec;
     }
-    public void InsertGroup(String code, String manager, String name, Boolean status, String description, String parent_group_code, String update_date) {
+    public  boolean InsertGroup(Group g) throws Exception {
+        int check = 0;
         try {
             //mo ket noi
             Connection conn = new DBContext().getConnection();
-            String sql = "INSERT INTO hr_system_v2.group (code, manager_id, name, status, description, parent_group_code, update_date) VALUES (?,?,?,?,?,?,?);";
+            String sql = "INSERT INTO `hr_system_v2`.`group` (`code`, `manager_id`, `name`, `status`, `description`, `parent_group_code`,`delete`, `update_date`) VALUES (?, ?, ?, ?, ?, ?, 1, ?);";
             con = new DBContext().getConnection();
+            con.setAutoCommit(false);
             ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
-
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, code);
-            ps.setString(2, manager);
-            ps.setString(3, name);
-            ps.setBoolean(4, status);
-            ps.setString(5, description);
-            ps.setString(6, parent_group_code);
-            ps.setString(7, update_date);
-            ps.executeUpdate();
-        } catch (Exception ex) {
-            ex.printStackTrace(System.out);
+            ps.setString(1, g.getCode());
+            ps.setString(2, g.getManager());
+            ps.setString(3, g.getName());
+            ps.setBoolean(4, g.isStatus());
+            ps.setString(5, g.getDescription());
+            ps.setString(6, g.getParent_group_code());
+            ps.setString(7, g.getUpdate_date());
+            check = ps.executeUpdate();
+            con.commit();
+        } catch (Exception e) {
+            con.rollback();
+            System.err.println("Error: " + e.getMessage());
         }
-       
+        return check > 0;
     }
 }
