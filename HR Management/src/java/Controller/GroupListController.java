@@ -52,7 +52,7 @@ public class GroupListController extends HttpServlet {
                     groupListImplement(request, response);
                     break;
                 case "/GroupEdit":
-                    groupEditImplement(request, response);
+                    GroupEdit(request, response,method);
                     break;
                 default:
                     response.sendError(404);
@@ -149,22 +149,22 @@ public class GroupListController extends HttpServlet {
 
     //</editor-fold>
     // <editor-fold defaultstate="collapsed" desc="GroupEdit">
-//    private void GroupEdit(HttpServletRequest request, HttpServletResponse response, String method) {
-//        try (PrintWriter out = response.getWriter();) {
-//            if (method.equalsIgnoreCase("post")) {
-//                groupEditImplement(request, response);
-//            } else if (method.equalsIgnoreCase("get")) {
-//                editGroupView(request, response);
-//            }
-//        } catch (Exception ex) {
-//            log(ex.getMessage());
-//        }
-//    }
+    private void GroupEdit(HttpServletRequest request, HttpServletResponse response, String method) {
+        try (PrintWriter out = response.getWriter();) {
+            if (method.equalsIgnoreCase("post")) {
+                groupEditImplement(request, response);
+            } else if (method.equalsIgnoreCase("get")) {
+                editGroupView(request, response);
+            }
+        } catch (Exception ex) {
+            log(ex.getMessage());
+        }
+    }
 
     private void editGroupView(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        String gid = request.getParameter("id");
-//        List<Group> group = new GroupDAO().getOne(Integer.parseInt(gid));
-//        request.setAttribute("group", group);
+        String id = request.getParameter("id");
+        Vector<Group> group = new GroupDAO().getOne(Integer.parseInt(id));
+        request.setAttribute("group", group);
         request.getRequestDispatcher("../Views/GroupViewEdit.jsp").forward(request, response);
     }
 
@@ -173,18 +173,18 @@ public class GroupListController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
         try (PrintWriter out = response.getWriter();) {
-            String gcode = request.getParameter("code");
-            String gmanager_id = request.getParameter("manager_id");
-            String gname = request.getParameter("name");
-            Boolean gstatus = Boolean.parseBoolean(request.getParameter("status"));
-            String gdescription = request.getParameter("description");
-            String gparent_group_code = request.getParameter("parent_group_code");
-            String gupdate_date = request.getParameter("update_date");
-            String gid = request.getParameter("id");
-            request.getRequestDispatcher("../Views/GroupViewEdit.jsp").forward(request, response);
+            String code = request.getParameter("code");
+            String manager_id = request.getParameter("manager_id");
+            String name = request.getParameter("name");
+            Boolean status = Boolean.parseBoolean(request.getParameter("status"));
+            String description = request.getParameter("description");
+            String parent_group_code = request.getParameter("parent_group_code");
+            String update_date = request.getParameter("update_date");
+            String id = request.getParameter("id");
+            
             GroupDAO group = new GroupDAO();
-            group.editGroup(gcode, Integer.parseInt(gmanager_id), gname, gstatus, gdescription, gparent_group_code, gupdate_date, Integer.parseInt(gid));
-//            response.sendRedirect("GroupList");
+            group.editGroup(code, Integer.parseInt(manager_id), name, status, description, parent_group_code, update_date, Integer.parseInt(id));
+            response.sendRedirect("../Contract/GroupEdit?id=" + id);
         }
     }
     //</editor-fold>

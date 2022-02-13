@@ -92,31 +92,37 @@
                                                 <div class="row ">
                                                     <div class="form-group col-lg-12">
                                                         <label for="fullname">Full name</label>
-                                                        <input type="text" class="form-control" name="fullname" disabled="" value="${c.user_id.fullname}">
+                                                        <input type="text" class="form-control" name="code" disabled="" value="${g.id.code}">
+                                                    </div>
+                                                </div>
+                                                      <div class="row ">
+                                                    <div class="form-group col-lg-12">
+                                                        <label for="username">Username</label>
+                                                        <input type="text" class="form-control" name="manager_id" disabled="" value="${g.id.manager_id}">
                                                     </div>
                                                 </div>
                                                 <div class="row ">
                                                     <div class="form-group col-lg-12">
                                                         <label for="username">Username</label>
-                                                        <input type="text" class="form-control" name="username" disabled="" value="${c.user_id.getUsername()}">
+                                                        <input type="text" class="form-control" name="name" disabled="" value="${g.id.name}">
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="form-group col-lg-12">
                                                         <label for="email">Email address</label>
-                                                        <input type="email" class="form-control" name="email" disabled="" value="${c.user_id.email}">
+                                                        <input type="email" class="form-control" name="email" disabled="" value="${g.id.email}">
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="form-group col-lg-12">
                                                         <label for="StartDate">Start Date</label>
-                                                        <input type="date" class="form-control" name="StartDate" value="${c.startDate}">
+                                                        <input type="date" class="form-control" name="status" value="${g.status}">
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="form-group col-lg-12">
                                                         <label for="EndDate">End Date</label>
-                                                        <input type="date" class="form-control" name="EndDate" value="${c.endDate}">
+                                                        <input type="date" class="form-control" name="update_date" value="${g.update_date}">
                                                     </div>
                                                 </div>
                                                 <div class="row">
