@@ -316,68 +316,71 @@
                                     Edit
                                 </header>
                                 <div class="panel-body">
+
                                     <form action="../Group/GroupEdit" >
-                                    
-                                                <div class="row ">
-                                                    <div class="form-group col-lg-12">
-                                                        <label for="ID">ID</label>
-                                                        <input type="text" class="form-control" name="id" readonly="" value="${listG.id}">
-                                                    </div>
-                                                </div>
-                                                <div class="row ">
-                                                    <div class="form-group col-lg-12">
-                                                        <label for="code">Code</label>
-                                                        <input type="text" class="form-control" name="code"  value="${listG.code}">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="form-group col-lg-12">
-                                                        <label for="name">Name</label>
-                                                        <input type="text" class="form-control" name="email"  value="${listG.name}">
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="row">
-                                                    <div class="form-group col-lg-12">
-                                                        <label for="Status">Status</label><br>
-                                                        <c:choose>
-                                                            <c:when test = "${listG.status == false}">
-                                                                <input  type="radio" name="status" value="1" id="rbStatus" > <span style="margin-right: 2rem;" >BA</span>
-                                                                <input type="radio" name="status" value="0" id="rbStatus" checked="checked"> Non BA
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                <input  type="radio" name="status" value="1" id="rbStatus" checked="checked"> <span style="margin-right: 2rem;" >BA</span>
-                                                                <input type="radio" name="status" value="0" id="rbStatus"> Non BA
-                                                            </c:otherwise>
-                                                        </c:choose>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="form-group col-lg-12">
-                                                        <label for="description">Description</label>
-                                                        <input type="text" class="form-control" name="description"  value="${listG.description}">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="form-group col-lg-12">
-                                                        <label for="Gcode">Group Parent Code</label>
-                                                        <input type="text" class="form-control" name="parent_group_code"  value="${listG.group_parent_code}">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="form-group col-lg-12">
-                                                        <label for="Updatdate">Update date</label>
-                                                        <input type="date" class="form-control" name="update_date"  value="${listG.update_date}">
-                                                    </div>
-                                                </div>
-                                                  
-                                                <div class=" form-group row col-lg-12 text-center">
-                                                    <button type="submit" id="submit-btn" class="btn btn-info"  >Save Change</button>
-                                                </div>
-                                    
+                                        <div>
+                                            <button type="submit" id="submit-btn" class="btn btn-info"  >Save Change</button>
+                                        </div>
+                                        <div class="row ">
+                                            <div class="form-group col-lg-12">
+                                                <label for="ID">ID</label>
+                                                <input type="text" class="form-control" name="id" readonly="" value="${listG.id}">
+                                            </div>
+                                        </div>
+                                        <div class="row ">
+                                            <div class="form-group col-lg-12">
+                                                <label for="code">Code</label>
+                                                <input type="text" class="form-control" name="code"  value="${listG.code}">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-lg-12">
+                                                <label for="name">Name</label>
+                                                <input type="text" class="form-control" name="email"  value="${listG.name}">
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="form-group col-lg-12">
+                                                <label for="Status">Status</label><br>
+                                                <c:choose>
+                                                    <c:when test = "${listG.status == false}">
+                                                        <input  type="radio" name="status" value="1" id="rbStatus" > <span style="margin-right: 2rem;" >BA</span>
+                                                        <input type="radio" name="status" value="0" id="rbStatus" checked="checked"> Non BA
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <input  type="radio" name="status" value="1" id="rbStatus" checked="checked"> <span style="margin-right: 2rem;" >BA</span>
+                                                        <input type="radio" name="status" value="0" id="rbStatus"> Non BA
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-lg-12">
+                                                <label for="description">Description</label>
+                                                <input type="text" class="form-control" name="description"  value="${listG.description}">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-lg-12">
+                                                <label for="Gcode">Group Parent Code</label>
+                                                <input type="text" class="form-control" name="parent_group_code"  value="${listG.group_parent_code}">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-lg-12">
+                                                <label for="Updatdate">Update date</label>
+                                                <input type="date" class="form-control" name="update_date"  value="${listG.update_date}">
+                                            </div>
+                                        </div>
+
+                                        <div >
+                                            <button type="submit" id="submit-btn" class="btn btn-info"  >Save Change</button>
+                                        </div>
+
                                     </form>
 
-                                   
+
                                 </div>
                             </div>
                             <!--                            <div class="panel-body">

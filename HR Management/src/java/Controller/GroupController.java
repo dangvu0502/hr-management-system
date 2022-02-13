@@ -136,7 +136,7 @@ public class GroupController extends HttpServlet {
             GroupDAO gDAO = new GroupDAO();
             int count = gDAO.totalGroup();
             int endPage = count / 6;
-            if (endPage % 5 != 0) {
+            if (endPage % 6 != 0) {
                 endPage++;
             }
             request.setAttribute("endP", endPage);
