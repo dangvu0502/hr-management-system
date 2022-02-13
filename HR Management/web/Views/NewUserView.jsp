@@ -57,7 +57,7 @@
                                     <div class="row">
                                         <div class="col-lg-2"></div>
                                         <div class="col-lg-8">
-<!--                                            <div class="row ">
+<!--                                        <div class="row ">
                                                 <div class="form-group col-lg-12">
                                                     <label for="group-code">Group code</label>
                                                     <input type="text" class="form-control" id="group-code" name="group-code" placeholder="Enter group code" required>
@@ -70,12 +70,11 @@
                                                         <select class="form-control text-bold" aria-label="" id="system-role" name="group-code" onchange="val()">
                                                             <option value="0" selected></option>
                                                             <c:forEach var="group" items="${groups}">
-                                                                <option value="${group.key}">${group.value} </option>
+                                                                <option value="${group.key}">${group.key} </option>
                                                             </c:forEach>
                                                             <c:remove var="groups" scope="session" />     
                                                         </select>
                                                     </span>
-
                                                 </div>
                                             </div>
                                             <div class="row ">
