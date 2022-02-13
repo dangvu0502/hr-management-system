@@ -309,14 +309,14 @@
                     <div class="row">
                         <div class="panel">
                             <header class="panel-heading">
-                                Support Type Edit
+                                Setting List Edit
                             </header>
                             <div class="panel-body" style="width: 50%;">
                                 <header class="panel-heading">
                                     Edit
                                 </header>
                                 <div class="panel-body">
-                                    <form action="../SupportTypeController/Edit" >
+                                    <form action="../SettingController/Edit" >
                                         <div class="row ">
                                                     <div class="form-group col-lg-12">
                                                         <label for="ID">ID</label>
@@ -341,12 +341,12 @@
                                                         <input type="text" class="form-control" name="order"  value="${listS.order}">
                                                     </div>
                                                 </div>
-                                                    <div class="row">
+<!--                                                    <div class="row">
                                                     <div class="form-group col-lg-12">
                                                         <label for="Note">Note</label>
                                                         <input type="text" class="form-control" name="note"  value="${listS.note}">
                                                     </div>
-                                                </div>
+                                                </div>-->
                                                     
                                                     <div class="row">
                                                     <div class="form-group col-lg-12">

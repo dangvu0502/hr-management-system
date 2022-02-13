@@ -29,6 +29,15 @@ public class Contract {
         this.status = status;
     }
 
+    public Contract(int id, String startDate, String endDate, int status) {
+        this.id = id;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.status = status;
+    }
+ 
+    
+    
     public int getId() {
         return id;
     }

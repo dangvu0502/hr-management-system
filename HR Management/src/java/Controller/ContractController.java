@@ -14,6 +14,8 @@ import Models.Employee;
 import Models.User;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -203,17 +205,26 @@ public class ContractController extends HttpServlet {
         }
     }
 
-    private void contractAddImplement(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void contractAddImplement(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ParseException {
         String idStr = request.getParameter("id");
+        String idc = request.getParameter("idc");
+        String StartDate = request.getParameter("StartDate");
+        String EndDate = request.getParameter("EndDate");
         if (idStr == null) {
             idStr = "-1";
         }
         int id = Integer.parseInt(idStr);
         UserDAO userDAO = new UserDAO();
+        ContractDAO contractDAO = new ContractDAO();
+        if (StartDate != null && EndDate != null) {
+            contractDAO.addContract(StartDate, EndDate, Integer.parseInt(idc));
+        }
         List<User> listUser = userDAO.getUserById(Integer.parseInt(idStr));
         List<User> listU = userDAO.getUserList();
+        List<Contract> listContract = contractDAO.getContractByUserId(Integer.parseInt(idStr));
         request.setAttribute("listU", listU);
         request.setAttribute("listUser", listUser);
+        request.setAttribute("listContract", listContract);
         request.setAttribute("idSelected", id);
         request.getRequestDispatcher("../Views/ContractAdd.jsp").forward(request, response);
 

@@ -1,3 +1,10 @@
+<%-- 
+    Document   : SupportTypeAdd
+    Created on : Jan 30, 2022, 9:30:43 PM
+    Author     : hide
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -30,7 +37,7 @@
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
         <header class="header">
-            <a href="Views/Home.jsp" class="logo">
+            <a href="../Views/Home.jsp" class="logo">
                 <!-- Add the class icon to your logo image or logo icon to add the margining -->
                 Home
             </a>
@@ -302,128 +309,163 @@
                     <div class="row">
                         <div class="panel">
                             <header class="panel-heading">
-                                Setting List
+                                Support Type Add
                             </header>
                             <div class="panel-body" style="width: 50%;">
                                 <header class="panel-heading">
-                                    Filter
+                                    Add Support Type
                                 </header>
-                                <form action="Setting" method="post">
-                                    <div class="form-row">
-                                        <div class="form-group col-md-3">
-                                            <select class="form-control" name="type">
-                                                <option value="setting_id">ID</option>
-                                                <option value="username">User Name</option>
-                                                <option value="fullname">Full Name</option>
-                                                <option value="email">Email</option>
-                                                <option value="type_name">Type</option>
-                                                <option value="status">Status</option>
-                                            </select>                                            
+                                <div class="panel-body">
+                                    <form action="../SupportTypeController/Add" >
+                                        <!--                                        <div class="row ">
+                                                                                            <div class="form-group col-lg-12">
+                                                                                                <label for="ID">ID</label>
+                                                                                                <input type="text" class="form-control" name="spid" readonly="" value="${listS.id}">
+                                                                                            </div>
+                                                                                        </div>-->
+                                        <div class="row ">
+                                            <div class="form-group col-lg-12">
+                                                <label for="name">Name</label>
+                                                <input type="text" class="form-control" name="name"  value="">
+                                            </div>
                                         </div>
-                                        <div class="form-group col-md-7">
-                                            <input class="form-control" type="text" placeholder="Input..." name="input">
+                                        <div class="row">
+                                            <div class="form-group col-lg-12">
+                                                <label for="email">Email</label>
+                                                <input type="email" class="form-control" name="email"  value="">
+                                            </div>
                                         </div>
-                                        <div class="form-group col-md-2">
-                                            <input type="submit" class="btn btn-info" value="Search">
+                                        <div class="row">
+                                            <div class="form-group col-lg-12">
+                                                <label for="description">Description</label>
+                                                <input type="text" class="form-control" name="description"  value="">
+                                            </div>
                                         </div>
-                                    </div>
-                                </form>
+                                        <div class="row">
+                                            <div class="form-group col-lg-12">
+                                                <label for="InCharge">In Charge</label>
+                                                <input type="text" class="form-control" name="incharge"  value="">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-lg-12">
+                                                <label for="Status">Status</label><br>
+                                                <input  type="radio" name="foo" value="1" id="rbStatus" checked="checked" > <span style="margin-right: 2rem;" >Active</span>
+                                                <input type="radio" name="foo" value="0" id="rbStatus" > Deactivate
+
+                                            </div>
+                                        </div>
+                                        <div class=" form-group row col-lg-12 text-center">
+                                            <button type="submit" id="submit-btn" class="btn btn-info"  >Add Support Type</button>
+                                        </div>
+                                    </form>
+                                    <!--                                    <form action="../SupportTypeController/Edit" >
+                                                                            <div class="row">
+                                                                                <div class="col-lg-2"></div>
+                                    
+                                                                                <div class="col-lg-8">
+                                                                                    <div class="row ">
+                                                                                        <div class="form-group col-lg-12">
+                                                                                            <label for="ID">ID</label>
+                                                                                            <input type="text" class="form-control" name="spid" disabled="" value="${listS.id}">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row ">
+                                                                                        <div class="form-group col-lg-12">
+                                                                                            <label for="name">Name</label>
+                                                                                            <input type="text" class="form-control" name="name"  value="${listS.name}">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        <div class="form-group col-lg-12">
+                                                                                            <label for="email">Email</label>
+                                                                                            <input type="email" class="form-control" name="email"  value="${listS.email}">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                        <div class="row">
+                                                                                        <div class="form-group col-lg-12">
+                                                                                            <label for="description">Description</label>
+                                                                                            <input type="text" class="form-control" name="description"  value="${listS.description}">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        <div class="form-group col-lg-12">
+                                                                                            <label for="InCharge">In Charge</label>
+                                                                                            <input type="text" class="form-control" name="InCharge"  value="${listS.in_charge_group}">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        <div class="form-group col-lg-12">
+                                                                                            <label for="Status">Status</label><br>
+                                    <c:choose>
+                                        <c:when test = "${listS.status == false}">
+                                            <input  type="radio" name="foo" value="1" id="rbStatus" > <span style="margin-right: 2rem;" >Active</span>
+                                            <input type="radio" name="foo" value="0" id="rbStatus" checked="checked"> Deactivate
+                                        </c:when>
+                                        <c:otherwise>
+                                            <input  type="radio" name="foo" value="1" id="rbStatus" checked="checked"> <span style="margin-right: 2rem;" >Active</span>
+                                            <input type="radio" name="foo" value="0" id="rbStatus"> Deactivate
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
                             </div>
-                            <div class="panel-body">
-                                <div class="pull-right">
-                                    <div class="btn btn-success">
-                                        <a id="opener" href="../SettingController/AddView?" style="color: white;">Add &nbsp;&nbsp;<span class="glyphicon glyphicon-pencil"></span></a>    
-                                    </div>
+                            <div class=" form-group row col-lg-12 text-center">
+                                <button type="submit" id="submit-btn" class="btn btn-info"  >Save Change</button>
+                            </div>
+                </form>-->
                                 </div>
-                                <table class="table table-bordered">
-                                    <tr>
-                                        <th style="width: 50px">ID</th>
-                                        <th style="width: 500px">Type</th>
-                                        <th style="width: 500px">Value</th>
-                                        <th>Order</th>
-                                        <th style="width: 150px;">Status</th>
-                                        <th style="width: 70px;">Action</th>
-                                    </tr>
-                                    <c:forEach items="${listS}" var="s">
-                                        <tr>
-                                            <td>${s.id}</td>
-                                            <td>${s.type}</td>
-                                            <td>${s.value}</td>
-                                            <td>${s.order}</td>
-                                            <td>
-                                                <c:if test = "${!s.status}">
-                                                    <span class="badge bg-red">Deactivate</span>
-                                                    &nbsp;
-                                                    <a href="../StatusController?status=0&id=${s.id}&page=${page}"><span class="glyphicon glyphicon-retweet"></span></a>
-                                                    <a href="../SettingController/Status?status=0&id=${s.id}&page=${page}"><span class="glyphicon glyphicon-retweet"></span></a>
-                                                    </c:if>
-                                                    <c:if test = "${s.status}">
-                                                    <span class="badge bg-green">Activate</span>
-                                                    &nbsp;
-                                                    <a href="../SettingController/Status?status=1&id=${s.id}&page=${page}"><span class="glyphicon glyphicon-retweet"></span></a>
-                                                    </c:if>
-                                            </td>
-                                            <td>
-                                                <a id="delete" onclick="deleteByID('${s.id}');" href="#"><span class="glyphicon glyphicon-trash"></span></a>
-                                                &nbsp;&nbsp;
-                                                <a class="edit" href="../SettingController/EditView?id=${s.id}&type=${s.type}&value=${s.value}&order=${s.order}&status=${s.status}&note=${s.note}" return false;"><span class="glyphicon glyphicon-edit"></span></a>
-                                            </td>
-                                        </tr>
-                                    </c:forEach>
-                                </table>
-                                <div class="table-foot">
-                                    <ul class="pagination pagination-sm no-margin pull-right">
-                                        <c:forEach begin="1" end="${endP}" var="p">
-                                            <li><a href="Setting?page=${p}">${p}</a></li>
-                                            </c:forEach>
-                                    </ul>
-                                </div>
+                            </div>
+                            <!--                            <div class="panel-body">
+                                                            <div style="margin-left: 30rem;" ><div style="display: flex; justify-content: space-between;margin-bottom: 2rem">
+                                                                    <div><label>ID</label></div>
+                                                                    <div style="margin-left: 4rem;"><input  disabled="true" style="border-radius:8px; " type="text" id="txtId" value="${listS.id}"></div>
+                                                                </div>
+                                                                <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
+                                                                    <div><label>Name</label></div>
+                                                                    <div  style="margin-left: 4rem;"><input style="border-radius:8px; " type="text" id="txtName" value="${listS.name}"></div>
+                                                                </div>
+                                                                <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
+                                                                    <div><label>Gmail</label></div>
+                                                                    <div style="margin-left: 4rem;" ><input style="border-radius:8px; " type="text" id="txtGmail" value="${listS.email}"></div>
+                                                                </div>
+                                                                <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
+                                                                    <div><label>Description</label></div>
+                                                                    <div  style="margin-left: 4rem;"><input style="border-radius:8px; " type="text" id="txtDescription" value="${listS.description}"></div>
+                                                                </div>
+                                                                <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
+                                                                    <div><label>Status</label></div>
+                                                                    <div style="padding-right: 2rem;" >
+                                                                        <input  type="radio" name="foo" value="1" id="rbStatus" checked="checked"> <span style="margin-right: 2rem;" >Active</span>
+                                                                        <input type="radio" name="foo" value="0" id="rbStatus"> Deactivate
+                                                                    </div>
+                                                                </div>
+                                                                <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
+                                                                    <div><label>In Charge</label></div>
+                                                                    <div style="margin-left: 4rem;" >
+                                                                        <select name="cbbType" id="cbbInCharge" style="width: 215px;height: 30px;border-radius: 8px;">
+                                                                            <option value="0">Admin</option>
+                                                                            <option value="1">HR</option>
+                                                                            <option value="2">Manager</option>
+                                                                            <option value="3">Staff</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div> 
+                                                                <div><a href="../SupportTypeController/Edit?id=${listS.id}&name=${txtName}&incharge=${listS.in_charge_group}&email=${listS.email}&status=${listS.status}&description=${listS.description}">Edit</a></div>
+                                                                <div><a href="../SupportTypeController/SupportType?page=1">Cancer</a></div>
+                                                            </div>-->
+
+
+                            <div class="table-foot">
+                                <ul class="pagination pagination-sm no-margin pull-right">
+
+                                </ul>
                             </div>
                         </div>
                     </div>
+                    </div>
                 </section><!-- /.content -->
-                <!-- /.Dialog -->
-                <!--                <div id="dialog">
-                                    <div style="display: flex; justify-content: center;  margin: 2rem;"><img style=" width: 100px; height: 100px;" src="https://www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png" alt="Avatar" > </div>
-                                    <div style="display: flex; justify-content: space-between;margin-bottom: 2rem">
-                                        <div><label>ID</label></div>
-                                        <div style="margin-left: 4rem;"><input  disabled="true" style="border-radius:8px; " type="text" id="txtId"></div>
-                                    </div>
-                                    <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
-                                        <div><label>UserName</label></div>
-                                        <div  style="margin-left: 4rem;"><input style="border-radius:8px; " type="text" id="txtUserName"></div>
-                                    </div>
-                                    <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
-                                        <div><label>FullName</label></div>
-                                        <div  style="margin-left: 4rem;"><input style="border-radius:8px; " type="text" id="txtFullName"></div>
-                                    </div>
-                                    <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
-                                        <div><label>PassWord</label></div>
-                                        <div style="margin-left: 4rem;"><input style="border-radius:8px; " type="password" id="txtPassWord"></div>
-                                    </div>
-                                    <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
-                                        <div><label>Gmail</label></div>
-                                        <div style="margin-left: 4rem;" ><input style="border-radius:8px; " type="text" id="txtGmail"></div>
-                                    </div>
-                                    <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
-                                        <div><label>Status</label></div>
-                                        <div style="padding-right: 2rem;" >
-                                            <input  type="radio" name="foo" value="1" id="rbStatus" checked="checked"> <span style="margin-right: 2rem;" >Active</span>
-                                            <input type="radio" name="foo" value="0" id="rbStatus"> Deactivate
-                                        </div>
-                                    </div>
-                                    <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
-                                        <div><label>Type</label></div>
-                                        <div style="margin-left: 4rem;" >
-                                            <select name="cbbType" id="cbbType" style="width: 215px;height: 30px;border-radius: 8px;">
-                                                <option value="0">Admin</option>
-                                                <option value="1">HR</option>
-                                                <option value="2">Manager</option>
-                                                <option value="3">Staff</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>-->
                 <div class="footer-main">
                     Copyright &copy Director, 2014
                 </div>
@@ -434,11 +476,11 @@
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
         <script type="text/javascript">
-                                                    function deleteByID(id) {
-                                                        if (confirm("Do you really want to delete setting?")) {
-                                                            window.location = "../SettingController/Delete?id=" + id;
-                                                        }
-                                                    }
+            function deleteByID(id) {
+                if (confirm("Do you really want to delete profile?")) {
+                    window.location = "grouplist?typef=delete" + "&id=" + id;
+                }
+            }
         </script>
     </body>
 </html>

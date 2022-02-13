@@ -6,12 +6,15 @@
 package Controller;
 
 import DAO.GroupDAO;
+import DAO.SettingDAO;
 import DAO.SupportTypeDAO;
+import Models.Setting;
 import Models.SupportType;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Vector;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Hide
  */
+@WebServlet(name = "SupportTypeController", urlPatterns = {"/SupportTypeController/*"})
 public class SupportTypeController extends HttpServlet {
 
     /**
@@ -43,6 +47,13 @@ public class SupportTypeController extends HttpServlet {
                     break;
                 case "/SupportTypeEdit":
                     supportTypeEditView(request, response);
+                    break;
+                case "/AddView":
+                    request.getRequestDispatcher("../Views/SupportTypeAdd.jsp").forward(request, response);
+                    break;
+                case "/Add":
+                    supportTypeAdd(request, response);
+//                    settingListImplement(request, response);
                     break;
                 case "/Edit":
                     supportTypeEdit(request, response);
@@ -85,6 +96,16 @@ public class SupportTypeController extends HttpServlet {
         processRequest(request, response);
     }
 
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
     private void supportTypeListImplement(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
@@ -97,8 +118,49 @@ public class SupportTypeController extends HttpServlet {
                 page = "1";
             }
             request.setAttribute("page", page);
-            GroupDAO gDAO = new GroupDAO();
             SupportTypeDAO sDAO = new SupportTypeDAO();
+            int count = sDAO.totalSupportType();
+            int endPage = count / 3;
+            if (endPage % 3 != 0) {
+                endPage++;
+            }
+            request.setAttribute("endP", endPage);
+            Vector<SupportType> s = new Vector();
+            if (group_type == null || input == null || input.isEmpty()) {
+                s = sDAO.getSupportTypeList(Integer.parseInt(page));
+            } else {
+                s = sDAO.getSupportTypeList(Integer.parseInt(page));//sai
+            }
+            request.setAttribute("listS", s);
+            request.getRequestDispatcher("../Views/SupportTypeView.jsp").forward(request, response);
+        }
+    }
+
+     //Add
+    private void supportTypeAdd(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
+        try (PrintWriter out = response.getWriter();) {
+            String name = request.getParameter("name");
+            String incharge = request.getParameter("incharge");
+            String email = request.getParameter("email");
+            String status = request.getParameter("foo");
+            String description = request.getParameter("description");
+            boolean sta = Boolean.parseBoolean(status);
+            SupportType st = new SupportType(1, name, email, sta, false, incharge, description);
+            
+            SupportTypeDAO sDAO = new SupportTypeDAO();
+            boolean check = sDAO.addNewSupportType(st);
+
+            String group_type = request.getParameter("type");
+            String input = request.getParameter("input");
+            String page = request.getParameter("page");
+            if (page == null) {
+                page = "1";
+            }
+            request.setAttribute("page", page);
+            GroupDAO gDAO = new GroupDAO();
             int count = sDAO.totalSupportType();
             int endPage = count / 3;
             if (endPage % 3 != 0) {
@@ -149,8 +211,8 @@ public class SupportTypeController extends HttpServlet {
             String status = request.getParameter("foo");
             String description = request.getParameter("description");
             int i = Integer.parseInt(id);
-            boolean sta = Boolean.parseBoolean(status);
-//            SupportTypeDAO sDAO  = new SupportTypeDAO(i,name,email,s,true,incharge,description);
+//            boolean sta = Boolean.parseBoolean(status);
+            boolean sta = status.contains("1") ? true : false;
             SupportType st = new SupportType(i, name, email, sta, false, incharge, description);
             SupportTypeDAO sDAO = new SupportTypeDAO();
             boolean check = sDAO.updateSupportType(st, i);
@@ -179,15 +241,4 @@ public class SupportTypeController extends HttpServlet {
             request.getRequestDispatcher("../Views/SupportTypeView.jsp").forward(request, response);
         }
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }

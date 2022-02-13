@@ -116,7 +116,7 @@ public class ContractDAO {
         String sql = "UPDATE hr_system_v2.contract SET end_date = ? WHERE id= ?";
         try (
                 Connection con = new DBContext().getConnection();
-                PreparedStatement ps = con.prepareStatement(sql)) { 
+                PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, EndDate);
             ps.setInt(2, id);
             // execute update SQL stetement
@@ -150,5 +150,42 @@ public class ContractDAO {
             ex.printStackTrace(System.out);
         }
         return list;
+    }
+
+    public List<Contract> getContractByUserId(int id) {
+        List<Contract> list = new ArrayList<>();
+        try {
+            String sql = "select id, start_date, end_date, status from hr_system_v2.contract where user_id = ?";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            String pattern = "yyyy-MM-dd";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            while (rs.next()) {
+                Contract c = new Contract(rs.getInt(1),
+                        simpleDateFormat.format(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString(2))),
+                        simpleDateFormat.format(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString(3))), rs.getInt(4));
+                list.add(c);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return list;
+    }
+
+    public void addContract(String StartDate, String EndDate, int id) throws SQLException {
+        String sql = "UPDATE hr_system_v2.contract SET start_date = ?, end_date = ? WHERE id= ?";
+        try (
+                Connection con = new DBContext().getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, StartDate);
+            ps.setString(2, EndDate);
+            ps.setInt(3, id);
+            // execute update SQL stetement
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw e;
+        }
     }
 }

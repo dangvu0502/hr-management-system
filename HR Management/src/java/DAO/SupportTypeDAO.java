@@ -7,6 +7,7 @@ package DAO;
 import Context.DBContext;
 import Models.Employee;
 import Models.Group;
+import Models.Setting;
 import Models.SupportType;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -65,6 +66,29 @@ public class SupportTypeDAO {
             e.printStackTrace(System.out);
         }
         return 0;
+    }
+    
+    //add
+    public boolean addNewSupportType(SupportType s) throws Exception {
+        int check = 0;
+        try {
+            String sql = "INSERT INTO `hr_system_v2`.`support_type` (`name`,`email`,`status`,`delete`,`in_charge_group`,`description`) VALUES (?,?,?,?,?,?)";
+            con = new DBContext().getConnection();
+            con.setAutoCommit(false);
+            ps = con.prepareStatement(sql);
+            ps.setString(1, s.getName());
+            ps.setString(2, s.getEmail());
+            ps.setBoolean(3, s.isStatus());
+            ps.setBoolean(4, s.isDelete());
+            ps.setString(5, s.getIn_charge_group());
+            ps.setString(6, s.getDescription());
+            check = ps.executeUpdate();
+            con.commit();
+        } catch (Exception e) {
+            con.rollback();
+            System.err.println("Error: " + e.getMessage());
+        }
+        return check > 0;
     }
     
     public boolean updateSupportType(SupportType s, int id) throws Exception {

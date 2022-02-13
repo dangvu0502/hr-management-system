@@ -25,10 +25,6 @@
         <servlet-class>Controller.Logout</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>SettingDetailController</servlet-name>
-        <servlet-class>Controller.SettingDetailController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ForgotPasswordController</servlet-name>
         <servlet-class>Controller.ForgotPasswordController</servlet-class>
     </servlet>
@@ -69,10 +65,6 @@
         <url-pattern>/Logout</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>SettingDetailController</servlet-name>
-        <url-pattern>/SettingDetailController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>ForgotPasswordController</servlet-name>
         <url-pattern>/ForgotPassword/*</url-pattern>
     </servlet-mapping>
@@ -91,10 +83,6 @@
     <servlet-mapping>
         <servlet-name>BlogDetailsController</servlet-name>
         <url-pattern>/BlogDetailsController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SupportTypeController</servlet-name>
-        <url-pattern>/SupportTypeController/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SettingController</servlet-name>
