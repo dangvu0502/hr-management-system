@@ -137,7 +137,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class=" form-group row col-lg-12 text-center">
+                                            <div class=" form-group col-lg-12 text-center">
                                                 <button type="submit" id="submit-btn" class="btn btn-info" onclick="ansValidation(event)">Login</button>
                                             </div>
 
