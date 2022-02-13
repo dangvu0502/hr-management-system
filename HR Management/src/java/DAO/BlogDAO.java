@@ -85,7 +85,7 @@ public class BlogDAO {
         return e;
     }
 
-    public Vector<BLog> SearchBlogByTittle(int page, String Type, String Tittle) throws ParseException {
+    public Vector<BLog> SearchBlogByType(int page, String Type, String Tittle) throws ParseException {
         Vector vec = new Vector();
         try {
             String sql = "SELECT  b.id,b.Slug ,b.Thumnail_image,b.Tittle,b.Brieft,c.Category_Name,b.Content,b.Author,b.PublishDate FROM hr_system_v2.blog b\n"

@@ -11,6 +11,7 @@ import Models.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,13 +40,13 @@ public class GroupDAO {
                 Group g = new Group();
                 g.setId(rs.getInt(1));
                 g.setCode(rs.getString(2));
-                g.setManager_id(rs.getInt(3));
+                g.setManager(rs.getString(3));
                 g.setName(rs.getString(4));
                 g.setStatus(rs.getBoolean(5));
                 g.setDescription(rs.getString(6));
                 g.setParent_group_code(rs.getString(7));
                 g.setDelete(rs.getBoolean(8));
-                g.setUpdate_date(rs.getDate(9));
+                g.setUpdate_date(rs.getString(9));
                 vec.add(g);
             }
         } catch (Exception e) {
@@ -84,13 +85,13 @@ public class GroupDAO {
                 Group g = new Group();
                 g.setId(rs.getInt(1));
                 g.setCode(rs.getString(2));
-                g.setManager_id(rs.getInt(3));
+                g.setManager(rs.getString(3));
                 g.setName(rs.getString(4));
                 g.setStatus(rs.getBoolean(5));
                 g.setDescription(rs.getString(6));
                 g.setParent_group_code(rs.getString(7));
                 g.setDelete(rs.getBoolean(8));
-                g.setUpdate_date(rs.getDate(9));
+                g.setUpdate_date(rs.getString(9));
                 vec.add(g);
             }
         } catch (Exception e) {
@@ -99,24 +100,27 @@ public class GroupDAO {
         return vec;
     }
 
-    public void editGroup(String code, int manager_id, String name, Boolean status, String description, String parent_group_code, String update_date, int id) {
+    public Boolean editGroup(Group g, int id) throws SQLException {
+        int check = 0;
         try {
             //mo ket noi
+            
             Connection conn = new DBContext().getConnection();
             String sql = "UPDATE hr_system_v2.group SET code =?, manager_id = ?, name = ?, status = ?, description = ?, parent_group_code = ?, update_date = ? WHERE (id = ?);";
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, code);
-            ps.setInt(2, manager_id);
-            ps.setString(3, name);
-            ps.setBoolean(4, status);
-            ps.setString(5, description);
-            ps.setString(6, parent_group_code);
-            ps.setString(7, update_date);
+            ps.setString(1, g.getCode());
+            ps.setString(2, g.getManager());
+            ps.setString(3, g.getName());
+            ps.setBoolean(4, g.isStatus());
+            ps.setString(5, g.getDescription());
+            ps.setString(6, g.getParent_group_code());
+            ps.setString(7, g.getUpdate_date());
             ps.setInt(8, id);
             ps.executeUpdate();
-        } catch (Exception ex) {
-            ex.printStackTrace(System.out);
+        } catch (SQLException e) {
+            throw e;
         }
+        return check > 0;
     }
 
     public Vector<Group> getOne(int id) {
@@ -129,18 +133,18 @@ public class GroupDAO {
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
-            
+
             while (rs.next()) {
                 Group g = new Group();
                 g.setId(rs.getInt(1));
                 g.setCode(rs.getString(2));
-                g.setManager_id(rs.getInt(3));
+                g.setManager(rs.getString(3));
                 g.setName(rs.getString(4));
                 g.setStatus(rs.getBoolean(5));
                 g.setDescription(rs.getString(6));
                 g.setParent_group_code(rs.getString(7));
                 g.setDelete(rs.getBoolean(8));
-                g.setUpdate_date(rs.getDate(9));
+                g.setUpdate_date(rs.getString(9));
                 vec.add(g);
             }
         } catch (Exception ex) {
@@ -148,6 +152,7 @@ public class GroupDAO {
         }
         return vec;
     }
+
     public Vector<Group> getGroup() {
         Vector vec = new Vector();
         try {
@@ -157,18 +162,18 @@ public class GroupDAO {
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
-            
+
             while (rs.next()) {
                 Group g = new Group();
                 g.setId(rs.getInt(1));
                 g.setCode(rs.getString(2));
-                g.setManager_id(rs.getInt(3));
+                g.setManager(rs.getString(3));
                 g.setName(rs.getString(4));
                 g.setStatus(rs.getBoolean(5));
                 g.setDescription(rs.getString(6));
                 g.setParent_group_code(rs.getString(7));
                 g.setDelete(rs.getBoolean(8));
-                g.setUpdate_date(rs.getDate(9));
+                g.setUpdate_date(rs.getString(9));
                 vec.add(g);
             }
         } catch (Exception ex) {
@@ -176,5 +181,27 @@ public class GroupDAO {
         }
         return vec;
     }
+    public void InsertGroup(String code, String manager, String name, Boolean status, String description, String parent_group_code, String update_date) {
+        try {
+            //mo ket noi
+            Connection conn = new DBContext().getConnection();
+            String sql = "INSERT INTO hr_system_v2.group (code, manager_id, name, status, description, parent_group_code, update_date) VALUES (?,?,?,?,?,?,?);";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
 
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, code);
+            ps.setString(2, manager);
+            ps.setString(3, name);
+            ps.setBoolean(4, status);
+            ps.setString(5, description);
+            ps.setString(6, parent_group_code);
+            ps.setString(7, update_date);
+            ps.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+       
+    }
 }

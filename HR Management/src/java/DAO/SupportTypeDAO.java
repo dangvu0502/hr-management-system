@@ -124,13 +124,13 @@ public class SupportTypeDAO {
             while (rs.next()) {
                 Group g = new Group();
                 g.setCode(rs.getString(1));
-                g.setManager_id(rs.getInt(2));
+                g.setManager(rs.getString(2));
                 g.setName(rs.getString(3));
                 g.setStatus(rs.getBoolean(4));
                 g.setDescription(rs.getString(5));
                 g.setParent_group_code(rs.getString(6));
                 g.setDelete(rs.getBoolean(7));
-                g.setUpdate_date(rs.getDate(8));
+                g.setUpdate_date(rs.getString(8));
                 vec.add(g);
             }
         } catch (Exception e) {
