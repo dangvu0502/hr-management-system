@@ -6,6 +6,7 @@
 package Controller;
 
 import DAO.GroupDAO;
+import DAO.SupportTypeDAO;
 import Models.Group;
 import Models.SupportType;
 import java.io.IOException;
@@ -45,11 +46,18 @@ public class GroupController extends HttpServlet {
                 case "/GroupList":
                     groupListImplement(request, response);
                     break;
-                case "/GroupEdit":
+                case "/GroupViewEdit":
                     GroupViewEdit(request, response);
                     break;
+                case "/GroupViewAdd":
+                    request.getRequestDispatcher("../Views/GroupViewAdd.jsp").forward(request, response);
+                    break;
                 case "/GroupAdd":
-                    insertGroup(request, response);
+                    GroupAdd(request, response);
+                    
+                    break;
+                case "/GroupEdit":
+                    GroupEdit(request, response);
                     break;
                 default:
                     response.sendError(404);
@@ -154,7 +162,6 @@ public class GroupController extends HttpServlet {
     }
 
     //</editor-fold>
-    
     // <editor-fold defaultstate="collapsed" desc="GroupEdit">
     private void GroupViewEdit(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
@@ -169,22 +176,19 @@ public class GroupController extends HttpServlet {
             String description = request.getParameter("description");
             String parent_group_code = request.getParameter("parent_group_code");
             String update_date = request.getParameter("update_date");
-            
+
             Group g = new Group(id, code, manager, name, status, description, parent_group_code, true, update_date);
-            request.setAttribute("listg", g);
+            request.setAttribute("listG", g);
             request.getRequestDispatcher("../Views/GroupViewEdit.jsp").forward(request, response);
         }
     }
-    
-    
-    //</editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="GroupAdd">
-    private void insertGroup(HttpServletRequest request, HttpServletResponse response)
+    private void GroupEdit(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
-        try(PrintWriter out = response.getWriter();) {
+        try (PrintWriter out = response.getWriter();) {
+            int id = Integer.parseInt(request.getParameter("id"));
             String code = request.getParameter("code");
             String manager = request.getParameter("manager");
             String name = request.getParameter("name");
@@ -192,14 +196,39 @@ public class GroupController extends HttpServlet {
             String description = request.getParameter("description");
             String parent_group_code = request.getParameter("parent_group_code");
             String update_date = request.getParameter("update_date");
-            
-            GroupDAO group = new GroupDAO();
-            group.InsertGroup(code, manager, name, status, description, parent_group_code, update_date);
-            
+
+//            boolean sta = status.contains("1") ? true : false;
+            Group g = new Group(id, code, manager, name, status, description, parent_group_code, true, update_date);
+            GroupDAO gdao = new GroupDAO();
+            boolean check = gdao.editGroup(g, id);
+
+            request.setAttribute("listG", g);
             request.getRequestDispatcher("../Views/GroupView.jsp").forward(request, response);
-        } 
+        }
+    }
+
+    //</editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="GroupAdd">
+    private void GroupAdd(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
+        try (PrintWriter out = response.getWriter();) {
+            String code = request.getParameter("code");
+            String manager = request.getParameter("manager");
+            String name = request.getParameter("name");
+            Boolean status = Boolean.parseBoolean(request.getParameter("status"));
+            String description = request.getParameter("description");
+            String parent_group_code = request.getParameter("parent_group_code");
+            String update_date = request.getParameter("update_date");
+            Group gr = new Group(1, code, manager, name, status, description, parent_group_code, true, update_date);
+            
+            GroupDAO gDAO = new GroupDAO();
+            boolean check = gDAO.InsertGroup(gr);
+
+            groupListImplement(request, response);
+        }
     }
 }
 //</editor-fold>
-
 
