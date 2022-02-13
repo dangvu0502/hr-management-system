@@ -39,7 +39,7 @@ public class GroupDAO {
                 Group g = new Group();
                 g.setId(rs.getInt(1));
                 g.setCode(rs.getString(2));
-                g.setManager_id(rs.getInt(3));
+                g.setManager(rs.getString(3));
                 g.setName(rs.getString(4));
                 g.setStatus(rs.getBoolean(5));
                 g.setDescription(rs.getString(6));
@@ -84,7 +84,7 @@ public class GroupDAO {
                 Group g = new Group();
                 g.setId(rs.getInt(1));
                 g.setCode(rs.getString(2));
-                g.setManager_id(rs.getInt(3));
+                g.setManager(rs.getString(3));
                 g.setName(rs.getString(4));
                 g.setStatus(rs.getBoolean(5));
                 g.setDescription(rs.getString(6));
@@ -99,14 +99,14 @@ public class GroupDAO {
         return vec;
     }
 
-    public void editGroup(String code, int manager_id, String name, Boolean status, String description, String parent_group_code, String update_date, int id) {
+    public void editGroup(String code, String manager, String name, Boolean status, String description, String parent_group_code, String update_date, int id) {
         try {
             //mo ket noi
             Connection conn = new DBContext().getConnection();
             String sql = "UPDATE hr_system_v2.group SET code =?, manager_id = ?, name = ?, status = ?, description = ?, parent_group_code = ?, update_date = ? WHERE (id = ?);";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, code);
-            ps.setInt(2, manager_id);
+            ps.setString(2, manager);
             ps.setString(3, name);
             ps.setBoolean(4, status);
             ps.setString(5, description);
@@ -129,12 +129,12 @@ public class GroupDAO {
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
-            
+
             while (rs.next()) {
                 Group g = new Group();
                 g.setId(rs.getInt(1));
                 g.setCode(rs.getString(2));
-                g.setManager_id(rs.getInt(3));
+                g.setManager(rs.getString(3));
                 g.setName(rs.getString(4));
                 g.setStatus(rs.getBoolean(5));
                 g.setDescription(rs.getString(6));
@@ -148,6 +148,7 @@ public class GroupDAO {
         }
         return vec;
     }
+
     public Vector<Group> getGroup() {
         Vector vec = new Vector();
         try {
@@ -157,12 +158,12 @@ public class GroupDAO {
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
-            
+
             while (rs.next()) {
                 Group g = new Group();
                 g.setId(rs.getInt(1));
                 g.setCode(rs.getString(2));
-                g.setManager_id(rs.getInt(3));
+                g.setManager(rs.getString(3));
                 g.setName(rs.getString(4));
                 g.setStatus(rs.getBoolean(5));
                 g.setDescription(rs.getString(6));

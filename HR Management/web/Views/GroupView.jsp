@@ -339,7 +339,7 @@
                             <div class="panel-body">
                                 <div class="pull-right">
                                     <div class="btn btn-success">
-                                        <a id="opener" href="#" style="color: white;">Add &nbsp;&nbsp;<span class="glyphicon glyphicon-pencil"></span></a>    
+                                        <a id="opener" href="../Group/GroupAdd" style="color: white;">Add &nbsp;&nbsp;<span class="glyphicon glyphicon-pencil"></span></a>    
                                     </div>
                                 </div>
                                 <table class="table table-bordered">
@@ -356,7 +356,7 @@
                                     <c:forEach items="${listG}" var="g">
                                         <tr>
                                             <td>${g.code}</td>
-                                            <td>${g.manager_id}</td>
+                                            <td>${g.manager}</td>
                                             <td>${g.name}</td>
                                             <td>
                                                 <c:if test = "${g.status}"> <span>Non-BA</span></c:if>
