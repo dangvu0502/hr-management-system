@@ -168,9 +168,10 @@
             <!-- Side-Bar -->
             <div class="SideBar_Wrapper">
                 <!-- Search_Bar -->
-                <form action="BlogSearchController" method="post" class="form-inline" >
+                <form action="BlogSearchController" method="post" class="form-inline" 
+                      style="padding: 20px 0px 20px 30px">
                     <div class="form-group mb-2">
-                        <select class="form-control" name="type" value ="${txtS}" >
+                        <select class="form-control" name="type" >
                             <option value="Tittle">Tittle</option>
                             <option value="Brieft">Brieft</option>
                         </select>                                            
@@ -183,6 +184,7 @@
                             id="text"
                             name="inputSearch"
                             placeholder="Search"
+                            required=""
                             />
                     </div>
                     <button type="submit" class="btn btn-primary mb-2">Search</button>

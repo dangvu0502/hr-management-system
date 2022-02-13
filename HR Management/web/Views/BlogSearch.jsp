@@ -152,6 +152,11 @@
                 color: #f37879;
                 text-decoration: none;
             }
+            .Error{
+                margin: 40px 0px;
+                font-weight: 800;
+                font-family: sans-serif;
+            }
         </style>
     </head>
 
@@ -168,7 +173,9 @@
             <!-- Side-Bar -->
             <div class="SideBar_Wrapper">
                 <!-- Search_Bar -->
-                <form action="BlogSearchController" method="post" class="form-inline" >
+                <form action="BlogSearchController" method="post" class="form-inline"  
+                      style="padding: 20px 0px 20px 30px"
+                      >
                     <div class="form-group mb-2">
                         <select class="form-control" name="type" value ="${txtS}" >
                             <option value="Tittle">Tittle</option>
@@ -183,6 +190,7 @@
                             id="text"
                             name="inputSearch"
                             placeholder="Search"
+                            required
                             />
                     </div>
                     <button type="submit" class="btn btn-primary mb-2">Search</button>
@@ -218,6 +226,10 @@
 
             <!-- Main-Wrapper -->
             <div class="main_WrapperContent">
+                <c:if test="${IsEmpty!=null}">
+                    <h2 class="Error">${IsEmpty}</h2>
+                    <h3>0 matches for ${SearchResult}</h3>
+                </c:if>
                 <c:forEach items="${listE}" var="e">
                     <div class="Blog_list fade">
                         <div class="row">
