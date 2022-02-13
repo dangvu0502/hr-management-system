@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
@@ -204,5 +205,22 @@ public class GroupDAO {
             System.err.println("Error: " + e.getMessage());
         }
         return check > 0;
+    }
+    
+    public HashMap<String,String> getAllGroupNameAndCode() {
+        HashMap<String,String> role = new HashMap<>();
+        try {
+            String sql = "SELECT group.code ,  group.name FROM hr_system_v2.group;";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                role.put(rs.getString(1),rs.getString(2));
+            }
+            return role;
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return null;
     }
 }
