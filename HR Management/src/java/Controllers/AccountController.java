@@ -101,6 +101,8 @@ public class AccountController extends HttpServlet {
             if (method.equalsIgnoreCase("post")) {
                 loginImplement(request, response);
             } else if (method.equalsIgnoreCase("get")) {
+                HttpSession session = request.getSession();
+                session.invalidate();
                 showLoginView(request, response);
             }
         } catch (Exception ex) {
