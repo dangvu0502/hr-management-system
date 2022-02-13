@@ -93,6 +93,11 @@
                                                     </select>
                                                 </div>
                                             </div>
+                                            <c:if test="${listUser!=null||listUser.size()==1}">
+                                                <c:if test="${listContract==null||listContract.size()==0}">
+                                                    <h4 style="color: red">This user does not have any contract before, add one!!</h4>
+                                                </c:if>
+                                            </c:if>
                                             <c:forEach items="${listUser}" var="user">
                                                 <div class="row ">
                                                     <div class="form-group col-lg-12">
@@ -113,10 +118,44 @@
                                                     </div>
                                                 </div>
                                             </c:forEach>
-                                            
+                                            <c:forEach items="${listContract}" var="contract">
+                                                <input hidden="" name="idc" value="${contract.id}">
+                                                <div class="row ">
+                                                    <div class="form-group col-lg-12">
+                                                        <label for="StartDate">Start Date</label>
+                                                        <input type="date" name="StartDate" class="form-control" value="${contract.startDate}">
+                                                    </div>
+                                                </div>
+                                                <div class="row ">
+                                                    <div class="form-group col-lg-12">
+                                                        <label for="EndDate">End Date</label>
+                                                        <input type="date" name="EndDate" class="form-control" value="${contract.endDate}">
+                                                    </div>
+                                                </div>
+                                                <c:if test="${contract.status==0}">
+                                                    <h5 style="color: red"><i>This contract has been exprired </br>By add new contract, the current active contract would be archieved and the end-date of that contract would be updated to the date right before the start date of the new contract</i></h5>
+                                                </c:if>
+                                            </c:forEach>
+                                            <c:if test="${listUser!=null||listUser.size()==1}">
+                                                <c:if test="${listContract==null||listContract.size()==0}">
+                                                    <input hidden="" name="idc" value="${contract.id}">
+                                                    <div class="row ">
+                                                        <div class="form-group col-lg-12">
+                                                            <label for="StartDate">Start Date</label>
+                                                            <input type="date" name="StartDate" class="form-control" value="${contract.startDate}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row ">
+                                                        <div class="form-group col-lg-12">
+                                                            <label for="EndDate">End Date</label>
+                                                            <input type="date" name="EndDate" class="form-control" value="${contract.endDate}">
+                                                        </div>
+                                                    </div>
+                                                </c:if>
+                                            </c:if>
                                             <c:if test="${listUser==null||listUser.size()==0}"><h3 style="color: red">Select user account to add contract !!</h3></c:if>
                                             <div class=" form-group row col-lg-12 text-center" ${listUser==null||listUser.size()==0 ?'hidden':'' }>
-                                                <button type="submit" id="submit-btn" class="btn btn-info">Add</button>
+                                                <button onclick="addFunction()" type="submit" id="submit-btn" class="btn btn-info">Add</button>
                                             </div>
                                         </div>
                                     </div>
@@ -136,4 +175,9 @@
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
     </body>
+    <script>
+                                                        function addFunction() {
+                                                            alert("Successfully!!");
+                                                        }
+    </script>
 </html>

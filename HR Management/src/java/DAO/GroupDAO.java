@@ -103,15 +103,7 @@ public class GroupDAO {
         try {
             //mo ket noi
             Connection conn = new DBContext().getConnection();
-            String sql = "UPDATE `hr_system_v2`.`group`\n"
-                    + "   SET [code] = ?\n"
-                    + "      ,[manager_id] = ?\n"
-                    + "      ,[name] = ?\n"
-                    + "      ,[status] = ?\n"
-                    + "      ,[description] = ?\n"
-                    + "      ,[parent_group_code] = ?\n"
-                    + "      ,[update_date] = ?\n"
-                    + " WHERE id = ?";
+            String sql = "UPDATE hr_system_v2.group SET code =?, manager_id = ?, name = ?, status = ?, description = ?, parent_group_code = ?, update_date = ? WHERE (id = ?);";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, code);
             ps.setInt(2, manager_id);
@@ -127,8 +119,8 @@ public class GroupDAO {
         }
     }
 
-    public List<Group> getOne(int id) {
-        List<Group> list = new ArrayList<>();
+    public Vector<Group> getOne(int id) {
+        Vector vec = new Vector();
         try {
             //mo ket noi
             Connection conn = new DBContext().getConnection();
@@ -149,12 +141,40 @@ public class GroupDAO {
                 g.setParent_group_code(rs.getString(7));
                 g.setDelete(rs.getBoolean(8));
                 g.setUpdate_date(rs.getDate(9));
-                list.add(g);
+                vec.add(g);
             }
         } catch (Exception ex) {
             ex.printStackTrace(System.out);
         }
-        return list;
+        return vec;
+    }
+    public Vector<Group> getGroup() {
+        Vector vec = new Vector();
+        try {
+            //mo ket noi
+            Connection conn = new DBContext().getConnection();
+            String sql = "SELECT * FROM hr_system_v2.group;";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                Group g = new Group();
+                g.setId(rs.getInt(1));
+                g.setCode(rs.getString(2));
+                g.setManager_id(rs.getInt(3));
+                g.setName(rs.getString(4));
+                g.setStatus(rs.getBoolean(5));
+                g.setDescription(rs.getString(6));
+                g.setParent_group_code(rs.getString(7));
+                g.setDelete(rs.getBoolean(8));
+                g.setUpdate_date(rs.getDate(9));
+                vec.add(g);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+        return vec;
     }
 
 }

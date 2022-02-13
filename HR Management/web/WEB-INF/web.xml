@@ -9,6 +9,10 @@
         <url-pattern>/User/*</url-pattern>
     </filter-mapping>
     <servlet>
+        <servlet-name>SettingController</servlet-name>
+        <servlet-class>Controller.SettingController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>AccountController</servlet-name>
         <servlet-class>Controller.AccountController</servlet-class>
     </servlet>
@@ -44,6 +48,10 @@
         <servlet-name>BlogSearchController</servlet-name>
         <servlet-class>Controller.BlogSearchController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SupportTypeController</servlet-name>
+        <servlet-class>Controller.SupportTypeController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AccountController</servlet-name>
         <url-pattern>/Account/*</url-pattern>
@@ -75,6 +83,10 @@
     <servlet-mapping>
         <servlet-name>BlogDetailsController</servlet-name>
         <url-pattern>/BlogDetailsController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SettingController</servlet-name>
+        <url-pattern>/SettingController/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

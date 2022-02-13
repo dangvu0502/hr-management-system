@@ -355,12 +355,13 @@
                                                     <span class="badge bg-red">Deactivate</span>
                                                     &nbsp;
                                                     <a href="../StatusController?status=0&id=${s.id}&page=${page}"><span class="glyphicon glyphicon-retweet"></span></a>
-                                                </c:if>
-                                                <c:if test = "${s.status}">
+                                                    <a href="../SettingController/Status?status=0&id=${s.id}&page=${page}"><span class="glyphicon glyphicon-retweet"></span></a>
+                                                    </c:if>
+                                                    <c:if test = "${s.status}">
                                                     <span class="badge bg-green">Activate</span>
                                                     &nbsp;
-                                                    <a href="StatusController?status=1&id=${s.id}&page=${page}"><span class="glyphicon glyphicon-retweet"></span></a>
-                                                </c:if>
+                                                    <a href="../SettingController/Status?status=1&id=${s.id}&page=${page}"><span class="glyphicon glyphicon-retweet"></span></a>
+                                                    </c:if>
                                             </td>
                                             <td>
                                                 <a id="delete" onclick="deleteByID('${s.id}');" href="#"><span class="glyphicon glyphicon-trash"></span></a>
@@ -382,47 +383,47 @@
                     </div>
                 </section><!-- /.content -->
                 <!-- /.Dialog -->
-<!--                <div id="dialog">
-                    <div style="display: flex; justify-content: center;  margin: 2rem;"><img style=" width: 100px; height: 100px;" src="https://www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png" alt="Avatar" > </div>
-                    <div style="display: flex; justify-content: space-between;margin-bottom: 2rem">
-                        <div><label>ID</label></div>
-                        <div style="margin-left: 4rem;"><input  disabled="true" style="border-radius:8px; " type="text" id="txtId"></div>
-                    </div>
-                    <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
-                        <div><label>UserName</label></div>
-                        <div  style="margin-left: 4rem;"><input style="border-radius:8px; " type="text" id="txtUserName"></div>
-                    </div>
-                    <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
-                        <div><label>FullName</label></div>
-                        <div  style="margin-left: 4rem;"><input style="border-radius:8px; " type="text" id="txtFullName"></div>
-                    </div>
-                    <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
-                        <div><label>PassWord</label></div>
-                        <div style="margin-left: 4rem;"><input style="border-radius:8px; " type="password" id="txtPassWord"></div>
-                    </div>
-                    <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
-                        <div><label>Gmail</label></div>
-                        <div style="margin-left: 4rem;" ><input style="border-radius:8px; " type="text" id="txtGmail"></div>
-                    </div>
-                    <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
-                        <div><label>Status</label></div>
-                        <div style="padding-right: 2rem;" >
-                            <input  type="radio" name="foo" value="1" id="rbStatus" checked="checked"> <span style="margin-right: 2rem;" >Active</span>
-                            <input type="radio" name="foo" value="0" id="rbStatus"> Deactivate
-                        </div>
-                    </div>
-                    <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
-                        <div><label>Type</label></div>
-                        <div style="margin-left: 4rem;" >
-                            <select name="cbbType" id="cbbType" style="width: 215px;height: 30px;border-radius: 8px;">
-                                <option value="0">Admin</option>
-                                <option value="1">HR</option>
-                                <option value="2">Manager</option>
-                                <option value="3">Staff</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>-->
+                <!--                <div id="dialog">
+                                    <div style="display: flex; justify-content: center;  margin: 2rem;"><img style=" width: 100px; height: 100px;" src="https://www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png" alt="Avatar" > </div>
+                                    <div style="display: flex; justify-content: space-between;margin-bottom: 2rem">
+                                        <div><label>ID</label></div>
+                                        <div style="margin-left: 4rem;"><input  disabled="true" style="border-radius:8px; " type="text" id="txtId"></div>
+                                    </div>
+                                    <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
+                                        <div><label>UserName</label></div>
+                                        <div  style="margin-left: 4rem;"><input style="border-radius:8px; " type="text" id="txtUserName"></div>
+                                    </div>
+                                    <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
+                                        <div><label>FullName</label></div>
+                                        <div  style="margin-left: 4rem;"><input style="border-radius:8px; " type="text" id="txtFullName"></div>
+                                    </div>
+                                    <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
+                                        <div><label>PassWord</label></div>
+                                        <div style="margin-left: 4rem;"><input style="border-radius:8px; " type="password" id="txtPassWord"></div>
+                                    </div>
+                                    <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
+                                        <div><label>Gmail</label></div>
+                                        <div style="margin-left: 4rem;" ><input style="border-radius:8px; " type="text" id="txtGmail"></div>
+                                    </div>
+                                    <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
+                                        <div><label>Status</label></div>
+                                        <div style="padding-right: 2rem;" >
+                                            <input  type="radio" name="foo" value="1" id="rbStatus" checked="checked"> <span style="margin-right: 2rem;" >Active</span>
+                                            <input type="radio" name="foo" value="0" id="rbStatus"> Deactivate
+                                        </div>
+                                    </div>
+                                    <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
+                                        <div><label>Type</label></div>
+                                        <div style="margin-left: 4rem;" >
+                                            <select name="cbbType" id="cbbType" style="width: 215px;height: 30px;border-radius: 8px;">
+                                                <option value="0">Admin</option>
+                                                <option value="1">HR</option>
+                                                <option value="2">Manager</option>
+                                                <option value="3">Staff</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>-->
                 <div class="footer-main">
                     Copyright &copy Director, 2014
                 </div>
@@ -433,7 +434,7 @@
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
         <script type="text/javascript">
-            function deleteByID(id) {
+                                                    function deleteByID(id) {
                                                         if (confirm("Do you really want to delete setting?")) {
                                                             window.location = "../SettingController/Delete?id=" + id;
                                                         }

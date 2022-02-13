@@ -5,11 +5,8 @@
  */
 package Controller;
 
-import DAO.GroupDAO;
 import DAO.SettingDAO;
-import Models.Group;
 import Models.Setting;
-import Models.SupportType;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Vector;
@@ -23,7 +20,6 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Hide
  */
-@WebServlet(name = "SettingController", urlPatterns = {"/SettingController/*"})
 public class SettingController extends HttpServlet {
 
     /**
@@ -50,6 +46,10 @@ public class SettingController extends HttpServlet {
                     break;
                 case "/Add":
                     settingAdd(request, response);
+//                    settingListImplement(request, response);
+                    break;
+                case "/Status":
+                    changeStatus(request, response);
                     break;
                 case "/EditView":
                     settingEditView(request, response);
@@ -170,7 +170,29 @@ public class SettingController extends HttpServlet {
         }
     }
 
+    private void changeStatus(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            String status = request.getParameter("status");
+            String employee_id = request.getParameter("id");
+            String page = request.getParameter("page");
+            if (page == null) {
+                page = "1";
+            }
+            int st = Integer.parseInt(status);
+            int i = Integer.parseInt(employee_id);
+            SettingDAO s = new SettingDAO();
+            s.editStatus(st, i);
+            response.sendRedirect("../SettingController/Setting?page=" + page);
+        } catch (Exception e) {
+            System.out.println("Error " + e.getMessage());
+        }
+    }
     //editview
+
     private void settingEditView(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
