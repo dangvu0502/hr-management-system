@@ -1,21 +1,58 @@
+<%-- 
+    Document   : Test
+    Created on : Jan 12, 2022, 8:30:25 AM
+    Author     : dangGG
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Director | Simple Tables</title>
+        <title>Register</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
         <!-- bootstrap 3.0.2 -->
-        <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <!--<link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css" />-->
         <!-- font Awesome -->
         <link href="../css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <!-- Ionicons -->
         <link href="../css/ionicons.min.css" rel="stylesheet" type="text/css" />
-        <!-- google font -->
+
         <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
         <!-- Theme style -->
-        <link href="../css/style.css" rel="stylesheet" type="text/css" />
+        <!--<link href="../css/style.css" rel="stylesheet" type="text/css" />-->
+
+
+
+        <!--Boostrap 4-->
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+            crossorigin="anonymous"
+            />
+        <script
+            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"
+        ></script>
+
+
+        <link rel="icon" href="../img/Honey Bee.png" />
+        <!--Boostrap 4-->
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -23,174 +60,137 @@
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
+        <style> 
+            .skin-black{
+                background: #f1f2f7
+            }
+            .panel{
+                background: #fff;
+                margin-top:30px;
+            }
+            .panel-heading{
+                padding:10px 15px;
+                text-transform: uppercase;   
+                border-bottom: 1px solid transparent;
+                border-top-right-radius: 3px;
+                border-top-left-radius: 3px;
+                border-bottom: 1px solid #eee;
+                background-color: #FAFAFA;
+            }
+            .form-group {
+                margin-bottom: 15px;            
+                margin-top:  15px;
+            }
+        </style>
     </head>
+
     <body class="skin-black">
-        <!-- header logo: style can be found in header.less -->
-        <header class="header">
-            <a href="index.html" class="logo">
-                <!-- Add the class icon to your logo image or logo icon to add the margining -->
-                Home
-            </a>
-        </header>
+        <%@ include file = "Header/NavBar.jsp" %>
         <div class="wrapper row-offcanvas row-offcanvas-left">
-            <!-- Left side column. contains the logo and sidebar -->
-            <aside class="left-side sidebar-offcanvas">
-                <!-- sidebar: style can be found in sidebar.less -->
-                <section class="sidebar">
-                    <!-- Sidebar user panel -->
-                    <div class="user-panel">
-                        <div class="pull-left image">
-                            <img src="img/avatar3.png" class="img-circle" alt="User Image" />
-                        </div>
-                        <div class="pull-left info">
-                            <p>Hello, Jane</p>
 
-                            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-                        </div>
-                    </div>
-                    <!-- search form -->
-                    <form action="#" method="get" class="sidebar-form">
-                        <div class="input-group">
-                            <input type="text" name="q" class="form-control" placeholder="Search..."/>
-                            <span class="input-group-btn">
-                                <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
-                            </span>
-                        </div>
-                    </form>
-                    <ul class="sidebar-menu">
-                        <li>
-                            <a href="index.html">
-                                <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="general.html">
-                                <i class="fa fa-gavel"></i> <span>General</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="basic_form.html">
-                                <i class="fa fa-globe"></i> <span>Basic Elements</span>
-                            </a>
-                        </li>
-
-                        <li class="active">
-                            <a href="simple.html">
-                                <i class="fa fa-glass"></i> <span>Simple tables</span>
-                            </a>
-                        </li>
-
-                    </ul>
-                </section>
-                <!-- /.sidebar -->
-            </aside>
-
-            <!-- Right side column. Contains the navbar and content of the page -->
-            <aside class="right-side">
-
-                <!-- Main content -->
-                <section class="content">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="panel">
-                                <header class="panel-heading">
-                                    Timesheet List
-                                </header>
-                                <!-- <div class="box-header"> -->
-                                <!-- <h3 class="box-title">Responsive Hover Table</h3> -->
-
-                                <!-- </div> -->
-                                <div class="panel-body table-responsive">
-                                    <div class="box-tools m-b-15">
-                                        <div class="row">
-                                            <div class="col-lg-8">
-                                                <form action="Setting" method="post" >
-                                                    <div class="input-group">
-                                                        <select class="form-control input-md" style="width: 150px;" name="type">
-                                                            <option value="setting_id">ID</option>
-                                                            <option value="username">User Name</option>
-                                                            <option value="fullname">Full Name</option>
-                                                            <option value="email">Email</option>
-                                                            <option value="type_name">Type</option>
-                                                            <option value="status">Status</option>
-                                                        </select>  
-                                                        <input type="text" name="table_search" class="form-control input-md" style="width: 450px;" placeholder="Search" onclick="dateHideShow()"/>
-                                                        <button type="submit" class="btn btn-md btn-default  "><i class="fa fa-search"></i></button>
-                                                        <br>
-                                                        <div id="date" style="display: none;">
-                                                            <label class="text-left" for="from-date" style="width: 150px;"></label>
-                                                            <label class="text-left" for="from-date" style="width: 150px;">Date</label><br>
-                                                            <label class="text-left" for="from-date" style="width: 150px;"></label>
-                                                            <input type="date" class="form-control  " id="from-date" style="width: 200px;" name="from-date" placeholder="From">
-                                                            <label class="text-left" for="from-date" style="width: 50px;"></label>
-                                                            <input type="date" class="form-control" id="to-date" style="width: 200px;" name="to-date" placeholder="To">
-                                                        </div>
-                                                    </div>
-                                                </form>
+            <!-- Main content -->
+            <section class="content">
+                <div class="row">
+                    <div  class="col-lg-3"></div>
+                    <div class="col-lg-6 ">
+                        <section class="panel">
+                            <header class="panel-heading text-center">
+                                Sign Up
+                            </header>
+                            <c:if test="${message != null}">
+                                <div class="error alert alert-danger" role="alert">
+                                    <h4 class="alert-heading">Error</h4><hr>
+                                    <p class="mb-0">${message}</p>
+                                </div>
+                                <c:remove var="message" scope="session" /> 
+                            </c:if>
+                            <div class="panel-body">
+                                <form action="../Account/Register" method="POST" role="form" onsubmit="return isValid">
+                                    <div class="row">
+                                        <div class="col-lg-2"></div>
+                                        <div class="col-lg-8">
+                                            <div class="row ">
+                                                <div class="form-group col-lg-12">
+                                                    <label for="fullname">Full name</label>
+                                                    <input type="text" class="form-control" id="fullname" name="fullname"  placeholder="Enter your name" required>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-2"></div>
-                                            <div class="col-lg-2">
-                                                <form action="https://google.com">
-                                                    <input class="btn btn-md btn-success" type="submit" value="Add new timesheet" />
-                                                </form>
+                                            <div class="row ">
+                                                <div class="form-group col-lg-12">
+                                                    <label for="username">Username</label>
+                                                    <input type="text" class="form-control" id="username" name="username" onkeyup="checkUsername()" placeholder="Enter your username" required>
+                                                    <c:if test="${usernameErrorMessage != null}">
+                                                        <p class="message text-danger">${usernameErrorMessage}</p>
+                                                        <c:remove var="usernameErrorMessage" scope="session" /> 
+                                                    </c:if>
+                                                    <span id='inValidUsername'></span>    
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-lg-12">
+                                                    <label for="email">Email address</label>
+                                                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+                                                    <c:if test="${emailErrorMessage != null}">
+                                                        <p class="message text-danger">${emailErrorMessage}</p>
+                                                        <c:remove var="emailErrorMessage" scope="session" /> 
+                                                    </c:if>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-lg-12">
+                                                    <label for="mobile">Mobile</label>
+                                                    <input type="text" class="form-control" id="mobile" name="mobile" onkeyup="checkMobile()" placeholder="Enter your mobile" required>
+                                                    <span id='inValidPhone'></span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-lg-12">
+                                                    <span class="text-bold" >Choose Gender:  &nbsp &nbsp 
+                                                        <label for="male">Male</label>
+                                                        <input type="radio" name="gender" id="male" value="male" checked> &nbsp &nbsp &nbsp
+                                                        <label for="female">Female</label>
+                                                        <input type="radio" name="gender" id="female" value="female">
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="row ">
+                                                <div class="form-group col-lg-12">
+                                                    <label for="password">Password</label>
+                                                    <input type="password" class="form-control" id="password" name="password" onkeyup="checkEqual()" placeholder="Enter your password"  required >
+                                                </div>
+                                            </div>
+                                            <div class="row ">
+                                                <div class="form-group col-lg-12">
+                                                    <label for="confirm-password">Confirm Password</label>
+                                                    <input type="password" class="form-control" id="confirm-password" onkeyup="checkEqual()" placeholder="Confirm your password" required >
+                                                    <span id='message'></span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-lg-12">
+                                                    <span> <input type="checkbox" onclick="password_show_hide()">Show Password </span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group  col-lg-12 text-center">
+                                                <button type="submit" id="submit-btn" class="btn btn-info"  >Register</button>
+                                            </div>
+                                            <div class="row ">
+                                                <div class="col-lg-3"></div>
+                                                <div class="col-lg-8">
+                                                    <p>Already have a account? &nbsp &nbsp  &nbsp  <a href="../Account/Login">Login</a></p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <table class="table table-hover">
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Timesheet Date</th>
-                                            <th>Timesheet Title</th>
-                                            <th>Project</th>
-                                            <th>Process</th>
-                                            <th>Duration</th>
-                                            <th>Status</th>
-                                            <th></th>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>20222-02-02</td>
-                                            <td>Online meeting</td>
-                                            <td>SWP-G6</td>
-                                            <td>Training</td>
-                                            <td>1:30</td>
-                                            <td><span class="label label-success">Approved</span></td>
-                                            <td><a href="#" class="btn btn-md btn-default"><i class="fa fa-trash-o"></i></a></td>
+                                </form>
 
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>20222-02-02</td>
-                                            <td>Online meeting</td>
-                                            <td>SWP-G6</td>
-                                            <td>Training</td>
-                                            <td>1:30</td>
-                                            <td><span class="label label-danger">Rejected</span></td>
-                                            <td><a href="#" class="btn btn-md btn-default"><i class="fa fa-trash-o"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>20222-02-02</td>
-                                            <td>Online meeting</td>
-                                            <td>SWP-G6</td>
-                                            <td>Training</td>
-                                            <td>1:30</td>
-                                            <td><span class="label label-warning">Submitted</span></td>
-                                            <td><a href="#" class="btn btn-md btn-default"><i class="fa fa-trash-o"></i></a></td>
-                                        </tr>
-                                    </table>
-                                </div><!-- /.box-body -->
-                            </div><!-- /.box -->
-                        </div>
+                            </div>
+                        </section>
                     </div>
-                </section><!-- /.content -->
-                <div class="footer-main">
-                    Copyright &copy Director, 2014
                 </div>
-            </aside><!-- /.right-side -->
-        </div><!-- ./wrapper -->
+            </section>
 
-
+        </div>
         <!-- jQuery 2.0.2 -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
         <script src="../js/jquery.min.js" type="text/javascript"></script>
@@ -199,15 +199,56 @@
         <script src="../js/bootstrap.min.js" type="text/javascript"></script>
         <!-- Director App -->
         <script src="../js/Director/app.js" type="text/javascript"></script>
+        <script src="../js/Director/myScript.js" type="text/javascript"></script>
         <script>
-                                                            function dateHideShow() {
-                                                                var x = document.getElementById("date");
-                                                                if (x.style.display === "none") {
-                                                                    x.style.display = "block";
+
+                                                        /** HIDE ALERT**/
+                                                        $(document).click(function (e) {
+                                                            $('.message').hide();
+                                                        });
+                                                        /** HIDE ALERT**/
+
+
+                                                        function checkMobile() {
+                                                            var mobile = document.getElementById('mobile');
+                                                            var regex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+                                                            if (mobile == null || mobile.value.toString().length == 0) {
+                                                                document.getElementById('inValidPhone').innerHTML = '';
+                                                            } else {
+
+                                                                if (mobile.value.match(regex)) {
+                                                                    isValid = true;
+                                                                    document.getElementById('inValidPhone').style.color = 'green';
+                                                                    document.getElementById('inValidPhone').innerHTML = 'Valid';
                                                                 } else {
-                                                                    x.style.display = "none";
+                                                                    isValid = false;
+                                                                    document.getElementById('inValidPhone').style.color = 'red';
+                                                                    document.getElementById('inValidPhone').innerHTML = 'Not Valid';
                                                                 }
                                                             }
+                                                        }
+
+                                                        function checkUsername() {
+                                                            var username = document.getElementById('username');
+                                                            var regex = /^[a-zA-Z0-9]+$/;
+                                                            if (username == null || username.value.toString().length == 0) {
+                                                                document.getElementById('inValidUsername').innerHTML = '';
+                                                            } else {
+
+                                                                if (username.value.match(regex)) {
+                                                                    isValid = true;
+                                                                    document.getElementById('inValidUsername').style.color = 'green';
+                                                                    document.getElementById('inValidUsername').innerHTML = 'Valid';
+                                                                } else {
+                                                                    isValid = false;
+                                                                    document.getElementById('inValidUsername').style.color = 'red';
+                                                                    document.getElementById('inValidUsername').innerHTML = 'Not Valid';
+                                                                }
+                                                            }
+                                                        }
+
+
         </script>
     </body>
 </html>
+

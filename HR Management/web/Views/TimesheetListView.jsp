@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Director | Simple Tables</title>
+        <title>Timesheet List</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
@@ -138,24 +138,27 @@
                                     </div>
                                     <table class="table table-hover">
                                         <tr>
-                                            <th>#</th>
-                                            <th>Timesheet Date</th>
-                                            <th>Timesheet Title</th>
-                                            <th>Project</th>
-                                            <th>Process</th>
-                                            <th>Duration</th>
-                                            <th>Status</th>
-                                            <th></th>
+                                            <th style="width: 10%">#</th>
+                                            <th style="width: 13%">Timesheet Date</th>
+                                            <th style="width: 16%">Timesheet Title</th>
+                                            <th style="width: 13%">Project</th>
+                                            <th style="width: 13%">Process</th>
+                                            <th style="width: 13%">Duration</th>
+                                            <th style="width: 13%">Status</th>
+                                            <th style="width: 13%"></th>
                                         </tr>
                                         <tr  onclick="window.open('http://localhost:8080/HR_Management/Views/TimesheetListView.jsp','_blank')">
-                                            <td>1</td>
+                                            <td >1</td>
                                             <td>20222-02-02</td>
                                             <td>Online meeting</td>
                                             <td>SWP-G6</td>
                                             <td>Training</td>
                                             <td>1:30</td>
                                             <td><span class="label label-success">Approved</span></td>
-                                            <td><a href="#" class="btn btn-md btn-default"><i class="fa fa-trash-o"></i></a></td>
+                                            <td>
+                                                <a href="#" class="btn btn-md btn-default"><i class="fa fa-trash-o"></i></a>
+                                                <a href="#" class="btn btn-md btn-default"><i class="fa fa-pencil"></i></a>
+                                            </td>
                                         </tr>
                                         <tr onclick="window.open('http://localhost:8080/HR_Management/Views/TimesheetListView.jsp','_blank')">
                                             <td>2</td>
@@ -165,7 +168,10 @@
                                             <td>Training</td>
                                             <td>1:30</td>
                                             <td><span class="label label-danger">Rejected</span></td>
-                                            <td><a href="#" class="btn btn-md btn-default"><i class="fa fa-trash-o"></i></a></td>
+                                            <td>
+                                                <a href="#" class="btn btn-md btn-default"><i class="fa fa-trash-o"></i></a>
+                                                <a href="#" class="btn btn-md btn-default"><i class="fa fa-pencil"></i></a>
+                                            </td>
                                         </tr>
                                         <tr onclick="window.open('http://localhost:8080/HR_Management/Views/TimesheetListView.jsp','_blank')">
                                             <td>3</td>
@@ -175,7 +181,10 @@
                                             <td>Training</td>
                                             <td>1:30</td>
                                             <td><span class="label label-warning">Submitted</span></td>
-                                            <td><a href="#" class="btn btn-md btn-default"><i class="fa fa-trash-o"></i></a></td>
+                                            <td>
+                                                <a href="#" class="btn btn-md btn-default"><i class="fa fa-trash-o"></i></a>
+                                                <a href="#" class="btn btn-md btn-default"><i class="fa fa-pencil"></i></a>
+                                            </td>
                                         </tr>
                                     </table>
                                 </div><!-- /.box-body -->
