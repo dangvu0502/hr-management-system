@@ -14,8 +14,8 @@
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
-        <!-- bootstrap 3.0.2 -->
-        <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+       <!-- bootstrap 3.0.2 -->
+        <!--<link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css" />-->
         <!-- font Awesome -->
         <link href="../css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <!-- Ionicons -->
@@ -23,8 +23,36 @@
 
         <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
         <!-- Theme style -->
-        <link href="../css/style.css" rel="stylesheet" type="text/css" />
+        <!--<link href="../css/style.css" rel="stylesheet" type="text/css" />-->
 
+
+
+        <!--Boostrap 4-->
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+            crossorigin="anonymous"
+            />
+        <script
+            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"
+        ></script>
+
+
+        <link rel="icon" href="<%= request.getContextPath()%>/img/HoneyBee.png" />
+        <!--Boostrap 4-->
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -32,11 +60,33 @@
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
+        <style> 
+            .skin-black{
+                background: #f1f2f7
+            }
+            .panel{
+                background: #fff;
+                margin-top:30px;
+            }
+            .panel-heading{
+                padding:10px 15px;
+                text-transform: uppercase;   
+                border-bottom: 1px solid transparent;
+                border-top-right-radius: 3px;
+                border-top-left-radius: 3px;
+                border-bottom: 1px solid #eee;
+                background-color: #FAFAFA;
+            }
+            .form-group {
+                margin-bottom: 15px;            
+                margin-top:  15px;
+            }
+        </style>
     </head>
-    
+
     <body class="skin-black">
         <div class="wrapper row-offcanvas row-offcanvas-left">
-
+            <%@ include file = "Header/NavBar.jsp" %>
             <!-- Main content -->
             <section class="content">
                 <div class="row">
@@ -94,7 +144,7 @@
                                                 <div class="form-group col-lg-12">
                                                     <label for="mobile">Mobile</label>
                                                     <input type="text" class="form-control" id="mobile" name="mobile" onkeyup="checkMobile()" placeholder="Enter your mobile" required>
-                                                     <span id='inValidPhone'></span>
+                                                    <span id='inValidPhone'></span>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -170,44 +220,44 @@
                                                                 else
                                                                     chooseRole = false;
                                                             }
-                                                            
-                                                    function checkMobile() {
-                                                        var mobile = document.getElementById('mobile');
-                                                        var regex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-                                                        if (mobile == null || mobile.value.toString().length == 0){
-                                                            document.getElementById('inValidPhone').innerHTML = '';
-                                                        } else{
-                                                            
-                                                            if (mobile.value.match(regex)) {
-                                                                isValid = true;
-                                                                document.getElementById('inValidPhone').style.color = 'green';
-                                                                document.getElementById('inValidPhone').innerHTML = 'Valid';
-                                                            } else {
-                                                                isValid = false;
-                                                                document.getElementById('inValidPhone').style.color = 'red';
-                                                                document.getElementById('inValidPhone').innerHTML = 'This is not mobile';
+
+                                                            function checkMobile() {
+                                                                var mobile = document.getElementById('mobile');
+                                                                var regex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+                                                                if (mobile == null || mobile.value.toString().length == 0) {
+                                                                    document.getElementById('inValidPhone').innerHTML = '';
+                                                                } else {
+
+                                                                    if (mobile.value.match(regex)) {
+                                                                        isValid = true;
+                                                                        document.getElementById('inValidPhone').style.color = 'green';
+                                                                        document.getElementById('inValidPhone').innerHTML = 'Valid';
+                                                                    } else {
+                                                                        isValid = false;
+                                                                        document.getElementById('inValidPhone').style.color = 'red';
+                                                                        document.getElementById('inValidPhone').innerHTML = 'This is not mobile';
+                                                                    }
+                                                                }
                                                             }
-                                                        }
-                                                    }
-                                                    
-                                                    function checkUsername() {
-                                                        var username = document.getElementById('username');
-                                                        var regex = /^[a-zA-Z0-9]+$/;
-                                                        if (username== null || username.value.toString().length == 0){
-                                                            document.getElementById('inValidUsername').innerHTML = '';
-                                                        } else{
-                                                            
-                                                            if (username.value.match(regex)) {
-                                                                isValid = true;
-                                                                document.getElementById('inValidUsername').style.color = 'green';
-                                                                document.getElementById('inValidUsername').innerHTML = 'Valid';
-                                                            } else {
-                                                                isValid = false;
-                                                                document.getElementById('inValidUsername').style.color = 'red';
-                                                                document.getElementById('inValidUsername').innerHTML = 'Not Valid';
+
+                                                            function checkUsername() {
+                                                                var username = document.getElementById('username');
+                                                                var regex = /^[a-zA-Z0-9]+$/;
+                                                                if (username == null || username.value.toString().length == 0) {
+                                                                    document.getElementById('inValidUsername').innerHTML = '';
+                                                                } else {
+
+                                                                    if (username.value.match(regex)) {
+                                                                        isValid = true;
+                                                                        document.getElementById('inValidUsername').style.color = 'green';
+                                                                        document.getElementById('inValidUsername').innerHTML = 'Valid';
+                                                                    } else {
+                                                                        isValid = false;
+                                                                        document.getElementById('inValidUsername').style.color = 'red';
+                                                                        document.getElementById('inValidUsername').innerHTML = 'Not Valid';
+                                                                    }
+                                                                }
                                                             }
-                                                        }
-                                                    }
         </script>
     </body>
 </html>

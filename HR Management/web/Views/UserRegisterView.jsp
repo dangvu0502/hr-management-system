@@ -51,7 +51,7 @@
         ></script>
 
 
-        <link rel="icon" href="../img/Honey Bee.png" />
+        <link rel="icon" href="<%= request.getContextPath()%>/img/HoneyBee.png" />
         <!--Boostrap 4-->
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

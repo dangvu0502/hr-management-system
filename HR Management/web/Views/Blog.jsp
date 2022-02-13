@@ -128,6 +128,11 @@
             }
             .Briefs_info {
                 font-size: 15px;
+                text-overflow: ellipsis;
+                overflow: hidden; 
+                width: 160px; 
+                height: 1.2em; 
+                white-space: nowrap;
             }
             .Popular_Post_Text {
                 background-color: black;
