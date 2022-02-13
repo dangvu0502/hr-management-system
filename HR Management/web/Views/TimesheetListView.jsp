@@ -157,7 +157,7 @@
                                             <td><span class="label label-success">Approved</span></td>
                                             <td>
                                                 <a href="#" class="btn btn-md btn-default"><i class="fa fa-trash-o"></i></a>
-                                                <a href="#" class="btn btn-md btn-default"><i class="fa fa-pencil"></i></a>
+            
                                             </td>
                                         </tr>
                                         <tr onclick="window.open('http://localhost:8080/HR_Management/Views/TimesheetListView.jsp','_blank')">
