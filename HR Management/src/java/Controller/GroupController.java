@@ -7,6 +7,7 @@ package Controller;
 
 import DAO.GroupDAO;
 import Models.Group;
+import Models.SupportType;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -45,7 +46,7 @@ public class GroupController extends HttpServlet {
                     groupListImplement(request, response);
                     break;
                 case "/GroupEdit":
-                    GroupEdit(request, response, method);
+                    GroupViewEdit(request, response);
                     break;
                 case "/GroupAdd":
                     insertGroup(request, response);
@@ -153,45 +154,29 @@ public class GroupController extends HttpServlet {
     }
 
     //</editor-fold>
+    
     // <editor-fold defaultstate="collapsed" desc="GroupEdit">
-    private void GroupEdit(HttpServletRequest request, HttpServletResponse response, String method) {
-        try (PrintWriter out = response.getWriter();) {
-            if (method.equalsIgnoreCase("post")) {
-                groupEditImplement(request, response);
-            } else if (method.equalsIgnoreCase("get")) {
-                editGroupView(request, response);
-            }
-        } catch (Exception ex) {
-            log(ex.getMessage());
-        }
-    }
-
-    private void editGroupView(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = request.getParameter("id");
-        Vector<Group> group = new GroupDAO().getOne(Integer.parseInt(id));
-        request.setAttribute("group", group);
-        request.getRequestDispatcher("../Views/GroupViewEdit.jsp").forward(request, response);
-    }
-
-    private void groupEditImplement(HttpServletRequest request, HttpServletResponse response)
+    private void GroupViewEdit(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
         try (PrintWriter out = response.getWriter();) {
+            int id = Integer.parseInt(request.getParameter("id"));
             String code = request.getParameter("code");
-            String manager = request.getParameter("manager_id");
+            String manager = request.getParameter("manager");
             String name = request.getParameter("name");
             Boolean status = Boolean.parseBoolean(request.getParameter("status"));
             String description = request.getParameter("description");
             String parent_group_code = request.getParameter("parent_group_code");
             String update_date = request.getParameter("update_date");
-            String id = request.getParameter("id");
-
-            GroupDAO group = new GroupDAO();
-            group.editGroup(code, manager, name, status, description, parent_group_code, update_date, Integer.parseInt(id));
-            response.sendRedirect("../Contract/GroupEdit?id=" + id);
+            
+            Group g = new Group(id, code, manager, name, status, description, parent_group_code, true, update_date);
+            request.setAttribute("listg", g);
+            request.getRequestDispatcher("../Views/GroupViewEdit.jsp").forward(request, response);
         }
     }
+    
+    
     //</editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="GroupAdd">

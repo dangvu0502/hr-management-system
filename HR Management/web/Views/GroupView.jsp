@@ -371,7 +371,7 @@
                                                 &nbsp;&nbsp;
                                                 <a id="delete" href="#"><span class="glyphicon glyphicon-trash" ></span></a>
                                                 &nbsp;&nbsp;
-                                                <a class="edit" href="../Group/GroupEdit?id=${g.id}" ><span class="glyphicon glyphicon-edit"></span></a>
+                                                <a class="edit" href="../Group/GroupEdit?id=${g.id}&code=${g.code}&manager=${g.manager}&name=${g.name}&status=${g.status}&description=${g.description}&parent_group_code=${g.parent_group_code}&update_date=${g.update_date}" ><span class="glyphicon glyphicon-edit"></span></a>
                                             </td>
                                         </tr>
                                     </c:forEach>

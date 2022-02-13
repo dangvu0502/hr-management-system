@@ -11,6 +11,7 @@ import Models.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -99,24 +100,27 @@ public class GroupDAO {
         return vec;
     }
 
-    public void editGroup(String code, String manager, String name, Boolean status, String description, String parent_group_code, String update_date, int id) {
+    public Boolean editGroup(Group g, int id) throws SQLException {
+        int check = 0;
         try {
             //mo ket noi
+            
             Connection conn = new DBContext().getConnection();
             String sql = "UPDATE hr_system_v2.group SET code =?, manager_id = ?, name = ?, status = ?, description = ?, parent_group_code = ?, update_date = ? WHERE (id = ?);";
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, code);
-            ps.setString(2, manager);
-            ps.setString(3, name);
-            ps.setBoolean(4, status);
-            ps.setString(5, description);
-            ps.setString(6, parent_group_code);
-            ps.setString(7, update_date);
+            ps.setString(1, g.getCode());
+            ps.setString(2, g.getManager());
+            ps.setString(3, g.getName());
+            ps.setBoolean(4, g.isStatus());
+            ps.setString(5, g.getDescription());
+            ps.setString(6, g.getParent_group_code());
+            ps.setString(7, g.getUpdate_date());
             ps.setInt(8, id);
             ps.executeUpdate();
-        } catch (Exception ex) {
-            ex.printStackTrace(System.out);
+        } catch (SQLException e) {
+            throw e;
         }
+        return check > 0;
     }
 
     public Vector<Group> getOne(int id) {

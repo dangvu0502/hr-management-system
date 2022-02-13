@@ -362,7 +362,7 @@
                                                         </c:choose>
                                                     </div>
                                                 </div>
-                                                    <div class=" form-group row col-lg-12 text-center">
+                                                <div class=" form-group row col-lg-12 text-center">
                                                     <button type="submit" id="submit-btn" class="btn btn-info"  >Save Change</button>
                                                 </div>
                                     </form>
