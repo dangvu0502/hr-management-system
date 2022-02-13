@@ -2,7 +2,7 @@
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <filter>
         <filter-name>UserFilter</filter-name>
-        <filter-class>filter.UserFilter</filter-class>
+        <filter-class>Filter.UserFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>UserFilter</filter-name>
@@ -10,11 +10,11 @@
     </filter-mapping>
     <servlet>
         <servlet-name>SettingController</servlet-name>
-        <servlet-class>controllers.SettingController</servlet-class>
+        <servlet-class>Controllers.SettingController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AccountController</servlet-name>
-        <servlet-class>controllers.AccountController</servlet-class>
+        <servlet-class>Controllers.AccountController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>VerifyUserEmailController</servlet-name>
@@ -22,7 +22,7 @@
     </servlet>
     <servlet>
         <servlet-name>Logout</servlet-name>
-        <servlet-class>controllers.Logout</servlet-class>
+        <servlet-class>Controllers.Logout</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ForgotPasswordController</servlet-name>
@@ -30,27 +30,27 @@
     </servlet>
     <servlet>
         <servlet-name>UserController</servlet-name>
-        <servlet-class>controllers.UserController</servlet-class>
+        <servlet-class>Controllers.UserController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ContractController</servlet-name>
-        <servlet-class>controllers.ContractController</servlet-class>
+        <servlet-class>Controllers.ContractController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>BlogController</servlet-name>
-        <servlet-class>controllers.BlogController</servlet-class>
+        <servlet-class>Controllers.BlogController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>BlogDetailsController</servlet-name>
-        <servlet-class>controllers.BlogDetailsController</servlet-class>
+        <servlet-class>Controllers.BlogDetailsController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>BlogSearchController</servlet-name>
-        <servlet-class>controllers.BlogSearchController</servlet-class>
+        <servlet-class>Controllers.BlogSearchController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SupportTypeController</servlet-name>
-        <servlet-class>controllers.SupportTypeController</servlet-class>
+        <servlet-class>Controllers.SupportTypeController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AccountController</servlet-name>
