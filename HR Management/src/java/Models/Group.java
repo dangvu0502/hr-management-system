@@ -19,12 +19,12 @@ public class Group {
     private String description;
     private String parent_group_code;
     private boolean delete;
-    private Date update_date;
+    private String update_date;
 
     public Group() {
     }
 
-    public Group(int id, String code, String manager, String name, boolean status, String description, String parent_group_code, boolean delete, Date update_date) {
+    public Group(int id, String code, String manager, String name, Boolean status, String description, String parent_group_code, Boolean delete, String update_date) {
         this.id = id;
         this.code = code;
         this.manager = manager;
@@ -100,11 +100,11 @@ public class Group {
         this.delete = delete;
     }
 
-    public Date getUpdate_date() {
+    public String getUpdate_date() {
         return update_date;
     }
 
-    public void setUpdate_date(Date update_date) {
+    public void setUpdate_date(String update_date) {
         this.update_date = update_date;
     }
 

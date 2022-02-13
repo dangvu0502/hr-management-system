@@ -45,7 +45,7 @@ public class GroupDAO {
                 g.setDescription(rs.getString(6));
                 g.setParent_group_code(rs.getString(7));
                 g.setDelete(rs.getBoolean(8));
-                g.setUpdate_date(rs.getDate(9));
+                g.setUpdate_date(rs.getString(9));
                 vec.add(g);
             }
         } catch (Exception e) {
@@ -90,7 +90,7 @@ public class GroupDAO {
                 g.setDescription(rs.getString(6));
                 g.setParent_group_code(rs.getString(7));
                 g.setDelete(rs.getBoolean(8));
-                g.setUpdate_date(rs.getDate(9));
+                g.setUpdate_date(rs.getString(9));
                 vec.add(g);
             }
         } catch (Exception e) {
@@ -140,7 +140,7 @@ public class GroupDAO {
                 g.setDescription(rs.getString(6));
                 g.setParent_group_code(rs.getString(7));
                 g.setDelete(rs.getBoolean(8));
-                g.setUpdate_date(rs.getDate(9));
+                g.setUpdate_date(rs.getString(9));
                 vec.add(g);
             }
         } catch (Exception ex) {
@@ -169,7 +169,7 @@ public class GroupDAO {
                 g.setDescription(rs.getString(6));
                 g.setParent_group_code(rs.getString(7));
                 g.setDelete(rs.getBoolean(8));
-                g.setUpdate_date(rs.getDate(9));
+                g.setUpdate_date(rs.getString(9));
                 vec.add(g);
             }
         } catch (Exception ex) {
@@ -177,5 +177,27 @@ public class GroupDAO {
         }
         return vec;
     }
+    public void InsertGroup(String code, String manager, String name, Boolean status, String description, String parent_group_code, String update_date) {
+        try {
+            //mo ket noi
+            Connection conn = new DBContext().getConnection();
+            String sql = "INSERT INTO hr_system_v2.group (code, manager_id, name, status, description, parent_group_code, update_date) VALUES (?,?,?,?,?,?,?);";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
 
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, code);
+            ps.setString(2, manager);
+            ps.setString(3, name);
+            ps.setBoolean(4, status);
+            ps.setString(5, description);
+            ps.setString(6, parent_group_code);
+            ps.setString(7, update_date);
+            ps.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+       
+    }
 }

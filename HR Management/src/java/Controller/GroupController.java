@@ -35,7 +35,7 @@ public class GroupController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
         try (PrintWriter out = response.getWriter();) {
             String action = request.getPathInfo() == null ? "" : request.getPathInfo();
@@ -48,7 +48,7 @@ public class GroupController extends HttpServlet {
                     GroupEdit(request, response, method);
                     break;
                 case "/GroupAdd":
-                    GroupAdd(request, response, method);
+                    insertGroup(request, response);
                     break;
                 default:
                     response.sendError(404);
@@ -98,7 +98,7 @@ public class GroupController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-        // <editor-fold defaultstate="collapsed" desc="GroupList">
+    // <editor-fold defaultstate="collapsed" desc="GroupList">
 //     private void groupList(HttpServletRequest request, HttpServletResponse response, String method)
 //            throws Exception {
 //        response.setContentType("text/html;charset=UTF-8");
@@ -195,44 +195,26 @@ public class GroupController extends HttpServlet {
     //</editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="GroupAdd">
-    private void GroupAdd(HttpServletRequest request, HttpServletResponse response, String method) {
-        try (PrintWriter out = response.getWriter();) {
-            if (method.equalsIgnoreCase("post")) {
-                GroupAdd(request, response, method);
-            } else if (method.equalsIgnoreCase("get")) {
-                editGroupView(request, response);
-            }
-        } catch (Exception ex) {
-            log(ex.getMessage());
-        }
-    }
-
-    private void addGroupView(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = request.getParameter("id");
-        Vector<Group> group = new GroupDAO().getGroup();
-        request.setAttribute("group", group);
-        request.getRequestDispatcher("../Views/GroupViewAdd.jsp").forward(request, response);
-    }
-
-    private void groupAddImplement(HttpServletRequest request, HttpServletResponse response)
+    private void insertGroup(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
-        try (PrintWriter out = response.getWriter();) {
-            String idStr = request.getParameter("id");
-            if (idStr == null) {
-                idStr = "-1";
-            }
-            int id = Integer.parseInt(idStr);
-            GroupDAO groupDAO = new GroupDAO();
-            List<Group> Vgroup = groupDAO.getOne(Integer.parseInt(idStr));
-            List<Group> group = groupDAO.getGroup();
-            request.setAttribute("group", group);
-            request.setAttribute("Vgroup", Vgroup);
-            request.setAttribute("idSelected", id);
-            request.getRequestDispatcher("../Views/GroupViewAdd.jsp").forward(request, response);
-        }
+        try(PrintWriter out = response.getWriter();) {
+            String code = request.getParameter("code");
+            String manager = request.getParameter("manager");
+            String name = request.getParameter("name");
+            Boolean status = Boolean.parseBoolean(request.getParameter("status"));
+            String description = request.getParameter("description");
+            String parent_group_code = request.getParameter("parent_group_code");
+            String update_date = request.getParameter("update_date");
+            
+            GroupDAO group = new GroupDAO();
+            group.InsertGroup(code, manager, name, status, description, parent_group_code, update_date);
+            
+            request.getRequestDispatcher("../Views/GroupView.jsp").forward(request, response);
+        } 
     }
-    //</editor-fold>
-    
 }
+//</editor-fold>
+
+

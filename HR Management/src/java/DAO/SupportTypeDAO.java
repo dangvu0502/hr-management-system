@@ -106,7 +106,7 @@ public class SupportTypeDAO {
                 g.setDescription(rs.getString(5));
                 g.setParent_group_code(rs.getString(6));
                 g.setDelete(rs.getBoolean(7));
-                g.setUpdate_date(rs.getDate(8));
+                g.setUpdate_date(rs.getString(8));
                 vec.add(g);
             }
         } catch (Exception e) {
