@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Vector;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,8 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Hide
  */
-@WebServlet(name = "SupportTypeController", urlPatterns = {"/SupportTypeController/*"})
-public class SupportTypeController extends HttpServlet {
+public class SupportTypeController1111 extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -86,16 +84,6 @@ public class SupportTypeController extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
     private void supportTypeListImplement(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
@@ -191,4 +179,15 @@ public class SupportTypeController extends HttpServlet {
             request.getRequestDispatcher("../Views/SupportTypeView.jsp").forward(request, response);
         }
     }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
 }

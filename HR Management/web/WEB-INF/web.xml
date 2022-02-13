@@ -9,10 +9,6 @@
         <url-pattern>/User/*</url-pattern>
     </filter-mapping>
     <servlet>
-        <servlet-name>SettingListController</servlet-name>
-        <servlet-class>Controller.SettingListController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>AccountController</servlet-name>
         <servlet-class>Controller.AccountController</servlet-class>
     </servlet>
@@ -23,10 +19,6 @@
     <servlet>
         <servlet-name>Logout</servlet-name>
         <servlet-class>Controller.Logout</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>SettingDetailController</servlet-name>
-        <servlet-class>Controller.SettingDetailController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ForgotPasswordController</servlet-name>
@@ -53,10 +45,6 @@
         <servlet-class>Controller.BlogSearchController</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>SettingListController</servlet-name>
-        <url-pattern>/SettingListController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>AccountController</servlet-name>
         <url-pattern>/Account/*</url-pattern>
     </servlet-mapping>
@@ -67,10 +55,6 @@
     <servlet-mapping>
         <servlet-name>Logout</servlet-name>
         <url-pattern>/Logout</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SettingDetailController</servlet-name>
-        <url-pattern>/SettingDetailController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ForgotPasswordController</servlet-name>
@@ -91,10 +75,6 @@
     <servlet-mapping>
         <servlet-name>BlogDetailsController</servlet-name>
         <url-pattern>/BlogDetailsController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SupportTypeController</servlet-name>
-        <url-pattern>/SupportTypeController/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

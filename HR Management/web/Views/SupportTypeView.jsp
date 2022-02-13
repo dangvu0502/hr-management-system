@@ -315,7 +315,7 @@
                                 <header class="panel-heading">
                                     Filter
                                 </header>
-                                <form action="grouplist" method="post">
+<!--                                <form action="grouplist" method="post">
                                     <div class="form-row">
                                         <div class="form-group col-md-3">
                                             <select class="form-control" name="type">
@@ -334,12 +334,12 @@
                                             <input type="submit" class="btn btn-info" value="Search">
                                         </div>
                                     </div>
-                                </form>
+                                </form>-->
                             </div>
                             <div class="panel-body">
                                 <div class="pull-right">
                                     <div class="btn btn-success">
-                                        <a id="opener" href="#" style="color: white;">Add</a>    
+<!--                                        <a id="opener" href="#" style="color: white;">Add</a>    -->
                                     </div>
                                 </div>
                                 <table class="table table-bordered">
@@ -357,8 +357,8 @@
                                             <td>${s.in_charge_group}</td>
                                             <td>${s.email}</td>
                                             <td>
-                                                <c:if test = "${s.status}"> <span>Active</span></c:if>
-                                                <c:if test = "${!s.status}"><span>Deactivate</span></c:if>
+                                                <c:if test = "${s.status}"> <span class="badge bg-green">Active</span></c:if>
+                                                <c:if test = "${!s.status}"><span class="badge bg-red">Deactivate</span></c:if>
                                                 </td>
                                                 <td>
                                                 <div>
