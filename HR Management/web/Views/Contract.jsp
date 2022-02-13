@@ -33,7 +33,7 @@
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
         <header class="header">
-            <a href="Views1/Home.jsp" class="logo">
+            <a href="../Views/Home.jsp" class="logo">
                 <!-- Add the class icon to your logo image or logo icon to add the margining -->
                 Home
             </a>
@@ -55,6 +55,16 @@
                         </div>
                     </div>
                     <ul class="sidebar-menu">
+                        <li >
+                            <a href="<%= request.getContextPath()%>/Views/Home.jsp">
+                                <i class="fa fa-home"></i> <span>Home Page</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<%= request.getContextPath()%>/BlogController">
+                                <i class="fa fa-rss"></i> <span>Blog</span>
+                            </a>
+                        </li>
                         <li class="active">
                             <a href="../Contract/Details">
                                 <i class="fa fa-glass"></i> <span>Contract Details</span>
@@ -65,7 +75,6 @@
                                 <i class="fa fa-glass"></i> <span>Contract Add</span>
                             </a>
                         </li>
-
                     </ul>
                 </section>
                 <!-- /.sidebar -->

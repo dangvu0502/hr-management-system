@@ -37,7 +37,7 @@
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
         <header class="header">
-            <a href="Views1/Home.jsp" class="logo">
+            <a href="../Views/Home.jsp" class="logo">
                 <!-- Add the class icon to your logo image or logo icon to add the margining -->
                 Home
             </a>
@@ -263,6 +263,33 @@
                             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                         </div>
                     </div>
+                    <ul class="sidebar-menu">
+                        <li >
+                            <a href="../Views/Home.jsp">
+                                <i class="fa fa-home"></i> <span>Home Page</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<%= request.getContextPath()%>/BlogController">
+                                <i class="fa fa-rss"></i> <span>Blog</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<%= request.getContextPath()%>/SettingController/Setting">
+                                <i class="fa fa-gear"></i> <span>Setting List</span>
+                            </a>
+                        </li>
+                        <li >
+                            <a href="<%= request.getContextPath()%>/Group/GroupList">
+                                <i class="fa fa-user"></i> <span>Group List</span>
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="<%= request.getContextPath()%>/SupportTypeController/SupportType">
+                                <i class="fa fa-user"></i> <span>Support Type</span>
+                            </a>
+                        </li>
+                    </ul>
                     <!-- search form -->
                     <!--                    <form action="#" method="get" class="sidebar-form">
                                             <div class="input-group">
@@ -315,26 +342,26 @@
                                 <header class="panel-heading">
                                     Filter
                                 </header>
-<!--                                <form action="grouplist" method="post">
-                                    <div class="form-row">
-                                        <div class="form-group col-md-3">
-                                            <select class="form-control" name="type">
-                                                <option value="code">Code</option>
-                                                <option value="name">Name</option>
-                                                <option value="fullname">Full Name</option>
-                                                <option value="email">Email</option>
-                                                <option value="type_name">Type</option>
-                                                <option value="status">Status</option>
-                                            </select>                                            
-                                        </div>
-                                        <div class="form-group col-md-7">
-                                            <input class="form-control" type="text" placeholder="Input..." name="input">
-                                        </div>
-                                        <div class="form-group col-md-2">
-                                            <input type="submit" class="btn btn-info" value="Search">
-                                        </div>
-                                    </div>
-                                </form>-->
+                                <!--                                <form action="grouplist" method="post">
+                                                                    <div class="form-row">
+                                                                        <div class="form-group col-md-3">
+                                                                            <select class="form-control" name="type">
+                                                                                <option value="code">Code</option>
+                                                                                <option value="name">Name</option>
+                                                                                <option value="fullname">Full Name</option>
+                                                                                <option value="email">Email</option>
+                                                                                <option value="type_name">Type</option>
+                                                                                <option value="status">Status</option>
+                                                                            </select>                                            
+                                                                        </div>
+                                                                        <div class="form-group col-md-7">
+                                                                            <input class="form-control" type="text" placeholder="Input..." name="input">
+                                                                        </div>
+                                                                        <div class="form-group col-md-2">
+                                                                            <input type="submit" class="btn btn-info" value="Search">
+                                                                        </div>
+                                                                    </div>
+                                                                </form>-->
                             </div>
                             <div class="panel-body">
                                 <div class="pull-right">
@@ -361,8 +388,8 @@
                                                 <c:if test = "${!s.status}"><span class="badge bg-red">Deactivate</span></c:if>
                                                 </td>
                                                 <td>
-                                                <div>
-                                                    <a id="delete" onclick="deleteByID('${e.employee_id}');" href="#"><span class="glyphicon glyphicon-trash"></span></a>
+                                                    <div>
+                                                        <a id="delete" onclick="deleteByID('${e.employee_id}');" href="#"><span class="glyphicon glyphicon-trash"></span></a>
                                                     &nbsp;&nbsp;
                                                     <a href="../SupportTypeController/SupportTypeEdit?id=${s.id}&name=${s.name}&incharge=${s.in_charge_group}&email=${s.email}&status=${s.status}&description=${s.description}" <span class="glyphicon glyphicon-edit"></span></a></div>
                                             </td>
@@ -380,7 +407,7 @@
                         </div>
                     </div>
                 </section><!-- /.content -->
-                
+
                 <div class="footer-main">
                     Copyright &copy Director, 2014
                 </div>
@@ -391,7 +418,7 @@
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
         <script type="text/javascript">
-                                                   
+
         </script>
     </body>
 </html>

@@ -37,7 +37,7 @@
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
         <header class="header">
-            <a href="Views1/Home.jsp" class="logo">
+            <a href="../Views/Home.jsp" class="logo">
                 <!-- Add the class icon to your logo image or logo icon to add the margining -->
                 Home
             </a>
@@ -263,6 +263,33 @@
                             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                         </div>
                     </div>
+                       <ul class="sidebar-menu">
+                        <li >
+                            <a href="../Views/Home.jsp">
+                                <i class="fa fa-home"></i> <span>Home Page</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<%= request.getContextPath()%>/BlogController">
+                                <i class="fa fa-rss"></i> <span>Blog</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<%= request.getContextPath()%>/SettingController/Setting">
+                                <i class="fa fa-gear"></i> <span>Setting List</span>
+                            </a>
+                        </li>
+                        <li >
+                            <a href="<%= request.getContextPath()%>/Group/GroupList">
+                                <i class="fa fa-user"></i> <span>Group List</span>
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="<%= request.getContextPath()%>/SupportTypeController/SupportType">
+                                <i class="fa fa-user"></i> <span>Support Type</span>
+                            </a>
+                        </li>
+                    </ul>
                     <!-- search form -->
                     <!--                    <form action="#" method="get" class="sidebar-form">
                                             <div class="input-group">
@@ -318,108 +345,108 @@
                                 <div class="panel-body">
                                     <form action="../SupportTypeController/Edit" >
                                         <div class="row ">
-                                                    <div class="form-group col-lg-12">
-                                                        <label for="ID">ID</label>
-                                                        <input type="text" class="form-control" name="spid" readonly="" value="${listS.id}">
-                                                    </div>
-                                                </div>
-                                                    <div class="row ">
-                                                    <div class="form-group col-lg-12">
-                                                        <label for="name">Name</label>
-                                                        <input type="text" class="form-control" name="name"  value="${listS.name}">
-                                                    </div>
-                                                </div>
-                                                    <div class="row">
-                                                    <div class="form-group col-lg-12">
-                                                        <label for="email">Email</label>
-                                                        <input type="email" class="form-control" name="email"  value="${listS.email}">
-                                                    </div>
-                                                </div>
-                                                    <div class="row">
-                                                    <div class="form-group col-lg-12">
-                                                        <label for="description">Description</label>
-                                                        <input type="text" class="form-control" name="description"  value="${listS.description}">
-                                                    </div>
-                                                </div>
-                                                    <div class="row">
-                                                    <div class="form-group col-lg-12">
-                                                        <label for="InCharge">In Charge</label>
-                                                        <input type="text" class="form-control" name="incharge"  value="${listS.in_charge_group}">
-                                                    </div>
-                                                </div>
-                                                    <div class="row">
-                                                    <div class="form-group col-lg-12">
-                                                        <label for="Status">Status</label><br>
-                                                        <c:choose>
-                                                            <c:when test = "${listS.status == false}">
-                                                                <input  type="radio" name="foo" value="1" id="rbStatus" > <span style="margin-right: 2rem;" >Active</span>
-                                                                <input type="radio" name="foo" value="0" id="rbStatus" checked="checked"> Deactivate
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                <input  type="radio" name="foo" value="1" id="rbStatus" checked="checked"> <span style="margin-right: 2rem;" >Active</span>
-                                                                <input type="radio" name="foo" value="0" id="rbStatus"> Deactivate
-                                                            </c:otherwise>
-                                                        </c:choose>
-                                                    </div>
-                                                </div>
-                                                <div class=" form-group row col-lg-12 text-center">
-                                                    <button type="submit" id="submit-btn" class="btn btn-info"  >Save Change</button>
-                                                </div>
-                                    </form>
-<!--                                    <form action="../SupportTypeController/Edit" >
+                                            <div class="form-group col-lg-12">
+                                                <label for="ID">ID</label>
+                                                <input type="text" class="form-control" name="spid" readonly="" value="${listS.id}">
+                                            </div>
+                                        </div>
+                                        <div class="row ">
+                                            <div class="form-group col-lg-12">
+                                                <label for="name">Name</label>
+                                                <input type="text" class="form-control" name="name"  value="${listS.name}">
+                                            </div>
+                                        </div>
                                         <div class="row">
-                                            <div class="col-lg-2"></div>
-
-                                            <div class="col-lg-8">
-                                                <div class="row ">
-                                                    <div class="form-group col-lg-12">
-                                                        <label for="ID">ID</label>
-                                                        <input type="text" class="form-control" name="spid" disabled="" value="${listS.id}">
-                                                    </div>
-                                                </div>
-                                                <div class="row ">
-                                                    <div class="form-group col-lg-12">
-                                                        <label for="name">Name</label>
-                                                        <input type="text" class="form-control" name="name"  value="${listS.name}">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="form-group col-lg-12">
-                                                        <label for="email">Email</label>
-                                                        <input type="email" class="form-control" name="email"  value="${listS.email}">
-                                                    </div>
-                                                </div>
-                                                    <div class="row">
-                                                    <div class="form-group col-lg-12">
-                                                        <label for="description">Description</label>
-                                                        <input type="text" class="form-control" name="description"  value="${listS.description}">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="form-group col-lg-12">
-                                                        <label for="InCharge">In Charge</label>
-                                                        <input type="text" class="form-control" name="InCharge"  value="${listS.in_charge_group}">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="form-group col-lg-12">
-                                                        <label for="Status">Status</label><br>
-                                                        <c:choose>
-                                                            <c:when test = "${listS.status == false}">
-                                                                <input  type="radio" name="foo" value="1" id="rbStatus" > <span style="margin-right: 2rem;" >Active</span>
-                                                                <input type="radio" name="foo" value="0" id="rbStatus" checked="checked"> Deactivate
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                <input  type="radio" name="foo" value="1" id="rbStatus" checked="checked"> <span style="margin-right: 2rem;" >Active</span>
-                                                                <input type="radio" name="foo" value="0" id="rbStatus"> Deactivate
-                                                            </c:otherwise>
-                                                        </c:choose>
-                                                    </div>
-                                                </div>
-                                                <div class=" form-group row col-lg-12 text-center">
-                                                    <button type="submit" id="submit-btn" class="btn btn-info"  >Save Change</button>
-                                                </div>
-                                    </form>-->
+                                            <div class="form-group col-lg-12">
+                                                <label for="email">Email</label>
+                                                <input type="email" class="form-control" name="email"  value="${listS.email}">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-lg-12">
+                                                <label for="description">Description</label>
+                                                <input type="text" class="form-control" name="description"  value="${listS.description}">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-lg-12">
+                                                <label for="InCharge">In Charge</label>
+                                                <input type="text" class="form-control" name="incharge"  value="${listS.in_charge_group}">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-lg-12">
+                                                <label for="Status">Status</label><br>
+                                                <c:choose>
+                                                    <c:when test = "${listS.status == false}">
+                                                        <input  type="radio" name="foo" value="1" id="rbStatus" > <span style="margin-right: 2rem;" >Active</span>
+                                                        <input type="radio" name="foo" value="0" id="rbStatus" checked="checked"> Deactivate
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <input  type="radio" name="foo" value="1" id="rbStatus" checked="checked"> <span style="margin-right: 2rem;" >Active</span>
+                                                        <input type="radio" name="foo" value="0" id="rbStatus"> Deactivate
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </div>
+                                        </div>
+                                        <div class=" form-group row col-lg-12 text-center">
+                                            <button type="submit" id="submit-btn" class="btn btn-info"  >Save Change</button>
+                                        </div>
+                                    </form>
+                                    <!--                                    <form action="../SupportTypeController/Edit" >
+                                                                            <div class="row">
+                                                                                <div class="col-lg-2"></div>
+                                    
+                                                                                <div class="col-lg-8">
+                                                                                    <div class="row ">
+                                                                                        <div class="form-group col-lg-12">
+                                                                                            <label for="ID">ID</label>
+                                                                                            <input type="text" class="form-control" name="spid" disabled="" value="${listS.id}">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row ">
+                                                                                        <div class="form-group col-lg-12">
+                                                                                            <label for="name">Name</label>
+                                                                                            <input type="text" class="form-control" name="name"  value="${listS.name}">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        <div class="form-group col-lg-12">
+                                                                                            <label for="email">Email</label>
+                                                                                            <input type="email" class="form-control" name="email"  value="${listS.email}">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                        <div class="row">
+                                                                                        <div class="form-group col-lg-12">
+                                                                                            <label for="description">Description</label>
+                                                                                            <input type="text" class="form-control" name="description"  value="${listS.description}">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        <div class="form-group col-lg-12">
+                                                                                            <label for="InCharge">In Charge</label>
+                                                                                            <input type="text" class="form-control" name="InCharge"  value="${listS.in_charge_group}">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        <div class="form-group col-lg-12">
+                                                                                            <label for="Status">Status</label><br>
+                                    <c:choose>
+                                        <c:when test = "${listS.status == false}">
+                                            <input  type="radio" name="foo" value="1" id="rbStatus" > <span style="margin-right: 2rem;" >Active</span>
+                                            <input type="radio" name="foo" value="0" id="rbStatus" checked="checked"> Deactivate
+                                        </c:when>
+                                        <c:otherwise>
+                                            <input  type="radio" name="foo" value="1" id="rbStatus" checked="checked"> <span style="margin-right: 2rem;" >Active</span>
+                                            <input type="radio" name="foo" value="0" id="rbStatus"> Deactivate
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                            </div>
+                            <div class=" form-group row col-lg-12 text-center">
+                                <button type="submit" id="submit-btn" class="btn btn-info"  >Save Change</button>
+                            </div>
+                </form>-->
                                 </div>
                             </div>
                             <!--                            <div class="panel-body">
