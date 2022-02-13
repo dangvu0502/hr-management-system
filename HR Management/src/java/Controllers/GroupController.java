@@ -201,9 +201,9 @@ public class GroupController extends HttpServlet {
             Group g = new Group(id, code, manager, name, status, description, parent_group_code, true, update_date);
             GroupDAO gdao = new GroupDAO();
             boolean check = gdao.editGroup(g, id);
-
+            
             request.setAttribute("listG", g);
-            request.getRequestDispatcher("../Views/GroupView.jsp").forward(request, response);
+            groupListImplement(request, response);
         }
     }
 

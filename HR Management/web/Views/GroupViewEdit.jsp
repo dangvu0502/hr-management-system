@@ -318,13 +318,17 @@
                                 <div class="panel-body">
 
                                     <form action="../Group/GroupEdit" >
-                                        <div>
-                                            <button type="submit" id="submit-btn" class="btn btn-info"  >Save Change</button>
-                                        </div>
+                                 
                                         <div class="row ">
                                             <div class="form-group col-lg-12">
                                                 <label for="ID">ID</label>
                                                 <input type="text" class="form-control" name="id" readonly="" value="${listG.id}">
+                                            </div>
+                                        </div>
+                                             <div class="row ">
+                                            <div class="form-group col-lg-12">
+                                                <label for="ID">Manager</label>
+                                                <input type="text" class="form-control" name="manager"  value="${listG.manager}">
                                             </div>
                                         </div>
                                         <div class="row ">
@@ -336,7 +340,7 @@
                                         <div class="row">
                                             <div class="form-group col-lg-12">
                                                 <label for="name">Name</label>
-                                                <input type="text" class="form-control" name="email"  value="${listG.name}">
+                                                <input type="text" class="form-control" name="name"  value="${listG.name}">
                                             </div>
                                         </div>
 
@@ -364,7 +368,7 @@
                                         <div class="row">
                                             <div class="form-group col-lg-12">
                                                 <label for="Gcode">Group Parent Code</label>
-                                                <input type="text" class="form-control" name="parent_group_code"  value="${listG.group_parent_code}">
+                                                <input type="text" class="form-control" name="parent_group_code"  value="${listG.parent_group_code}">
                                             </div>
                                         </div>
                                         <div class="row">
