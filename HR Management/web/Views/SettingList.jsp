@@ -357,11 +357,11 @@
                                                     <a href="../StatusController?status=0&id=${s.id}&page=${page}"><span class="glyphicon glyphicon-retweet"></span></a>
                                                     <a href="../SettingController/Status?status=0&id=${s.id}&page=${page}"><span class="glyphicon glyphicon-retweet"></span></a>
                                                     </c:if>
-                                                    <c:if test = "${s.status}">
+                                                <c:if test = "${s.status}">
                                                     <span class="badge bg-green">Activate</span>
                                                     &nbsp;
                                                     <a href="../SettingController/Status?status=1&id=${s.id}&page=${page}"><span class="glyphicon glyphicon-retweet"></span></a>
-                                                    </c:if>
+                                                </c:if>
                                             </td>
                                             <td>
                                                 <a id="delete" onclick="deleteByID('${s.id}');" href="#"><span class="glyphicon glyphicon-trash"></span></a>
