@@ -7,6 +7,7 @@ package Controllers;
 
 import Context.SendEmail;
 import Context.TrippleDes;
+import Dao.GroupDAO;
 import Dao.SettingDAO;
 import Dao.UserDAO;
 import Models.User;
@@ -92,7 +93,9 @@ public class UserController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         if (method.equalsIgnoreCase("get")) {
             SettingDAO st = new SettingDAO();
+            GroupDAO gDAO = new GroupDAO();
             request.getSession().setAttribute("roles", st.getAllRole());
+            request.getSession().setAttribute("groups", gDAO.getAllGroupNameAndCode());
             showNewUserView(request, response);
         } else {
             newUserImplement(request, response);
