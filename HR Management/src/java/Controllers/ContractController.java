@@ -216,6 +216,9 @@ public class ContractController extends HttpServlet {
         int id = Integer.parseInt(idStr);
         UserDAO userDAO = new UserDAO();
         ContractDAO contractDAO = new ContractDAO();
+        if(idc == null){
+            contractDAO.addNewContract(Integer.parseInt(idStr));
+        }
         if (StartDate != null && EndDate != null) {
             contractDAO.addContract(StartDate, EndDate, Integer.parseInt(idc));
         }

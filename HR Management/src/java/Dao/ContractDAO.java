@@ -188,4 +188,17 @@ public class ContractDAO {
             throw e;
         }
     }
+
+    public void addNewContract(int id) throws SQLException {
+        String sql = "INSERT INTO `hr_system_v2`.`contract` (`user_id`) VALUES (?);";
+        try (
+                Connection con = new DBContext().getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            // execute update SQL stetement
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw e;
+        }
+    }
 }
