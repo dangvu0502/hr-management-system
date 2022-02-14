@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Title</title>
+        <title>Blog</title>
         <!-- Required meta tags -->
         <meta charset="utf-8" />
         <meta
@@ -33,11 +33,6 @@
             integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
             crossorigin="anonymous"
         ></script>
-        <script
-            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-            crossorigin="anonymous"
-        ></script>
 
         <!-- cdn font awsome -->
         <link
@@ -47,7 +42,7 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
             />
-        <link rel="icon" href="../img/Honey Bee.png" />
+        <link rel="icon" href="../img/HoneyBee.png" />
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
         <script>
@@ -157,6 +152,10 @@
                 color: #f37879;
                 text-decoration: none;
             }
+            .dropdown{
+
+                margin-top: 40px;
+            }
         </style>
     </head>
 
@@ -225,8 +224,20 @@
 
             <!-- Main-Wrapper -->
             <div class="main_WrapperContent">
+                <div class="dropdown">
+                    <p>Filter by:</p>
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        ALL 
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item category-title" tabindex="0" id="Funny" >Funny</a>
+                        <a class="dropdown-item category-title" tabindex="0" id="Gamming" >Gamming</a>
+                    </div>
+                </div>
+
+
                 <c:forEach items="${listE}" var="e">
-                    <div class="Blog_list fade">
+                    <div class="Blog_list fade all ${e.category}">
                         <div class="row">
 
                             <div class="col-lg-6">
@@ -265,6 +276,33 @@
         </section>
         <%@ include file = "Header/Footer.jsp" %>
         <!-- boostrap -->
+        <script>
+            const categoryTitle = document.querySelectorAll('.category-title');
+            const allCategoryPosts = document.querySelectorAll('.all');
+
+            for (let i = 0; i < categoryTitle.length; i++) {
+                categoryTitle[i].addEventListener('click', filterPosts.bind(this, categoryTitle[i]));
+            }
+
+            function filterPosts(item) {
+                changeActivePosition(item);
+                for (let i = 0; i < allCategoryPosts.length; i++) {
+                    if (allCategoryPosts[i].classList.contains(item.attributes.id.value)) {
+                        allCategoryPosts[i].style.display = "block";
+                    } else {
+                        allCategoryPosts[i].style.display = "none";
+                    }
+                }
+            }
+
+            function changeActivePosition(activeItem) {
+                for (let i = 0; i < categoryTitle.length; i++) {
+                    categoryTitle[i].classList.remove('active');
+                }
+                activeItem.classList.add('active');
+            }
+            ;
+        </script>
         <script
             src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

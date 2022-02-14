@@ -89,6 +89,10 @@
         <url-pattern>/BlogDetailsController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>BlogSearchController</servlet-name>
+        <url-pattern>/BlogSearchController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>SettingController</servlet-name>
         <url-pattern>/SettingController/*</url-pattern>
     </servlet-mapping>
