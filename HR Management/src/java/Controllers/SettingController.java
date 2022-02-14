@@ -5,7 +5,7 @@
  */
 package Controllers;
 
-import DAO.SettingDAO;
+import Dao.SettingDAO;
 import Models.Setting;
 import java.io.IOException;
 import java.io.PrintWriter;
