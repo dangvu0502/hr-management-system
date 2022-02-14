@@ -19,6 +19,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -55,13 +56,16 @@ public class GroupController extends HttpServlet {
                     break;
                 case "/GroupAdd":
                     GroupAdd(request, response);
-                    
+
                     break;
                 case "/GroupEdit":
                     GroupEdit(request, response);
                     break;
                 case "/Delete":
                     changeStatusDelete(request, response);
+                    break;
+                case "/Filter":
+                    filterGroup(request, response);
                     break;
                 default:
                     response.sendError(404);
@@ -138,20 +142,43 @@ public class GroupController extends HttpServlet {
             }
             request.setAttribute("page", page);
             GroupDAO gDAO = new GroupDAO();
-            int count = gDAO.totalGroup();
+
+            Vector<String> c = gDAO.getAllCode();
+            request.setAttribute("listC", c);
+            boolean check = true;
+            for (String type : c) {
+                if (type.equals(input)) {
+                    check = false;
+                    break;
+                }
+            }
+            int count;
+            Vector<Group> g;
+            if (input == null || input.isEmpty()) {
+                g = gDAO.getGroupList(Integer.parseInt(page));
+                count = gDAO.getTotalGroup(null, null);
+            } else {
+                if ("1".equals(input) || "0".equals(input)) {
+                    g = gDAO.filterGroupList(input, 2, Integer.parseInt(page));
+                    count = gDAO.getTotalGroup(input, null);
+                } else {
+                    if (check) {
+                        g = gDAO.getGroupBySearch(input, Integer.parseInt(page));
+                        count = gDAO.getTotalGroup(null, input);
+                    } else {
+                        g = gDAO.filterGroupList(input, 1, Integer.parseInt(page));
+                        count = gDAO.getTotalGroup(input, null);
+                    }
+                }
+            }
             int endPage = count / 6;
-            if (endPage % 6 != 0) {
+            if (count % 6 != 0) {
                 endPage++;
             }
             request.setAttribute("endP", endPage);
             request.setAttribute("gr", group_type);
             request.setAttribute("txtS", input);
-            Vector<Group> g = new Vector();
-            if (input == null || input.isEmpty()) {
-                g = gDAO.getGroupList(Integer.parseInt(page));
-            } else {
-                g = gDAO.getGroupBySearch(input);
-            }
+           
             request.setAttribute("listG", g);
             request.getRequestDispatcher("../Views/GroupView.jsp").forward(request, response);
         }
@@ -205,7 +232,7 @@ public class GroupController extends HttpServlet {
             Group g = new Group(id, code, manager, name, status, description, parent_group_code, true, update_date);
             GroupDAO gdao = new GroupDAO();
             boolean check = gdao.editGroup(g, id);
-            
+
             request.setAttribute("listG", g);
             groupListImplement(request, response);
         }
@@ -226,15 +253,16 @@ public class GroupController extends HttpServlet {
             String parent_group_code = request.getParameter("parent_group_code");
             String update_date = request.getParameter("update_date");
             Group gr = new Group(1, code, manager, name, status, description, parent_group_code, true, update_date);
-            
+
             GroupDAO gDAO = new GroupDAO();
             boolean check = gDAO.InsertGroup(gr);
 
             groupListImplement(request, response);
         }
     }
+
     //delete
-     private void changeStatusDelete(HttpServletRequest request, HttpServletResponse response)
+    private void changeStatusDelete(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
@@ -246,12 +274,29 @@ public class GroupController extends HttpServlet {
             if (page == null) {
                 page = "1";
             }
-            
+
             GroupDAO g = new GroupDAO();
             g.editStatusDelete(delete, id);
             groupListImplement(request, response);
         } catch (Exception e) {
             System.out.println("Error " + e.getMessage());
+        }
+    }
+
+    private void filterGroup(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
+        try (PrintWriter out = response.getWriter()) {
+            String filter = request.getParameter("input");
+            HttpSession ses = request.getSession();
+            if (!"All".equals(filter)) {
+                ses.setAttribute("session", filter);
+                ses.setMaxInactiveInterval(-1);
+            } else {
+                ses.removeAttribute("session");
+            }
+            groupListImplement(request, response);
         }
     }
 }

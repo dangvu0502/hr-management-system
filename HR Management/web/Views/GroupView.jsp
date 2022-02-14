@@ -16,6 +16,9 @@
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <!-- bootstrap 3.0.2 -->
         <link href="../css/bootstrap.min.css" rel="stylesheet" />
         <!-- font Awesome -->
@@ -359,32 +362,61 @@
                     <div class="row">
                         <div class="panel">
                             <header class="panel-heading">
-                                Setting List
+                                Group List
                             </header>
-                            <div class="panel-body" style="width: 50%;">
-                                <header class="panel-heading">
-                                    Filter
-                                </header>
-                                <form action="GroupList" method="post">
-                                    <div class="form-row">
-                                        <div class="form-group col-md-3">
-                                            <select class="form-control" name="type" value ="${txtS}" >
-                                                <option value="code">Code</option>
-                                                <option value="name">Name</option>
-                                                <option value="fullname">Full Name</option>
-                                                <option value="email">Email</option>
-                                                <option value="type_name">Type</option>
-                                                <option value="status">Status</option>
-                                            </select>                                            
-                                        </div>
-                                        <div class="form-group col-md-7">
-                                            <input class="form-control" type="text" value="${txtS}" placeholder="Input..." name="input">
-                                        </div>
-                                        <div class="form-group col-md-2">
-                                            <input type="submit" name="input" class="btn btn-info" value="Search">
+                            <div class="form-row">
+                                <div class="form-group col-md-3">
+                                    <div class="panel-body">
+                                        <header class="panel-heading">
+                                            Filter &nbsp;
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                                    Code <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="../Group/Filter?input=All">All</a></li>
+                                                        <c:forEach items="${listC}" var="c">
+                                                        <li>
+                                                            <a href="../Group/Filter?input=${c}">${c}</a>
+                                                        </li>
+                                                    </c:forEach>
+                                                </ul>
+                                            </div>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                                    Status <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="../Group/Filter?input=All">All</a></li>
+                                                    <li>
+                                                        <a href="../Group/Filter?input=1">BA</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="../Group/Filter?input=0">Non BA</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </header>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-9">
+                                    <div class="panel-body">
+                                        <div class="form">
+                                            <form action="GroupList" method="post">
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-6">
+                                                    </div>
+                                                    <div class="form-group col-md-5">
+                                                        <input class="form-control" type="text" value="${txtS}" placeholder="Input..." name="input">
+                                                    </div>
+                                                    <div class="form-group col-md-1">
+                                                        <input type="submit" name="input" class="btn btn-info" value="Search">
+                                                    </div>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
-                                </form>
+                                </div>
                             </div>
                             <div class="panel-body">
                                 <div class="pull-right">
@@ -409,8 +441,8 @@
                                             <td>${g.manager}</td>
                                             <td>${g.name}</td>
                                             <td>
-                                                <c:if test = "${g.status}"> <span>Non-BA</span></c:if>
-                                                <c:if test = "${!g.status}"><span>BA</span></c:if>
+                                                <c:if test = "${!g.status}"> <span>Non-BA</span></c:if>
+                                                <c:if test = "${g.status}"><span>BA</span></c:if>
                                                 </td>
 
 
