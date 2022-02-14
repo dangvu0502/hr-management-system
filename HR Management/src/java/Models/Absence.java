@@ -5,8 +5,6 @@
  */
 package Models;
 
-import java.util.Date;
-
 /**
  *
  * @author Kha Chinh
@@ -15,17 +13,17 @@ public class Absence {
     
     private int id;
     private int user_id;
-    private Date request_date;
+    private String request_date;
     private String type;
     private String title;
-    private Date from;
-    private Date to;
+    private String from;
+    private String to;
     private boolean status;
 
     public Absence() {
     }
 
-    public Absence(int id, int user_id, Date request_date, String type, String title, Date from, Date to, boolean status) {
+    public Absence(int id, int user_id, String request_date, String type, String title, String from, String to, boolean status) {
         this.id = id;
         this.user_id = user_id;
         this.request_date = request_date;
@@ -52,11 +50,11 @@ public class Absence {
         this.user_id = user_id;
     }
 
-    public Date getRequest_date() {
+    public String getRequest_date() {
         return request_date;
     }
 
-    public void setRequest_date(Date request_date) {
+    public void setRequest_date(String request_date) {
         this.request_date = request_date;
     }
 
@@ -76,19 +74,19 @@ public class Absence {
         this.title = title;
     }
 
-    public Date getFrom() {
+    public String getFrom() {
         return from;
     }
 
-    public void setFrom(Date from) {
+    public void setFrom(String from) {
         this.from = from;
     }
 
-    public Date getTo() {
+    public String getTo() {
         return to;
     }
 
-    public void setTo(Date to) {
+    public void setTo(String to) {
         this.to = to;
     }
 
