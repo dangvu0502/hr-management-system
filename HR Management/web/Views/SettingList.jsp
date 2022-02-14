@@ -9,6 +9,9 @@
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <!-- bootstrap 3.0.2 -->
         <link href="../css/bootstrap.min.css" rel="stylesheet" />
         <!-- font Awesome -->
@@ -256,33 +259,6 @@
                             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                         </div>
                     </div>
-                        <ul class="sidebar-menu">
-                        <li >
-                            <a href="../Views/Home.jsp">
-                                <i class="fa fa-home"></i> <span>Home Page</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<%= request.getContextPath()%>/BlogController">
-                                <i class="fa fa-rss"></i> <span>Blog</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<%= request.getContextPath()%>/SettingController/Setting">
-                                <i class="fa fa-gear"></i> <span>Setting List</span>
-                            </a>
-                        </li>
-                        <li >
-                            <a href="<%= request.getContextPath()%>/Group/GroupList">
-                                <i class="fa fa-user"></i> <span>Group List</span>
-                            </a>
-                        </li>
-                        <li class="active">
-                            <a href="<%= request.getContextPath()%>/SupportTypeController/SupportType">
-                                <i class="fa fa-user"></i> <span>Support Type</span>
-                            </a>
-                        </li>
-                    </ul>
                     <!-- search form -->
                     <!--                    <form action="#" method="get" class="sidebar-form">
                                             <div class="input-group">
@@ -331,30 +307,59 @@
                             <header class="panel-heading">
                                 Setting List
                             </header>
-                            <div class="panel-body" style="width: 50%;">
-                                <header class="panel-heading">
-                                    Filter
-                                </header>
-                                <form action="Setting" method="post">
-                                    <div class="form-row">
-                                        <div class="form-group col-md-3">
-                                            <select class="form-control" name="type">
-                                                <option value="setting_id">ID</option>
-                                                <option value="username">User Name</option>
-                                                <option value="fullname">Full Name</option>
-                                                <option value="email">Email</option>
-                                                <option value="type_name">Type</option>
-                                                <option value="status">Status</option>
-                                            </select>                                            
-                                        </div>
-                                        <div class="form-group col-md-7">
-                                            <input class="form-control" type="text" placeholder="Input..." name="input">
-                                        </div>
-                                        <div class="form-group col-md-2">
-                                            <input type="submit" class="btn btn-info" value="Search">
+                            <div class="form-row">
+                                <div class="form-group col-md-3">
+                                    <div class="panel-body">
+                                        <header class="panel-heading">
+                                            Filter &nbsp;
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                                    Type <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="../SettingController/Filter?input=All">All</a></li>
+                                                        <c:forEach items="${listT}" var="t">
+                                                        <li>
+                                                            <a href="../SettingController/Filter?input=${t}">${t}</a>
+                                                        </li>
+                                                    </c:forEach>
+                                                </ul>
+                                            </div>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                                    Status <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="../SettingController/Filter?input=All">All</a></li>
+                                                    <li>
+                                                        <a href="../SettingController/Filter?input=1">Activate</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="../SettingController/Filter?input=0">Deactivate</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </header>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-9">
+                                    <div class="panel-body">
+                                        <div class="form">
+                                            <form action="../SettingController/Search" method="post">
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-6">
+                                                    </div>
+                                                    <div class="form-group col-md-5">
+                                                        <input class="form-control" type="text" placeholder="Input..." name="input">
+                                                    </div>
+                                                    <div class="form-group col-md-1">
+                                                        <input type="submit" class="btn btn-info" value="Search">
+                                                    </div>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
-                                </form>
+                                </div>
                             </div>
                             <div class="panel-body">
                                 <div class="pull-right">
@@ -381,14 +386,13 @@
                                                 <c:if test = "${!s.status}">
                                                     <span class="badge bg-red">Deactivate</span>
                                                     &nbsp;
-                                                    <a href="../StatusController?status=0&id=${s.id}&page=${page}"><span class="glyphicon glyphicon-retweet"></span></a>
                                                     <a href="../SettingController/Status?status=0&id=${s.id}&page=${page}"><span class="glyphicon glyphicon-retweet"></span></a>
                                                     </c:if>
-                                                <c:if test = "${s.status}">
+                                                    <c:if test = "${s.status}">
                                                     <span class="badge bg-green">Activate</span>
                                                     &nbsp;
                                                     <a href="../SettingController/Status?status=1&id=${s.id}&page=${page}"><span class="glyphicon glyphicon-retweet"></span></a>
-                                                </c:if>
+                                                    </c:if>
                                             </td>
                                             <td>
                                                 <a id="delete" onclick="deleteByID('${s.id}');" href="#"><span class="glyphicon glyphicon-trash"></span></a>
@@ -401,7 +405,12 @@
                                 <div class="table-foot">
                                     <ul class="pagination pagination-sm no-margin pull-right">
                                         <c:forEach begin="1" end="${endP}" var="p">
-                                            <li><a href="Setting?page=${p}">${p}</a></li>
+                                            <c:if test="${search == null}">
+                                                <li><a href="Setting?page=${p}">${p}</a></li>
+                                            </c:if>
+                                            <c:if test="${search != null}">
+                                                <li><a href="Search?page=${p}">${p}</a></li>
+                                            </c:if>
                                             </c:forEach>
                                     </ul>
                                 </div>
