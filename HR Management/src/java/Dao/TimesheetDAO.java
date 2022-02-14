@@ -59,6 +59,33 @@ public class TimesheetDAO {
         return res;
     }
     
+    public Timesheet getTimesheetById(int id) {
+        ArrayList<Timesheet> res = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM hr_system_v2.timesheet  where id = ?";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+               return new Timesheet(
+                       rs.getInt(1), 
+                       rs.getString(2), 
+                       rs.getString(3), 
+                       rs.getInt(4),
+                       rs.getString(5),
+                       rs.getInt(6),
+                       rs.getString(7),
+                       rs.getString(8),
+                       rs.getInt(9),
+                        rs.getString(10));
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return null;
+    }
+    
     public static void main(String[] args) {
         TimesheetDAO tsDAO = new TimesheetDAO();
         ArrayList<Timesheet> rs = tsDAO.getTimesheetList(1,99);
