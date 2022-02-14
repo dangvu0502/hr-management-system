@@ -44,42 +44,52 @@
                     <div class="col-lg-6 ">
                         <section class="panel">
                             <header class="panel-heading text-center">
-                                Timesheet Title
+                                ${timesheet.title}
                             </header>
                             <div class="panel-body">
-                                <form action="../User/NewUser" method="POST" role="form" onsubmit="return chooseRole">
+                                <form action="" method="POST" role="form" onsubmit="return chooseRole">
                                     <div class="row">
                                         <div class="col-lg-2"></div>
                                         <div class="col-lg-8">
                                             <div class="row">
                                                 <div class="form-group col-lg-12">
-                                                    <p class="text-bold" >Project: &nbsp xyz</p>
+                                                    <p class="text-bold" >Project: &nbsp ${timesheet.project_code}</p>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="form-group col-lg-8">
-                                                    <p class="text-bold" >Process: &nbsp training </p>
+                                                    <p class="text-bold" >Process: &nbsp ${timesheetProcess[timesheet.process]}</p>
                                                 </div>
                                                 <div class="form-group col-lg-4">
-                                                    <p class="text-bold" >Date: &nbsp 2022-02-02</p>
+                                                    <p class="text-bold" >Date: &nbsp ${timesheet.date}</p>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="form-group col-lg-8">
-                                                    <p class="text-bold" >Status: &nbsp <span class="text-success">Approved</span></p>
+                                                    <c:if test="${timesheet.status == 1}">
+                                                        <p class="text-bold" style="pointer-events: none;">Status: &nbsp <span  class="text-warning">${timesheetStatus[timesheet.status]}</span></p>
+                                                    </c:if>
+                                                    <c:if test="${timesheet.status == 2}">
+                                                        <p class="text-bold" style="pointer-events: none;" >Status: &nbsp <span class="text-success">${timesheetStatus[timesheet.status]}</span></p>
+                                                    </c:if>
+                                                    <c:if test="${timesheet.status == 3}">
+                                                        <p class="text-bold" style="pointer-events: none;">Status: &nbsp <span class="text-danger">${timesheetStatus[timesheet.status]}</span></p>
+                                                    </c:if>
                                                 </div>
                                                 <div class="form-group col-lg-4">
-                                                    <p class="text-bold" >Duration: &nbsp 1:30</p>
+                                                    <p class="text-bold" >Duration: &nbsp ${timesheet.duration}</p>
                                                 </div>
                                             </div>
                                             <div class="row ">
                                                 <div class="form-group col-lg-12">
                                                     <label for="work-result">Work result</label><p></p>
-                                                    <textarea rows="10" cols="60" id="work-result" name="work-result" style=" resize: vertical; "></textarea>
+                                                    <textarea rows="10" cols="60" id="work-result" name="work-result" style=" resize: vertical;" disabled></textarea>
                                                 </div>
                                                 <div class="form-group col-lg-12">
-                                                    <label for="work-result">Reject reason</label><p></p>
-                                                    <textarea rows="5" cols="60" id="work-result" name="work-result" style="  resize: vertical; "></textarea>
+                                                    <c:if test="${timesheet.status == 3}">
+                                                        <label for="work-result">Reject reason</label><p></p>
+                                                        <textarea rows="5" cols="60" id="work-result" name="work-result" style="  resize: vertical; " disabled></textarea>
+                                                    </c:if>
                                                 </div>
                                             </div>
                                         </div>

@@ -49,7 +49,7 @@
                                 New Timesheet
                             </header>
                             <div class="panel-body">
-                                <form action="../User/NewUser" method="POST" role="form" onsubmit="return chooseRole">
+                                <form action="" method="POST" role="form" onsubmit="return chooseRole">
                                     <div class="row">
                                         <div class="col-lg-2"></div>
                                         <div class="col-lg-8">
@@ -79,8 +79,9 @@
                                                     <select class="form-control text-bold" aria-label="" id="system-role" name="system-role" onchange="val()">
                                                         <option value="0" selected></option>
                                                         <c:forEach var="role" items="${roles}">
-                                                            <option value="${role.key}">${role.value } </option>
+                                                            <option value="${role.key}">HRM</option>
                                                         </c:forEach>
+                                                        <option value="${role.key}">HRM</option>        
                                                         <c:remove var="roles" scope="session" />    
                                                     </select>
 
@@ -90,10 +91,9 @@
                                                     <label for="system-role">Process</label>
                                                     <select class="form-control text-bold" aria-label="" id="system-role" name="system-role" onchange="val()">
                                                         <option value="0" selected></option>
-                                                        <c:forEach var="role" items="${roles}">
-                                                            <option value="${role.key}">${role.value } </option>
+                                                        <c:forEach var="process" items="${timesheetProcess}">
+                                                            <option value="${process.key}">${process.value}</option>
                                                         </c:forEach>
-                                                        <c:remove var="roles" scope="session" />    
                                                     </select>
 
                                                 </div>

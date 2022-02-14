@@ -38,6 +38,10 @@ public class TimesheetController extends HttpServlet {
                 case "/TimesheetList":
                     showTimesheetListView(request, response);
                     break;
+                case "/NewTimesheet":
+                    showNewTimesheetView(request, response);
+                case "/TimesheetDetail":
+                    showTimesheetDetailView(request, response);    
                 default:
                     response.sendError(404);
                     break;
@@ -67,6 +71,23 @@ public class TimesheetController extends HttpServlet {
         request.setAttribute("timesheetProcess", settingDAO.getTimesheetProcess());
         request.setAttribute("timesheetStatus", settingDAO.getTimesheetStatus());
         request.getRequestDispatcher("/Views/TimesheetListView.jsp").forward(request, response);
+    }
+    
+    private void showNewTimesheetView(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setAttribute("timesheetProcess", settingDAO.getTimesheetProcess());
+        request.getRequestDispatcher("/Views/NewTimesheetView.jsp").forward(request, response);
+    }
+    
+    private void showTimesheetDetailView(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        response.setContentType("text/html;charset=UTF-8");
+        int id = Integer.parseInt(request.getParameter("id"));
+        request.setAttribute("timesheet", timesheetDAO.getTimesheetById(id));
+        request.setAttribute("timesheetStatus", settingDAO.getTimesheetStatus());
+        request.setAttribute("timesheetProcess", settingDAO.getTimesheetProcess());
+        request.getRequestDispatcher("/Views/TimesheetDetailView.jsp").forward(request, response);
     }
 
 }
