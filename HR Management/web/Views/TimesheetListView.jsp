@@ -106,13 +106,14 @@
                                     <div class="box-tools m-b-15">
                                         <div class="row">
                                             <div class="col-lg-8">
-                                                <form action="Setting" method="post" >
+                                                <form action="" method="post" >
                                                     <div class="input-group">
-                                                        <button type="submit" class="btn btn-md btn-primary" style="width: 150px; " disabled>Search by title</button>
+                                                        <div class="btn btn-md btn-default" style="width: 150px; pointer-events: none; "><span>Search by Title</span></div>
                                                         <input type="text" name="table_search" class="form-control input-md" style="width: 450px;" placeholder="Search" onclick="dateHideShow()"/>
                                                         <button type="submit" class="btn btn-md btn-default"><i class="fa fa-search"></i></button>
                                                         <br>
                                                         <div id="advanced" style="display: none">
+                                                            <br>
                                                             <div class="row">
                                                                 <div class="col-lg-2"></div>
                                                                 <div class="col-lg-8">
@@ -127,6 +128,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            <br>
                                                             <div class="row">
                                                                 <div class="col-lg-2"></div>
                                                                 <div class="col-lg-8">
@@ -156,9 +158,7 @@
                                             </div>
                                             <div class="col-lg-2"></div>
                                             <div class="col-lg-2">
-                                                <form action="https://google.com">
-                                                    <input class="btn btn-md btn-primary" type="submit" value="Add new timesheet" />
-                                                </form>
+                                                 <button onclick="window.open('http://localhost:8080/HR_Management/Timesheet/NewTimesheet', '_blank')" class="btn btn-md btn-primary" style="width: 150px; ">Add new timesheet</button>
                                             </div>
                                         </div>
                                     </div>
@@ -175,8 +175,8 @@
                                                 <th style="width: 13%"></th>
                                             </tr>
                                             <c:forEach var="timesheet" items="${timesheetList}"  varStatus="theCount">
-                                                <tr  onclick="window.open('http://localhost:8080/HR_Management/Timesheet/TimesheeList', '_blank')">
-                                                    <td>${theCount.count}</td>
+                                                <tr>
+                                                    <td style=" cursor: pointer;" onclick="window.open('http://localhost:8080/HR_Management/Timesheet/TimesheetDetail?id=${timesheet.id}', '_blank')" >${theCount.count}</td>
                                                     <td>${timesheet.date}</td>
                                                     <td>${timesheet.title}</td>
                                                     <td>${timesheet.project_code}</td>
@@ -239,12 +239,10 @@
                                                             x.style.display = "none";
                                                         }
                                                     }
-
-                                                    $(document).on("click", "#page-number", function () { // When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
+                                                    $(document).on("click", "#page-number", function () { 
                                                         $.get("http://localhost:8080/HR_Management/Timesheet/TimesheetList?page=1",function () {
                                                             $( "#timesheet-list" ).load( "http://localhost:8080/HR_Management/Timesheet/TimesheetList?page=1 #timesheet-list" );
-                                                        });
-                                                        alert("Clicked");
+                                                        });   
                                                         });
                                              
         </script>
