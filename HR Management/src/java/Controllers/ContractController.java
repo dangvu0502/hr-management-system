@@ -7,7 +7,7 @@ package Controllers;
 
 import Dao.ContractDAO;
 import Dao.EmployeeDAO;
-import Dao.SettingDAO;
+import DAO.SettingDAO;
 import Dao.UserDAO;
 import Models.Contract;
 import Models.Employee;
