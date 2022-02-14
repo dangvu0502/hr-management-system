@@ -37,7 +37,7 @@
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
         <header class="header">
-            <a href="Views1/Home.jsp" class="logo">
+            <a href="../Views/Home.jsp" class="logo">
                 <!-- Add the class icon to your logo image or logo icon to add the margining -->
                 Home
             </a>
@@ -263,6 +263,29 @@
                             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                         </div>
                     </div>
+
+                    <ul class="sidebar-menu">
+                        <li >
+                            <a href="../Views/Home.jsp">
+                                <i class="fa fa-home"></i> <span>Home Page</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<%= request.getContextPath()%>/BlogController">
+                                <i class="fa fa-rss"></i> <span>Blog</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<%= request.getContextPath()%>/SettingController/Setting">
+                                <i class="fa fa-gear"></i> <span>Setting List</span>
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="<%= request.getContextPath()%>/Group/GroupList">
+                                <i class="fa fa-user"></i> <span>Group List</span>
+                            </a>
+                        </li>
+                    </ul>
                     <!-- search form -->
                     <!--                    <form action="#" method="get" class="sidebar-form">
                                             <div class="input-group">
@@ -309,11 +332,11 @@
                     <div class="row">
                         <div class="panel">
                             <header class="panel-heading">
-                                Support Type Add
+                                Group ADD
                             </header>
                             <div class="panel-body" style="width: 50%;">
                                 <header class="panel-heading">
-                                    Add Support Type
+                                    Group ADD
                                 </header>
                                 <div class="panel-body">
                                     <form action="../Group/GroupAdd" >
@@ -329,7 +352,7 @@
                                                 <input type="text" class="form-control" name="code"  value="">
                                             </div>
                                         </div>
-                                         <div class="row">
+                                        <div class="row">
                                             <div class="form-group col-lg-12">
                                                 <label for="manager">Manager</label>
                                                 <input type="text" class="form-control" name="manager"  value="">
@@ -341,7 +364,7 @@
                                                 <input type="text" class="form-control" name="name"  value="">
                                             </div>
                                         </div>
-                                       <div class="row">
+                                        <div class="row">
                                             <div class="form-group col-lg-12">
                                                 <label for="Status">Status</label><br>
                                                 <input  type="radio" name="status" value="1" id="rbStatus" checked="checked" > <span style="margin-right: 2rem;" >BA</span>
@@ -361,13 +384,13 @@
                                                 <input type="text" class="form-control" name="parent_group_code"  value="">
                                             </div>
                                         </div>
-                                         <div class="row">
+                                        <div class="row">
                                             <div class="form-group col-lg-12">
                                                 <label for="updatedate">Update date</label>
                                                 <input type="date" class="form-control" name="update_date"  value="">
                                             </div>
                                         </div>
-                                        
+
                                         <div class=" form-group row col-lg-12 text-center">
                                             <button type="submit" id="submit-btn" class="btn btn-info"  >Add Support Type</button>
                                         </div>

@@ -37,215 +37,215 @@
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
         <header class="header">
-            <a href="Views1/Home.jsp" class="logo">
+            <a href="<%= request.getContextPath()%>/Views/Home.jsp" class="logo">
                 <!-- Add the class icon to your logo image or logo icon to add the margining -->
                 Home
             </a>
             <!-- Header Navbar: style can be found in header.less -->
-<!--            <nav class="navbar navbar-static-top" role="navigation">
-                 Sidebar toggle button
-                <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </a>
-                <div class="navbar-right">
-                    <ul class="nav navbar-nav">
-                         Messages: style can be found in dropdown.less
-                        <li class="dropdown messages-menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-envelope"></i>
-                                <span class="label label-success">4</span>
+            <!--            <nav class="navbar navbar-static-top" role="navigation">
+                             Sidebar toggle button
+                            <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
                             </a>
-                            <ul class="dropdown-menu">
-                                <li class="header">You have 4 messages</li>
-                                <li>
-                                     inner menu: contains the actual data 
-                                    <ul class="menu">
-                                        <li> start message 
-                                            <a href="#">
-                                                <div class="pull-left">
-                                                    <img src="img/avatar3.png" class="img-circle" alt="User Image"/>
-                                                </div>
-                                                <h4>
-                                                    Support Team
-                                                    <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                                                </h4>
-                                                <p>Why not buy a new awesome theme?</p>
-                                            </a>
-                                        </li> end message 
-                                        <li>
-                                            <a href="#">
-                                                <div class="pull-left">
-                                                    <img src="img/avatar2.png" class="img-circle" alt="user image"/>
-                                                </div>
-                                                <h4>
-                                                    Director Design Team
-                                                    <small><i class="fa fa-clock-o"></i> 2 hours</small>
-                                                </h4>
-                                                <p>Why not buy a new awesome theme?</p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <div class="pull-left">
-                                                    <img src="img/avatar.png" class="img-circle" alt="user image"/>
-                                                </div>
-                                                <h4>
-                                                    Developers
-                                                    <small><i class="fa fa-clock-o"></i> Today</small>
-                                                </h4>
-                                                <p>Why not buy a new awesome theme?</p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <div class="pull-left">
-                                                    <img src="img/avatar2.png" class="img-circle" alt="user image"/>
-                                                </div>
-                                                <h4>
-                                                    Sales Department
-                                                    <small><i class="fa fa-clock-o"></i> Yesterday</small>
-                                                </h4>
-                                                <p>Why not buy a new awesome theme?</p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <div class="pull-left">
-                                                    <img src="img/avatar.png" class="img-circle" alt="user image"/>
-                                                </div>
-                                                <h4>
-                                                    Reviewers
-                                                    <small><i class="fa fa-clock-o"></i> 2 days</small>
-                                                </h4>
-                                                <p>Why not buy a new awesome theme?</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="footer"><a href="#">See All Messages</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown tasks-menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-tasks"></i>
-                                <span class="label label-danger">9</span>
-                            </a>
-                            <ul class="dropdown-menu">
-
-                                <li class="header">You have 9 tasks</li>
-                                <li>
-                                     inner menu: contains the actual data 
-                                    <ul class="menu">
-                                        <li> Task item 
-                                            <a href="#">
-                                                <h3>
-                                                    Design some buttons
-                                                    <small class="pull-right">20%</small>
-                                                </h3>
-                                                <div class="progress progress-striped xs">
-                                                    <div class="progress-bar progress-bar-success" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                                        <span class="sr-only">20% Complete</span>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li> end task item 
-                                        <li> Task item 
-                                            <a href="#">
-                                                <h3>
-                                                    Create a nice theme
-                                                    <small class="pull-right">40%</small>
-                                                </h3>
-                                                <div class="progress progress-striped xs">
-                                                    <div class="progress-bar progress-bar-danger" style="width: 40%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                                        <span class="sr-only">40% Complete</span>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li> end task item 
-                                        <li> Task item 
-                                            <a href="#">
-                                                <h3>
-                                                    Some task I need to do
-                                                    <small class="pull-right">60%</small>
-                                                </h3>
-                                                <div class="progress progress-striped xs">
-                                                    <div class="progress-bar progress-bar-info" style="width: 60%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                                        <span class="sr-only">60% Complete</span>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li> end task item 
-                                        <li> Task item 
-                                            <a href="#">
-                                                <h3>
-                                                    Make beautiful transitions
-                                                    <small class="pull-right">80%</small>
-                                                </h3>
-                                                <div class="progress progress-striped xs">
-                                                    <div class="progress-bar progress-bar-warning" style="width: 80%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                                        <span class="sr-only">80% Complete</span>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li> end task item 
-                                    </ul>
-                                </li>
-                                <li class="footer">
-                                    <a href="#">View all tasks</a>
-                                </li>
-
-                            </ul>
-                        </li>
-                         User Account: style can be found in dropdown.less 
-                        <li class="dropdown user user-menu">
-
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-user"></i>
-                                <span>Jane Doe <i class="caret"></i></span>
-                            </a>
-                            <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
-                                <li class="dropdown-header text-center">Account</li>
-
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-clock-o fa-fw pull-right"></i>
-                                        <span class="badge badge-success pull-right">10</span> Updates</a>
-                                    <a href="#">
-                                        <i class="fa fa-envelope-o fa-fw pull-right"></i>
-                                        <span class="badge badge-danger pull-right">5</span> Messages</a>
-                                    <a href="#"><i class="fa fa-magnet fa-fw pull-right"></i>
-                                        <span class="badge badge-info pull-right">3</span> Subscriptions</a>
-                                    <a href="#"><i class="fa fa-question fa-fw pull-right"></i> <span class=
-                                                                                                      "badge pull-right">11</span> FAQ</a>
-                                </li>
-
-                                <li class="divider"></li>
-
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-user fa-fw pull-right"></i>
-                                        Profile
-                                    </a>
-                                    <a data-toggle="modal" href="#modal-user-settings">
-                                        <i class="fa fa-cog fa-fw pull-right"></i>
-                                        Settings
-                                    </a>
-                                </li>
-
-                                <li class="divider"></li>
-
-                                <li>
-                                    <a href="#"><i class="fa fa-ban fa-fw pull-right"></i> Logout</a>
-                                </li>
-                            </ul>
-
-                        </li>
-                    </ul>
-                </div>
-            </nav>-->
+                            <div class="navbar-right">
+                                <ul class="nav navbar-nav">
+                                     Messages: style can be found in dropdown.less
+                                    <li class="dropdown messages-menu">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                            <i class="fa fa-envelope"></i>
+                                            <span class="label label-success">4</span>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li class="header">You have 4 messages</li>
+                                            <li>
+                                                 inner menu: contains the actual data 
+                                                <ul class="menu">
+                                                    <li> start message 
+                                                        <a href="#">
+                                                            <div class="pull-left">
+                                                                <img src="img/avatar3.png" class="img-circle" alt="User Image"/>
+                                                            </div>
+                                                            <h4>
+                                                                Support Team
+                                                                <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                                                            </h4>
+                                                            <p>Why not buy a new awesome theme?</p>
+                                                        </a>
+                                                    </li> end message 
+                                                    <li>
+                                                        <a href="#">
+                                                            <div class="pull-left">
+                                                                <img src="img/avatar2.png" class="img-circle" alt="user image"/>
+                                                            </div>
+                                                            <h4>
+                                                                Director Design Team
+                                                                <small><i class="fa fa-clock-o"></i> 2 hours</small>
+                                                            </h4>
+                                                            <p>Why not buy a new awesome theme?</p>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">
+                                                            <div class="pull-left">
+                                                                <img src="img/avatar.png" class="img-circle" alt="user image"/>
+                                                            </div>
+                                                            <h4>
+                                                                Developers
+                                                                <small><i class="fa fa-clock-o"></i> Today</small>
+                                                            </h4>
+                                                            <p>Why not buy a new awesome theme?</p>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">
+                                                            <div class="pull-left">
+                                                                <img src="img/avatar2.png" class="img-circle" alt="user image"/>
+                                                            </div>
+                                                            <h4>
+                                                                Sales Department
+                                                                <small><i class="fa fa-clock-o"></i> Yesterday</small>
+                                                            </h4>
+                                                            <p>Why not buy a new awesome theme?</p>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">
+                                                            <div class="pull-left">
+                                                                <img src="img/avatar.png" class="img-circle" alt="user image"/>
+                                                            </div>
+                                                            <h4>
+                                                                Reviewers
+                                                                <small><i class="fa fa-clock-o"></i> 2 days</small>
+                                                            </h4>
+                                                            <p>Why not buy a new awesome theme?</p>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="footer"><a href="#">See All Messages</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown tasks-menu">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                            <i class="fa fa-tasks"></i>
+                                            <span class="label label-danger">9</span>
+                                        </a>
+                                        <ul class="dropdown-menu">
+            
+                                            <li class="header">You have 9 tasks</li>
+                                            <li>
+                                                 inner menu: contains the actual data 
+                                                <ul class="menu">
+                                                    <li> Task item 
+                                                        <a href="#">
+                                                            <h3>
+                                                                Design some buttons
+                                                                <small class="pull-right">20%</small>
+                                                            </h3>
+                                                            <div class="progress progress-striped xs">
+                                                                <div class="progress-bar progress-bar-success" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                                    <span class="sr-only">20% Complete</span>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </li> end task item 
+                                                    <li> Task item 
+                                                        <a href="#">
+                                                            <h3>
+                                                                Create a nice theme
+                                                                <small class="pull-right">40%</small>
+                                                            </h3>
+                                                            <div class="progress progress-striped xs">
+                                                                <div class="progress-bar progress-bar-danger" style="width: 40%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                                    <span class="sr-only">40% Complete</span>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </li> end task item 
+                                                    <li> Task item 
+                                                        <a href="#">
+                                                            <h3>
+                                                                Some task I need to do
+                                                                <small class="pull-right">60%</small>
+                                                            </h3>
+                                                            <div class="progress progress-striped xs">
+                                                                <div class="progress-bar progress-bar-info" style="width: 60%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                                    <span class="sr-only">60% Complete</span>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </li> end task item 
+                                                    <li> Task item 
+                                                        <a href="#">
+                                                            <h3>
+                                                                Make beautiful transitions
+                                                                <small class="pull-right">80%</small>
+                                                            </h3>
+                                                            <div class="progress progress-striped xs">
+                                                                <div class="progress-bar progress-bar-warning" style="width: 80%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                                    <span class="sr-only">80% Complete</span>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </li> end task item 
+                                                </ul>
+                                            </li>
+                                            <li class="footer">
+                                                <a href="#">View all tasks</a>
+                                            </li>
+            
+                                        </ul>
+                                    </li>
+                                     User Account: style can be found in dropdown.less 
+                                    <li class="dropdown user user-menu">
+            
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                            <i class="fa fa-user"></i>
+                                            <span>Jane Doe <i class="caret"></i></span>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
+                                            <li class="dropdown-header text-center">Account</li>
+            
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fa fa-clock-o fa-fw pull-right"></i>
+                                                    <span class="badge badge-success pull-right">10</span> Updates</a>
+                                                <a href="#">
+                                                    <i class="fa fa-envelope-o fa-fw pull-right"></i>
+                                                    <span class="badge badge-danger pull-right">5</span> Messages</a>
+                                                <a href="#"><i class="fa fa-magnet fa-fw pull-right"></i>
+                                                    <span class="badge badge-info pull-right">3</span> Subscriptions</a>
+                                                <a href="#"><i class="fa fa-question fa-fw pull-right"></i> <span class=
+                                                                                                                  "badge pull-right">11</span> FAQ</a>
+                                            </li>
+            
+                                            <li class="divider"></li>
+            
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fa fa-user fa-fw pull-right"></i>
+                                                    Profile
+                                                </a>
+                                                <a data-toggle="modal" href="#modal-user-settings">
+                                                    <i class="fa fa-cog fa-fw pull-right"></i>
+                                                    Settings
+                                                </a>
+                                            </li>
+            
+                                            <li class="divider"></li>
+            
+                                            <li>
+                                                <a href="#"><i class="fa fa-ban fa-fw pull-right"></i> Logout</a>
+                                            </li>
+                                        </ul>
+            
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>-->
         </header>
         <div class="wrapper row-offcanvas row-offcanvas-left">
             <!-- Left side column. contains the logo and sidebar -->
@@ -263,40 +263,90 @@
                             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                         </div>
                     </div>
-                    <!-- search form -->
-<!--                    <form action="#" method="get" class="sidebar-form">
-                        <div class="input-group">
-                            <input type="text" name="q" class="form-control" placeholder="Search..."/>
-                            <span class="input-group-btn">
-                                <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
-                            </span>
-                        </div>
-                    </form>-->
-<!--                    <ul class="sidebar-menu">
-                        <li>
-                            <a href="index.html">
-                                <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                       <ul class="sidebar-menu">
+                        <li >
+                            <a href="../Views/Home.jsp">
+                                <i class="fa fa-home"></i> <span>Home Page</span>
                             </a>
                         </li>
                         <li>
-                            <a href="general.html">
-                                <i class="fa fa-gavel"></i> <span>General</span>
+                            <a href="<%= request.getContextPath()%>/BlogController">
+                                <i class="fa fa-rss"></i> <span>Blog</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<%= request.getContextPath()%>/SettingController/Setting">
+                                <i class="fa fa-gear"></i> <span>Setting List</span>
+
+
+                       <ul class="sidebar-menu">
+                        <li >
+                            <a href="../Views/Home.jsp">
+                                <i class="fa fa-home"></i> <span>Home Page</span>
                             </a>
                         </li>
 
                         <li>
-                            <a href="basic_form.html">
-                                <i class="fa fa-globe"></i> <span>Basic Elements</span>
+                            <a href="<%= request.getContextPath()%>/BlogController">
+                                <i class="fa fa-rss"></i> <span>Blog</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<%= request.getContextPath()%>/SettingController/Setting">
+                                <i class="fa fa-gear"></i> <span>Setting List</span>
                             </a>
                         </li>
 
+
+                        <li >
+                            <a href="<%= request.getContextPath()%>/Group/GroupList">
+                                <i class="fa fa-user"></i> <span>Group List</span>
+                            </a>
+                        </li>
                         <li class="active">
-                            <a href="simple.html">
-                                <i class="fa fa-glass"></i> <span>Simple tables</span>
+                            <a href="<%= request.getContextPath()%>/SupportTypeController/SupportType">
+                                <i class="fa fa-user"></i> <span>Support Type</span>
                             </a>
                         </li>
+                    </ul>
 
-                    </ul>-->
+
+
+
+                    <!-- search form -->
+                    <!--                    <form action="#" method="get" class="sidebar-form">
+                                            <div class="input-group">
+                                                <input type="text" name="q" class="form-control" placeholder="Search..."/>
+                                                <span class="input-group-btn">
+                                                    <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+                                                </span>
+                                            </div>
+                                        </form>-->
+                    <!--                    <ul class="sidebar-menu">
+                                            <li>
+                                                <a href="index.html">
+                                                    <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="general.html">
+                                                    <i class="fa fa-gavel"></i> <span>General</span>
+                                                </a>
+                                            </li>
+                    
+                                            <li>
+                                                <a href="basic_form.html">
+                                                    <i class="fa fa-globe"></i> <span>Basic Elements</span>
+                                                </a>
+                                            </li>
+                    
+                                            <li class="active">
+                                                <a href="simple.html">
+                                                    <i class="fa fa-glass"></i> <span>Simple tables</span>
+                                                </a>
+                                            </li>
+                    
+                                        </ul>-->
                 </section>
                 <!-- /.sidebar -->
             </aside>
@@ -351,7 +401,7 @@
                                         <th>Description</th>
                                         <th>Parent_group_code</th>
                                         <th>Update Date</th>
-                                        
+
                                     </tr>
                                     <c:forEach items="${listG}" var="g">
                                         <tr>
@@ -361,17 +411,18 @@
                                             <td>
                                                 <c:if test = "${g.status}"> <span>Non-BA</span></c:if>
                                                 <c:if test = "${!g.status}"><span>BA</span></c:if>
-                                            </td>
-                                            
-                                            
-                                            <td>${g.description}</td>
+                                                </td>
+
+
+                                                <td>${g.description}</td>
                                             <td>${g.parent_group_code}</td>
                                             <td>${g.update_date}</td>
                                             <td>
                                                 &nbsp;&nbsp;
-                                                <a id="delete" href="#"><span class="glyphicon glyphicon-trash" ></span></a>
-                                                &nbsp;&nbsp;
-                                                <a class="edit" href="../Group/GroupViewEdit?id=${g.id}&code=${g.code}&manager=${g.manager}&name=${g.name}&status=${g.status}&description=${g.description}&parent_group_code=${g.parent_group_code}&update_date=${g.update_date}" ><span class="glyphicon glyphicon-edit"></span></a>
+                                                <c:if test = "${g.delete}"> <a id="delete" name="" href="../Group/Delete?delete=1&id=${g.id}&page=${page}"><span class="glyphicon glyphicon-trash" ></span></a></c:if>
+                                                <c:if test = "${!g.delete}"><a id="delete" href="../Group/Delete?delete=0&id=${g.id}&page=${page}"><span class="glyphicon glyphicon-refresh" ></span></a></c:if>
+                                                    &nbsp;&nbsp;
+                                                    <a class="edit" href="../Group/GroupViewEdit?id=${g.id}&code=${g.code}&manager=${g.manager}&name=${g.name}&status=${g.status}&description=${g.description}&parent_group_code=${g.parent_group_code}&update_date=${g.update_date}" ><span class="glyphicon glyphicon-edit"></span></a>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -379,8 +430,8 @@
                                 <div class="table-foot">
                                     <ul class="pagination pagination-sm no-margin pull-right">
                                         <c:forEach begin="1" end="${endP}" var="p">
-                                             <li><a href="../Group/GroupList?page=${p}">${p}</a></li>
-                                        </c:forEach>
+                                            <li><a href="../Group/GroupList?page=${p}">${p}</a></li>
+                                            </c:forEach>
                                     </ul>
                                 </div>
                             </div>
@@ -388,7 +439,7 @@
                     </div>
                 </section><!-- /.content -->
                 <!-- /.Dialog -->
-        
+
                 <div class="footer-main">
                     Copyright &copy Director, 2014
                 </div>
@@ -399,8 +450,8 @@
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
         <script type="text/javascript">
-                      
-                                                   
+
+
         </script>
     </body>
 </html>

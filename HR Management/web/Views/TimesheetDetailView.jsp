@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>New User</title>
+        <title>Timesheet Detail</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
@@ -75,11 +75,11 @@
                                             <div class="row ">
                                                 <div class="form-group col-lg-12">
                                                     <label for="work-result">Work result</label><p></p>
-                                                    <textarea rows="10" cols="60" id="work-result" name="work-result" ></textarea>
+                                                    <textarea rows="10" cols="60" id="work-result" name="work-result" style=" resize: vertical; "></textarea>
                                                 </div>
                                                 <div class="form-group col-lg-12">
                                                     <label for="work-result">Reject reason</label><p></p>
-                                                    <textarea rows="5" cols="60" id="work-result" name="work-result"></textarea>
+                                                    <textarea rows="5" cols="60" id="work-result" name="work-result" style="  resize: vertical; "></textarea>
                                                 </div>
                                             </div>
                                         </div>

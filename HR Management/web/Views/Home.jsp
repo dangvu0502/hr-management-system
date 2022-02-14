@@ -44,7 +44,7 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
             />
-        <link rel="icon" href="../img/Honey Bee.png" />
+        <link rel="icon" href="<%= request.getContextPath()%>/img/HoneyBee.png" />
 
         <style>
             .Signup {

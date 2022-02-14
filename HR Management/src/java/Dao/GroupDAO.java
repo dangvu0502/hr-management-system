@@ -223,4 +223,16 @@ public class GroupDAO {
         }
         return null;
     }
+    public void editStatusDelete(int delete, int id) throws SQLException {
+        String sql = "UPDATE `hr_system_v2`.`group` SET `delete` = ? WHERE (`id` = ?);";
+        con = new DBContext().getConnection();
+        ps = con.prepareStatement(sql);
+        if (delete == 0) {
+            ps.setInt(1, 1);
+        } else {
+            ps.setInt(1, 0);
+        }
+        ps.setInt(2, id);
+        ps.executeUpdate();
+    }
 }

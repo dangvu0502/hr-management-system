@@ -52,6 +52,16 @@
                         </div>
                     </div>
                     <ul class="sidebar-menu">
+                        <li >
+                            <a href="<%= request.getContextPath()%>/Views/Home.jsp">
+                                <i class="fa fa-home"></i> <span>Home Page</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<%= request.getContextPath()%>/BlogController">
+                                <i class="fa fa-rss"></i> <span>Blog</span>
+                            </a>
+                        </li>
                         <li>
                             <a href="../Contract/Details">
                                 <i class="fa fa-glass"></i> <span>Contract Details</span>
@@ -62,6 +72,7 @@
                                 <i class="fa fa-glass"></i> <span>Contract Add</span>
                             </a>
                         </li>
+
                     </ul>
                 </section>
                 <!-- /.sidebar -->
@@ -176,8 +187,8 @@
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
     </body>
     <script>
-                                                        function addFunction() {
-                                                            alert("Successfully!!");
-                                                        }
+                                                    function addFunction() {
+                                                        alert("Successfully!!");
+                                                    }
     </script>
 </html>

@@ -6,6 +6,7 @@
 package Controllers;
 
 import Dao.GroupDAO;
+import Dao.SettingDAO;
 import Dao.SupportTypeDAO;
 import Models.Group;
 import Models.SupportType;
@@ -58,6 +59,9 @@ public class GroupController extends HttpServlet {
                     break;
                 case "/GroupEdit":
                     GroupEdit(request, response);
+                    break;
+                case "/Delete":
+                    changeStatusDelete(request, response);
                     break;
                 default:
                     response.sendError(404);
@@ -201,9 +205,9 @@ public class GroupController extends HttpServlet {
             Group g = new Group(id, code, manager, name, status, description, parent_group_code, true, update_date);
             GroupDAO gdao = new GroupDAO();
             boolean check = gdao.editGroup(g, id);
-
+            
             request.setAttribute("listG", g);
-            request.getRequestDispatcher("../Views/GroupView.jsp").forward(request, response);
+            groupListImplement(request, response);
         }
     }
 
@@ -227,6 +231,27 @@ public class GroupController extends HttpServlet {
             boolean check = gDAO.InsertGroup(gr);
 
             groupListImplement(request, response);
+        }
+    }
+    //delete
+     private void changeStatusDelete(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            int delete = Integer.parseInt(request.getParameter("delete"));
+            int id = Integer.parseInt(request.getParameter("id"));
+            String page = request.getParameter("page");
+            if (page == null) {
+                page = "1";
+            }
+            
+            GroupDAO g = new GroupDAO();
+            g.editStatusDelete(delete, id);
+            groupListImplement(request, response);
+        } catch (Exception e) {
+            System.out.println("Error " + e.getMessage());
         }
     }
 }

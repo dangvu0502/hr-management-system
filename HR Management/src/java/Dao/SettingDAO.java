@@ -3,18 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Dao;
+package DAO;
 
 import Context.DBContext;
 import Models.Setting;
-import Models.SupportType;
-import Models.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Vector;
 
 /**
@@ -52,12 +49,26 @@ public class SettingDAO {
         return vec;
     }
 
-    public int getTotalSetting() {
+    public int getTotalSetting(String filter, String search) {
         int total = 0;
         try {
-            String sql = "select count(*) FROM hr_system_v2.setting";
+            String sql = "select count(*) FROM hr_system_v2.setting\n";
+            if (filter != null && search == null) {
+                if ("0".equals(filter) || "1".equals(filter)) {
+                    sql += "where status = ?";
+                } else {
+                    sql += "where type = ?";
+                }
+            } else if (filter == null && search != null) {
+                sql += "where value like ?";
+            }
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
+            if (filter != null) {
+                ps.setString(1, filter);
+            } else if (search != null) {
+                ps.setString(1,"%" + search + "%");
+            }
             rs = ps.executeQuery();
             while (rs.next()) {
                 total = rs.getInt(1);
@@ -66,6 +77,84 @@ public class SettingDAO {
             System.out.println("Error: " + e.getMessage());
         }
         return total;
+    }
+
+    public Vector<String> getAllType() {
+        Vector vec = new Vector();
+        try {
+            String sql = "select type from hr_system_v2.setting\n"
+                    + "group by type";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                vec.add(rs.getString(1));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return vec;
+    }
+
+    public Vector<Setting> filterSettingList(String input, int option, int page) {
+        Vector vec = new Vector();
+        try {
+            String sql = "select * from hr_system_v2.setting\n";
+            switch (option) {
+                case 1:
+                    sql += "where type = ?\n";
+                    break;
+                case 2:
+                    sql += "where status = ?\n";
+                    break;
+            }
+            sql += "limit 5 offset ?";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, input);
+            ps.setInt(2, (page - 1) * 5);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Setting e = new Setting();
+                e.setId(rs.getInt(1));
+                e.setType(rs.getString(2));
+                e.setValue(rs.getString(3));
+                e.setStatus(rs.getBoolean(4));
+                e.setOrder(rs.getInt(5));
+                e.setNote(rs.getString(6));
+                vec.add(e);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return vec;
+    }
+
+    public Vector<Setting> searchSetting(String input, int page) {
+        Vector vec = new Vector();
+        try {
+            String sql = "select * FROM hr_system_v2.setting\n"
+                    + "where value like ?\n"
+                    + "limit 5 offset ?";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + input + "%");
+            ps.setInt(2, (page - 1) * 5);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Setting e = new Setting();
+                e.setId(rs.getInt(1));
+                e.setType(rs.getString(2));
+                e.setValue(rs.getString(3));
+                e.setStatus(rs.getBoolean(4));
+                e.setOrder(rs.getInt(5));
+                e.setNote(rs.getString(6));
+                vec.add(e);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return vec;
     }
 
     public void editStatus(int status, int setting_id) throws SQLException {
@@ -80,16 +169,16 @@ public class SettingDAO {
         ps.setInt(2, setting_id);
         ps.executeUpdate();
     }
-    
-    public HashMap<Integer,String> getAllRole() {
-        HashMap<Integer,String> role = new HashMap<>();
+
+    public HashMap<Integer, String> getAllRole() {
+        HashMap<Integer, String> role = new HashMap<>();
         try {
             String sql = "SELECT setting.order, setting.value FROM hr_system_v2.setting where setting.type = 'role';";
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
-                role.put(rs.getInt(1),rs.getString(2));
+                role.put(rs.getInt(1), rs.getString(2));
             }
             return role;
         } catch (Exception e) {
@@ -97,7 +186,7 @@ public class SettingDAO {
         }
         return null;
     }
-    
+
     public boolean updateSettingList(Setting s, int id) throws Exception {
         String updateTableSQL = "UPDATE hr_system_v2.setting SET type= ? ,value= ?, status= ?, setting.order = ? WHERE id= ?";
         int check = 0;
@@ -116,7 +205,7 @@ public class SettingDAO {
         }
         return check > 0;
     }
-    
+
     //add
     public boolean addNewSetting(Setting s) throws Exception {
         int check = 0;
@@ -137,7 +226,7 @@ public class SettingDAO {
         }
         return check > 0;
     }
-    
+
     //delete
     public void deleteByID(int id) {
         try {
@@ -153,9 +242,9 @@ public class SettingDAO {
 
     public static void main(String[] args) {
         SettingDAO st = new SettingDAO();
-        HashMap<Integer,String> role = st.getAllRole();
-        for(Map.Entry entry : role.entrySet()){
-            System.out.println(entry.getKey()+" "+entry.getValue());
-        }
+        int role = st.getTotalSetting(null, "m");
+
+            System.out.println(role);
+
     }
 }

@@ -256,6 +256,33 @@
                             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                         </div>
                     </div>
+                        <ul class="sidebar-menu">
+                        <li >
+                            <a href="../Views/Home.jsp">
+                                <i class="fa fa-home"></i> <span>Home Page</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<%= request.getContextPath()%>/BlogController">
+                                <i class="fa fa-rss"></i> <span>Blog</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<%= request.getContextPath()%>/SettingController/Setting">
+                                <i class="fa fa-gear"></i> <span>Setting List</span>
+                            </a>
+                        </li>
+                        <li >
+                            <a href="<%= request.getContextPath()%>/Group/GroupList">
+                                <i class="fa fa-user"></i> <span>Group List</span>
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="<%= request.getContextPath()%>/SupportTypeController/SupportType">
+                                <i class="fa fa-user"></i> <span>Support Type</span>
+                            </a>
+                        </li>
+                    </ul>
                     <!-- search form -->
                     <!--                    <form action="#" method="get" class="sidebar-form">
                                             <div class="input-group">
@@ -357,11 +384,11 @@
                                                     <a href="../StatusController?status=0&id=${s.id}&page=${page}"><span class="glyphicon glyphicon-retweet"></span></a>
                                                     <a href="../SettingController/Status?status=0&id=${s.id}&page=${page}"><span class="glyphicon glyphicon-retweet"></span></a>
                                                     </c:if>
-                                                    <c:if test = "${s.status}">
+                                                <c:if test = "${s.status}">
                                                     <span class="badge bg-green">Activate</span>
                                                     &nbsp;
                                                     <a href="../SettingController/Status?status=1&id=${s.id}&page=${page}"><span class="glyphicon glyphicon-retweet"></span></a>
-                                                    </c:if>
+                                                </c:if>
                                             </td>
                                             <td>
                                                 <a id="delete" onclick="deleteByID('${s.id}');" href="#"><span class="glyphicon glyphicon-trash"></span></a>

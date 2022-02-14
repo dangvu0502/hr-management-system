@@ -46,8 +46,8 @@
             <section class="content">
                 <div class="row">
                     <div  class="col-lg-3"></div>
-                    
-<div class="col-lg-6 ">
+
+                    <div class="col-lg-6 ">
                         <section class="panel">
                             <header class="panel-heading text-center">
                                 New Timesheet
@@ -57,7 +57,7 @@
                                     <div class="row">
                                         <div class="col-lg-2"></div>
                                         <div class="col-lg-8">
-                                         
+
                                             <div class="row ">
                                                 <div class="form-group col-lg-12">
                                                     <label for="fullname">Title</label>
@@ -68,15 +68,15 @@
                                                 <div class="form-group col-lg-6">
                                                     <label for="username">Date</label>
                                                     <input type="date" class="form-control" id="username" name="username" onkeyup="checkUsername()" placeholder="Enter your username" required>
-      
+
                                                 </div>
                                                 <div class="form-group col-lg-6">
                                                     <label for="email">Duration (hour)</label>
                                                     <input type="email" class="form-control" id="email" name="email" placeholder="Ex: 1:30" required>
-                                                 
+
                                                 </div>
                                             </div>
-                                       
+
                                             <div class="row">
                                                 <div class="form-group col-lg-6" >
                                                     <label for="system-role">Project</label>
@@ -89,8 +89,8 @@
                                                     </select>
 
                                                 </div>
-                                                 <div class="form-group col-lg-6" >
-          
+                                                <div class="form-group col-lg-6" >
+
                                                     <label for="system-role">Process</label>
                                                     <select class="form-control text-bold" aria-label="" id="system-role" name="system-role" onchange="val()">
                                                         <option value="0" selected></option>
