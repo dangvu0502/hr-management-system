@@ -51,6 +51,24 @@ public class SupportTypeDAO {
         }
         return vec;
     }
+    
+    public Vector<Group> getCodeGroupBAList() {
+        Vector vec = new Vector();
+        try {
+            String sql = "SELECT a.code FROM hr_system_v2.group a join hr_system_v2.`support type` b where a.manager_id = b.id and a.status = 1;";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Group s = new Group();
+                s.setCode(rs.getString(1));
+                vec.add(s);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return vec;
+    }
 
     public int totalSupportType() {
         try {
