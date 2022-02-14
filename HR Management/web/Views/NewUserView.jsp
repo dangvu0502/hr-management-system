@@ -180,7 +180,7 @@
                                                     <select class="form-control text-bold" aria-label="" id="system-role" name="system-role" onchange="val()">
                                                         <option value="0" selected></option>
                                                         <c:forEach var="role" items="${roles}">
-                                                            <option value="${role.key}">${role.value} </option>
+                                                            <option value="${role.key}">${role.value } </option>
                                                         </c:forEach>
                                                         <c:remove var="roles" scope="session" />    
                                                     </select>
