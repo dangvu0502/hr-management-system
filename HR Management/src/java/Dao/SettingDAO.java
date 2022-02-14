@@ -239,6 +239,40 @@ public class SettingDAO {
             System.out.println("Error: " + e.getMessage());
         }
     }
+    
+    public HashMap<Integer, String> getTimesheetProcess() {
+        HashMap<Integer, String> role = new HashMap<>();
+        try {
+            String sql = "SELECT setting.order, setting.value FROM hr_system_v2.setting where setting.type = 'timesheet process'";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                role.put(rs.getInt(1), rs.getString(2));
+            }
+            return role;
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return null;
+    }
+    
+    public HashMap<Integer, String> getTimesheetStatus() {
+        HashMap<Integer, String> role = new HashMap<>();
+        try {
+            String sql = "SELECT setting.order, setting.value FROM hr_system_v2.setting where setting.type = 'timesheet status'";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                role.put(rs.getInt(1), rs.getString(2));
+            }
+            return role;
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return null;
+    }
 
     public static void main(String[] args) {
         SettingDAO st = new SettingDAO();

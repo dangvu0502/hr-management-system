@@ -1,3 +1,5 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -39,9 +41,9 @@
                 <section class="sidebar">
                     <!-- Sidebar user panel -->
                     <div class="user-panel">
-                        <div class="pull-left image">
-                            <img src="img/avatar3.png" class="img-circle" alt="User Image" />
-                        </div>
+                        <!--                        <div class="pull-left image">
+                                                    <img src="img/avatar3.png" class="img-circle" alt="User Image" />
+                                                </div>-->
                         <div class="pull-left info">
                             <p>Hello, Jane</p>
 
@@ -106,24 +108,48 @@
                                             <div class="col-lg-8">
                                                 <form action="Setting" method="post" >
                                                     <div class="input-group">
-                                                        <select class="form-control input-md" style="width: 150px;" name="type">
-                                                            <option value="setting_id">ID</option>
-                                                            <option value="username">User Name</option>
-                                                            <option value="fullname">Full Name</option>
-                                                            <option value="email">Email</option>
-                                                            <option value="type_name">Type</option>
-                                                            <option value="status">Status</option>
-                                                        </select>  
+                                                        <button type="submit" class="btn btn-md btn-primary" style="width: 150px; " disabled>Search by title</button>
                                                         <input type="text" name="table_search" class="form-control input-md" style="width: 450px;" placeholder="Search" onclick="dateHideShow()"/>
-                                                        <button type="submit" class="btn btn-md btn-default  "><i class="fa fa-search"></i></button>
+                                                        <button type="submit" class="btn btn-md btn-default"><i class="fa fa-search"></i></button>
                                                         <br>
-                                                        <div id="date" style="display: none;">
-                                                            <label class="text-left" for="from-date" style="width: 150px;"></label>
-                                                            <label class="text-left" for="from-date" style="width: 150px;">Date</label><br>
-                                                            <label class="text-left" for="from-date" style="width: 150px;"></label>
-                                                            <input type="date" class="form-control  " id="from-date" style="width: 200px;" name="from-date" placeholder="From">
-                                                            <label class="text-left" for="from-date" style="width: 50px;"></label>
-                                                            <input type="date" class="form-control" id="to-date" style="width: 200px;" name="to-date" placeholder="To">
+                                                        <div id="advanced" style="display: none">
+                                                            <div class="row">
+                                                                <div class="col-lg-2"></div>
+                                                                <div class="col-lg-8">
+                                                                    <div class="col-md-1"></div>
+                                                                    <div class="col-md-7">
+                                                                        <label class="text-left" for="from-date" style="width: 150px;">From</label><br>
+                                                                        <input type="date" class="form-control" id="from-date" style="width: 200px;" name="from-date" placeholder="From">
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <label class="text-left" for="to-date" style="width: 150px;">To</label><br>
+                                                                        <input type="date" class="form-control" id="to-date" style="width: 200px;" name="to-date" placeholder="From">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-lg-2"></div>
+                                                                <div class="col-lg-8">
+                                                                    <div class="col-md-1"></div>
+                                                                    <div class="col-md-7">
+                                                                        <label class="text-left" for="project-filter" style="width: 150px;">Project</label><br>
+                                                                        <select class="form-control input-md" style="width: 200px;" name="project-filter" id="project-filter">
+                                                                            <option value="project">Project</option>
+                                                                            <option value="project">Project</option>
+                                                                            <option value="project">Project</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <label class="text-left" for="process-filter" style="width: 150px;">Process</label><br>
+                                                                        <select class="form-control input-md" style="width: 200px;" name="process-filter" id="process-filter">
+                                                                            <c:forEach var="process" items="${timesheetProcess}">
+                                                                                <option value="${process.key}">${process.value}</option>
+                                                                            </c:forEach>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
                                                         </div>
                                                     </div>
                                                 </form>
@@ -131,62 +157,59 @@
                                             <div class="col-lg-2"></div>
                                             <div class="col-lg-2">
                                                 <form action="https://google.com">
-                                                    <input class="btn btn-md btn-success" type="submit" value="Add new timesheet" />
+                                                    <input class="btn btn-md btn-primary" type="submit" value="Add new timesheet" />
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
-                                    <table class="table table-hover">
-                                        <tr>
-                                            <th style="width: 10%">#</th>
-                                            <th style="width: 13%">Timesheet Date</th>
-                                            <th style="width: 16%">Timesheet Title</th>
-                                            <th style="width: 13%">Project</th>
-                                            <th style="width: 13%">Process</th>
-                                            <th style="width: 13%">Duration</th>
-                                            <th style="width: 13%">Status</th>
-                                            <th style="width: 13%"></th>
-                                        </tr>
-                                        <tr  onclick="window.open('http://localhost:8080/HR_Management/Views/TimesheetListView.jsp','_blank')">
-                                            <td >1</td>
-                                            <td>20222-02-02</td>
-                                            <td>Online meeting</td>
-                                            <td>SWP-G6</td>
-                                            <td>Training</td>
-                                            <td>1:30</td>
-                                            <td><span class="label label-success">Approved</span></td>
-                                            <td>
-                                                <a href="#" class="btn btn-md btn-default"><i class="fa fa-trash-o"></i></a>
-            
-                                            </td>
-                                        </tr>
-                                        <tr onclick="window.open('http://localhost:8080/HR_Management/Views/TimesheetListView.jsp','_blank')">
-                                            <td>2</td>
-                                            <td>20222-02-02</td>
-                                            <td>Online meeting</td>
-                                            <td>SWP-G6</td>
-                                            <td>Training</td>
-                                            <td>1:30</td>
-                                            <td><span class="label label-danger">Rejected</span></td>
-                                            <td>
-                                                <a href="#" class="btn btn-md btn-default"><i class="fa fa-trash-o"></i></a>
-                                                <a href="#" class="btn btn-md btn-default"><i class="fa fa-pencil"></i></a>
-                                            </td>
-                                        </tr>
-                                        <tr onclick="window.open('http://localhost:8080/HR_Management/Views/TimesheetListView.jsp','_blank')">
-                                            <td>3</td>
-                                            <td>20222-02-02</td>
-                                            <td>Online meeting</td>
-                                            <td>SWP-G6</td>
-                                            <td>Training</td>
-                                            <td>1:30</td>
-                                            <td><span class="label label-warning">Submitted</span></td>
-                                            <td>
-                                                <a href="#" class="btn btn-md btn-default"><i class="fa fa-trash-o"></i></a>
-                                                <a href="#" class="btn btn-md btn-default"><i class="fa fa-pencil"></i></a>
-                                            </td>
-                                        </tr>
-                                    </table>
+                                    <div class="panel-body">
+                                        <table class="table table-hover" id="timesheet-list">
+                                            <tr>
+                                                <th style="width: 10%">#</th>
+                                                <th style="width: 13%">Timesheet Date</th>
+                                                <th style="width: 16%">Timesheet Title</th>
+                                                <th style="width: 13%">Project</th>
+                                                <th style="width: 13%">Process</th>
+                                                <th style="width: 13%">Duration</th>
+                                                <th style="width: 13%">Status</th>
+                                                <th style="width: 13%"></th>
+                                            </tr>
+                                            <c:forEach var="timesheet" items="${timesheetList}"  varStatus="theCount">
+                                                <tr  onclick="window.open('http://localhost:8080/HR_Management/Timesheet/TimesheeList', '_blank')">
+                                                    <td>${theCount.count}</td>
+                                                    <td>${timesheet.date}</td>
+                                                    <td>${timesheet.title}</td>
+                                                    <td>${timesheet.project_code}</td>
+                                                    <td>${timesheetProcess[timesheet.process]}</td>
+                                                    <td>${timesheet.duration}</td>
+                                                    <td>
+                                                        <c:if test="${timesheet.status == 1}">
+                                                            <span class="label label-warning">${timesheetStatus[timesheet.status]}</span>
+                                                        </c:if>
+                                                        <c:if test="${timesheet.status == 2}">
+                                                            <span class="label label-success">${timesheetStatus[timesheet.status]}</span>
+                                                        </c:if>
+                                                        <c:if test="${timesheet.status == 3}">
+                                                            <span class="label label-danger">${timesheetStatus[timesheet.status]}</span>
+                                                        </c:if>
+                                                    </td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-md btn-default"><i class="fa fa-trash-o"></i></a>
+                                                            <c:if test="${timesheet.status != 2}">
+                                                            <a href="#" class="btn btn-md btn-default"><i class="fa fa-pencil"></i></a>
+                                                            </c:if>
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+                                        </table>
+                                        <div class="table-foot">
+                                            <ul class="pagination pagination-sm no-margin pull-right">
+                                                <c:forEach begin="1" end="3" var="p">
+                                                    <li><button id="page-number" class="btn btn-sm btn-default">${p}</button></li>
+                                                </c:forEach>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div><!-- /.box-body -->
                             </div><!-- /.box -->
                         </div>
@@ -208,14 +231,22 @@
         <!-- Director App -->
         <script src="../js/Director/app.js" type="text/javascript"></script>
         <script>
-                                                            function dateHideShow() {
-                                                                var x = document.getElementById("date");
-                                                                if (x.style.display === "none") {
-                                                                    x.style.display = "block";
-                                                                } else {
-                                                                    x.style.display = "none";
-                                                                }
-                                                            }
+                                                    function dateHideShow() {
+                                                        var x = document.getElementById("advanced");
+                                                        if (x.style.display === "none") {
+                                                            x.style.display = "block";
+                                                        } else {
+                                                            x.style.display = "none";
+                                                        }
+                                                    }
+
+                                                    $(document).on("click", "#page-number", function () { // When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
+                                                        $.get("http://localhost:8080/HR_Management/Timesheet/TimesheetList?page=1",function () {
+                                                            $( "#timesheet-list" ).load( "http://localhost:8080/HR_Management/Timesheet/TimesheetList?page=1 #timesheet-list" );
+                                                        });
+                                                        alert("Clicked");
+                                                        });
+                                             
         </script>
     </body>
 </html>

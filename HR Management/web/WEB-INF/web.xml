@@ -52,6 +52,10 @@
         <servlet-name>SupportTypeController</servlet-name>
         <servlet-class>Controllers.SupportTypeController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TimesheetController</servlet-name>
+        <servlet-class>Controllers.TimesheetController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AccountController</servlet-name>
         <url-pattern>/Account/*</url-pattern>
@@ -87,6 +91,10 @@
     <servlet-mapping>
         <servlet-name>SettingController</servlet-name>
         <url-pattern>/SettingController/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TimesheetController</servlet-name>
+        <url-pattern>/Timesheet/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
