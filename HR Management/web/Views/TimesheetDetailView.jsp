@@ -75,11 +75,11 @@
                                             <div class="row ">
                                                 <div class="form-group col-lg-12">
                                                     <label for="work-result">Work result</label><p></p>
-                                                    <textarea rows="10" cols="60" id="work-result" name="work-result" ></textarea>
+                                                    <textarea rows="10" cols="60" id="work-result" name="work-result" style=" resize: vertical; "></textarea>
                                                 </div>
                                                 <div class="form-group col-lg-12">
                                                     <label for="work-result">Reject reason</label><p></p>
-                                                    <textarea rows="5" cols="60" id="work-result" name="work-result"></textarea>
+                                                    <textarea rows="5" cols="60" id="work-result" name="work-result" style="  resize: vertical; "></textarea>
                                                 </div>
                                             </div>
                                         </div>
