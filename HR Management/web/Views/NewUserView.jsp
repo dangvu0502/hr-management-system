@@ -14,7 +14,7 @@
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
-       <!-- bootstrap 3.0.2 -->
+        <!-- bootstrap 3.0.2 -->
         <!--<link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css" />-->
         <!-- font Awesome -->
         <link href="../css/font-awesome.min.css" rel="stylesheet" type="text/css" />
@@ -107,24 +107,24 @@
                                     <div class="row">
                                         <div class="col-lg-2"></div>
                                         <div class="col-lg-8">
-<!--                                        <div class="row ">
-                                                <div class="form-group col-lg-12">
-                                                    <label for="group-code">Group code</label>
-                                                    <input type="text" class="form-control" id="group-code" name="group-code" placeholder="Enter group code" required>
-                                                </div>
-                                            </div>-->
+                                            <!--                                        <div class="row ">
+                                                                                            <div class="form-group col-lg-12">
+                                                                                                <label for="group-code">Group code</label>
+                                                                                                <input type="text" class="form-control" id="group-code" name="group-code" placeholder="Enter group code" required>
+                                                                                            </div>
+                                                                                        </div>-->
                                             <div class="row">
-                                                <div class="form-group form-inline col-lg-6" >
-                                                    <span style="white-space: nowrap">
-                                                        <label for="group-code">Group Code  &nbsp &nbsp &nbsp </label>
-                                                        <select class="form-control text-bold" aria-label="" id="system-role" name="group-code" onchange="val()">
-                                                            <option value="0" selected></option>
-                                                            <c:forEach var="group" items="${groups}">
-                                                                <option value="${group.key}">${group.key} </option>
-                                                            </c:forEach>
-                                                            <c:remove var="groups" scope="session" />     
-                                                        </select>
-                                                    </span>
+                                                <div class="form-group form-inline col-lg-12" >
+                                                    <div class="col-lg-12"> </div>
+                                                    <label for="group-code">Group Code  &nbsp &nbsp &nbsp </label>
+                                                    <select class="form-control text-bold" aria-label="" id="system-role" name="group-code" onchange="val()">
+                                                        <option value="0" selected></option>
+                                                        <c:forEach var="group" items="${groups}">
+                                                            <option value="${group.key}">${group.key} </option>
+                                                        </c:forEach>
+                                                        <c:remove var="groups" scope="session" />     
+                                                    </select>
+
                                                 </div>
                                             </div>
                                             <div class="row ">
@@ -174,24 +174,23 @@
                                             </div>
 
                                             <div class="row">
-                                                <div class="form-group form-inline col-lg-6" >
-                                                    <span style="white-space: nowrap">
-                                                        <label for="system-role">System Role  &nbsp &nbsp &nbsp </label>
-                                                        <select class="form-control text-bold" aria-label="" id="system-role" name="system-role" onchange="val()">
-                                                            <option value="0" selected></option>
-                                                            <c:forEach var="role" items="${roles}">
-                                                                <option value="${role.key}">${role.value} </option>
-                                                            </c:forEach>
-                                                                <c:remove var="roles" scope="session" />    
-                                                        </select>
-                                                    </span>
+                                                <div class="form-group form-inline col-lg-12" >
+                                                    <div class="col-lg-12"> </div>
+                                                    <label for="system-role">System Role  &nbsp &nbsp &nbsp </label>
+                                                    <select class="form-control text-bold" aria-label="" id="system-role" name="system-role" onchange="val()">
+                                                        <option value="0" selected></option>
+                                                        <c:forEach var="role" items="${roles}">
+                                                            <option value="${role.key}">${role.value} </option>
+                                                        </c:forEach>
+                                                        <c:remove var="roles" scope="session" />    
+                                                    </select>
 
                                                 </div>
                                             </div>
 
 
 
-                                            <div class=" form-group row col-lg-12 text-center">
+                                            <div class=" form-group col-lg-12 text-center">
                                                 <br>
                                                 <button type="submit" id="submit-btn" class="btn btn-info"  >Add new user</button>
                                             </div>
@@ -221,58 +220,58 @@
 
         <script>
 
-                                                            /** HIDE ALERT**/
-                                                            $(document).click(function (e) {
-                                                                $('.message').hide();
-                                                            });
-                                                            /** HIDE ALERT**/
+                                                        /** HIDE ALERT**/
+                                                        $(document).click(function (e) {
+                                                            $('.message').hide();
+                                                        });
+                                                        /** HIDE ALERT**/
 
-                                                            var chooseRole = false;
-                                                            function val() {
-                                                                var value = document.getElementById("system-role").value;
-                                                                if (value != 0)
-                                                                    chooseRole = true;
-                                                                else
-                                                                    chooseRole = false;
-                                                            }
+                                                        var chooseRole = false;
+                                                        function val() {
+                                                            var value = document.getElementById("system-role").value;
+                                                            if (value != 0)
+                                                                chooseRole = true;
+                                                            else
+                                                                chooseRole = false;
+                                                        }
 
-                                                            function checkMobile() {
-                                                                var mobile = document.getElementById('mobile');
-                                                                var regex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-                                                                if (mobile == null || mobile.value.toString().length == 0) {
-                                                                    document.getElementById('inValidPhone').innerHTML = '';
+                                                        function checkMobile() {
+                                                            var mobile = document.getElementById('mobile');
+                                                            var regex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+                                                            if (mobile == null || mobile.value.toString().length == 0) {
+                                                                document.getElementById('inValidPhone').innerHTML = '';
+                                                            } else {
+
+                                                                if (mobile.value.match(regex)) {
+                                                                    isValid = true;
+                                                                    document.getElementById('inValidPhone').style.color = 'green';
+                                                                    document.getElementById('inValidPhone').innerHTML = 'Valid';
                                                                 } else {
-
-                                                                    if (mobile.value.match(regex)) {
-                                                                        isValid = true;
-                                                                        document.getElementById('inValidPhone').style.color = 'green';
-                                                                        document.getElementById('inValidPhone').innerHTML = 'Valid';
-                                                                    } else {
-                                                                        isValid = false;
-                                                                        document.getElementById('inValidPhone').style.color = 'red';
-                                                                        document.getElementById('inValidPhone').innerHTML = 'This is not mobile';
-                                                                    }
+                                                                    isValid = false;
+                                                                    document.getElementById('inValidPhone').style.color = 'red';
+                                                                    document.getElementById('inValidPhone').innerHTML = 'This is not mobile';
                                                                 }
                                                             }
+                                                        }
 
-                                                            function checkUsername() {
-                                                                var username = document.getElementById('username');
-                                                                var regex = /^[a-zA-Z0-9]+$/;
-                                                                if (username == null || username.value.toString().length == 0) {
-                                                                    document.getElementById('inValidUsername').innerHTML = '';
+                                                        function checkUsername() {
+                                                            var username = document.getElementById('username');
+                                                            var regex = /^[a-zA-Z0-9]+$/;
+                                                            if (username == null || username.value.toString().length == 0) {
+                                                                document.getElementById('inValidUsername').innerHTML = '';
+                                                            } else {
+
+                                                                if (username.value.match(regex)) {
+                                                                    isValid = true;
+                                                                    document.getElementById('inValidUsername').style.color = 'green';
+                                                                    document.getElementById('inValidUsername').innerHTML = 'Valid';
                                                                 } else {
-
-                                                                    if (username.value.match(regex)) {
-                                                                        isValid = true;
-                                                                        document.getElementById('inValidUsername').style.color = 'green';
-                                                                        document.getElementById('inValidUsername').innerHTML = 'Valid';
-                                                                    } else {
-                                                                        isValid = false;
-                                                                        document.getElementById('inValidUsername').style.color = 'red';
-                                                                        document.getElementById('inValidUsername').innerHTML = 'Not Valid';
-                                                                    }
+                                                                    isValid = false;
+                                                                    document.getElementById('inValidUsername').style.color = 'red';
+                                                                    document.getElementById('inValidUsername').innerHTML = 'Not Valid';
                                                                 }
                                                             }
+                                                        }
         </script>
     </body>
 </html>
