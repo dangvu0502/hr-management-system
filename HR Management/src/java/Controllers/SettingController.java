@@ -5,7 +5,7 @@
  */
 package Controllers;
 
-import Dao.SettingDAO;
+import DAO.SettingDAO;
 import Models.Setting;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -50,6 +51,12 @@ public class SettingController extends HttpServlet {
                     break;
                 case "/Status":
                     changeStatus(request, response);
+                    break;
+                case "/Filter":
+                    filterSetting(request, response);
+                    break;
+                case "/Search":
+                    searchSetting(request, response);
                     break;
                 case "/EditView":
                     settingEditView(request, response);
@@ -113,27 +120,74 @@ public class SettingController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
         try (PrintWriter out = response.getWriter();) {
+            HttpSession ses = request.getSession();
+            String input = (String) ses.getAttribute("session");
             String page = request.getParameter("page");
             if (page == null) {
                 page = "1";
             }
             request.setAttribute("page", page);
             SettingDAO sDAO = new SettingDAO();
-            int count = sDAO.getTotalSetting();
+
+            Vector<String> t = sDAO.getAllType();
+            request.setAttribute("listT", t);
+            boolean check = true;
+            for (String type : t) {
+                if (type.equals(input)) {
+                    check = false;
+                    break;
+                }
+            }
+            int count;
+            Vector<Setting> s;
+            if (input == null || input.isEmpty()) {
+                s = sDAO.getSettingList(Integer.parseInt(page));
+                count = sDAO.getTotalSetting(null, null);
+            } else {
+                if ("0".equals(input) || "1".equals(input)) {
+                    s = sDAO.filterSettingList(input, 2, Integer.parseInt(page));
+                    count = sDAO.getTotalSetting(input, null);
+                } else {
+                    if (check) {
+                        s = sDAO.searchSetting(input, Integer.parseInt(page));
+                        count = sDAO.getTotalSetting(null, input);
+                    } else {
+                        s = sDAO.filterSettingList(input, 1, Integer.parseInt(page));
+                        count = sDAO.getTotalSetting(input, null);
+                    }
+                }
+            }
             int endPage = count / 5;
             if (count % 5 != 0) {
                 endPage++;
             }
             request.setAttribute("endP", endPage);
-            Vector<Setting> s;
-            s = sDAO.getSettingList(Integer.parseInt(page));
             request.setAttribute("listS", s);
             request.getRequestDispatcher("../Views/SettingList.jsp").forward(request, response);
         } catch (Exception e) {
             System.out.println("ádfasdfasdfasd" + e.getMessage());
         }
     }
-    
+
+    private void searchSetting(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
+        try (PrintWriter out = response.getWriter();) {
+            String search = request.getParameter("input");
+            HttpSession ses = request.getSession();
+            if (null != search) {
+                ses.setAttribute("session", search);
+                ses.setMaxInactiveInterval(-1);
+            } else {
+                ses.removeAttribute("session");
+            }
+            response.sendRedirect("../SettingController/Setting");
+        } catch (Exception e) {
+            System.out.println("ádfasdfasdfasd" + e.getMessage());
+        }
+    }
+
     //Add
     private void settingAdd(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
@@ -148,7 +202,7 @@ public class SettingController extends HttpServlet {
             int o = Integer.parseInt(order);
             boolean sta = Boolean.parseBoolean(status);
             Setting st = new Setting(1, type, value, sta, o, note);
-            
+
             SettingDAO sDAO = new SettingDAO();
             boolean check = sDAO.addNewSetting(st);
 
@@ -157,7 +211,7 @@ public class SettingController extends HttpServlet {
                 page = "1";
             }
             request.setAttribute("page", page);
-            int count = sDAO.getTotalSetting();
+            int count = sDAO.getTotalSetting(null, null);
             int endPage = count / 5;
             if (count % 5 != 0) {
                 endPage++;
@@ -189,6 +243,23 @@ public class SettingController extends HttpServlet {
             response.sendRedirect("../SettingController/Setting?page=" + page);
         } catch (Exception e) {
             System.out.println("Error " + e.getMessage());
+        }
+    }
+
+    private void filterSetting(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
+        try (PrintWriter out = response.getWriter()) {
+            String filter = request.getParameter("input");
+            HttpSession ses = request.getSession();
+            if (!"All".equals(filter)) {
+                ses.setAttribute("session", filter);
+                ses.setMaxInactiveInterval(-1);
+            } else {
+                ses.removeAttribute("session");
+            }
+            response.sendRedirect("../SettingController/Setting");
         }
     }
     //editview
@@ -237,7 +308,7 @@ public class SettingController extends HttpServlet {
                 page = "1";
             }
             request.setAttribute("page", page);
-            int count = sDAO.getTotalSetting();
+            int count = sDAO.getTotalSetting(null, null);
             int endPage = count / 5;
             if (count % 5 != 0) {
                 endPage++;
@@ -266,7 +337,7 @@ public class SettingController extends HttpServlet {
                 page = "1";
             }
             request.setAttribute("page", page);
-            int count = sDAO.getTotalSetting();
+            int count = sDAO.getTotalSetting(null, null);
             int endPage = count / 5;
             if (count % 5 != 0) {
                 endPage++;
