@@ -108,7 +108,7 @@
                                             <div class="col-lg-8">
                                                 <form action="" method="post" >
                                                     <div class="input-group">
-                                                        <div class="btn btn-md btn-default" style="width: 150px; pointer-events: none; "><span>Search by Title</span></div>
+                                                        <div class="btn btn-md btn-default" style="width: 150px; pointer-events: none;"><span>Search by Title</span></div>
                                                         <input type="text" name="table_search" class="form-control input-md" style="width: 450px;" placeholder="Search" onclick="dateHideShow()"/>
                                                         <button type="submit" class="btn btn-md btn-default"><i class="fa fa-search"></i></button>
                                                         <br>

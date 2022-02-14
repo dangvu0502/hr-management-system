@@ -67,13 +67,13 @@
                                             <div class="row">
                                                 <div class="form-group col-lg-8">
                                                     <c:if test="${timesheet.status == 1}">
-                                                        <p class="text-bold" >Status: &nbsp <span class="text-warning">${timesheetStatus[timesheet.status]}</span></p>
+                                                        <p class="text-bold" style="pointer-events: none;">Status: &nbsp <span  class="text-warning">${timesheetStatus[timesheet.status]}</span></p>
                                                     </c:if>
                                                     <c:if test="${timesheet.status == 2}">
-                                                        <p class="text-bold" >Status: &nbsp <span class="text-success">${timesheetStatus[timesheet.status]}</span></p>
+                                                        <p class="text-bold" style="pointer-events: none;" >Status: &nbsp <span class="text-success">${timesheetStatus[timesheet.status]}</span></p>
                                                     </c:if>
                                                     <c:if test="${timesheet.status == 3}">
-                                                        <p class="text-bold" >Status: &nbsp <span class="text-danger">${timesheetStatus[timesheet.status]}</span></p>
+                                                        <p class="text-bold" style="pointer-events: none;">Status: &nbsp <span class="text-danger">${timesheetStatus[timesheet.status]}</span></p>
                                                     </c:if>
                                                 </div>
                                                 <div class="form-group col-lg-4">
@@ -83,7 +83,7 @@
                                             <div class="row ">
                                                 <div class="form-group col-lg-12">
                                                     <label for="work-result">Work result</label><p></p>
-                                                    <textarea rows="10" cols="60" id="work-result" name="work-result" style=" resize: vertical; "></textarea>
+                                                    <textarea rows="10" cols="60" id="work-result" name="work-result" style=" resize: vertical;" disabled></textarea>
                                                 </div>
                                                 <div class="form-group col-lg-12">
                                                     <c:if test="${timesheet.status == 3}">
