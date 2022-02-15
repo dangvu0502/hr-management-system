@@ -158,7 +158,7 @@
                                             </div>
                                             <div class="col-lg-2"></div>
                                             <div class="col-lg-2">
-                                                 <button onclick="window.open('http://localhost:8080/HR_Management/Timesheet/NewTimesheet', '_blank')" class="btn btn-md btn-primary" style="width: 150px; ">Add new timesheet</button>
+                                                <button onclick="window.open('http://localhost:8080/HR_Management/Timesheet/NewTimesheet', '_blank')" class="btn btn-md btn-primary" style="width: 150px; ">Add new timesheet</button>
                                             </div>
                                         </div>
                                     </div>
@@ -205,7 +205,7 @@
                                         <div class="table-foot">
                                             <ul class="pagination pagination-sm no-margin pull-right">
                                                 <c:forEach begin="1" end="3" var="p">
-                                                    <li><button id="page-number" class="btn btn-sm btn-default">${p}</button></li>
+                                                    <li><button id="page-number${p}" class="btn btn-sm btn-default" onclick="myFunc(${p})">${p}</button></li>
                                                 </c:forEach>
                                             </ul>
                                         </div>
@@ -231,20 +231,23 @@
         <!-- Director App -->
         <script src="../js/Director/app.js" type="text/javascript"></script>
         <script>
-                                                    function dateHideShow() {
-                                                        var x = document.getElementById("advanced");
-                                                        if (x.style.display === "none") {
-                                                            x.style.display = "block";
-                                                        } else {
-                                                            x.style.display = "none";
+                                                        function dateHideShow() {
+                                                            var x = document.getElementById("advanced");
+                                                            if (x.style.display === "none") {
+                                                                x.style.display = "block";
+                                                            } else {
+                                                                x.style.display = "none";
+                                                            }
                                                         }
-                                                    }
-                                                    $(document).on("click", "#page-number", function () { 
-                                                        $.get("http://localhost:8080/HR_Management/Timesheet/TimesheetList?page=1",function () {
-                                                            $( "#timesheet-list" ).load( "http://localhost:8080/HR_Management/Timesheet/TimesheetList?page=1 #timesheet-list" );
-                                                        });   
-                                                        });
-                                             
+
+                                                        function myFunc(pageNumber) {
+                                                            var pageNumber = document.getElementById("page-number" + pageNumber).innerHTML;
+                                                            var link = "http://localhost:8080/HR_Management/Timesheet/TimesheetList?page=" + pageNumber + " #timesheet-list";
+                                                            $("#timesheet-list").load(link);
+                                                        }
+
+
+
         </script>
     </body>
 </html>
