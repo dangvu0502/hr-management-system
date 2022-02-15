@@ -103,7 +103,7 @@
                                 <c:remove var="successMessage" scope="session" /> 
                             </c:if>
                             <div class="panel-body">
-                                <form action="../User/NewUser" method="POST" role="form" onsubmit="return chooseRole">
+                                <form action="../User/NewUser" method="POST" role="form" onsubmit="return chooseRole && chooseCode">
                                     <div class="row">
                                         <div class="col-lg-2"></div>
                                         <div class="col-lg-8">
@@ -117,7 +117,7 @@
                                                 <div class="form-group form-inline col-lg-12" >
                                                     <div class="col-lg-12"> </div>
                                                     <label for="group-code">Group Code  &nbsp &nbsp &nbsp </label>
-                                                    <select class="form-control text-bold" aria-label="" id="system-role" name="group-code" onchange="val()">
+                                                    <select class="form-control text-bold" aria-label="" id="group-code" name="group-code" onchange="val2()">
                                                         <option value="0" selected></option>
                                                         <c:forEach var="group" items="${groups}">
                                                             <option value="${group.key}">${group.key} </option>
@@ -177,7 +177,7 @@
                                                 <div class="form-group form-inline col-lg-12" >
                                                     <div class="col-lg-12"> </div>
                                                     <label for="system-role">System Role  &nbsp &nbsp &nbsp </label>
-                                                    <select class="form-control text-bold" aria-label="" id="system-role" name="system-role" onchange="val()">
+                                                    <select class="form-control text-bold" aria-label="" id="system-role" name="system-role" onchange="val1()">
                                                         <option value="0" selected></option>
                                                         <c:forEach var="role" items="${roles}">
                                                             <option value="${role.key}">${role.value } </option>
@@ -227,12 +227,21 @@
                                                         /** HIDE ALERT**/
 
                                                         var chooseRole = false;
-                                                        function val() {
+                                                        function val1() {
                                                             var value = document.getElementById("system-role").value;
                                                             if (value != 0)
                                                                 chooseRole = true;
                                                             else
                                                                 chooseRole = false;
+                                                        }
+                                                        
+                                                        var chooseCode = false;
+                                                        function val2() {
+                                                            var value = document.getElementById("group-code").value;
+                                                            if (value != 0)
+                                                                chooseCode  = true;
+                                                            else
+                                                                chooseCode  = false;
                                                         }
 
                                                         function checkMobile() {
