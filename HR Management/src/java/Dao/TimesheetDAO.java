@@ -84,11 +84,24 @@ public class TimesheetDAO {
         return null;
     }
     
-//    public static void main(String[] args) {
-//        TimesheetDAO tsDAO = new TimesheetDAO();
-//        ArrayList<Timesheet> rs = tsDAO.getTimesheetList(1,99);
-//        for(int i = 0; i < rs.size(); i++){
-//            System.out.println(rs.get(i).toString());
-//        }
-//    }
+    
+    public int getTotalTimesheet() {
+        try {
+            String sql = "select count(id) FROM hr_system_v2.timesheet;";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+               return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return -1;
+    }
+    
+    public static void main(String[] args) {
+        TimesheetDAO tsDAO = new TimesheetDAO();
+        System.out.println(tsDAO.getTotalTimesheet());
+    }
 }

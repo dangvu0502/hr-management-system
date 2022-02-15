@@ -109,8 +109,7 @@
                                                 <form action="" method="post" >
                                                     <div class="input-group">
                                                         <div class="btn btn-md btn-default" style="width: 150px; pointer-events: none;"><span>Search by Title</span></div>
-                                                        <input type="text" name="table_search" class="form-control input-md" style="width: 450px;" placeholder="Search" onclick="dateHideShow()"/>
-                                                        <button type="submit" class="btn btn-md btn-default"><i class="fa fa-search"></i></button>
+                                                        <input id="timesheetTitle" type="text" name="timesheetTitle" class="form-control input-md" style="width: 450px;" placeholder="Enter title to search" onclick="dateHideShow()"/>
                                                         <br>
                                                         <div id="advanced" style="display: none">
                                                             <br>
@@ -162,8 +161,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="panel-body">
-                                        <table class="table table-hover" id="timesheetTable">
+                                    <div class="panel-body" id="timesheetTable">
+                                        <table class="table table-hover">
                                             <tr>
                                                 <th style="width: 10%">#</th>
                                                 <th style="width: 13%">Timesheet Date</th>
@@ -194,18 +193,23 @@
                                                         </c:if>
                                                     </td>
                                                     <td>
-                                                        <a href="#" class="btn btn-md btn-default"><i class="fa fa-trash-o"></i></a>
-                                                            <c:if test="${timesheet.status != 2}">
+                                                            <a href="#" class="btn btn-md btn-default"><i class="fa fa-trash-o"></i></a>
+                                                        <c:if test="${timesheet.status != 2}">
                                                             <a href="#" class="btn btn-md btn-default"><i class="fa fa-pencil"></i></a>
-                                                            </c:if>
+                                                         </c:if>
                                                     </td>
                                                 </tr>
                                             </c:forEach>
                                         </table>
-                                        <div class="table-foot">
+                                        <div class="table-foot" id="table-foot">
                                             <ul class="pagination pagination-sm no-margin pull-right">
-                                                <c:forEach begin="1" end="3" var="p">
-                                                    <li><button id="page${p}" class="btn btn-sm btn-default" onclick="page(${p})">${p}</button></li>
+                                                <c:forEach begin="1" end="${total}" var="num">
+                                                    <c:if test="${num == currentNumber}">
+                                                        <li><button id="page${num}" class="btn btn-sm btn-primary" onclick="page(${num})">${num}</button></li>
+                                                    </c:if>
+                                                    <c:if test="${num != currentNumber}">
+                                                        <li><button id="page${num}" class="btn btn-sm btn-default" onclick="page(${num})">${num}</button></li>
+                                                    </c:if>    
                                                     </c:forEach>
                                             </ul>
                                         </div>
@@ -224,6 +228,7 @@
 
         <!-- jQuery 2.0.2 -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+
         <script src="../js/jquery.min.js" type="text/javascript"></script>
 
         <!-- Bootstrap -->
@@ -231,46 +236,62 @@
         <!-- Director App -->
         <script src="../js/Director/app.js" type="text/javascript"></script>
         <script>
-                                                        function dateHideShow() {
-                                                            var x = document.getElementById("advanced");
-                                                            if (x.style.display === "none") {
-                                                                x.style.display = "block";
-                                                            } else {
-                                                                x.style.display = "none";
+                                                            function dateHideShow() {
+                                                                var x = document.getElementById("advanced");
+                                                                if (x.style.display === "none") {
+                                                                    x.style.display = "block";
+                                                                } else {
+                                                                    x.style.display = "none";
+                                                                }
                                                             }
-                                                        }
 
-                                                        function page(number) {
-                                                            var pageNumber = document.getElementById('page'+number).innerHTML;
-                                                            var fromDate = document.getElementById('fromDate').value;
-                                                            var toDate = document.getElementById('toDate').value;
-                                                            var process = document.getElementById('processFilter').value;
-                                                            var project = document.getElementById('projectFilter').value;
-                                                            console.log(fromDate+" "+toDate+" "+process);
-                                                            var link = "http://localhost:8080/HR_Management/Timesheet/TimesheetList?";
-                                                            link += "page="+pageNumber;
-                                                            link += "&";
-                                                            link += "fromDate="+fromDate;
-                                                            link += "&";
-                                                            link += "toDate="+toDate;
-                                                            link += "&";
-                                                            link += "process="+process;
-                                                            link += "&";
-                                                            link += "project="+project;
-                                                            link += " "+"#timesheetTable"
-                                                            $("#timesheetTable").load(link);
-                                                        }
+                                                            function page(number) {
+                                                                var pageNumber = document.getElementById('page' + number).innerHTML;
+                                                                var fromDate = document.getElementById('fromDate').value;
+                                                                var toDate = document.getElementById('toDate').value;
+                                                                var process = document.getElementById('processFilter').value;
+                                                                var project = document.getElementById('projectFilter').value;
+                                                                var title = document.getElementById('timesheetTitle').value;
+                                                                console.log(title);
+                                                                var link = "http://localhost:8080/HR_Management/Timesheet/TimesheetList?";
+                                                                link += "page=" + pageNumber;
+                                                                link += "&";
+                                                                link += "fromDate=" + fromDate;
+                                                                link += "&";
+                                                                link += "toDate=" + toDate;
+                                                                link += "&";
+                                                                link += "process=" + process;
+                                                                link += "&";
+                                                                link += "project=" + project;
+                                                                link += "&";
+                                                                link += "title=" + title;
+                                                                $('#timesheetTable').load(link + " " + "#timesheetTable");
+
+                                                            }
 
 
-//                                                        $(document).ready(function () {
-//                                                            var page = $('#yourname').val();
-//                                                            $('#yourname').click(function () {
-//
-//                                                              
-//
-//                                                            });
-//
-//                                                        });
+                                                            $(document).ready(function () {
+                                                                $('#fromDate').change(function () {
+                                                                    page(1);
+                                                                });
+                                                                $('#toDate').change(function () {
+                                                                    page(1);
+                                                                });
+                                                                $('#processFilter').change(function () {
+                                                                    page(1);
+                                                                });
+                                                                $('#projectFilter').change(function () {
+                                                                    page(1);
+                                                                });
+                                                                $('#timesheetTitle').keyup(function () {
+                                                                    page(1);
+                                                                });
+
+
+                                                            });
+
+
+
 
 
         </script>
