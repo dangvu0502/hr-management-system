@@ -163,7 +163,7 @@
                                         </div>
                                     </div>
                                     <div class="panel-body">
-                                        <table class="table table-hover" id="timesheet-list">
+                                        <table class="table table-hover" id="timesheetTable">
                                             <tr>
                                                 <th style="width: 10%">#</th>
                                                 <th style="width: 13%">Timesheet Date</th>
@@ -205,8 +205,8 @@
                                         <div class="table-foot">
                                             <ul class="pagination pagination-sm no-margin pull-right">
                                                 <c:forEach begin="1" end="3" var="p">
-                                                    <li><button id="page-number${p}" class="btn btn-sm btn-default" onclick="myFunc(${p})">${p}</button></li>
-                                                </c:forEach>
+                                                    <li><button id="pageNumber${p}" class="btn btn-sm btn-default" onclick="myFunc(${p})">${p}</button></li>
+                                                    </c:forEach>
                                             </ul>
                                         </div>
                                     </div>
@@ -241,11 +241,50 @@
                                                         }
 
                                                         function myFunc(pageNumber) {
-                                                            var pageNumber = document.getElementById("page-number" + pageNumber).innerHTML;
-                                                            var link = "http://localhost:8080/HR_Management/Timesheet/TimesheetList?page=" + pageNumber + " #timesheet-list";
-                                                            $("#timesheet-list").load(link);
+                                                            var pageNumber = document.getElementById("pageNumber" + pageNumber).innerHTML;
+
+                                                            $.ajax({
+
+                                                                type: "GET",
+
+                                                                url: "http://localhost:8080/HR_Management/Timesheet/GetTimesheetListToJson",
+
+                                                                data: {page: pageNumber},
+
+                                                                success: function (responseJson) {
+
+
+                                                                    if (responseJson != null) {
+
+                                                                        $("#timesheetTable").find("tr:gt(0)").remove();
+                                                                        var id = 1;
+                                                                   
+                                                                        $.each(responseJson, function (key, value) {
+                                                                            var row = '<tr>';
+                                                                                row += '<td >' + id + '</td>';
+                                                                                row += '<td>' + value['title'] + '</td>';
+                          
+                                                                            row += '</tr>';
+                                                                            id++;
+                                                                            $('#timesheetTable tbody').append(row);
+                                                                        });
+                                                                    }
+
+                                                                }
+
+                                                            });
                                                         }
 
+
+//                                                        $(document).ready(function () {
+//                                                            var page = $('#yourname').val();
+//                                                            $('#yourname').click(function () {
+//
+//                                                              
+//
+//                                                            });
+//
+//                                                        });
 
 
         </script>
