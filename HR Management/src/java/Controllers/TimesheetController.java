@@ -49,9 +49,7 @@ public class TimesheetController extends HttpServlet {
                     showNewTimesheetView(request, response);
                 case "/TimesheetDetail":
                     showTimesheetDetailView(request, response);
-                case "/GetTimesheetListToJson":
-                    getTimesheetListToJson(request, response);
-                    break;
+          
                 default:
                     response.sendError(404);
                     break;
@@ -76,8 +74,21 @@ public class TimesheetController extends HttpServlet {
     private void showTimesheetListView(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
+        String fromDate = request.getParameter("fromDate") != null ? request.getParameter("fromDate") : "";
+        String toDate = request.getParameter("toDate") != null ? request.getParameter("toDate") : "";
+        String project_code = request.getParameter("project") != null ? request.getParameter("project") : "";
+        int process = request.getParameter("process") != null ? Integer.parseInt(request.getParameter("process")) : 0;
         int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
-        request.setAttribute("timesheetList", timesheetDAO.getTimesheetList(page, 99));
+        page -= 1;
+        page *= 3;
+        String query ="SELECT * FROM hr_system_v2.timesheet Where user_id= "+99;
+        if(!fromDate.isEmpty()) query += " and date >= " + "'" + fromDate + "'";
+        if(!toDate.isEmpty()) query += " and date <= " +  "'" + toDate+ "'";
+        if(!project_code.isEmpty()) query += " and project_code =  " +  "'" + project_code+ "'";
+        if(process != 0) query += " and process = " + "'"+ process+ "'"; 
+        query += " limit 3 offset " + page;
+        response.getWriter().println(query);
+        request.setAttribute("timesheetList", timesheetDAO.getTimesheetList(query));
         request.setAttribute("timesheetProcess", settingDAO.getTimesheetProcess());
         request.setAttribute("timesheetStatus", settingDAO.getTimesheetStatus());
         request.getRequestDispatcher("/Views/TimesheetListView.jsp").forward(request, response);
@@ -100,16 +111,5 @@ public class TimesheetController extends HttpServlet {
         request.getRequestDispatcher("/Views/TimesheetDetailView.jsp").forward(request, response);
     }
 
-    private void getTimesheetListToJson(HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
-        response.setContentType("text/html;charset=UTF-8");
-        int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
-        Gson gson = new Gson();
-        JsonElement element = gson.toJsonTree(timesheetDAO.getTimesheetList(page, 99), new TypeToken<ArrayList<Timesheet>>() {
-        }.getType());
-        JsonArray jsonArray = element.getAsJsonArray();
-        response.setContentType("application/json");
-        response.getWriter().println(jsonArray);
-    }
 
 }

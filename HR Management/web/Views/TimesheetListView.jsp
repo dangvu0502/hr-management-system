@@ -119,12 +119,12 @@
                                                                 <div class="col-lg-8">
                                                                     <div class="col-md-1"></div>
                                                                     <div class="col-md-7">
-                                                                        <label class="text-left" for="from-date" style="width: 150px;">From</label><br>
-                                                                        <input type="date" class="form-control" id="from-date" style="width: 200px;" name="from-date" placeholder="From">
+                                                                        <label class="text-left" for="fromDate" style="width: 150px;">From</label><br>
+                                                                        <input type="date" class="form-control" id="fromDate" style="width: 200px;" name="fromDate" >
                                                                     </div>
                                                                     <div class="col-md-4">
-                                                                        <label class="text-left" for="to-date" style="width: 150px;">To</label><br>
-                                                                        <input type="date" class="form-control" id="to-date" style="width: 200px;" name="to-date" placeholder="From">
+                                                                        <label class="text-left" for="toDate" style="width: 150px;">To</label><br>
+                                                                        <input type="date" class="form-control" id="toDate" style="width: 200px;" name="toDate" >
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -134,16 +134,16 @@
                                                                 <div class="col-lg-8">
                                                                     <div class="col-md-1"></div>
                                                                     <div class="col-md-7">
-                                                                        <label class="text-left" for="project-filter" style="width: 150px;">Project</label><br>
-                                                                        <select class="form-control input-md" style="width: 200px;" name="project-filter" id="project-filter">
-                                                                            <option value="project">Project</option>
-                                                                            <option value="project">Project</option>
-                                                                            <option value="project">Project</option>
+                                                                        <label class="text-left" for="projectFilter" style="width: 150px;">Project</label><br>
+                                                                        <select class="form-control input-md" style="width: 200px;" name="projectFilter" id="projectFilter">
+                                                                            <option value="">Choose Project</option>
+                                                                            <option value="HRM">HRM</option>
                                                                         </select>
                                                                     </div>
                                                                     <div class="col-md-4">
-                                                                        <label class="text-left" for="process-filter" style="width: 150px;">Process</label><br>
-                                                                        <select class="form-control input-md" style="width: 200px;" name="process-filter" id="process-filter">
+                                                                        <label class="text-left" for="processFilter" style="width: 150px;">Process</label><br>
+                                                                        <select class="form-control input-md" style="width: 200px;" name="procescFilter" id="processFilter">
+                                                                            <option value="0">Choose Process</option>
                                                                             <c:forEach var="process" items="${timesheetProcess}">
                                                                                 <option value="${process.key}">${process.value}</option>
                                                                             </c:forEach>
@@ -205,7 +205,7 @@
                                         <div class="table-foot">
                                             <ul class="pagination pagination-sm no-margin pull-right">
                                                 <c:forEach begin="1" end="3" var="p">
-                                                    <li><button id="pageNumber${p}" class="btn btn-sm btn-default" onclick="myFunc(${p})">${p}</button></li>
+                                                    <li><button id="page${p}" class="btn btn-sm btn-default" onclick="page(${p})">${p}</button></li>
                                                     </c:forEach>
                                             </ul>
                                         </div>
@@ -240,39 +240,25 @@
                                                             }
                                                         }
 
-                                                        function myFunc(pageNumber) {
-                                                            var pageNumber = document.getElementById("pageNumber" + pageNumber).innerHTML;
-
-                                                            $.ajax({
-
-                                                                type: "GET",
-
-                                                                url: "http://localhost:8080/HR_Management/Timesheet/GetTimesheetListToJson",
-
-                                                                data: {page: pageNumber},
-
-                                                                success: function (responseJson) {
-
-
-                                                                    if (responseJson != null) {
-
-                                                                        $("#timesheetTable").find("tr:gt(0)").remove();
-                                                                        var id = 1;
-                                                                   
-                                                                        $.each(responseJson, function (key, value) {
-                                                                            var row = '<tr>';
-                                                                                row += '<td >' + id + '</td>';
-                                                                                row += '<td>' + value['title'] + '</td>';
-                          
-                                                                            row += '</tr>';
-                                                                            id++;
-                                                                            $('#timesheetTable tbody').append(row);
-                                                                        });
-                                                                    }
-
-                                                                }
-
-                                                            });
+                                                        function page(number) {
+                                                            var pageNumber = document.getElementById('page'+number).innerHTML;
+                                                            var fromDate = document.getElementById('fromDate').value;
+                                                            var toDate = document.getElementById('toDate').value;
+                                                            var process = document.getElementById('processFilter').value;
+                                                            var project = document.getElementById('projectFilter').value;
+                                                            console.log(fromDate+" "+toDate+" "+process);
+                                                            var link = "http://localhost:8080/HR_Management/Timesheet/TimesheetList?";
+                                                            link += "page="+pageNumber;
+                                                            link += "&";
+                                                            link += "fromDate="+fromDate;
+                                                            link += "&";
+                                                            link += "toDate="+toDate;
+                                                            link += "&";
+                                                            link += "process="+process;
+                                                            link += "&";
+                                                            link += "project="+project;
+                                                            link += " "+"#timesheetTable"
+                                                            $("#timesheetTable").load(link);
                                                         }
 
 

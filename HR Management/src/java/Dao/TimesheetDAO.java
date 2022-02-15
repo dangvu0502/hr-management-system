@@ -30,14 +30,12 @@ public class TimesheetDAO {
         return dateTime.format(myFormatObj);
     }
     
-    public  ArrayList<Timesheet> getTimesheetList(int page, int user_id) {
+    public  ArrayList<Timesheet> getTimesheetList(String query) {
         ArrayList<Timesheet> res = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM hr_system_v2.timesheet  where user_id = ? limit 3 offset ?";
+            String sql = query;
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
-            ps.setInt(1, user_id);
-            ps.setInt(2, (page - 1) * 3);
             rs = ps.executeQuery();
             while (rs.next()) {
                Timesheet ts = new Timesheet(
@@ -86,11 +84,11 @@ public class TimesheetDAO {
         return null;
     }
     
-    public static void main(String[] args) {
-        TimesheetDAO tsDAO = new TimesheetDAO();
-        ArrayList<Timesheet> rs = tsDAO.getTimesheetList(1,99);
-        for(int i = 0; i < rs.size(); i++){
-            System.out.println(rs.get(i).toString());
-        }
-    }
+//    public static void main(String[] args) {
+//        TimesheetDAO tsDAO = new TimesheetDAO();
+//        ArrayList<Timesheet> rs = tsDAO.getTimesheetList(1,99);
+//        for(int i = 0; i < rs.size(); i++){
+//            System.out.println(rs.get(i).toString());
+//        }
+//    }
 }
