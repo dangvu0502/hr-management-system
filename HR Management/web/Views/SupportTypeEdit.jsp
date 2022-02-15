@@ -263,7 +263,7 @@
                             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                         </div>
                     </div>
-                       <ul class="sidebar-menu">
+                    <ul class="sidebar-menu">
                         <li >
                             <a href="../Views/Home.jsp">
                                 <i class="fa fa-home"></i> <span>Home Page</span>
@@ -370,8 +370,14 @@
                                         </div>
                                         <div class="row">
                                             <div class="form-group col-lg-12">
-                                                <label for="InCharge">In Charge</label>
-                                                <input type="text" class="form-control" name="incharge"  value="${listS.in_charge_group}">
+                                                <label for="InCharge">In Charge</label><br>
+<!--                                                <input type="text" class="form-control" name="incharge"  value="${listS.in_charge_group}">-->
+                                                <select name="incharge" id="incharge" style="width: 215px;height: 30px;border-radius: 8px;">
+                                                    <option value="${listS.in_charge_group}">${listS.in_charge_group}</option>
+                                                    <c:forEach items="${listCode}" var="c">
+                                                        <option value="${c.code}">${c.code}</option>
+                                                    </c:forEach>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="row">

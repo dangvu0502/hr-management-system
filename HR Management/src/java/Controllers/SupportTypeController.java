@@ -8,6 +8,7 @@ package Controllers;
 import Dao.GroupDAO;
 import Dao.SettingDAO;
 import Dao.SupportTypeDAO;
+import Models.Group;
 import Models.Setting;
 import Models.SupportType;
 import java.io.IOException;
@@ -49,14 +50,20 @@ public class SupportTypeController extends HttpServlet {
                     supportTypeEditView(request, response);
                     break;
                 case "/AddView":
+                    SupportTypeDAO sDAO = new SupportTypeDAO();
+                    Vector<Group> code = new Vector();
+            code = sDAO.getCodeGroupBAList();
+            request.setAttribute("listCode", code);
                     request.getRequestDispatcher("../Views/SupportTypeAdd.jsp").forward(request, response);
                     break;
                 case "/Add":
                     supportTypeAdd(request, response);
-//                    settingListImplement(request, response);
                     break;
                 case "/Edit":
                     supportTypeEdit(request, response);
+                    break;
+                case "/Delete":
+                    changeStatusDelete(request, response);
                     break;
                 default:
                     response.sendError(404);
@@ -136,7 +143,7 @@ public class SupportTypeController extends HttpServlet {
         }
     }
 
-     //Add
+    //Add
     private void supportTypeAdd(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
@@ -149,32 +156,11 @@ public class SupportTypeController extends HttpServlet {
             String description = request.getParameter("description");
             boolean sta = Boolean.parseBoolean(status);
             SupportType st = new SupportType(1, name, email, sta, false, incharge, description);
-            
+
             SupportTypeDAO sDAO = new SupportTypeDAO();
             boolean check = sDAO.addNewSupportType(st);
 
-            String group_type = request.getParameter("type");
-            String input = request.getParameter("input");
-            String page = request.getParameter("page");
-            if (page == null) {
-                page = "1";
-            }
-            request.setAttribute("page", page);
-            GroupDAO gDAO = new GroupDAO();
-            int count = sDAO.totalSupportType();
-            int endPage = count / 3;
-            if (endPage % 3 != 0) {
-                endPage++;
-            }
-            request.setAttribute("endP", endPage);
-            Vector<SupportType> s = new Vector();
-            if (group_type == null || input == null || input.isEmpty()) {
-                s = sDAO.getSupportTypeList(Integer.parseInt(page));
-            } else {
-                s = sDAO.getSupportTypeList(Integer.parseInt(page));//sai
-            }
-            request.setAttribute("listS", s);
-            request.getRequestDispatcher("../Views/SupportTypeView.jsp").forward(request, response);
+            supportTypeListImplement(request, response);
         }
     }
 
@@ -192,8 +178,12 @@ public class SupportTypeController extends HttpServlet {
             String description = request.getParameter("description");
             int i = Integer.parseInt(id);
             boolean s = Boolean.parseBoolean(status);
-            SupportType sDAO = new SupportType(i, name, email, s, false, incharge, description);
-            request.setAttribute("listS", sDAO);
+            SupportType st = new SupportType(i, name, email, s, false, incharge, description);
+            SupportTypeDAO sDAO = new SupportTypeDAO();
+            Vector<Group> code = new Vector();
+            code = sDAO.getCodeGroupBAList();
+            request.setAttribute("listCode", code);
+            request.setAttribute("listS", st);
             request.getRequestDispatcher("../Views/SupportTypeEdit.jsp").forward(request, response);
         }
     }
@@ -217,27 +207,62 @@ public class SupportTypeController extends HttpServlet {
             SupportTypeDAO sDAO = new SupportTypeDAO();
             boolean check = sDAO.updateSupportType(st, i);
 
-            String group_type = request.getParameter("type");
-            String input = request.getParameter("input");
+            supportTypeListImplement(request, response);
+        }
+    }
+
+    //delete
+    private void changeStatusDelete(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            int delete = Integer.parseInt(request.getParameter("delete"));
+            int id = Integer.parseInt(request.getParameter("id"));
             String page = request.getParameter("page");
             if (page == null) {
                 page = "1";
             }
-            request.setAttribute("page", page);
-            GroupDAO gDAO = new GroupDAO();
-            int count = sDAO.totalSupportType();
-            int endPage = count / 3;
-            if (endPage % 3 != 0) {
-                endPage++;
-            }
-            request.setAttribute("endP", endPage);
-            Vector<SupportType> s = new Vector();
-            if (group_type == null || input == null || input.isEmpty()) {
-                s = sDAO.getSupportTypeList(Integer.parseInt(page));
-            } else {
-                s = sDAO.getSupportTypeList(Integer.parseInt(page));//sai
-            }
-            request.setAttribute("listS", s);
+            GroupDAO g = new GroupDAO();
+            SupportTypeDAO s = new SupportTypeDAO();
+            s.editStatusDelete(delete, id);
+            supportTypeListImplement(request, response);
+        } catch (Exception e) {
+            System.out.println("Error " + e.getMessage());
+        }
+    }
+
+    //getCodeBA
+    private void getCodeGroupBA(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
+        try (PrintWriter out = response.getWriter();) {
+//            String group_type = request.getParameter("type");
+//            String input = request.getParameter("input");
+//            String page = request.getParameter("page");
+//            if (page == null) {
+//                page = "1";
+//            }
+//            request.setAttribute("page", page);
+//            SupportTypeDAO sDAO = new SupportTypeDAO();
+//            int count = sDAO.totalSupportType();
+//            int endPage = count / 3;
+//            if (endPage % 3 != 0) {
+//                endPage++;
+//            }
+//            request.setAttribute("endP", endPage);
+//            Vector<SupportType> s = new Vector();
+//            if (group_type == null || input == null || input.isEmpty()) {
+//                s = sDAO.getSupportTypeList(Integer.parseInt(page));
+//            } else {
+//                s = sDAO.getSupportTypeList(Integer.parseInt(page));//sai
+//            }
+            SupportTypeDAO sDAO = new SupportTypeDAO();
+            Vector<Group> code = new Vector();
+            code = sDAO.getCodeGroupBAList();
+            request.setAttribute("listCode", code);
             request.getRequestDispatcher("../Views/SupportTypeView.jsp").forward(request, response);
         }
     }

@@ -56,31 +56,47 @@ public class GroupDAO {
         return vec;
     }
 
-    public int totalGroup() {
+    public int getTotalGroup(String filter, String search) {
+        int total = 0;
         try {
-            //mo ket noi
-            String sql = "SELECT count(*) FROM hr_system_v2.group";
+            String sql = "select count(*) FROM hr_system_v2.group\n";
+            if (filter != null && search == null) {
+                if ("0".equals(filter) || "1".equals(filter)) {
+                    sql += "where status = ?";
+                } else {
+                    sql += "where code = ?";
+                }
+            } else if (filter == null && search != null) {
+                sql += "where value like ?";
+            }
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
+            if (filter != null) {
+                ps.setString(1, filter);
+            } else if (search != null) {
+                ps.setString(1,"%" + search + "%");
+            }
             rs = ps.executeQuery();
             while (rs.next()) {
-                return rs.getInt(1);
+                total = rs.getInt(1);
             }
         } catch (Exception e) {
-            e.printStackTrace(System.out);
+            System.out.println("Error: " + e.getMessage());
         }
-        return 0;
+        return total;
     }
 
-    public Vector<Group> getGroupBySearch(String input) {
+    public Vector<Group> getGroupBySearch(String input, int page) {
         Vector vec = new Vector();
         try {
             String sql = "SELECT * FROM hr_system_v2.group"
-                    + " where code like ? or name like ?";
+                    + " where code like ? or name like ?"
+                    + "limit 6 offset ?";
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
             ps.setString(1, "%" + input + "%");
             ps.setString(2, "%" + input + "%");
+            ps.setInt(3, (page - 1) * 6);
             rs = ps.executeQuery();
             while (rs.next()) {
                 Group g = new Group();
@@ -234,5 +250,58 @@ public class GroupDAO {
         }
         ps.setInt(2, id);
         ps.executeUpdate();
+    }
+    public Vector<String> getAllCode() {
+        Vector vec = new Vector();
+        try {
+            String sql = "select code from hr_system_v2.group\n"
+                    + "group by code";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                vec.add(rs.getString(1));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return vec;
+    }
+   
+    public Vector<Group> filterGroupList(String input, int option, int page) {
+        Vector vec = new Vector();
+        try {
+            String sql = "select * from hr_system_v2.group\n";
+            switch (option) {
+                case 1:
+                    sql += "where code = ?\n";
+                    break;
+                case 2:
+                    sql += "where status = ?\n";
+                    break;
+            }
+            sql += "limit 6 offset ?";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, input);
+            ps.setInt(2, (page - 1) * 6);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Group g = new Group();
+                g.setId(rs.getInt(1));
+                g.setCode(rs.getString(2));
+                g.setManager(rs.getString(3));
+                g.setName(rs.getString(4));
+                g.setStatus(rs.getBoolean(5));
+                g.setDescription(rs.getString(6));
+                g.setParent_group_code(rs.getString(7));
+                g.setDelete(rs.getBoolean(8));
+                g.setUpdate_date(rs.getString(9));
+                vec.add(g);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return vec;
     }
 }

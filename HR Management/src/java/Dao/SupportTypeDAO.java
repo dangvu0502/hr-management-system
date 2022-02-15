@@ -30,7 +30,7 @@ public class SupportTypeDAO {
     public Vector<SupportType> getSupportTypeList(int page) {
         Vector vec = new Vector();
         try {
-            String sql = "SELECT * FROM hr_system_v2.support_type limit 3 offset ?";
+            String sql = "SELECT * FROM hr_system_v2.`support type` limit 3 offset ?";
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
             ps.setInt(1, (page - 1) * 3);
@@ -51,11 +51,29 @@ public class SupportTypeDAO {
         }
         return vec;
     }
+    
+    public Vector<Group> getCodeGroupBAList() {
+        Vector vec = new Vector();
+        try {
+            String sql = "SELECT a.code FROM hr_system_v2.group a join hr_system_v2.`support type` b where a.manager_id = b.id and a.status = 1;";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Group s = new Group();
+                s.setCode(rs.getString(1));
+                vec.add(s);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return vec;
+    }
 
     public int totalSupportType() {
         try {
             //mo ket noi
-            String sql = "SELECT count(*) FROM hr_system_v2.support_type";
+            String sql = "SELECT count(*) FROM hr_system_v2.`support type`;";
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -72,7 +90,7 @@ public class SupportTypeDAO {
     public boolean addNewSupportType(SupportType s) throws Exception {
         int check = 0;
         try {
-            String sql = "INSERT INTO `hr_system_v2`.`support_type` (`name`,`email`,`status`,`delete`,`in_charge_group`,`description`) VALUES (?,?,?,?,?,?)";
+            String sql = "INSERT INTO `hr_system_v2`.`support type` (`name`,`email`,`status`,`delete`,`incharge group`,`description`) VALUES (?,?,?,?,?,?)";
             con = new DBContext().getConnection();
             con.setAutoCommit(false);
             ps = con.prepareStatement(sql);
@@ -92,7 +110,7 @@ public class SupportTypeDAO {
     }
     
     public boolean updateSupportType(SupportType s, int id) throws Exception {
-        String updateTableSQL = "UPDATE hr_system_v2.support_type SET name= ? ,email= ?, status= ?, in_charge_group = ?, description= ? WHERE id= ?";
+        String updateTableSQL = "UPDATE `hr_system_v2`.`support type` SET `name` = ?, `email` = ?, `status` = ?, `delete` = ?, `incharge group` = ?, `description` = ? WHERE (`id` = ?);";
         int check = 0;
         try (
                 Connection con = new DBContext().getConnection();
@@ -100,9 +118,10 @@ public class SupportTypeDAO {
             ps.setString(1, s.getName());
             ps.setString(2, s.getEmail());
             ps.setBoolean(3, s.isStatus());
-            ps.setString(4, s.getIn_charge_group());
-            ps.setString(5, s.getDescription());
-            ps.setInt(6, id);
+            ps.setBoolean(4, s.isDelete());
+            ps.setString(5, s.getIn_charge_group());
+            ps.setString(6, s.getDescription());
+            ps.setInt(7, id);
             // execute update SQL stetement
             check = ps.executeUpdate();
         } catch (SQLException e) {
@@ -139,5 +158,16 @@ public class SupportTypeDAO {
         return vec;
     }
     
-    
+    public void editStatusDelete(int delete, int id) throws SQLException {
+        String sql = "UPDATE `hr_system_v2`.`support type` SET `delete` = ? WHERE (`id` = ?);";
+        con = new DBContext().getConnection();
+        ps = con.prepareStatement(sql);
+        if (delete == 0) {
+            ps.setInt(1, 1);
+        } else {
+            ps.setInt(1, 0);
+        }
+        ps.setInt(2, id);
+        ps.executeUpdate();
+    }
 }
