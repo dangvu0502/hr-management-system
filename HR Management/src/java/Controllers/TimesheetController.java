@@ -7,6 +7,8 @@ package Controllers;
 
 import Dao.SettingDAO;
 import Dao.TimesheetDAO;
+import Models.Timesheet;
+import Models.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -68,6 +70,7 @@ public class TimesheetController extends HttpServlet {
     private void showTimesheetListView(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
+        User user = (User) request.getSession().getAttribute("account");
         String fromDate = request.getParameter("fromDate") != null ? request.getParameter("fromDate") : "";
         String toDate = request.getParameter("toDate") != null ? request.getParameter("toDate") : "";
         String project_code = request.getParameter("project") != null ? request.getParameter("project") : "";
@@ -77,7 +80,7 @@ public class TimesheetController extends HttpServlet {
         int offset = (page - 1) * 3;
 
         //this query for search and filter
-        String query1 = "SELECT * FROM hr_system_v2.timesheet Where user_id= " + 99;
+        String query1 = "SELECT * FROM hr_system_v2.timesheet Where user_id= " + user.getId();
         if (!fromDate.isEmpty()) {
             query1 += " and date >= " + "'" + fromDate + "'";
         }
@@ -96,7 +99,7 @@ public class TimesheetController extends HttpServlet {
         query1 += " limit 3 offset " + offset;
        
         //this query for  total timesheet
-        String query2 = "SELECT count(id) FROM hr_system_v2.timesheet Where user_id= " + 99;
+        String query2 = "SELECT count(id) FROM hr_system_v2.timesheet Where user_id= " + user.getId();
         if (!fromDate.isEmpty()) {
             query2 += " and date >= " + "'" + fromDate + "'";
         }
@@ -159,7 +162,12 @@ public class TimesheetController extends HttpServlet {
         String duration = request.getParameter("duration");
         int process = Integer.parseInt(request.getParameter("process"));
         String project = request.getParameter("project");
-        response.getWriter().println(title+" "+date+" "+duration+" "+process+" "+project);
+        int status = 1;
+        User user = (User) request.getSession().getAttribute("account");
+        timesheetDAO.addNewTimesheet(new Timesheet(title,date,process,duration,status,user.getId(),project));
+        request.getSession().setAttribute("successMessage", "Add new timesheet success");
+        response.sendRedirect("/HR_Management/Timesheet/NewTimesheet");
+        
     }
     
 

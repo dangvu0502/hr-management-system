@@ -34,6 +34,18 @@ public class Timesheet {
         this.project_code = project_code;
     }
 
+    public Timesheet(String title, String date, int process, String duration, int status, int user_id, String project_code) {
+        this.title = title;
+        this.date = date;
+        this.process = process;
+        this.duration = duration;
+        this.status = status;
+        this.user_id = user_id;
+        this.project_code = project_code;
+    }
+
+    
+    
     
     
     

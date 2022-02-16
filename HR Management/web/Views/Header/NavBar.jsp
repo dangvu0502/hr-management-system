@@ -32,8 +32,11 @@
             <a class="nav-item nav-link active" href="<%= request.getContextPath()%>/Views/Home.jsp"
                >Home <span class="sr-only">(current)</span></a
             >
-            <a class="nav-item nav-link active" href="<%= request.getContextPath()%>/BlogController"
+            <a class="nav-item nav-link" href="<%= request.getContextPath()%>/BlogController"
                >Blog <span class="sr-only">(current)</span></a
+            >
+            <a class="nav-item nav-link" href="<%= request.getContextPath()%>/Timesheet/TimesheetList"
+               >Timesheet <span class="sr-only"></span></a
             >
             <c:if test="${sessionScope.account.role_id eq 1}"> 
                 <a class="nav-item nav-link" href="<%= request.getContextPath()%>/SettingController/Setting">Setting List</a>

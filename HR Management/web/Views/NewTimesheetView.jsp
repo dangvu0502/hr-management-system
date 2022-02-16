@@ -53,7 +53,12 @@
                                     <div class="row">
                                         <div class="col-lg-2"></div>
                                         <div class="col-lg-8">
-
+                                            <c:if test="${successMessage != null}">
+                                                <div class="message alert alert-success" role="alert">
+                                                    <p class="mb-0">${successMessage}</p>
+                                                </div>
+                                                <c:remove var="successMessage" scope="session" /> 
+                                            </c:if>
                                             <div class="row ">
                                                 <div class="form-group col-lg-12">
                                                     <label for="title">Title</label>
@@ -121,6 +126,11 @@
         <script src="../js/Director/app.js" type="text/javascript"></script>
         <script src="../js/Director/myScript.js" type="text/javascript"></script>
         <script>
+                                                        /** HIDE ALERT**/
+                                                        $(document).click(function (e) {
+                                                            $('.message').hide();
+                                                        });
+                                                        /** HIDE ALERT**/
 
                                                         var chooseProject = false;
                                                         function val1() {
@@ -139,7 +149,7 @@
                                                             else
                                                                 chooseProcess = false;
                                                         }
-                                                        
+
                                                         var isValid = false;
                                                         function validate() {
                                                             var duration = document.getElementById('duration');
