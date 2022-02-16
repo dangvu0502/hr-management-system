@@ -23,10 +23,12 @@ public class TimesheetController extends HttpServlet {
 
     private TimesheetDAO timesheetDAO;
     private SettingDAO settingDAO;
+    private int timesheetCount;
 
     public void init() {
         timesheetDAO = new TimesheetDAO();
         settingDAO = new SettingDAO();
+        timesheetCount = timesheetDAO.getTotalTimesheet();
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -75,6 +77,14 @@ public class TimesheetController extends HttpServlet {
         int process = request.getParameter("process") != null ? Integer.parseInt(request.getParameter("process")) : 0;
         int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
         int offset = (page-1)*3;
+        int total = timesheetCount/3 + (timesheetCount%3 == 0 ? 0 : 1);
+        int begin = 1;
+        int end  = 3;
+        while(page > end) {
+            end += 3;
+            begin += 3;
+        }
+        end = Math.min(end,total);
         String query ="SELECT * FROM hr_system_v2.timesheet Where user_id= "+99;
         if(!fromDate.isEmpty()) query += " and date >= " + "'" + fromDate + "'";
         if(!toDate.isEmpty()) query += " and date <= " +  "'" + toDate+ "'";
@@ -83,8 +93,10 @@ public class TimesheetController extends HttpServlet {
         if(process != 0) query += " and process = " + "'"+ process+ "'"; 
         query += " limit 3 offset " + offset;
         response.getWriter().println(query);
+        request.setAttribute("total",total);
+        request.setAttribute("begin",begin);
+        request.setAttribute("end",end);
         request.setAttribute("currentNumber", page);
-        request.setAttribute("total",  timesheetDAO.getTotalTimesheet()/3+1);
         request.setAttribute("timesheetList", timesheetDAO.getTimesheetList(query));
         request.setAttribute("timesheetProcess", settingDAO.getTimesheetProcess());
         request.setAttribute("timesheetStatus", settingDAO.getTimesheetStatus());
