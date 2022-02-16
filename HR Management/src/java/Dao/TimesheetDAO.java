@@ -85,9 +85,9 @@ public class TimesheetDAO {
     }
     
     
-    public int getTotalTimesheet() {
+    public int getTotalTimesheet(String query) {
         try {
-            String sql = "select count(id) FROM hr_system_v2.timesheet;";
+            String sql = query;
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -102,6 +102,6 @@ public class TimesheetDAO {
     
     public static void main(String[] args) {
         TimesheetDAO tsDAO = new TimesheetDAO();
-        System.out.println(tsDAO.getTotalTimesheet());
+      
     }
 }

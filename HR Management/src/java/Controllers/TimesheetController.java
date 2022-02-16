@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 /**
  *
  * @author dangGG
@@ -23,12 +22,11 @@ public class TimesheetController extends HttpServlet {
 
     private TimesheetDAO timesheetDAO;
     private SettingDAO settingDAO;
-    private int timesheetCount;
 
     public void init() {
         timesheetDAO = new TimesheetDAO();
         settingDAO = new SettingDAO();
-        timesheetCount = timesheetDAO.getTotalTimesheet();
+
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -45,7 +43,7 @@ public class TimesheetController extends HttpServlet {
                     showNewTimesheetView(request, response);
                 case "/TimesheetDetail":
                     showTimesheetDetailView(request, response);
-          
+
                 default:
                     response.sendError(404);
                     break;
@@ -76,28 +74,60 @@ public class TimesheetController extends HttpServlet {
         String title = request.getParameter("title") != null ? request.getParameter("title") : "";
         int process = request.getParameter("process") != null ? Integer.parseInt(request.getParameter("process")) : 0;
         int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
-        int offset = (page-1)*3;
-        int total = timesheetCount/3 + (timesheetCount%3 == 0 ? 0 : 1);
+        int offset = (page - 1) * 3;
+
+        //query to search and filter
+        String query1 = "SELECT * FROM hr_system_v2.timesheet Where user_id= " + 99;
+        if (!fromDate.isEmpty()) {
+            query1 += " and date >= " + "'" + fromDate + "'";
+        }
+        if (!toDate.isEmpty()) {
+            query1 += " and date <= " + "'" + toDate + "'";
+        }
+        if (!project_code.isEmpty()) {
+            query1 += " and project_code =  " + "'" + project_code + "'";
+        }
+        if (!title.isEmpty()) {
+            query1 += " and title like  " + "'%" + title + "%'";
+        }
+        if (process != 0) {
+            query1 += " and process = " + "'" + process + "'";
+        }
+        query1 += " limit 3 offset " + offset;
+       
+        //query count total timesheet
+        String query2 = "SELECT count(id) FROM hr_system_v2.timesheet Where user_id= " + 99;
+        if (!fromDate.isEmpty()) {
+            query2 += " and date >= " + "'" + fromDate + "'";
+        }
+        if (!toDate.isEmpty()) {
+            query2 += " and date <= " + "'" + toDate + "'";
+        }
+        if (!project_code.isEmpty()) {
+            query2 += " and project_code =  " + "'" + project_code + "'";
+        }
+        if (!title.isEmpty()) {
+            query2 += " and title like  " + "'%" + title + "%'";
+        }
+        if (process != 0) {
+            query2 += " and process = " + "'" + process + "'";
+        }
+       
+        int timesheetCount = timesheetDAO.getTotalTimesheet(query2);
+        int total = timesheetCount / 3 + (timesheetCount % 3 == 0 ? 0 : 1);
         int begin = 1;
-        int end  = 3;
-        while(page > end) {
+        int end = 3;
+        while (page > end) {
             end += 3;
             begin += 3;
         }
-        end = Math.min(end,total);
-        String query ="SELECT * FROM hr_system_v2.timesheet Where user_id= "+99;
-        if(!fromDate.isEmpty()) query += " and date >= " + "'" + fromDate + "'";
-        if(!toDate.isEmpty()) query += " and date <= " +  "'" + toDate+ "'";
-        if(!project_code.isEmpty()) query += " and project_code =  " +  "'" + project_code+ "'";
-        if(!title.isEmpty()) query += " and title like  " +  "'%" + title + "%'";
-        if(process != 0) query += " and process = " + "'"+ process+ "'"; 
-        query += " limit 3 offset " + offset;
-        response.getWriter().println(query);
-        request.setAttribute("total",total);
-        request.setAttribute("begin",begin);
-        request.setAttribute("end",end);
+        end = Math.min(end, total);
+        begin = Math.min(end, begin);
+        request.setAttribute("total", total);
+        request.setAttribute("begin", begin);
+        request.setAttribute("end", end);
         request.setAttribute("currentNumber", page);
-        request.setAttribute("timesheetList", timesheetDAO.getTimesheetList(query));
+        request.setAttribute("timesheetList", timesheetDAO.getTimesheetList(query1));
         request.setAttribute("timesheetProcess", settingDAO.getTimesheetProcess());
         request.setAttribute("timesheetStatus", settingDAO.getTimesheetStatus());
         request.getRequestDispatcher("/Views/TimesheetListView.jsp").forward(request, response);
@@ -119,6 +149,5 @@ public class TimesheetController extends HttpServlet {
         request.setAttribute("timesheetProcess", settingDAO.getTimesheetProcess());
         request.getRequestDispatcher("/Views/TimesheetDetailView.jsp").forward(request, response);
     }
-
 
 }
