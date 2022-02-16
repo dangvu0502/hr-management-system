@@ -67,7 +67,7 @@ public class SettingDAO {
             if (filter != null) {
                 ps.setString(1, filter);
             } else if (search != null) {
-                ps.setString(1,"%" + search + "%");
+                ps.setString(1, "%" + search + "%");
             }
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -239,8 +239,8 @@ public class SettingDAO {
             System.out.println("Error: " + e.getMessage());
         }
     }
-    
-    public HashMap<Integer, String> getTimesheetProcess() {
+
+    public HashMap<Integer, String> getTimesheetProcess() throws SQLException {
         HashMap<Integer, String> role = new HashMap<>();
         try {
             String sql = "SELECT setting.order, setting.value FROM hr_system_v2.setting where setting.type = 'timesheet process'";
@@ -253,11 +253,15 @@ public class SettingDAO {
             return role;
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
+        } finally {
+            if (con != null) {
+                con.close();
+            }
         }
         return null;
     }
-    
-    public HashMap<Integer, String> getTimesheetStatus() {
+
+    public HashMap<Integer, String> getTimesheetStatus() throws SQLException {
         HashMap<Integer, String> role = new HashMap<>();
         try {
             String sql = "SELECT setting.order, setting.value FROM hr_system_v2.setting where setting.type = 'timesheet status'";
@@ -270,6 +274,10 @@ public class SettingDAO {
             return role;
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
+        } finally {
+            if (con != null) {
+                con.close();
+            }
         }
         return null;
     }
@@ -278,7 +286,7 @@ public class SettingDAO {
         SettingDAO st = new SettingDAO();
         int role = st.getTotalSetting(null, "m");
 
-            System.out.println(role);
+        System.out.println(role);
 
     }
 }

@@ -10,6 +10,7 @@ import Models.Timesheet;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class TimesheetDAO {
         return dateTime.format(myFormatObj);
     }
 
-    public ArrayList<Timesheet> getTimesheetList(String query) {
+    public ArrayList<Timesheet> getTimesheetList(String query) throws SQLException {
         ArrayList<Timesheet> res = new ArrayList<>();
         try {
             String sql = query;
@@ -52,6 +53,10 @@ public class TimesheetDAO {
             }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
+        } finally {
+            if (con != null) {
+                con.close();
+            }
         }
         return res;
     }
@@ -83,7 +88,7 @@ public class TimesheetDAO {
         return null;
     }
 
-    public int getTotalTimesheet(String query) {
+    public int getTotalTimesheet(String query) throws SQLException {
         try {
             String sql = query;
             con = new DBContext().getConnection();
@@ -94,11 +99,15 @@ public class TimesheetDAO {
             }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
+        } finally {
+            if (con != null) {
+                con.close();
+            }
         }
         return -1;
     }
 
-    public int addNewTimesheet(Timesheet timesheet) {
+    public int addNewTimesheet(Timesheet timesheet) throws SQLException {
         int rows = 0;
         try {
             String sql = "INSERT INTO `hr_system_v2`.`timesheet` (`title`, `date`, `process`, \n"
@@ -116,6 +125,10 @@ public class TimesheetDAO {
             rows = ps.executeUpdate();
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
+        } finally {
+            if (con != null) {
+                con.close();
+            }
         }
         return rows;
     }
