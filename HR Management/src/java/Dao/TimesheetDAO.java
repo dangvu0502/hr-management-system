@@ -61,7 +61,7 @@ public class TimesheetDAO {
         return res;
     }
 
-    public Timesheet getTimesheetById(int id) {
+    public Timesheet getTimesheetById(int id) throws SQLException {
         ArrayList<Timesheet> res = new ArrayList<>();
         try {
             String sql = "SELECT * FROM hr_system_v2.timesheet  where id = ?";
@@ -84,6 +84,10 @@ public class TimesheetDAO {
             }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
+        }finally {
+            if (con != null) {
+                con.close();
+            }
         }
         return null;
     }
