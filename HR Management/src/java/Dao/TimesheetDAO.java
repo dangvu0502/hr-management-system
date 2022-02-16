@@ -136,6 +136,24 @@ public class TimesheetDAO {
         }
         return rows;
     }
+    
+    public int deleteTimesheetById(int id) throws SQLException {
+        int rows = 0;
+        try {
+            String sql = "DELETE FROM `hr_system_v2`.`timesheet` WHERE (`id` = ?)";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            rows = ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+        }
+        return rows;
+    }
 
     public static void main(String[] args) {
         TimesheetDAO tsDAO = new TimesheetDAO();

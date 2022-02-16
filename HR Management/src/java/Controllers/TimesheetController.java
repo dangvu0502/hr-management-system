@@ -43,9 +43,13 @@ public class TimesheetController extends HttpServlet {
                     break;
                 case "/NewTimesheet":
                     newTimesheet(request, response, method);
+                    break;
                 case "/TimesheetDetail":
                     showTimesheetDetailView(request, response);
-
+                    break;
+                case "/DeleteTimesheet":
+                    deleteTimesheet(request, response);    
+                    break;
                 default:
                     response.sendError(404);
                     break;
@@ -80,7 +84,7 @@ public class TimesheetController extends HttpServlet {
         int offset = (page - 1) * 3;
 
         //this query for search and filter
-        String query1 = "SELECT * FROM hr_system_v2.timesheet Where user_id= " + user.getId();
+        String query1 = "SELECT * FROM hr_system_v2.timesheet Where user_id= " + 106;
         if (!fromDate.isEmpty()) {
             query1 += " and date >= " + "'" + fromDate + "'";
         }
@@ -99,7 +103,7 @@ public class TimesheetController extends HttpServlet {
         query1 += " limit 3 offset " + offset;
        
         //this query for  total timesheet
-        String query2 = "SELECT count(id) FROM hr_system_v2.timesheet Where user_id= " + user.getId();
+        String query2 = "SELECT count(id) FROM hr_system_v2.timesheet Where user_id= " + 106;
         if (!fromDate.isEmpty()) {
             query2 += " and date >= " + "'" + fromDate + "'";
         }
@@ -167,9 +171,14 @@ public class TimesheetController extends HttpServlet {
         timesheetDAO.addNewTimesheet(new Timesheet(title,date,process,duration,status,user.getId(),project));
         request.getSession().setAttribute("successMessage", "Add new timesheet success");
         response.sendRedirect("/HR_Management/Timesheet/NewTimesheet");
-        
     }
     
+     private void deleteTimesheet(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        response.setContentType("text/html;charset=UTF-8");
+        int id = Integer.parseInt(request.getParameter("id"));
+        timesheetDAO.deleteTimesheetById(id);
+    }
 
     private void showTimesheetDetailView(HttpServletRequest request, HttpServletResponse response)
             throws Exception {

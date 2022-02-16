@@ -174,7 +174,7 @@
                                                 <th style="width: 13%"></th>
                                             </tr>
                                             <c:forEach var="timesheet" items="${timesheetList}"  varStatus="theCount">
-                                                <tr>
+                                                <tr id="timesheet${timesheet.id}">
                                                     <td style=" cursor: pointer;" onclick="window.open('http://localhost:8080/HR_Management/Timesheet/TimesheetDetail?id=${timesheet.id}', '_blank')" >${theCount.count}</td>
                                                     <td>${timesheet.date}</td>
                                                     <td>${timesheet.title}</td>
@@ -193,7 +193,7 @@
                                                         </c:if>
                                                     </td>
                                                     <td>
-                                                        <a href="#" class="btn btn-md btn-default"><i class="fa fa-trash-o"></i></a>
+                                                        <a href="#" class="btn btn-md btn-default" onclick="deleteTimesheet(${timesheet.id})"><i class="fa fa-trash-o"></i></a>
                                                             <c:if test="${timesheet.status != 2}">
                                                             <a href="#" class="btn btn-md btn-default"><i class="fa fa-pencil"></i></a>
                                                             </c:if>
@@ -257,57 +257,78 @@
         <!-- Director App -->
         <script src="../js/Director/app.js" type="text/javascript"></script>
         <script>
-                                                        function dateHideShow() {
-                                                            var x = document.getElementById("advanced");
-                                                            if (x.style.display === "none") {
-                                                                x.style.display = "block";
-                                                            } else {
-                                                                x.style.display = "none";
+                                                            function dateHideShow() {
+                                                                var x = document.getElementById("advanced");
+                                                                if (x.style.display === "none") {
+                                                                    x.style.display = "block";
+                                                                } else {
+                                                                    x.style.display = "none";
+                                                                }
                                                             }
-                                                        }
 
-                                                        function page(number) {
-                                                            var pageNumber = number;
-                                                            var fromDate = document.getElementById('fromDate').value;
-                                                            var toDate = document.getElementById('toDate').value;
-                                                            var process = document.getElementById('processFilter').value;
-                                                            var project = document.getElementById('projectFilter').value;
-                                                            var title = document.getElementById('timesheetTitle').value;
-                                                            console.log(title);
-                                                            var link = "http://localhost:8080/HR_Management/Timesheet/TimesheetList?";
-                                                            link += "page=" + pageNumber;
-                                                            link += "&";
-                                                            link += "fromDate=" + fromDate;
-                                                            link += "&";
-                                                            link += "toDate=" + toDate;
-                                                            link += "&";
-                                                            link += "process=" + process;
-                                                            link += "&";
-                                                            link += "project=" + project;
-                                                            link += "&";
-                                                            link += "title=" + title;
-                                                            $('#timesheetTable').load(link + " " + "#timesheetTable");
+                                                            function page(number) {
+                                                                var pageNumber = number;
+                                                                var fromDate = document.getElementById('fromDate').value;
+                                                                var toDate = document.getElementById('toDate').value;
+                                                                var process = document.getElementById('processFilter').value;
+                                                                var project = document.getElementById('projectFilter').value;
+                                                                var title = document.getElementById('timesheetTitle').value;
+                                                                console.log(title);
+                                                                var link = "http://localhost:8080/HR_Management/Timesheet/TimesheetList?";
+                                                                link += "page=" + pageNumber;
+                                                                link += "&";
+                                                                link += "fromDate=" + fromDate;
+                                                                link += "&";
+                                                                link += "toDate=" + toDate;
+                                                                link += "&";
+                                                                link += "process=" + process;
+                                                                link += "&";
+                                                                link += "project=" + project;
+                                                                link += "&";
+                                                                link += "title=" + title;
+                                                                $('#timesheetTable').load(link + " " + "#timesheetTable");
+                                                            }
 
-                                                        }
+                                                            function deleteTimesheet(id) {
+                                                                var cf = confirm("Are you sure to delete?");
+                                                                if (cf) {
+                                                                    //Logic to delete the item
+                                                                    $.ajax({
+
+                                                                        type: "POST",
+
+                                                                        url: "http://localhost:8080/HR_Management/Timesheet/DeleteTimesheet",
+
+                                                                        data: {id: id},
+
+                                                                        success: function () {
+                                                                            page(1);
+                                                                        }
+
+                                                                    });
+                                                                    
+                                                                    
+                                                                }
+                                                            }
 
 
-                                                        $(document).ready(function () {
-                                                            $('#fromDate').change(function () {
-                                                                page(1);
+                                                            $(document).ready(function () {
+                                                                $('#fromDate').change(function () {
+                                                                    page(1);
+                                                                });
+                                                                $('#toDate').change(function () {
+                                                                    page(1);
+                                                                });
+                                                                $('#processFilter').change(function () {
+                                                                    page(1);
+                                                                });
+                                                                $('#projectFilter').change(function () {
+                                                                    page(1);
+                                                                });
+                                                                $('#timesheetTitle').keyup(function () {
+                                                                    page(1);
+                                                                });
                                                             });
-                                                            $('#toDate').change(function () {
-                                                                page(1);
-                                                            });
-                                                            $('#processFilter').change(function () {
-                                                                page(1);
-                                                            });
-                                                            $('#projectFilter').change(function () {
-                                                                page(1);
-                                                            });
-                                                            $('#timesheetTitle').keyup(function () {
-                                                                page(1);
-                                                            });
-                                                        });
 
 
 
