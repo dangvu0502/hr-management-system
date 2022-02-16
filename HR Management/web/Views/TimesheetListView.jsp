@@ -208,7 +208,7 @@
                                                     </c:if>
                                                     <c:if test="${currentNumber>3}">
                                                     <li><button id="page${1}" class="btn btn-sm btn-default" onclick="page(${1})">1</button></li>
-                                                    <li><button id="page${currentNumber-2}" class="btn btn-sm btn-default" onclick="page(${currentNumber-2})">...</button></li>
+                                                    <li><button id="page${currentNumber-3}" class="btn btn-sm btn-default" onclick="page(${currentNumber-3})">...</button></li>
                                                     </c:if>
                                                     <c:forEach begin="${begin}" end="${end}" var="num">
                                                         <c:if test="${num == currentNumber}">
@@ -219,7 +219,7 @@
                                                         </c:if>    
                                                     </c:forEach>
                                                     <c:if test="${total-currentNumber+1>=3}">
-                                                    <li><button id="page${currentNumber+3}" class="btn btn-sm btn-default" onclick="page(${currentNumber+3})">...</button></li>
+                                                    <li><button id="page${Math.min(currentNumber+3,total)}" class="btn btn-sm btn-default" onclick="page(${Math.min(currentNumber+3,total)})">...</button></li>
                                                     <li><button id="page${total}" class="btn btn-sm btn-default" onclick="page(${total})">${total}</button></li>
                                                     </c:if>
                                                     <c:if test="${currentNumber < total}">
