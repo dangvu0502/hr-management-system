@@ -49,53 +49,46 @@
                                 New Timesheet
                             </header>
                             <div class="panel-body">
-                                <form action="" method="POST" role="form" onsubmit="return chooseRole">
+                                <form action="/HR_Management/Timesheet/NewTimesheet" method="POST" role="form" onsubmit="return chooseProject && chooseProcess && isValid">
                                     <div class="row">
                                         <div class="col-lg-2"></div>
                                         <div class="col-lg-8">
 
                                             <div class="row ">
                                                 <div class="form-group col-lg-12">
-                                                    <label for="fullname">Title</label>
-                                                    <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Enter timesheet title" required>
+                                                    <label for="title">Title</label>
+                                                    <input type="text" class="form-control" id="title" name="title" placeholder="Enter timesheet title" required>
                                                 </div>
                                             </div>
                                             <div class="row ">
                                                 <div class="form-group col-lg-6">
-                                                    <label for="username">Date</label>
-                                                    <input type="date" class="form-control" id="username" name="username" onkeyup="checkUsername()" placeholder="Enter your username" required>
+                                                    <label for="date">Date</label>
+                                                    <input type="date" class="form-control" id="date" name="date"  placeholder="Enter your username" required>
 
                                                 </div>
                                                 <div class="form-group col-lg-6">
-                                                    <label for="email">Duration (hour)</label>
-                                                    <input type="email" class="form-control" id="email" name="email" placeholder="Ex: 1:30" required>
-
+                                                    <label for="duration">Duration (hour : minute)</label>
+                                                    <input type="text" class="form-control" id="duration" onkeyup="validate()" name="duration" placeholder="Ex: 1:30" required>
+                                                    <span id='isValidHour'></span> 
                                                 </div>
                                             </div>
 
                                             <div class="row">
                                                 <div class="form-group col-lg-6" >
-                                                    <label for="system-role">Project</label>
-                                                    <select class="form-control text-bold" aria-label="" id="system-role" name="system-role" onchange="val()">
+                                                    <label for="project">Project</label>
+                                                    <select class="form-control text-bold" aria-label="" id="project" name="project" onchange="val1()">
                                                         <option value="0" selected></option>
-                                                        <c:forEach var="role" items="${roles}">
-                                                            <option value="${role.key}">HRM</option>
-                                                        </c:forEach>
-                                                        <option value="${role.key}">HRM</option>        
-                                                        <c:remove var="roles" scope="session" />    
+                                                        <option value="HRM">HRM</option>        
                                                     </select>
-
                                                 </div>
                                                 <div class="form-group col-lg-6" >
-
-                                                    <label for="system-role">Process</label>
-                                                    <select class="form-control text-bold" aria-label="" id="system-role" name="system-role" onchange="val()">
+                                                    <label for="process">Process</label>
+                                                    <select class="form-control text-bold" aria-label="" id="process" name="process" onchange="val2()">
                                                         <option value="0" selected></option>
                                                         <c:forEach var="process" items="${timesheetProcess}">
                                                             <option value="${process.key}">${process.value}</option>
                                                         </c:forEach>
                                                     </select>
-
                                                 </div>
                                             </div>
 
@@ -127,7 +120,47 @@
         <!-- Director App -->
         <script src="../js/Director/app.js" type="text/javascript"></script>
         <script src="../js/Director/myScript.js" type="text/javascript"></script>
+        <script>
 
+                                                        var chooseProject = false;
+                                                        function val1() {
+                                                            var value = document.getElementById("project").value;
+                                                            if (value != 0)
+                                                                chooseProject = true;
+                                                            else
+                                                                chooseProject = false;
+                                                        }
+
+                                                        var chooseProcess = false;
+                                                        function val2() {
+                                                            var value = document.getElementById("process").value;
+                                                            if (value != 0)
+                                                                chooseProcess = true;
+                                                            else
+                                                                chooseProcess = false;
+                                                        }
+                                                        
+                                                        var isValid = false;
+                                                        function validate() {
+                                                            var duration = document.getElementById('duration');
+                                                            console.log(duration.value.toString());
+                                                            var regex = /^[0-9]+:[0-9][0-9]$/;
+                                                            if (duration == null || duration.value.toString().length == 0) {
+                                                                document.getElementById('isValidHour').innerHTML = '';
+                                                            } else {
+
+                                                                if (duration.value.match(regex)) {
+                                                                    isValid = true;
+                                                                    document.getElementById('isValidHour').style.color = 'green';
+                                                                    document.getElementById('isValidHour').innerHTML = 'Valid';
+                                                                } else {
+                                                                    isValid = false;
+                                                                    document.getElementById('isValidHour').style.color = 'red';
+                                                                    document.getElementById('isValidHour').innerHTML = 'Not Valid';
+                                                                }
+                                                            }
+                                                        }
+        </script>
 
     </body>
 </html>

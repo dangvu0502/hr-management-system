@@ -40,7 +40,7 @@ public class TimesheetController extends HttpServlet {
                     showTimesheetListView(request, response);
                     break;
                 case "/NewTimesheet":
-                    showNewTimesheetView(request, response);
+                    newTimesheet(request, response, method);
                 case "/TimesheetDetail":
                     showTimesheetDetailView(request, response);
 
@@ -76,7 +76,7 @@ public class TimesheetController extends HttpServlet {
         int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
         int offset = (page - 1) * 3;
 
-        //query to search and filter
+        //this query for search and filter
         String query1 = "SELECT * FROM hr_system_v2.timesheet Where user_id= " + 99;
         if (!fromDate.isEmpty()) {
             query1 += " and date >= " + "'" + fromDate + "'";
@@ -95,7 +95,7 @@ public class TimesheetController extends HttpServlet {
         }
         query1 += " limit 3 offset " + offset;
        
-        //query count total timesheet
+        //this query for  total timesheet
         String query2 = "SELECT count(id) FROM hr_system_v2.timesheet Where user_id= " + 99;
         if (!fromDate.isEmpty()) {
             query2 += " and date >= " + "'" + fromDate + "'";
@@ -133,12 +133,35 @@ public class TimesheetController extends HttpServlet {
         request.getRequestDispatcher("/Views/TimesheetListView.jsp").forward(request, response);
     }
 
+  
+    private void newTimesheet(HttpServletRequest request, HttpServletResponse response, String method)
+            throws Exception {
+        response.setContentType("text/html;charset=UTF-8");
+       if(method.equalsIgnoreCase("GET")){
+           showNewTimesheetView(request, response);
+       }else{
+           newTimesheetImplement(request, response);
+       }
+    }
+    
     private void showNewTimesheetView(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
         request.setAttribute("timesheetProcess", settingDAO.getTimesheetProcess());
         request.getRequestDispatcher("/Views/NewTimesheetView.jsp").forward(request, response);
     }
+    
+    private void newTimesheetImplement(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        response.setContentType("text/html;charset=UTF-8");
+        String title = request.getParameter("title");
+        String date = request.getParameter("date");
+        String duration = request.getParameter("duration");
+        int process = Integer.parseInt(request.getParameter("process"));
+        String project = request.getParameter("project");
+        response.getWriter().println(title+" "+date+" "+duration+" "+process+" "+project);
+    }
+    
 
     private void showTimesheetDetailView(HttpServletRequest request, HttpServletResponse response)
             throws Exception {

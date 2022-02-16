@@ -83,12 +83,12 @@
                                             <div class="row ">
                                                 <div class="form-group col-lg-12">
                                                     <label for="work-result">Work result</label><p></p>
-                                                    <textarea rows="10" cols="60" id="work-result" name="work-result" style=" resize: vertical;" disabled></textarea>
+                                                    <textarea rows="10" cols="60" id="work-result" name="work-result" style=" resize: vertical;" disabled>${timesheet.work_result}</textarea>
                                                 </div>
                                                 <div class="form-group col-lg-12">
                                                     <c:if test="${timesheet.status == 3}">
-                                                        <label for="work-result">Reject reason</label><p></p>
-                                                        <textarea rows="5" cols="60" id="work-result" name="work-result" style="  resize: vertical; " disabled></textarea>
+                                                        <label for="reject-reason">Reject reason</label><p></p>
+                                                        <textarea rows="5" cols="60" id="reject-reason" name="reject-reason" style="  resize: vertical; " disabled>${timesheet.reject_reason}</textarea>
                                                     </c:if>
                                                 </div>
                                             </div>

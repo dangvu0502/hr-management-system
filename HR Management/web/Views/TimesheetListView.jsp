@@ -305,8 +305,6 @@
                                                             $('#timesheetTitle').keyup(function () {
                                                                 page(1);
                                                             });
-
-
                                                         });
 
 
