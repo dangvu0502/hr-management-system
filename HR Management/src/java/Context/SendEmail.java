@@ -49,7 +49,7 @@ public class SendEmail {
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         String fromEmail = "haidang0528@gmail.com";
-        String password = "H@idang0502";
+        String password = "Haid@ng0502";
         /* Pass Properties object(props) and Authenticator object   
            for authentication to Session instance 
          */
@@ -69,7 +69,7 @@ public class SendEmail {
             message.setFrom(new InternetAddress(fromEmail));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
             message.setSubject(sub);
-            message.setContent(msg, "text/html");
+            message.setContent(msg, "text/html; charset=utf-8");
 
             /* Transport class is used to deliver the message to the recipients */
             Transport.send(message);

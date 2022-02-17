@@ -3,8 +3,9 @@
     Created on : Jan 14, 2022, 2:27:08 PM
     Author     : lehun
 --%>
+<%@page import="Models.User"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="Models.Employee"%>
+<%@page import="Context.TrippleDes"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +13,7 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <title>Home Page</title>
         <link
             rel="stylesheet"
             href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -43,7 +44,7 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
             />
-        <link rel="icon" href="../img/Honey Bee.png" />
+        <link rel="icon" href="<%= request.getContextPath()%>/img/HoneyBee.png" />
 
         <style>
             .Signup {
@@ -112,66 +113,7 @@
         </style>
     </head>
     <body>
-        <!-- Nav Bar -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <img
-                class="navbar-brand"
-                src="../img/Honey Bee.png"
-                alt=""
-                height="150"
-                width="150"
-                />
-            <a class="navbar-brand" href="#"> HR Management</a>
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-toggle="collapse"
-                data-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-                >
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <% Models.Employee acc = (Employee) session.getAttribute("account");
-
-            %>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <!-- If User Log-in -->
-                <div class="navbar-nav ml-auto mr-auto">
-                    <a class="nav-item nav-link active" href="#"
-                       >Home <span class="sr-only">(current)</span></a
-                    >
-                    <c:if test="${sessionScope.account.type_id == 0}"> 
-                        <a class="nav-item nav-link" href="../SettingListController">Setting List</a>
-                    </c:if>
-                    <a class="nav-item nav-link" href="#">Our Team</a>
-
-                </div>
-                <!-- If User Log-in -->
-                <%                    if (acc == null) {
-                %>
-                <div class="navbar-nav ml-auto">
-                    <a class="nav-item nav-link" href="../login">Login</a>
-                    <a class="nav-item nav-link " href="../UserRegister">Sign Up</a>
-                </div>
-                <%}%>
-                <!--       If User Loggin Successfully-->
-                <%
-                    if (acc != null) {
-                %>
-                <div class="navbar-nav ml-auto">
-                    <a href="../EditProfile" data-toggle="modal" data-target="#myModal">  <img
-                            src="https://www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png"
-                            alt="Avatar" width="50" height="50"
-                            /></a>
-                    <p class="nav-item nav-link text-center"> Hello ${sessionScope.account.username}</p>     
-                    <a href="../Logout" class="nav-item nav-link">Log Out</a>
-                </div>
-                <%}%>
-            </div>
-        </nav>
-        <!-- Nav bar -->
+        <%@ include file = "Header/NavBar.jsp" %>
 
         <div id="success" class="error alert alert-success" style="display: none">
             <strong>Well done!</strong> You successfully read this important alert message.
@@ -202,38 +144,31 @@
                             <h4 class="modal-title">Edit Profile</h4>
                         </div>
                         <div class="modal-body">
-                            <form action="../EditProfile" method="post" enctype="multipart/form-data">
+                            <form action="../User/EditProfile" method="POST">
                                 <div class="row">
                                     <div class="col-md-3">
                                         <figure class="text-center">
                                             <figcaption>
                                                 <h4>${sessionScope.account.username}</h4>
                                             </figcaption>
-                                            <img class="img-rounded" src="${sessionScope.account.avatar}" alt="avatar" style="width:200px">
-                                            <input name="image" class="file-upload" type="file" accept="image/*" id="file">
-                                            <!--<input type="hidden" name="image" value="">-->
+                                            <img class="img-rounded" src="../userimg/${sessionScope.account.avatar}" alt="avatar" style="width:200px">
+                                            <input name="fileName" onchange="downloadImage()" class="file-upload" type="file" multiple accept="image/*" id="file" value="${sessionScope.account.avatar}">
                                             <button class="btn btn-primary btn-addon btn-sm"><label for="file">Choose Photo</label></button>
                                         </figure>
                                     </div>
                                     <div class="col-md-9">
-                                        <div class="col-md-8 col-md-6">
+                                        <div class="col-md-8">
                                             <input name="username" type="hidden" value="${sessionScope.account.username}">
-                                            <div class="col-md"><label class="labels">Date of birth</label><input type="date" class="form-control" value="" disabled=""></div>
+                                            <div class="col-md"><label class="labels">Full name</label><input name="fullname" type="text" class="form-control" value="${sessionScope.account.fullname}" required=""></div>
+                                            <div class="col-md"><label class="labels">Date of birth</label><input name="dob" type="date" class="form-control" value="${sessionScope.account.dob}" required=""></div>
+                                            <div class="col-md"><label class="labels">Address</label><input name="address" type="text" class="form-control" value="${sessionScope.account.address}" required="" ></div>
+                                            <div class="col-md"></br>
+                                                <label class="labels" for="1">Male</label>&nbsp&nbsp<input id="1" value="true" name="gender" type="radio" ${sessionScope.account.gender == 'true'?'checked':''} >
+                                                <label class="labels" for="0">Female</label>&nbsp&nbsp<input id="0" value="false" name="gender" type="radio" ${sessionScope.account.gender == 'false'?'checked':''} >
 
-                                            <div class="col-md"><label class="labels">Full name</label><input name="fullname" type="text" class="form-control" value="${sessionScope.account.fullname}"></div>
-                                            <div class="col-md"><label class="labels">Address</label><input type="text" class="form-control" value="" disabled=""></div>
-                                            <input id="password1" type="hidden" class="form-control" value="${sessionScope.account.password}">
-                                        </div>
-                                        <div class="col-md-8 col-md-6">
-                                            <div class="col-md"><label class="labels">Sex</label>
-                                                <select class="form-control" disabled="">
-                                                    <option value="">Male</option>
-                                                    <option value="">Female</option>
-                                                </select>
                                             </div>
-                                            <div class="col-md"><label class="labels">Email</label><input type="email" class="form-control" value="" disabled=""></div>
-                                            <div class="col-md"><label class="labels">Phone number</label><input type="tel" class="form-control" value="" disabled=""></div>
-                                            <div class="col-md"><label class="labels">Password</label><input id="password2" name="password" type="password" class="form-control" value="" required=""></div>
+                                            <div class="col-md"><label class="labels">Email</label><input name="email" type="email" class="form-control" value="${sessionScope.account.email}" disabled=""></div>
+                                            <div class="col-md"><label class="labels">Phone number</label><input name="mobile" type="tel" class="form-control" value="${sessionScope.account.mobile}" required="" ></div>
 
                                         </div>
 
@@ -241,7 +176,7 @@
 
                                 </div>
 
-                                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit" onclick="checkPassword()">Save Profile</button></div>
+                                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit" onchange="checkPassword()">Save Profile</button></div>
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -249,25 +184,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div id="password" class="tab-pane fade">
-                    <form action="ChangePassword" method="POST">
-                        <div class="row mt-5">
-                            <input name="username" type="hidden" value="">
-    
-                            <div class="col-md-8">
-                                <div class="col-md-4 col-md-offset-7"><label class="labels">Old Password</label><input name="oldpass" type="password" class="form-control" required=""></div>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="col-md-4 col-md-offset-7"><label class="labels">New Password</label><input name="newpass" type="password" class="form-control" required=""></div>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="col-md-4 col-md-offset-7"><label class="labels">Confirm Password</label><input name="renewpass" type="password" class="form-control" required=""></div>
-                            </div>
-                        </div>
-                        <input name="test" type="hidden" value="1">
-                        <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Submit Change</button></div>
-                    </form>
-                </div> -->
             </div>
         </div>
         <!-- Footer -->
@@ -363,40 +279,77 @@
         </footer>
         <!-- Footer -->
     </body>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
-        /***AVATAR SCRIPT***/
+                                    /***AVATAR SCRIPT***/
 
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    var fileurl = e.target.result;
-                    $('.img-rounded').attr('src', fileurl);
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-        $(".file-upload").on('change', function () {
-            readURL(this);
-        });
-        $(".upload-button").on('click', function () {
-            $(".file-upload").click();
-        });
-        /***AVATAR SCRIPT***/
+                                    function readURL(input) {
+                                        if (input.files && input.files[0]) {
+                                            var reader = new FileReader();
+                                            reader.onload = function (e) {
+                                                var fileurl = e.target.result;
+                                                $('.img-rounded').attr('src', fileurl);
+                                            }
+                                            reader.readAsDataURL(input.files[0]);
+                                        }
+                                    }
+                                    $(".file-upload").on('change', function () {
+                                        readURL(this);
+                                    });
+                                    $(".upload-button").on('click', function () {
+                                        $(".file-upload").click();
+                                    });
+                                    /***AVATAR SCRIPT***/
 
-        /** HIDE ALERT**/
-        $(document).keypress(function (e) {
-            $('.error').hide();
-        });
-        /** HIDE ALERT**/
-        function checkPassword() {
-            var password1 = document.getElementById('password1').value;
-            var password2 = document.getElementById('password2').value;
-            if (password1 == password2) {
-                alert("Successful change your information");
-            } else {
-                alert("Wrong password");
-            }
-        }
+                                    /** HIDE ALERT**/
+                                    $(document).keypress(function (e) {
+                                        $('.error').hide();
+                                    });
+                                    /** HIDE ALERT**/
+
+                                    /** CHECK EDIT PROFILE**/
+                                    function checkPassword() {
+                                        alert("Successful change your information!!");
+                                    }
+                                    /** CHECK EDIT PROFILE**/
+
+                                    /** CHECK CHANGE PASSWORD**/
+                                    function checkPasswordChange() {
+                                        var oldpassword = document.getElementById('oldpassword').value;
+                                        var oldpassword1 = document.getElementById('oldpassword1').value;
+                                        var newpassword = document.getElementById('newpassword').value;
+                                        var conpassword = document.getElementById('conpassword').value;
+                                        if (oldpassword == oldpassword1) {
+                                            if (newpassword == conpassword) {
+                                                alert("Successful update your new password!!");
+                                            } else {
+                                                alert("Wrong confirm password");
+                                            }
+                                        } else {
+                                            alert("Wrong old password!!");
+                                        }
+                                    }
+                                    /** CHECK CHANGE PASSWORD**/
+
+                                    /** DOWNLOAD IMAGE**/
+                                    function downloadImage() {
+                                        var file = document.getElementById('file')
+                                        var bodyFormData = new FormData();
+                                        bodyFormData.append('fileName', file.files[0]);
+                                        axios({
+                                            method: "post",
+                                            url: "http://localhost:8080/HR_Management/UploadFile",
+                                            data: bodyFormData,
+                                            headers: {"Content-Type": "multipart/form-data"},
+                                        }).then(function (response) {
+                                            //handle success
+                                            console.log(response);
+                                        })
+                                                .catch(function (response) {
+                                                    //handle error
+                                                    console.log(response);
+                                                });
+                                    }
+                                    /** DOWNLOAD IMAGE**/
     </script>
 </html>

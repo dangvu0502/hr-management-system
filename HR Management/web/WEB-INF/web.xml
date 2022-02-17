@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <filter>
+        <filter-name>UserFilter</filter-name>
+        <filter-class>Filter.UserFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>UserFilter</filter-name>
+        <url-pattern>/User/*</url-pattern>
+    </filter-mapping>
     <servlet>
-        <servlet-name>EditProfileController</servlet-name>
-        <servlet-class>Controller.EditProfileController</servlet-class>
+        <servlet-name>SettingController</servlet-name>
+        <servlet-class>Controllers.SettingController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>SettingListController</servlet-name>
-        <servlet-class>Controller.SettingListController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>UserRegisterController</servlet-name>
-        <servlet-class>Controller.UserRegisterController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>VerifyUserRegisterEmailController</servlet-name>
-        <servlet-class>Controller.VerifyUserRegisterEmailController</servlet-class>
+        <servlet-name>AccountController</servlet-name>
+        <servlet-class>Controllers.AccountController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>VerifyUserEmailController</servlet-name>
@@ -22,23 +22,43 @@
     </servlet>
     <servlet>
         <servlet-name>Logout</servlet-name>
-        <servlet-class>Controller.Logout</servlet-class>
+        <servlet-class>Controllers.Logout</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>SettingDetailController</servlet-name>
-        <servlet-class>Controller.SettingDetailController</servlet-class>
+        <servlet-name>ForgotPasswordController</servlet-name>
+        <servlet-class>Controller.ForgotPasswordController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UserController</servlet-name>
+        <servlet-class>Controllers.UserController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ContractController</servlet-name>
+        <servlet-class>Controllers.ContractController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BlogController</servlet-name>
+        <servlet-class>Controllers.BlogController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BlogDetailsController</servlet-name>
+        <servlet-class>Controllers.BlogDetailsController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BlogSearchController</servlet-name>
+        <servlet-class>Controllers.BlogSearchController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SupportTypeController</servlet-name>
+        <servlet-class>Controllers.SupportTypeController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TimesheetController</servlet-name>
+        <servlet-class>Controllers.TimesheetController</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>EditProfileController</servlet-name>
-        <url-pattern>/EditProfile</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SettingListController</servlet-name>
-        <url-pattern>/SettingListController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>UserRegisterController</servlet-name>
-        <url-pattern>/UserRegister</url-pattern>
+        <servlet-name>AccountController</servlet-name>
+        <url-pattern>/Account/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>VerifyUserEmailController</servlet-name>
@@ -49,12 +69,48 @@
         <url-pattern>/Logout</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>SettingDetailController</servlet-name>
-        <url-pattern>/SettingDetailController</url-pattern>
+        <servlet-name>ForgotPasswordController</servlet-name>
+        <url-pattern>/ForgotPassword/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserController</servlet-name>
+        <url-pattern>/User/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ContractController</servlet-name>
+        <url-pattern>/Contract/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BlogController</servlet-name>
+        <url-pattern>/BlogController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BlogDetailsController</servlet-name>
+        <url-pattern>/BlogDetailsController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BlogSearchController</servlet-name>
+        <url-pattern>/BlogSearchController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SettingController</servlet-name>
+        <url-pattern>/SettingController/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TimesheetController</servlet-name>
+        <url-pattern>/Timesheet/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/Views/ErrorPage/404.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/Views/ErrorPage/403.jsp</location>
+    </error-page>
 </web-app>

@@ -8,6 +8,9 @@ package Context;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,7 +20,7 @@ import java.util.logging.Logger;
  */
 public class DBContext {
 
-    private static String jdbcURL = "jdbc:mysql://localhost:3306/hr_system?useTimeZone=true&serverTimezone=UTC&autoReconnect=true&useSSL=false";
+    private static String jdbcURL = "jdbc:mysql://localhost:3306/hr_system_v2?useTimeZone=true&serverTimezone=UTC&autoReconnect=true&useSSL=false";
     private static String jdbcUsername = "root";
     private static String jdbcPassword = "123456";
 
@@ -51,8 +54,6 @@ public class DBContext {
             }
         }
     }
-
- 
 
     //check Connection
     public static void main(String[] args) {

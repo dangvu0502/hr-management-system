@@ -1,9 +1,4 @@
 
-$(document).keypress(function (e) {
-$('.error').hide();
-});
-                              
-
 function password_show_hide() {
     var x = document.getElementById("password");
     var y = document.getElementById("confirm-password");
@@ -35,4 +30,5 @@ function checkEqual() {
         isValid = false;
     }
 }
+
 
