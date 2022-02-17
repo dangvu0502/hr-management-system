@@ -34,6 +34,7 @@ public class TimesheetController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
         try (PrintWriter out = response.getWriter();) {
             String action = request.getPathInfo() == null ? "" : request.getPathInfo();
             String method = request.getMethod();
@@ -50,6 +51,9 @@ public class TimesheetController extends HttpServlet {
                 case "/DeleteTimesheet":
                     deleteTimesheet(request, response);    
                     break;
+                case "/EditTimesheet":
+                    editTimesheet(request, response, method);    
+                    break;    
                 default:
                     response.sendError(404);
                     break;
@@ -151,11 +155,40 @@ public class TimesheetController extends HttpServlet {
        }
     }
     
+    private void editTimesheet(HttpServletRequest request, HttpServletResponse response, String method)
+            throws Exception {
+        response.setContentType("text/html;charset=UTF-8");
+        if(method.equalsIgnoreCase("GET")){
+            showNewTimesheetView(request, response);
+        }else{
+            editTimesheetImplement(request, response);
+        }
+    }
+    
     private void showNewTimesheetView(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
+        if(request.getParameter("id") != null )
+        request.setAttribute("timesheet", timesheetDAO.getTimesheetById(Integer.parseInt(request.getParameter("id"))));
         request.setAttribute("timesheetProcess", settingDAO.getTimesheetProcess());
         request.getRequestDispatcher("/Views/NewTimesheetView.jsp").forward(request, response);
+    }
+    
+    
+    private void editTimesheetImplement(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        response.setContentType("text/html;charset=UTF-8");
+        int id = Integer.parseInt(request.getParameter("id"));
+        String title = request.getParameter("title");
+        String date = request.getParameter("date");
+        String duration = request.getParameter("duration");
+        int process = Integer.parseInt(request.getParameter("process"));
+        String project = request.getParameter("project");
+        String workResult = request.getParameter("work-result");
+        timesheetDAO.updateTimesheet(new Timesheet(id, title, date, process, duration, workResult, project));
+        request.getSession().setAttribute("successMessage", "Editted");
+        response.sendRedirect("/HR_Management/Timesheet/EditTimesheet?id="+id);
+     
     }
     
     private void newTimesheetImplement(HttpServletRequest request, HttpServletResponse response)
@@ -168,7 +201,7 @@ public class TimesheetController extends HttpServlet {
         String project = request.getParameter("project");
         int status = 1;
         User user = (User) request.getSession().getAttribute("account");
-        timesheetDAO.addNewTimesheet(new Timesheet(title,date,process,duration,status,user.getId(),project));
+        timesheetDAO.addNewTimesheet(new Timesheet(title,date,process,duration,status,106,project));
         request.getSession().setAttribute("successMessage", "Add new timesheet success");
         response.sendRedirect("/HR_Management/Timesheet/NewTimesheet");
     }

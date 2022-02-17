@@ -84,7 +84,7 @@ public class TimesheetDAO {
             }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
-        }finally {
+        } finally {
             if (con != null) {
                 con.close();
             }
@@ -136,7 +136,7 @@ public class TimesheetDAO {
         }
         return rows;
     }
-    
+
     public int deleteTimesheetById(int id) throws SQLException {
         int rows = 0;
         try {
@@ -153,6 +153,21 @@ public class TimesheetDAO {
             }
         }
         return rows;
+    }
+
+    public void updateTimesheet(Timesheet timesheet) throws SQLException {
+        String sql = "UPDATE `hr_system_v2`.`timesheet` SET `title` = ? , `date` = ?, `process` = ?"
+                + ", `duration` = ?,  `work_result` = ?, `project_code` = ? WHERE (`id` = ?);";
+        con = new DBContext().getConnection();
+        ps = con.prepareStatement(sql);
+        ps.setString(1, timesheet.getTitle());
+        ps.setString(2, timesheet.getDate());
+        ps.setInt(3, timesheet.getProcess());
+        ps.setString(4, timesheet.getDuration());
+        ps.setString(5, timesheet.getWork_result());
+        ps.setString(6, timesheet.getProject_code());
+        ps.setInt(7, timesheet.getId());
+        ps.executeUpdate();
     }
 
     public static void main(String[] args) {

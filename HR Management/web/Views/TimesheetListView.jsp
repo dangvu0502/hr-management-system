@@ -119,11 +119,11 @@
                                                                     <div class="col-md-1"></div>
                                                                     <div class="col-md-7">
                                                                         <label class="text-left" for="fromDate" style="width: 150px;">From</label><br>
-                                                                        <input type="date" class="form-control" id="fromDate" style="width: 200px;" name="fromDate" >
+                                                                        <input type="date" class="form-control" id="fromDate" style="width: 200px;" name="fromDate" value="13/12/2022" >
                                                                     </div>
                                                                     <div class="col-md-4">
                                                                         <label class="text-left" for="toDate" style="width: 150px;">To</label><br>
-                                                                        <input type="date" class="form-control" id="toDate" style="width: 200px;" name="toDate" >
+                                                                        <input type="date" class="form-control" id="toDate" style="width: 200px;" name="toDate">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -164,7 +164,7 @@
                                     <div class="panel-body" id="timesheetTable">
                                         <table class="table table-hover">
                                             <tr>
-                                                <th style="width: 10%">#</th>
+                                                <th style="width: 10%">ID</th>
                                                 <th style="width: 13%">Timesheet Date</th>
                                                 <th style="width: 16%">Timesheet Title</th>
                                                 <th style="width: 13%">Project</th>
@@ -175,7 +175,7 @@
                                             </tr>
                                             <c:forEach var="timesheet" items="${timesheetList}"  varStatus="theCount">
                                                 <tr id="timesheet${timesheet.id}">
-                                                    <td style=" cursor: pointer;" onclick="window.open('http://localhost:8080/HR_Management/Timesheet/TimesheetDetail?id=${timesheet.id}', '_blank')" >${theCount.count}</td>
+                                                    <td style=" cursor: pointer;" onclick="window.open('http://localhost:8080/HR_Management/Timesheet/TimesheetDetail?id=${timesheet.id}', '_blank')" >${timesheet.id}</td>
                                                     <td>${timesheet.date}</td>
                                                     <td>${timesheet.title}</td>
                                                     <td>${timesheet.project_code}</td>
@@ -195,7 +195,7 @@
                                                     <td>
                                                         <a href="#" class="btn btn-md btn-default" onclick="deleteTimesheet(${timesheet.id})"><i class="fa fa-trash-o"></i></a>
                                                             <c:if test="${timesheet.status != 2}">
-                                                            <a href="#" class="btn btn-md btn-default"><i class="fa fa-pencil"></i></a>
+                                                            <a href="#" class="btn btn-md btn-default" onclick="window.open('http://localhost:8080/HR_Management/Timesheet/EditTimesheet?id=${timesheet.id}', '_blank')" ><i class="fa fa-pencil"></i></a>
                                                             </c:if>
                                                     </td>
                                                 </tr>
@@ -328,6 +328,8 @@
                                                                 $('#timesheetTitle').keyup(function () {
                                                                     page(1);
                                                                 });
+                                                                
+                                                                
                                                             });
 
 
