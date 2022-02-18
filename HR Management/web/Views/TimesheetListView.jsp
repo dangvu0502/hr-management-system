@@ -289,6 +289,7 @@
                                                                 link += "&";
                                                                 link += "title=" + title;
                                                                 $('#timesheetTable').load(link + " " + "#timesheetTable");
+                                                                
                                                             }
 
                                                             function deleteTimesheet(id) {
@@ -331,7 +332,7 @@
                                                                     page(1);
                                                                 });
                                                                 
-                                                                
+                                                                 
                                                             });
 
 
