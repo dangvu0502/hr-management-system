@@ -215,7 +215,7 @@
                                                         </c:if>
                                                         <c:forEach begin="${begin}" end="${end}" var="num">
                                                             <c:if test="${num == currentNumber}">
-                                                            <li><button id="page${num}" class="btn btn-sm btn-primary" onclick="page(${num})">${num}</button></li>
+                                                            <li><button id="page-active" class="btn btn-sm btn-primary" onclick="page(${num})">${num}</button></li>
                                                             </c:if>
                                                             <c:if test="${num != currentNumber}">
                                                             <li><button id="page${num}" class="btn btn-sm btn-default" onclick="page(${num})">${num}</button></li>
@@ -275,7 +275,6 @@
                                                                 var process = document.getElementById('processFilter').value;
                                                                 var project = document.getElementById('projectFilter').value;
                                                                 var title = document.getElementById('timesheetTitle').value;
-                                                                console.log(title);
                                                                 var link = "http://localhost:8080/HR_Management/Timesheet/TimesheetList?";
                                                                 link += "page=" + pageNumber;
                                                                 link += "&";
@@ -289,7 +288,6 @@
                                                                 link += "&";
                                                                 link += "title=" + title;
                                                                 $('#timesheetTable').load(link + " " + "#timesheetTable");
-                                                                
                                                             }
 
                                                             function deleteTimesheet(id) {
@@ -309,8 +307,8 @@
                                                                         }
 
                                                                     });
-                                                                    
-                                                                    
+
+
                                                                 }
                                                             }
 
@@ -331,13 +329,14 @@
                                                                 $('#timesheetTitle').keyup(function () {
                                                                     page(1);
                                                                 });
-                                                                
-                                                                 
                                                             });
 
 
-
-
+                                                            setInterval(function () {
+                                                                var number = document.getElementById('page-active').innerHTML;
+                                                                console.log(number);
+                                                                page(number);
+                                                            }, 5000);
 
         </script>
     </body>
