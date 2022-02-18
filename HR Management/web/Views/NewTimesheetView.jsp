@@ -120,7 +120,16 @@
                                                     <label for="project">Project</label>
                                                     <select class="form-control text-bold" aria-label="" id="project" name="project" onchange="val1()">
                                                         <option value="0" selected></option>
-                                                        <option value="HRM">HRM</option>        
+                                                        <c:forEach var="project" items="${projects}">
+                                                            <c:choose>
+                                                                <c:when test="${timesheet != null && timesheet.project_code == project}">
+                                                                    <option value="${project}" selected>${project}</option>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <option value="${project}">${project}</option>
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </c:forEach>       
                                                     </select>
                                                 </div>
                                                 <div class="form-group col-lg-6" >

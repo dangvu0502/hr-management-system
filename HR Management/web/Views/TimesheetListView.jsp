@@ -119,7 +119,7 @@
                                                                     <div class="col-md-1"></div>
                                                                     <div class="col-md-7">
                                                                         <label class="text-left" for="fromDate" style="width: 150px;">From</label><br>
-                                                                        <input type="date" class="form-control" id="fromDate" style="width: 200px;" name="fromDate" value="13/12/2022" >
+                                                                        <input type="date" class="form-control" id="fromDate" style="width: 200px;" name="fromDate">
                                                                     </div>
                                                                     <div class="col-md-4">
                                                                         <label class="text-left" for="toDate" style="width: 150px;">To</label><br>
@@ -136,7 +136,9 @@
                                                                         <label class="text-left" for="projectFilter" style="width: 150px;">Project</label><br>
                                                                         <select class="form-control input-md" style="width: 200px;" name="projectFilter" id="projectFilter">
                                                                             <option value="">Choose Project</option>
-                                                                            <option value="HRM">HRM</option>
+                                                                            <c:forEach var="project" items="${projects}">
+                                                                                <option value="${project}">${project}</option>
+                                                                            </c:forEach>
                                                                         </select>
                                                                     </div>
                                                                     <div class="col-md-4">
