@@ -292,6 +292,12 @@
 
                                                             function deleteTimesheet(id) {
                                                                 var cf = confirm("Are you sure to delete?");
+                                                                var pageNumber = document.getElementById('page-active').innerHTML;
+                                                                var fromDate = document.getElementById('fromDate').value;
+                                                                var toDate = document.getElementById('toDate').value;
+                                                                var process = document.getElementById('processFilter').value;
+                                                                var project = document.getElementById('projectFilter').value;
+                                                                var title = document.getElementById('timesheetTitle').value;
                                                                 if (cf) {
                                                                     //Logic to delete the item
                                                                     $.ajax({
@@ -300,10 +306,16 @@
 
                                                                         url: "http://localhost:8080/HR_Management/Timesheet/DeleteTimesheet",
 
-                                                                        data: {id: id},
+                                                                        data: {id: id,
+                                                                               fromDate: fromDate,
+                                                                               toDate: toDate,
+                                                                               process: process,
+                                                                               project: project,
+                                                                               title: title,
+                                                                               page: pageNumber},
 
-                                                                        success: function () {
-                                                                            page(1);
+                                                                        success: function (number) {
+                                                                            page(number);
                                                                         }
 
                                                                     });
