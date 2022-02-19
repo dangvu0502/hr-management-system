@@ -119,7 +119,7 @@
                                                                     <div class="col-md-1"></div>
                                                                     <div class="col-md-7">
                                                                         <label class="text-left" for="fromDate" style="width: 150px;">From</label><br>
-                                                                        <input type="date" class="form-control" id="fromDate" style="width: 200px;" name="fromDate" value="13/12/2022" >
+                                                                        <input type="date" class="form-control" id="fromDate" style="width: 200px;" name="fromDate">
                                                                     </div>
                                                                     <div class="col-md-4">
                                                                         <label class="text-left" for="toDate" style="width: 150px;">To</label><br>
@@ -136,7 +136,9 @@
                                                                         <label class="text-left" for="projectFilter" style="width: 150px;">Project</label><br>
                                                                         <select class="form-control input-md" style="width: 200px;" name="projectFilter" id="projectFilter">
                                                                             <option value="">Choose Project</option>
-                                                                            <option value="HRM">HRM</option>
+                                                                            <c:forEach var="project" items="${projects}">
+                                                                                <option value="${project}">${project}</option>
+                                                                            </c:forEach>
                                                                         </select>
                                                                     </div>
                                                                     <div class="col-md-4">
@@ -213,7 +215,7 @@
                                                         </c:if>
                                                         <c:forEach begin="${begin}" end="${end}" var="num">
                                                             <c:if test="${num == currentNumber}">
-                                                            <li><button id="page${num}" class="btn btn-sm btn-primary" onclick="page(${num})">${num}</button></li>
+                                                            <li><button id="page-active" class="btn btn-sm btn-primary" onclick="page(${num})">${num}</button></li>
                                                             </c:if>
                                                             <c:if test="${num != currentNumber}">
                                                             <li><button id="page${num}" class="btn btn-sm btn-default" onclick="page(${num})">${num}</button></li>
@@ -273,7 +275,6 @@
                                                                 var process = document.getElementById('processFilter').value;
                                                                 var project = document.getElementById('projectFilter').value;
                                                                 var title = document.getElementById('timesheetTitle').value;
-                                                                console.log(title);
                                                                 var link = "http://localhost:8080/HR_Management/Timesheet/TimesheetList?";
                                                                 link += "page=" + pageNumber;
                                                                 link += "&";
@@ -306,8 +307,8 @@
                                                                         }
 
                                                                     });
-                                                                    
-                                                                    
+
+
                                                                 }
                                                             }
 
@@ -328,13 +329,14 @@
                                                                 $('#timesheetTitle').keyup(function () {
                                                                     page(1);
                                                                 });
-                                                                
-                                                                
                                                             });
 
 
-
-
+                                                            setInterval(function () {
+                                                                var number = document.getElementById('page-active').innerHTML;
+                                                                console.log(number);
+                                                                page(number);
+                                                            }, 5000);
 
         </script>
     </body>

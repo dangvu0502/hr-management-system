@@ -5,6 +5,7 @@
  */
 package Controllers;
 
+import Dao.ProjectDAO;
 import Dao.SettingDAO;
 import Dao.TimesheetDAO;
 import Models.Timesheet;
@@ -24,10 +25,12 @@ public class TimesheetController extends HttpServlet {
 
     private TimesheetDAO timesheetDAO;
     private SettingDAO settingDAO;
+    private ProjectDAO projectDAO;
 
     public void init() {
         timesheetDAO = new TimesheetDAO();
         settingDAO = new SettingDAO();
+        projectDAO = new ProjectDAO();
 
     }
 
@@ -139,6 +142,7 @@ public class TimesheetController extends HttpServlet {
         request.setAttribute("end", end);
         request.setAttribute("currentNumber", page);
         request.setAttribute("timesheetList", timesheetDAO.getTimesheetList(query1));
+        request.setAttribute("projects", projectDAO.getAllProjectCode());
         request.setAttribute("timesheetProcess", settingDAO.getTimesheetProcess());
         request.setAttribute("timesheetStatus", settingDAO.getTimesheetStatus());
         request.getRequestDispatcher("/Views/TimesheetListView.jsp").forward(request, response);
@@ -170,6 +174,7 @@ public class TimesheetController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         if(request.getParameter("id") != null )
         request.setAttribute("timesheet", timesheetDAO.getTimesheetById(Integer.parseInt(request.getParameter("id"))));
+        request.setAttribute("projects", projectDAO.getAllProjectCode());
         request.setAttribute("timesheetProcess", settingDAO.getTimesheetProcess());
         request.getRequestDispatcher("/Views/NewTimesheetView.jsp").forward(request, response);
     }

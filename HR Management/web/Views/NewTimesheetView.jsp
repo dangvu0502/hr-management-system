@@ -64,7 +64,7 @@
                                         <c:set var = "action"  value = "/HR_Management/Timesheet/EditTimesheet?id=${timesheet.id}"/>
                                     </c:otherwise>
                                 </c:choose>
-                                <form action="${action}" method="POST" role="form" onsubmit="return chooseProject && chooseProcess && isValid">
+                                <form action="${action}" method="POST" role="form" onsubmit="return chooseProject && chooseProcess && isValid && cf">
                                     <div class="row">
                                         <div class="col-lg-2"></div>
                                         <div class="col-lg-8">
@@ -119,14 +119,23 @@
                                                 <div class="form-group col-lg-6" >
                                                     <label for="project">Project</label>
                                                     <select class="form-control text-bold" aria-label="" id="project" name="project" onchange="val1()">
-                                                        <option value="0" selected></option>
-                                                        <option value="HRM">HRM</option>        
+                                                        
+                                                        <c:forEach var="project" items="${projects}">
+                                                            <c:choose>
+                                                                <c:when test="${timesheet != null && timesheet.project_code == project}">
+                                                                    <option value="${project}" selected>${project}</option>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <option value="${project}">${project}</option>
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </c:forEach>       
                                                     </select>
                                                 </div>
                                                 <div class="form-group col-lg-6" >
                                                     <label for="process">Process</label>
                                                     <select class="form-control text-bold" aria-label="" id="process" name="process" onchange="val2()">
-                                                        <option value="0" selected></option>
+                                                       
                                                         <c:forEach var="process" items="${timesheetProcess}">
                                                             <c:choose>
                                                                 <c:when test="${timesheet != null && timesheet.process == process.key}">
@@ -158,7 +167,7 @@
                                                 <c:otherwise>
                                                     <div class=" form-group col-lg-12 text-center">
                                                         <br>
-                                                        <button type="submit" id="submit-btn" class="btn btn-info"  >Save</button>
+                                                        <button type="submit" id="submit-btn" class="btn btn-info" onclick="confirmEdit()">Save</button>
                                                     </div>
                                                 </c:otherwise>
                                             </c:choose>
@@ -227,6 +236,11 @@
                                                                     document.getElementById('isValidHour').innerHTML = 'Not Valid';
                                                                 }
                                                             }
+                                                        }
+                                                        
+                                                        var cf = true;
+                                                        function confirmEdit(){
+                                                            cf = confirm("Confirm Edit");
                                                         }
 
                                                         $(document).ready(function () {
