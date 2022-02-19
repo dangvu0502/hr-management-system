@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -25,10 +27,7 @@ public class TimesheetDAO {
     PreparedStatement ps;
     ResultSet rs;
 
-    private String formatDateTime(LocalDateTime dateTime) {
-        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
-        return dateTime.format(myFormatObj);
-    }
+   
 
     public ArrayList<Timesheet> getTimesheetList(String query) throws SQLException {
         ArrayList<Timesheet> res = new ArrayList<>();
