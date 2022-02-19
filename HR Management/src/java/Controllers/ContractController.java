@@ -36,6 +36,15 @@ import javax.servlet.http.HttpSession;
  */
 public class ContractController extends HttpServlet {
 
+    private ContractDAO contractDAO;
+    private SettingDAO settingDAO;
+
+    public void init() {
+        contractDAO = new ContractDAO();
+        settingDAO = new SettingDAO();
+
+    }
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -48,12 +57,14 @@ public class ContractController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
+
         try (PrintWriter out = response.getWriter();) {
             String action = request.getPathInfo() == null ? "" : request.getPathInfo();
             String method = request.getMethod();
             switch (action) {
                 case "/Details":
-                    ContractDetails(request, response, method);
+                    showContractView(request, response);
                     break;
                 case "/Add":
                     ContractAdd(request, response, method);
@@ -110,85 +121,87 @@ public class ContractController extends HttpServlet {
     }// </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="ContractDetails">
-    private void ContractDetails(HttpServletRequest request, HttpServletResponse response, String method) {
-        try (PrintWriter out = response.getWriter();) {
-            if (method.equalsIgnoreCase("post")) {
-                contractImplement(request, response);
-            } else if (method.equalsIgnoreCase("get")) {
-                showContractView(request, response);
-            }
-        } catch (Exception ex) {
-            log(ex.getMessage());
-        }
-    }
-
-    private void contractImplement(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
+    private void showContractView(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-        String setting_type = request.getParameter("type");
-        String txtSearch = request.getParameter("txt");
-        String page = request.getParameter("page");
-        if (page == null) {
-            page = "1";
+        User user = (User) request.getSession().getAttribute("account");
+        String fromDate = request.getParameter("fromDate") != null ? request.getParameter("fromDate") : "";
+        String toDate = request.getParameter("toDate") != null ? request.getParameter("toDate") : "";
+        int status = request.getParameter("status") != null ? Integer.parseInt(request.getParameter("status")) : -1;
+        String fullname = request.getParameter("fullname") != null ? request.getParameter("fullname") : "";
+        int type = request.getParameter("type") != null ? Integer.parseInt(request.getParameter("type")) : -1;
+        int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+        int offset = (page - 1) * 3;
+
+        //this query for search and filter
+        String query1 = "SELECT c.id, u.fullname, u.email, c.start_date, c.end_date, c.status, c.type \n"
+                + "FROM hr_system_v2.contract c inner join hr_system_v2.user u \n"
+                + "where c.user_id = u.id ";
+        if (!fromDate.isEmpty()) {
+            query1 += " and start_date >= " + "'" + fromDate + "'";
         }
-        request.setAttribute("page", page);
-        ContractDAO cDAO = new ContractDAO();
-        int count = cDAO.getTotalContract();
-        int endPage = count / 2;
-        if (endPage % 2 != 0) {
-            endPage++;
+        if (!toDate.isEmpty()) {
+            query1 += " and end_date <= " + "'" + toDate + "'";
         }
-        request.setAttribute("endP", endPage);
+        if (status != -1) {
+            query1 += " and c.status =  " + "'" + status + "'";
+        }
+        if (!fullname.isEmpty()) {
+            query1 += " and fullname like  " + "'%" + fullname + "%'";
+        }
+        if (type != -1) {
+            query1 += " and type = " + "'" + type + "'";
+        }
+        query1 += " limit 3 offset " + offset;
+
+        //this query for  total contract
+        String query2 = "SELECT count(*) FROM (" + query1+") c";
+//        if (!fromDate.isEmpty()) {
+//            query2 += " and start_date >= " + "'" + fromDate + "'";
+//        }
+//        if (!toDate.isEmpty()) {
+//            query2 += " and end_date <= " + "'" + toDate + "'";
+//        }
+//        if (status != -1) {
+//            query2 += " and c.status =  " + "'" + status + "'";
+//        }
+//        if (!fullname.isEmpty()) {
+//            query2 += " and fullname like  " + "'%" + fullname + "%'";
+//        }
+//        if (type != -1) {
+//            query2 += " and type = " + "'" + type + "'";
+//        }
         List<Contract> c = new ArrayList<>();
-        if (setting_type == null || txtSearch == null) {
-            c = cDAO.getContractList(Integer.parseInt(page));
-        } else {
-            c = cDAO.getContractBySearch(setting_type, txtSearch, Integer.parseInt(page));
-            request.setAttribute("setting_type", setting_type);
-            request.setAttribute("txtSearch", txtSearch);
-        }
-        request.setAttribute("listC", c);
-        request.getRequestDispatcher("../Views/Contract.jsp").forward(request, response);
-    }
-
-    private void showContractView(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html;charset=UTF-8");
-        try {
-            HttpSession session = request.getSession();
-            String setting_type = request.getParameter("type");
-            String txtSearch = request.getParameter("txt");
-            String page = request.getParameter("page");
-            if (page == null) {
-                page = "1";
-            }
-            request.setAttribute("page", page);
-            ContractDAO cDAO = new ContractDAO();
-            int count = cDAO.getTotalContract();
-            int endPage = count / 2;
-            if (endPage % 2 != 0) {
-                endPage++;
-            }
-            request.setAttribute("endP", endPage);
-            List<Contract> c = new ArrayList<>();
-            c = cDAO.getContractList(Integer.parseInt(page));
-
-            LocalDateTime now = LocalDateTime.now();
+        c = contractDAO.getContractList(query1);
+        LocalDateTime now = LocalDateTime.now();
             for (int i = 0; i < c.size(); i++) {
 
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
                 LocalDate endDate = LocalDate.parse(c.get(i).getEndDate(), formatter);
                 LocalDateTime ldt = LocalDateTime.of(endDate, LocalDateTime.now().toLocalTime());
                 if (ldt.isAfter(now)) {
                     c.get(i).setStatus('1');
-                    cDAO.setStatus(c.get(i));
+                    contractDAO.setStatus(c.get(i));
                 }
             }
-            request.setAttribute("listC", c);
-            request.getRequestDispatcher("../Views/Contract.jsp").forward(request, response);
-        } catch (Exception e) {
-            System.out.println("Error" + e.getMessage());
+
+        int contractCount = contractDAO.getTotalContract(query2);
+        int total = contractCount / 3 + (contractCount % 3 == 0 ? 0 : 1);
+        int begin = 1;
+        int end = 3;
+        while (page > end) {
+            end += 3;
+            begin += 3;
         }
+        end = Math.min(end, total);
+        begin = Math.min(end, begin);
+        request.setAttribute("total", total);
+        request.setAttribute("begin", begin);
+        request.setAttribute("end", end);
+        request.setAttribute("currentNumber", page);
+        request.setAttribute("contractList", contractDAO.getContractList(query1));
+//        request.setAttribute("contractProcess", settingDAO.getTimesheetProcess());
+//        request.setAttribute("contractStatus", settingDAO.getTimesheetStatus());
+        request.getRequestDispatcher("/Views/Contract.jsp").forward(request, response);
     }
     //</editor-fold>
 
@@ -216,7 +229,7 @@ public class ContractController extends HttpServlet {
         int id = Integer.parseInt(idStr);
         UserDAO userDAO = new UserDAO();
         ContractDAO contractDAO = new ContractDAO();
-        if(idc == null){
+        if (idc == null) {
             contractDAO.addNewContract(Integer.parseInt(idStr));
         }
         if (StartDate != null && EndDate != null) {

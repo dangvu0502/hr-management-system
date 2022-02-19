@@ -17,23 +17,27 @@ public class Contract {
     private String startDate;
     private String endDate;
     private int status;
+    private int type;
 
     public Contract() {
     }
 
-    public Contract(int id, User user_id, String startDate, String endDate, int status) {
+    public Contract(int id, User user_id, String startDate, String endDate, int status, int type) {
         this.id = id;
         this.user_id = user_id;
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
+        this.type = type;
     }
 
-    public Contract(int id, String startDate, String endDate, int status) {
+    
+    public Contract(int id, String startDate, String endDate, int status, int type) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
+        this.type = type;
     }
  
     
@@ -76,6 +80,14 @@ public class Contract {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
     
     

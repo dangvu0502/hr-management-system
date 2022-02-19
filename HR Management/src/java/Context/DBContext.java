@@ -8,6 +8,8 @@ package Context;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -56,14 +58,24 @@ public class DBContext {
     }
 
     //check Connection
-    public static void main(String[] args) {
-        DBContext dBContext = new DBContext();
-        try {
-            System.out.println("Thanh Cong");
-            System.out.println(dBContext.getConnection());
-        } catch (Exception ex) {
-            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//    public static void main(String[] args) {
+//        DBContext dBContext = new DBContext();
+//        try {
+//            System.out.println("Thanh Cong");
+//            System.out.println(dBContext.getConnection());
+//        } catch (Exception ex) {
+//            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
+    public static String MyFormatDate(String date) throws ParseException {
+        String pattern = "dd-MM-yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        return simpleDateFormat.format(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date));
+    }
+
+    public static void main(String[] args) throws ParseException {
+
+        System.out.println(MyFormatDate("2001-01-1 00:00:00"));
     }
 
 }
