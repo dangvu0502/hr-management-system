@@ -148,7 +148,7 @@ public class Timesheet {
         return "Timesheet{" + "id=" + id + ", title=" + title + ", date=" + date + ", process=" + process + ", duration=" + duration + ", status=" + status + ", work_result=" + work_result + ", reject_reason=" + reject_reason + ", user_id=" + user_id + ", project_code=" + project_code + '}';
     }
     
-     public static String myFormatDate(String date) throws ParseException {
+    public static String myFormatDate(String date) throws ParseException {
         String pattern = "dd-MM-yyyy";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         return simpleDateFormat.format(new SimpleDateFormat("yyyy-MM-dd").parse(date));

@@ -119,7 +119,7 @@ public class TimesheetDAO {
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
             ps.setString(1, timesheet.getTitle());
-            ps.setString(2, timesheet.getDate());
+            ps.setString(2, myFormatDate(timesheet.getDate()));
             ps.setInt(3, timesheet.getProcess());
             ps.setString(4, timesheet.getDuration());
             ps.setInt(5, timesheet.getStatus());
@@ -154,19 +154,25 @@ public class TimesheetDAO {
         return rows;
     }
 
-    public void updateTimesheet(Timesheet timesheet) throws SQLException {
+    public void updateTimesheet(Timesheet timesheet) throws SQLException, ParseException {
         String sql = "UPDATE `hr_system_v2`.`timesheet` SET `title` = ? , `date` = ?, `process` = ?"
                 + ", `duration` = ?,  `work_result` = ?, `project_code` = ? WHERE (`id` = ?);";
         con = new DBContext().getConnection();
         ps = con.prepareStatement(sql);
         ps.setString(1, timesheet.getTitle());
-        ps.setString(2, timesheet.getDate());
+        ps.setString(2, myFormatDate(timesheet.getDate()));
         ps.setInt(3, timesheet.getProcess());
         ps.setString(4, timesheet.getDuration());
         ps.setString(5, timesheet.getWork_result());
         ps.setString(6, timesheet.getProject_code());
         ps.setInt(7, timesheet.getId());
         ps.executeUpdate();
+    }
+    
+    public static String myFormatDate(String date) throws ParseException {
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        return simpleDateFormat.format(new SimpleDateFormat("dd-MM-yyyy").parse(date));
     }
 
     public static void main(String[] args) {

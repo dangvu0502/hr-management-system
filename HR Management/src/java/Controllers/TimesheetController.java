@@ -12,6 +12,8 @@ import Models.Timesheet;
 import Models.User;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -172,11 +174,20 @@ public class TimesheetController extends HttpServlet {
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
         if (request.getParameter("id") != null) {
-            request.setAttribute("timesheet", timesheetDAO.getTimesheetById(Integer.parseInt(request.getParameter("id"))));
+            Timesheet timesheet = timesheetDAO.getTimesheetById(Integer.parseInt(request.getParameter("id")));
+           request.setAttribute("viDate",myFormatDate(timesheet.getDate()));
+            
+            request.setAttribute("timesheet", timesheet);
         }
         request.setAttribute("projects", projectDAO.getAllProjectCode());
         request.setAttribute("timesheetProcess", settingDAO.getTimesheetProcess());
         request.getRequestDispatcher("/Views/NewTimesheetView.jsp").forward(request, response);
+    }
+
+    private String myFormatDate(String date) throws ParseException {
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        return simpleDateFormat.format(new SimpleDateFormat("dd-MM-yyyy").parse(date));
     }
 
     private void editTimesheetImplement(HttpServletRequest request, HttpServletResponse response)

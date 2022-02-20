@@ -6,6 +6,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%> 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -95,7 +96,7 @@
                                                             <input type="date" class="form-control" id="date" name="date" required>
                                                         </c:when>
                                                         <c:otherwise>
-                                                            <input type="date" class="form-control" id="date" name="date" required value="${timesheet.date}">
+                                                            <input type="date" class="form-control" id="date" name="date" required value="${viDate}">
                                                         </c:otherwise>
                                                     </c:choose>
 
@@ -247,6 +248,7 @@
                                                             validate();
                                                             val1();
                                                             val2();
+                                                           
                                                         });
         </script>
 
