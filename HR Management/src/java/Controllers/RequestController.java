@@ -99,8 +99,9 @@ public class RequestController extends HttpServlet {
         int incharge_staff = Integer.parseInt(request.getParameter("incharge_staff") != null ? request.getParameter("incharge_staff") : "");
         String incharge_group = request.getParameter("incharge_group") != null ? request.getParameter("incharge_group") : "";
         int status = Integer.parseInt(request.getParameter("status") != null ? request.getParameter("status") : "");
-    
-    
+        int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+        int offset = (page - 1) * 3;
+            
     }
 
 // </editor-fold>
