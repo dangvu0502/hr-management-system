@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -25,10 +27,7 @@ public class TimesheetDAO {
     PreparedStatement ps;
     ResultSet rs;
 
-    private String formatDateTime(LocalDateTime dateTime) {
-        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
-        return dateTime.format(myFormatObj);
-    }
+   
 
     public ArrayList<Timesheet> getTimesheetList(String query) throws SQLException {
         ArrayList<Timesheet> res = new ArrayList<>();
@@ -120,7 +119,7 @@ public class TimesheetDAO {
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
             ps.setString(1, timesheet.getTitle());
-            ps.setString(2, timesheet.getDate());
+            ps.setString(2, myFormatDate(timesheet.getDate()));
             ps.setInt(3, timesheet.getProcess());
             ps.setString(4, timesheet.getDuration());
             ps.setInt(5, timesheet.getStatus());
@@ -155,19 +154,25 @@ public class TimesheetDAO {
         return rows;
     }
 
-    public void updateTimesheet(Timesheet timesheet) throws SQLException {
+    public void updateTimesheet(Timesheet timesheet) throws SQLException, ParseException {
         String sql = "UPDATE `hr_system_v2`.`timesheet` SET `title` = ? , `date` = ?, `process` = ?"
                 + ", `duration` = ?,  `work_result` = ?, `project_code` = ? WHERE (`id` = ?);";
         con = new DBContext().getConnection();
         ps = con.prepareStatement(sql);
         ps.setString(1, timesheet.getTitle());
-        ps.setString(2, timesheet.getDate());
+        ps.setString(2, myFormatDate(timesheet.getDate()));
         ps.setInt(3, timesheet.getProcess());
         ps.setString(4, timesheet.getDuration());
         ps.setString(5, timesheet.getWork_result());
         ps.setString(6, timesheet.getProject_code());
         ps.setInt(7, timesheet.getId());
         ps.executeUpdate();
+    }
+    
+    public static String myFormatDate(String date) throws ParseException {
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        return simpleDateFormat.format(new SimpleDateFormat("dd-MM-yyyy").parse(date));
     }
 
     public static void main(String[] args) {

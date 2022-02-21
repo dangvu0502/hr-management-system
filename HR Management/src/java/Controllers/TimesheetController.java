@@ -12,6 +12,8 @@ import Models.Timesheet;
 import Models.User;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -52,11 +54,11 @@ public class TimesheetController extends HttpServlet {
                     showTimesheetDetailView(request, response);
                     break;
                 case "/DeleteTimesheet":
-                    deleteTimesheet(request, response);    
+                    deleteTimesheet(request, response);
                     break;
                 case "/EditTimesheet":
-                    editTimesheet(request, response, method);    
-                    break;    
+                    editTimesheet(request, response, method);
+                    break;
                 default:
                     response.sendError(404);
                     break;
@@ -108,7 +110,7 @@ public class TimesheetController extends HttpServlet {
             query1 += " and process = " + "'" + process + "'";
         }
         query1 += " limit 3 offset " + offset;
-       
+
         //this query for  total timesheet
         String query2 = "SELECT count(id) FROM hr_system_v2.timesheet Where user_id= " + 106;
         if (!fromDate.isEmpty()) {
@@ -126,7 +128,7 @@ public class TimesheetController extends HttpServlet {
         if (process != 0) {
             query2 += " and process = " + "'" + process + "'";
         }
-       
+
         int timesheetCount = timesheetDAO.getTotalTimesheet(query2);
         int total = timesheetCount / 3 + (timesheetCount % 3 == 0 ? 0 : 1);
         int begin = 1;
@@ -148,38 +150,46 @@ public class TimesheetController extends HttpServlet {
         request.getRequestDispatcher("/Views/TimesheetListView.jsp").forward(request, response);
     }
 
-  
     private void newTimesheet(HttpServletRequest request, HttpServletResponse response, String method)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
-       if(method.equalsIgnoreCase("GET")){
-           showNewTimesheetView(request, response);
-       }else{
-           newTimesheetImplement(request, response);
-       }
+        if (method.equalsIgnoreCase("GET")) {
+            showNewTimesheetView(request, response);
+        } else {
+            newTimesheetImplement(request, response);
+        }
     }
-    
+
     private void editTimesheet(HttpServletRequest request, HttpServletResponse response, String method)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
-        if(method.equalsIgnoreCase("GET")){
+        if (method.equalsIgnoreCase("GET")) {
             showNewTimesheetView(request, response);
-        }else{
+        } else {
             editTimesheetImplement(request, response);
         }
     }
-    
+
     private void showNewTimesheetView(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
-        if(request.getParameter("id") != null )
-        request.setAttribute("timesheet", timesheetDAO.getTimesheetById(Integer.parseInt(request.getParameter("id"))));
+        if (request.getParameter("id") != null) {
+            Timesheet timesheet = timesheetDAO.getTimesheetById(Integer.parseInt(request.getParameter("id")));
+           request.setAttribute("viDate",myFormatDate(timesheet.getDate()));
+            
+            request.setAttribute("timesheet", timesheet);
+        }
         request.setAttribute("projects", projectDAO.getAllProjectCode());
         request.setAttribute("timesheetProcess", settingDAO.getTimesheetProcess());
         request.getRequestDispatcher("/Views/NewTimesheetView.jsp").forward(request, response);
     }
-    
-    
+
+    private String myFormatDate(String date) throws ParseException {
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        return simpleDateFormat.format(new SimpleDateFormat("dd-MM-yyyy").parse(date));
+    }
+
     private void editTimesheetImplement(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
@@ -192,10 +202,10 @@ public class TimesheetController extends HttpServlet {
         String workResult = request.getParameter("work-result");
         timesheetDAO.updateTimesheet(new Timesheet(id, title, date, process, duration, workResult, project));
         request.getSession().setAttribute("successMessage", "Editted");
-        response.sendRedirect("/HR_Management/Timesheet/EditTimesheet?id="+id);
-     
+        response.sendRedirect("/HR_Management/Timesheet/EditTimesheet?id=" + id);
+
     }
-    
+
     private void newTimesheetImplement(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
@@ -206,16 +216,44 @@ public class TimesheetController extends HttpServlet {
         String project = request.getParameter("project");
         int status = 1;
         User user = (User) request.getSession().getAttribute("account");
-        timesheetDAO.addNewTimesheet(new Timesheet(title,date,process,duration,status,106,project));
+        timesheetDAO.addNewTimesheet(new Timesheet(title, date, process, duration, status, 106, project));
         request.getSession().setAttribute("successMessage", "Add new timesheet success");
         response.sendRedirect("/HR_Management/Timesheet/NewTimesheet");
     }
-    
-     private void deleteTimesheet(HttpServletRequest request, HttpServletResponse response)
+
+    private void deleteTimesheet(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
         int id = Integer.parseInt(request.getParameter("id"));
         timesheetDAO.deleteTimesheetById(id);
+        User user = (User) request.getSession().getAttribute("account");
+        String fromDate = request.getParameter("fromDate") != null ? request.getParameter("fromDate") : "";
+        String toDate = request.getParameter("toDate") != null ? request.getParameter("toDate") : "";
+        String project_code = request.getParameter("project") != null ? request.getParameter("project") : "";
+        String title = request.getParameter("title") != null ? request.getParameter("title") : "";
+        int process = request.getParameter("process") != null ? Integer.parseInt(request.getParameter("process")) : 0;
+        int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+        String query2 = "SELECT count(id) FROM hr_system_v2.timesheet Where user_id= " + 106;
+        if (!fromDate.isEmpty()) {
+            query2 += " and date >= " + "'" + fromDate + "'";
+        }
+        if (!toDate.isEmpty()) {
+            query2 += " and date <= " + "'" + toDate + "'";
+        }
+        if (!project_code.isEmpty()) {
+            query2 += " and project_code =  " + "'" + project_code + "'";
+        }
+        if (!title.isEmpty()) {
+            query2 += " and title like  " + "'%" + title + "%'";
+        }
+        if (process != 0) {
+            query2 += " and process = " + "'" + process + "'";
+        }
+
+        int timesheetCount = timesheetDAO.getTotalTimesheet(query2);
+        int total = timesheetCount / 3 + (timesheetCount % 3 == 0 ? 0 : 1);
+        response.getWriter().print(Math.min(total, page));
+
     }
 
     private void showTimesheetDetailView(HttpServletRequest request, HttpServletResponse response)
