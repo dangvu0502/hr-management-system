@@ -33,6 +33,15 @@ public class User {
     public User() {
     }
 
+    public User(int id) {
+        this.id = id;
+    }
+
+    public User(int id, String username) {
+        this.id = id;
+        this.username = username;
+    }
+    
     public User(String fullname, String username, String password, String email, String mobile, boolean gender) {
         this.fullname = fullname;
         this.username = username;

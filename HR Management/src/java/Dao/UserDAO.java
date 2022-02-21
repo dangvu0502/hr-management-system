@@ -298,7 +298,6 @@ public class UserDAO {
 //    public static void main(String[] args) throws Exception {
 //
 //    }
-
     public List<User> getUserById(int id) {
         List<User> list = new ArrayList<>();
         try {
@@ -331,5 +330,26 @@ public class UserDAO {
             System.out.println("Error: " + e.getMessage());
         }
         return list;
+    }
+
+    public List<User> getManagerUserName() throws SQLException {
+        List<User> result = new ArrayList<User>();
+        try {
+            String sql = "SELECT id, username FROM hr_system_v2.user where role_id = 2 or 3;";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                User u = new User(rs.getInt(1), rs.getString(2));
+                result.add(u);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;
     }
 }
