@@ -112,13 +112,14 @@ public class ContractDAO {
 //
 //        return null;
 //    }
-    public void updateContract(String EndDate, int id) throws Exception {
-        String sql = "UPDATE hr_system_v2.contract SET end_date = ? WHERE id= ?";
+    public void updateContract(String EndDate, int type, int id) throws Exception {
+        String sql = "UPDATE hr_system_v2.contract SET end_date = ?, type = ? WHERE id= ?";
         try (
                 Connection con = new DBContext().getConnection();
                 PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, EndDate);
-            ps.setInt(2, id);
+            ps.setInt(2, type);
+            ps.setInt(3, id);
             // execute update SQL stetement
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -138,7 +139,7 @@ public class ContractDAO {
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
-            String pattern = "dd-MM-yyyy";
+            String pattern = "yyyy-MM-dd";
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
             while (rs.next()) {
                 Contract c = new Contract(rs.getInt(1), new User(rs.getString(2), rs.getString(3)),
@@ -160,7 +161,7 @@ public class ContractDAO {
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
-            String pattern = "dd-MM-yyyy";
+            String pattern = "yyyy-MM-dd";
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
             while (rs.next()) {
                 Contract c = new Contract(rs.getInt(1),
