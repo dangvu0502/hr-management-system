@@ -154,35 +154,37 @@ public class ContractController extends HttpServlet {
         query1 += " limit 3 offset " + offset;
 
         //this query for  total contract
-        String query2 = "SELECT count(*) FROM (" + query1+") c";
-//        if (!fromDate.isEmpty()) {
-//            query2 += " and start_date >= " + "'" + fromDate + "'";
-//        }
-//        if (!toDate.isEmpty()) {
-//            query2 += " and end_date <= " + "'" + toDate + "'";
-//        }
-//        if (status != -1) {
-//            query2 += " and c.status =  " + "'" + status + "'";
-//        }
-//        if (!fullname.isEmpty()) {
-//            query2 += " and fullname like  " + "'%" + fullname + "%'";
-//        }
-//        if (type != -1) {
-//            query2 += " and type = " + "'" + type + "'";
-//        }
+        String query2 = "SELECT count(*) FROM (SELECT c.id, u.fullname, u.email, c.start_date, c.end_date, c.status, c.type \n"
+                + "FROM hr_system_v2.contract c inner join hr_system_v2.user u\n"
+                + "where c.user_id = u.id) c where status = 1 or status = 0";
+        if (!fromDate.isEmpty()) {
+            query2 += " and start_date >= " + "'" + fromDate + "'";
+        }
+        if (!toDate.isEmpty()) {
+            query2 += " and end_date <= " + "'" + toDate + "'";
+        }
+        if (status != -1) {
+            query2 += " and c.status =  " + "'" + status + "'";
+        }
+        if (!fullname.isEmpty()) {
+            query2 += " and fullname like  " + "'%" + fullname + "%'";
+        }
+        if (type != -1) {
+            query2 += " and type = " + "'" + type + "'";
+        }
         List<Contract> c = new ArrayList<>();
         c = contractDAO.getContractList(query1);
         LocalDateTime now = LocalDateTime.now();
-            for (int i = 0; i < c.size(); i++) {
+        for (int i = 0; i < c.size(); i++) {
 
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-                LocalDate endDate = LocalDate.parse(c.get(i).getEndDate(), formatter);
-                LocalDateTime ldt = LocalDateTime.of(endDate, LocalDateTime.now().toLocalTime());
-                if (ldt.isAfter(now)) {
-                    c.get(i).setStatus('1');
-                    contractDAO.setStatus(c.get(i));
-                }
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            LocalDate endDate = LocalDate.parse(c.get(i).getEndDate(), formatter);
+            LocalDateTime ldt = LocalDateTime.of(endDate, LocalDateTime.now().toLocalTime());
+            if (ldt.isAfter(now)) {
+                c.get(i).setStatus('1');
+                contractDAO.setStatus(c.get(i));
             }
+        }
 
         int contractCount = contractDAO.getTotalContract(query2);
         int total = contractCount / 3 + (contractCount % 3 == 0 ? 0 : 1);
@@ -229,7 +231,7 @@ public class ContractController extends HttpServlet {
         int id = Integer.parseInt(idStr);
         UserDAO userDAO = new UserDAO();
         ContractDAO contractDAO = new ContractDAO();
-        if (idc == null) {
+        if (idc == null && idStr != "-1") {
             contractDAO.addNewContract(Integer.parseInt(idStr));
         }
         if (StartDate != null && EndDate != null) {
@@ -277,10 +279,11 @@ public class ContractController extends HttpServlet {
         String id = request.getParameter("id");
         String StartDate = request.getParameter("StartDate");
         String EndDate = request.getParameter("EndDate");
+        String type = request.getParameter("type");
         ContractDAO contractDAO = new ContractDAO();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         if (sdf.parse(StartDate).before(sdf.parse(EndDate))) {
-            contractDAO.updateContract(EndDate, Integer.parseInt(id));
+            contractDAO.updateContract(EndDate, Integer.parseInt(type), Integer.parseInt(id));
             request.getSession().setAttribute("message", "Edit Contract Successfully!!");
             response.sendRedirect("../Contract/EditContract?id=" + id);
         } else {
