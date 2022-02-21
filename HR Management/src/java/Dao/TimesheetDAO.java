@@ -27,7 +27,37 @@ public class TimesheetDAO {
     PreparedStatement ps;
     ResultSet rs;
 
-   
+    public ArrayList<Timesheet> getAllTimesheet() throws SQLException {
+        ArrayList<Timesheet> res = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM hr_system_v2.timesheet";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Timesheet ts = new Timesheet(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getInt(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getInt(9),
+                        rs.getString(10));
+                res.add(ts);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+        }
+        return res;
+    }
+    
 
     public ArrayList<Timesheet> getTimesheetList(String query) throws SQLException {
         ArrayList<Timesheet> res = new ArrayList<>();
@@ -61,7 +91,7 @@ public class TimesheetDAO {
     }
 
     public Timesheet getTimesheetById(int id) throws SQLException {
-        ArrayList<Timesheet> res = new ArrayList<>();
+     
         try {
             String sql = "SELECT * FROM hr_system_v2.timesheet  where id = ?";
             con = new DBContext().getConnection();

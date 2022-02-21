@@ -19,6 +19,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.reflect.TypeToken;
+import java.util.ArrayList;
+
 /**
  *
  * @author dangGG
@@ -58,6 +64,12 @@ public class TimesheetController extends HttpServlet {
                     break;
                 case "/EditTimesheet":
                     editTimesheet(request, response, method);
+                    break;
+                case "/Review":
+                    showTimesheetReviewList(request, response);
+                    break;
+                case "/GetAllTimeSheet":
+                    getAllTimesheet(request, response);
                     break;
                 default:
                     response.sendError(404);
@@ -175,8 +187,8 @@ public class TimesheetController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         if (request.getParameter("id") != null) {
             Timesheet timesheet = timesheetDAO.getTimesheetById(Integer.parseInt(request.getParameter("id")));
-           request.setAttribute("viDate",myFormatDate(timesheet.getDate()));
-            
+            request.setAttribute("viDate", myFormatDate(timesheet.getDate()));
+
             request.setAttribute("timesheet", timesheet);
         }
         request.setAttribute("projects", projectDAO.getAllProjectCode());
@@ -264,6 +276,24 @@ public class TimesheetController extends HttpServlet {
         request.setAttribute("timesheetStatus", settingDAO.getTimesheetStatus());
         request.setAttribute("timesheetProcess", settingDAO.getTimesheetProcess());
         request.getRequestDispatcher("/Views/TimesheetDetailView.jsp").forward(request, response);
+    }
+
+    private void showTimesheetReviewList(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        response.setContentType("text/html;charset=UTF-8");
+        request.getRequestDispatcher("/Views/TimesheetReviewView.jsp").forward(request, response);
+    }
+
+    private void getAllTimesheet(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        response.setContentType("text/html;charset=UTF-8");
+        Gson gson = new Gson();
+        JsonElement element = gson.toJsonTree(timesheetDAO.getAllTimesheet(), new TypeToken<ArrayList<Timesheet>>() {
+        }.getType());
+        JsonArray jsonArray = element.getAsJsonArray();
+        response.setContentType("application/json");
+        response.getWriter().println(jsonArray);
+     
     }
 
 }

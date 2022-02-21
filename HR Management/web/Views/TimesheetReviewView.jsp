@@ -117,7 +117,7 @@
                                                                 <div class="col-lg-8">
                                                                     <div class="col-md-1"></div>
                                                                     <div class="col-md-7">
-                                                                       <label class="text-left" for="projectFilter" style="width: 150px;">Username</label><br>
+                                                                        <label class="text-left" for="projectFilter" style="width: 150px;">Username</label><br>
                                                                         <select class="form-control input-md" style="width: 200px;" name="projectFilter" id="projectFilter">
                                                                             <option value="">Choose Username</option>
                                                                             <c:forEach var="project" items="${projects}">
@@ -172,11 +172,11 @@
                                                     </div>
                                                 </form>
                                             </div>
-                                            
+
                                         </div>
                                     </div>
                                     <div class="panel-body" id="timesheetTable">
-                                        <table class="table table-hover">
+                                        <table class="table table-hover" id="table-content">
                                             <tr>
                                                 <th style="width: 10%">ID</th>
                                                 <th style="width: 10%">User name</th>
@@ -215,7 +215,7 @@
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
                                                                     <h5 class="modal-title" id="exampleModalCenterTitle">Rejected reason</h5>
-                                                                 
+
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <textarea rows="5" cols="75" id="reject-reason" name="reject-reason" style="resize: vertical; ">${timesheet.reject_reason}</textarea>
@@ -349,6 +349,62 @@
                                                                     $('#myInput').trigger('focus')
                                                                 })
 
+                                                                $.ajax({
+
+                                                                    type: "POST",
+
+                                                                    url: "http://localhost:8080/HR_Management/Timesheet/GetAllTimeSheet",
+
+                                                                    success: function (responseJson) {
+
+                                                                        if (responseJson != null) {
+                                                                            $("#timesheetTable").find("tr:gt(0)").remove();
+                                                                            var table = $("#table-content");
+
+                                                                            $.each(responseJson, function (key, value) {
+                                                                                console.log(value['id']);
+                                                                                var rowNew = "";
+                                                                                rowNew += `<tr>`;
+                                                                                rowNew += `<td style=" cursor: pointer;" onclick="window.open('http://localhost:8080/HR_Management/Timesheet/TimesheetDetail?id=` + value['id'] + `', '_blank')" >` + value['id'] + `</td>`;
+                                                                                rowNew += `<td>DangGG</td>`;
+                                                                                rowNew += `<td>` + value['date'] + `</td>`;
+                                                                                rowNew += `<td>` + value['title'] + `</td>`;
+                                                                                rowNew += `<td>` + value['project_code'] + `</td>`;
+                                                                                rowNew += `<td>` + value['process'] + `</td>`;
+                                                                                rowNew += `<td>` + value['duration'] + `</td>`;
+                                                                                rowNew += `<td>` + value['status'] + `</td>`;
+                                                                                rowNew += `<td>
+                                                    <a href="#" class="btn btn-md btn-default"  data-toggle="modal" data-target="#exampleModalCenter"  title="reject"><i class="fa fa-ban"></i></a>
+                                                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalCenterTitle">Rejected reason</h5>
+
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <textarea rows="5" cols="75" id="reject-reason" name="reject-reason" style="resize: vertical; ">${timesheet.reject_reason}</textarea>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                    <button type="button" class="btn btn-danger">Reject</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                 
+                                                        <a href="#" class="btn btn-md btn-default" onclick="window.open('http://localhost:8080/HR_Management/Timesheet/EditTimesheet?id=${timesheet.id}', '_blank')" ><i class="fa fa-check"></i></a>
+                                                        
+
+
+                                                </td>`;
+                                                                                rowNew += `</tr>`;
+                                                                                table.append(rowNew);
+                                                                            });
+                                                                        }
+                                                                    }
+
+                                                                });
 
                                                             });
 
