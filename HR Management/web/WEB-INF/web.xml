@@ -56,6 +56,10 @@
         <servlet-name>TimesheetController</servlet-name>
         <servlet-class>Controllers.TimesheetController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ProjectController</servlet-name>
+        <servlet-class>Controllers.ProjectController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AccountController</servlet-name>
         <url-pattern>/Account/*</url-pattern>
@@ -99,6 +103,10 @@
     <servlet-mapping>
         <servlet-name>TimesheetController</servlet-name>
         <url-pattern>/Timesheet/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProjectController</servlet-name>
+        <url-pattern>/Project/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

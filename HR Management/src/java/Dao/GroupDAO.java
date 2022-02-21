@@ -304,4 +304,24 @@ public class GroupDAO {
         }
         return vec;
     }
+
+    public ArrayList<String> getAllGroupCode() throws SQLException {
+       ArrayList<String> result = new ArrayList<String>();
+        try {
+            String sql = "SELECT code FROM hr_system_v2.group;";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+              result.add(rs.getString(1));
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;
+    }
 }
