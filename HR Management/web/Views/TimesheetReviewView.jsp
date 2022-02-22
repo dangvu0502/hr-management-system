@@ -273,9 +273,7 @@
                                                                     page(1);
                                                                 });
 
-                                                                $('#myModal').on('shown.bs.modal', function () {
-                                                                    $('#myInput').trigger('focus')
-                                                                })
+                                                               
 
                                                                 $.ajax({
 
@@ -302,8 +300,8 @@
                                                                                 rowNew += `<td>` + value['duration'] + `</td>`;
                                                                                 if(value['status_value'] == 'approved' ){
                                                                                     rowNew += `<td>` + `<span class="label label-success">approved</span>` + `</td>`;
-                                                                                    rowNew += `<td><a href="#" class="btn btn-md btn-default"  data-toggle="modal" data-target="#exampleModalCenter"  title="reject"><i class="fa fa-ban"></i></a>
-                                                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                                                    rowNew += `<td><a href="#" class="btn btn-md btn-default"  data-toggle="modal" data-target="#exampleModalCenter`+value['id']+`"  title="reject"><i class="fa fa-ban"></i></a>
+                                                    <div class="modal fade" id="exampleModalCenter`+value['id']+`" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
@@ -326,8 +324,8 @@
                                                                                 }else {
                                                                                     rowNew += `<td>` + `<span class="label label-warning">submitted</span>` + `</td>`;
                                                                                     rowNew += `<td>
-                                                    <a href="#" class="btn btn-md btn-default"  data-toggle="modal" data-target="#exampleModalCenter"  title="reject"><i class="fa fa-ban"></i></a>
-                                                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                    <a href="#" class="btn btn-md btn-default"  data-toggle="modal" data-target="#exampleModalCenter`+value['id']+`"  title="reject"><i class="fa fa-ban"></i></a>
+                                                    <div class="modal fade" id="exampleModalCenter`+value['id']+`" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
