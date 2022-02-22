@@ -166,6 +166,14 @@
                                                     </div>
                                                 </div>
                                             </c:if>
+                                            <c:if test="${timesheet != null && timesheet.status == 3}">
+                                                <div class="row">
+                                                    <div class="form-group col-lg-12">
+                                                        <label for="reject-reason">Reject reason</label><p></p>
+                                                        <textarea rows="10" cols="60" id="reject-reason" name="reject-reason" style=" resize: vertical;" disabled>${timesheet.reject_reason}</textarea>
+                                                    </div>
+                                                </div>
+                                            </c:if>
                                             <c:choose>
                                                 <c:when test="${timesheet == null}">
                                                     <div class=" form-group col-lg-12 text-center">
