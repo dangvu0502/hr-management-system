@@ -41,7 +41,7 @@ public class Timesheet {
         this.project_code = project_code;
     }
 
-    public Timesheet(String title, String date, int process, String duration, int status, int user_id, String project_code) {
+    public Timesheet(String title, String date, int process, String duration, int status, int user_id, String project_code,String work_result) {
         this.title = title;
         this.date = date;
         this.process = process;
@@ -49,6 +49,7 @@ public class Timesheet {
         this.status = status;
         this.user_id = user_id;
         this.project_code = project_code;
+        this.work_result = work_result;
     }
 
     public Timesheet(int id, String title, String date, int process, String duration, String work_result, String project_code) {

@@ -226,9 +226,10 @@ public class TimesheetController extends HttpServlet {
         String duration = request.getParameter("duration");
         int process = Integer.parseInt(request.getParameter("process"));
         String project = request.getParameter("project");
+        String work_result = request.getParameter("work-result");
         int status = 1;
         User user = (User) request.getSession().getAttribute("account");
-        timesheetDAO.addNewTimesheet(new Timesheet(title, date, process, duration, status, 106, project));
+        timesheetDAO.addNewTimesheet(new Timesheet(title, date, process, duration, status, 106, project,work_result));
         request.getSession().setAttribute("successMessage", "Add new timesheet success");
         response.sendRedirect("/HR_Management/Timesheet/NewTimesheet");
     }

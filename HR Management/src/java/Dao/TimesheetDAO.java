@@ -160,8 +160,8 @@ public class TimesheetDAO {
         int rows = 0;
         try {
             String sql = "INSERT INTO `hr_system_v2`.`timesheet` (`title`, `date`, `process`, \n"
-                    + "`duration`, `status`, `user_id`, `project_code`) \n"
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+                    + "`duration`, `status`, `user_id`, `project_code`,`work_result`) \n"
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
             ps.setString(1, timesheet.getTitle());
@@ -171,6 +171,7 @@ public class TimesheetDAO {
             ps.setInt(5, timesheet.getStatus());
             ps.setInt(6, timesheet.getUser_id());
             ps.setString(7, timesheet.getProject_code());
+            ps.setString(8, timesheet.getWork_result());
             rows = ps.executeUpdate();
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
