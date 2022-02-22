@@ -10,12 +10,15 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Contract | Edit</title>
+        <title>Project | Edit</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
         <!-- bootstrap 3.0.2 -->
-        <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <!--<link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css" />-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <!-- font Awesome -->
         <link href="../css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <!-- Ionicons -->
@@ -59,13 +62,13 @@
                     </div>
                     <ul class="sidebar-menu">
                         <li class="active">
-                            <a href="../Contract/Details">
-                                <i class="fa fa-glass"></i> <span>Contract Details</span>
+                            <a href="../Project/List">
+                                <i class="fa fa-glass"></i> <span>Project List</span>
                             </a>
                         </li>
                         <li>
-                            <a href="../Contract/Add">
-                                <i class="fa fa-glass"></i> <span>Contract Add</span>
+                            <a href="../Project/Add">
+                                <i class="fa fa-glass"></i> <span>Project Add</span>
                             </a>
                         </li>
 
@@ -80,11 +83,11 @@
                     <div class="col-lg-6 ">
                         <section class="panel">
                             <header class="panel-heading text-center">
-                                Edit Contract
+                                Edit Projects
                             </header>
                             <c:if test="${message != null}">
                                 <c:choose>
-                                    <c:when test = "${message eq 'Edit Contract Successfully!!'}">
+                                    <c:when test = "${message eq 'Edit Project Successfully!!'}">
                                         <div class="error alert alert-success" role="alert">
                                             <h4 class="alert-heading">Error</h4><hr>
                                             <p class="mb-0">${message}</p>
@@ -100,57 +103,87 @@
                                 <c:remove var="message" scope="session" /> 
                             </c:if>
                             <div class="panel-body">
-                                <form action="../Contract/EditContract" method="POST">
+                                <form action="../Project/Edit" method="POST">
 
                                     <div class="row">
                                         <div class="col-lg-2"></div>
-                                        <c:forEach items="${contract}" var="c">
-                                            <input name="id" value="${c.id}" hidden="">
+                                        <c:forEach items="${project}" var="p">
+                                            <input name="code" value="${p.code}" hidden="">
                                             <div class="col-lg-8">
                                                 <div class="row ">
                                                     <div class="form-group col-lg-12">
-                                                        <label for="fullname">Full name</label>
-                                                        <input type="text" class="form-control" name="fullname" disabled="" value="${c.user_id.fullname}">
+                                                        <label for="code1">Code</label>
+                                                        <input type="text" class="form-control" name="code1" value="${p.code}" disabled="">
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="form-group col-lg-12">
-                                                        <label for="email">Email address</label>
-                                                        <input type="email" class="form-control" name="email" disabled="" value="${c.user_id.email}">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="form-group col-lg-12">
-                                                        <label for="StartDate">Start Date</label>
-                                                        <input type="date" class="form-control" value="${c.startDate}" disabled="">
-                                                        <input name="StartDate" value="${c.startDate}" hidden="">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="form-group col-lg-12">
-                                                        <label for="EndDate">End Date</label>
-                                                        <input type="date" class="form-control" name="EndDate" value="${c.endDate}">
-                                                    </div>
-                                                </div>
-                                                <div class="row ">
-                                                    <div class="form-group col-lg-12">
-                                                        <label for="type">Select type:</label>
-                                                        <select class="form-control input-md" style="width: 200px;" name="type">
-                                                            <option value="0"${c.type == 0 ? "selected":""}>Intern</option>
-                                                            <option value="1"${c.type == 1 ? "selected":""}>Official</option>
+                                                        <label for="group">Group Code</label>
+                                                        <select class="form-control input-md" style="width: 200px;" name="group" >
+                                                            <c:forEach var="group" items="${group}">
+                                                                <option value="${group}" ${p.groupCode eq group ?'selected':''} >${group}</option>
+                                                            </c:forEach>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="form-group col-lg-12">
+                                                        <label for="manager">Username Manager</label>
+                                                        <select class="form-control input-md" style="width: 200px;" name="manager">
+                                                            <c:forEach items="${listU}" var="u">
+                                                                <option value="${u.id}">${u.username}</option>
+                                                            </c:forEach>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-lg-12">
+                                                        <label for="projectName">Project Name</label>
+                                                        <input type="text" class="form-control" name="projectName" value="${p.projectName}" required="">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-lg-12">
+                                                        <label for="startDate">Start Date</label>
+                                                        <input type="date" class="form-control" name="startDate" value="${p.startDate}">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-lg-12">
+                                                        <label for="endDate">End Date</label>
+                                                        <input type="date" class="form-control" name="endDate" value="${p.endDate}">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-lg-12">
+                                                        <label for="description">Description</label>
+                                                        <textarea required="" class="form-control" name="description">${p.description}</textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-lg-12">
+                                                        <label>Status</label><br/>
                                                         <c:choose>
-                                                            <c:when test = "${c.status == 0}">
-                                                                <span class="badge bg-red">Contract Expired</span>
+                                                            <c:when test = "${p.status == 0}">
+                                                                <span class="badge bg-yellow">Doing</span>
                                                             </c:when>
                                                             <c:otherwise>
-                                                                <span class="badge bg-green">On contract</span>
+                                                                <span class="badge bg-green">Done</span>
                                                             </c:otherwise>
                                                         </c:choose>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-lg-12">
+                                                        <label for="effort">Effort</label>
+                                                        <input class="form-control input-md" style="width: 200px;" max="100" min="0" type="number" class="form-control" name="effort" value="${p.effort}">
+                                                        <br/>
+                                                        <div class="progress">
+                                                            <div class="progress-bar progress-bar-striped active" role="progressbar"
+                                                                 aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:${p.effort}%;">
+                                                                ${p.effort}%
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class=" form-group row col-lg-12 text-center">
@@ -169,7 +202,7 @@
 
         </div>
         <!-- jQuery 2.0.2 -->
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+        <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>-->
         <script src="../js/jquery.min.js" type="text/javascript"></script>
 
         <!-- Bootstrap -->
@@ -179,13 +212,11 @@
         <script src="../js/Director/myScript.js" type="text/javascript"></script>
         <script>
 
-                                                        /** HIDE ALERT**/
-                                                        $(document).click(function (e) {
-                                                            $('.message').hide();
-                                                        });
-                                                        /** HIDE ALERT**/
-
-
+            /** HIDE ALERT**/
+            $(document).click(function (e) {
+                $('.message').hide();
+            });
+            /** HIDE ALERT**/
         </script>
     </body>
 </html>

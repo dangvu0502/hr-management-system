@@ -13,6 +13,7 @@ import Models.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -56,6 +57,9 @@ public class ProjectController extends HttpServlet {
             switch (action) {
                 case "/List":
                     showProjectView(request, response);
+                    break;
+                case "/Edit":
+                    Edit(request, response, method);
                     break;
                 default:
                     response.sendError(404);
@@ -130,7 +134,7 @@ public class ProjectController extends HttpServlet {
             query1 += " and status =  " + "'" + status + "'";
         }
         if (!search.isEmpty()) {
-            query1 += " and code or project_name like  " + "'%" + search + "%'";
+            query1 += " and code like  " + "'%" + search + "%' or project_name like " + "'%" + search + "%'";
         }
         if (!group.isEmpty()) {
             query1 += " and group_code = " + "'" + group + "'";
@@ -160,9 +164,17 @@ public class ProjectController extends HttpServlet {
         if (!pm.isEmpty()) {
             query2 += " and manager_id = " + "'" + pm + "'";
         }
-//        List<Project> p = new ArrayList<>();
-//        p = projectDAO.getProjectList(query1);
-
+        List<Project> p = new ArrayList<>();
+        p = projectDAO.getProjectList(query1);
+        for (int i = 0; i < p.size(); i++) {
+            if(p.get(i).getEffort()==100){
+                p.get(i).setStatus(1);
+                projectDAO.setStatus1(p.get(i));
+            }else{
+                p.get(i).setStatus(0);
+                projectDAO.setStatus0(p.get(i));
+            }
+        }
         int projectCount = projectDAO.getTotalProject(query2);
         int total = projectCount / 3 + (projectCount % 3 == 0 ? 0 : 1);
         int begin = 1;
@@ -183,6 +195,54 @@ public class ProjectController extends HttpServlet {
 //        request.setAttribute("contractProcess", settingDAO.getTimesheetProcess());
 //        request.setAttribute("contractStatus", settingDAO.getTimesheetStatus());
         request.getRequestDispatcher("/Views/ProjectList.jsp").forward(request, response);
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="EditProject">
+    private void Edit(HttpServletRequest request, HttpServletResponse response, String method) {
+        try (PrintWriter out = response.getWriter();) {
+            if (method.equalsIgnoreCase("post")) {
+                projectEditImplement(request, response);
+            } else if (method.equalsIgnoreCase("get")) {
+                editProjectView(request, response);
+            }
+        } catch (Exception ex) {
+            log(ex.getMessage());
+        }
+    }
+
+    private void editProjectView(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+        String code = request.getParameter("code");
+        List<Project> project = new ProjectDAO().getOne(code);
+        request.setAttribute("listU", userDAO.getManagerUserName());
+        request.setAttribute("group", groupDAO.getAllGroupCode());
+        request.setAttribute("project", project);
+        request.getRequestDispatcher("../Views/ProjectEdit.jsp").forward(request, response);
+    }
+
+    private void projectEditImplement(HttpServletRequest request, HttpServletResponse response) throws IOException, Exception {
+        String code = request.getParameter("code");
+        String groupCode = request.getParameter("group");
+        String manager = request.getParameter("manager");
+        String projectName = request.getParameter("projectName");
+        String startDate = request.getParameter("startDate");
+        String endDate = request.getParameter("endDate");
+        String description = request.getParameter("description");
+        String effort = request.getParameter("effort");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        if (sdf.parse(startDate).before(sdf.parse(endDate))) {
+            projectDAO.updateProject(groupCode, Integer.parseInt(manager), projectName, startDate, endDate, description, Integer.parseInt(effort), code);
+            if(Integer.parseInt(effort) == 100){
+                projectDAO.updateStatus(1, code);
+            }else{
+                projectDAO.updateStatus(0, code);
+            }
+            request.getSession().setAttribute("message", "Edit Project Successfully!!");
+            response.sendRedirect("../Project/Edit?code=" + code);
+        } else {
+            request.getSession().setAttribute("message", "End Date must after Start Date!!");
+            response.sendRedirect("../Project/Edit?code=" + code);
+        }
     }
     // </editor-fold>
 }
