@@ -13,12 +13,16 @@ import java.text.SimpleDateFormat;
  * @author dangGG
  */
 public class Timesheet {
+
     int id;
+    String fullname;
     String title;
     String date;
+    String process_value;
     int process;
     String duration;
     int status;
+    String status_value;
     String work_result;
     String reject_reason;
     int user_id;
@@ -57,12 +61,47 @@ public class Timesheet {
         this.project_code = project_code;
     }
 
+    public Timesheet(int id, String fullname, String project_code, String title, String date, String process_value, String duration, String status_value, String work_result, String reject_reason) {
+        this.id = id;
+        this.fullname = fullname;
+        this.project_code = project_code;
+        this.title = title;
+        this.date = date;
+        this.process_value = process_value;
+        this.duration = duration;
+        this.status_value = status_value;
+        this.work_result = work_result;
+        this.reject_reason = reject_reason;
+    }
+
     
     
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
+
+    public String getProcess_value() {
+        return process_value;
+    }
+
+    public void setProcess_value(String process_value) {
+        this.process_value = process_value;
+    }
+
+    public String getStatus_value() {
+        return status_value;
+    }
+
+    public void setStatus_value(String status_value) {
+        this.status_value = status_value;
+    }
     
     
-    
-    
+
     public int getId() {
         return id;
     }
@@ -147,11 +186,11 @@ public class Timesheet {
     public String toString() {
         return "Timesheet{" + "id=" + id + ", title=" + title + ", date=" + date + ", process=" + process + ", duration=" + duration + ", status=" + status + ", work_result=" + work_result + ", reject_reason=" + reject_reason + ", user_id=" + user_id + ", project_code=" + project_code + '}';
     }
-    
+
     public static String myFormatDate(String date) throws ParseException {
         String pattern = "dd-MM-yyyy";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         return simpleDateFormat.format(new SimpleDateFormat("yyyy-MM-dd").parse(date));
     }
-    
+
 }

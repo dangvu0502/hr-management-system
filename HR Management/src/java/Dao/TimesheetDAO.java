@@ -30,7 +30,23 @@ public class TimesheetDAO {
     public ArrayList<Timesheet> getAllTimesheet() throws SQLException {
         ArrayList<Timesheet> res = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM hr_system_v2.timesheet";
+            String sql = "with timesheet_status as (\n"
+                    + "SELECT * FROM hr_system_v2.setting where type = \"timesheet status\"\n"
+                    + ")\n"
+                    + ", timesheet_process as (\n"
+                    + "SELECT * FROM hr_system_v2.setting where type = \"timesheet process\"\n"
+                    + ")\n"
+                    + "\n"
+                    + "SELECT ts.id,u.fullname,ts.project_code,ts.title,ts.date,ts_process.value as 'process',ts.duration,\n"
+                    + "		ts_status.value as 'status',ts.work_result,ts.reject_reason\n"
+                    + "FROM hr_system_v2.timesheet as ts\n"
+                    + "        inner join timesheet_status as ts_status on ts_status.order = ts.status\n"
+                    + "		inner join timesheet_process as ts_process on ts_process.order = ts.process\n"
+                    + "        inner join hr_system_v2.user as u on u.id = ts.user_id\n"
+                    + "Where 1 = 1\n"
+                    + "Order by ts.id\n"
+                    + "\n"
+                    + "";
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -39,13 +55,14 @@ public class TimesheetDAO {
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getInt(4),
+                        rs.getString(4),
                         rs.getString(5),
-                        rs.getInt(6),
+                        rs.getString(6),
                         rs.getString(7),
                         rs.getString(8),
-                        rs.getInt(9),
-                        rs.getString(10));
+                        rs.getString(9),
+                        rs.getString(10)
+                );
                 res.add(ts);
             }
         } catch (Exception e) {
@@ -57,7 +74,6 @@ public class TimesheetDAO {
         }
         return res;
     }
-    
 
     public ArrayList<Timesheet> getTimesheetList(String query) throws SQLException {
         ArrayList<Timesheet> res = new ArrayList<>();
@@ -91,7 +107,7 @@ public class TimesheetDAO {
     }
 
     public Timesheet getTimesheetById(int id) throws SQLException {
-     
+
         try {
             String sql = "SELECT * FROM hr_system_v2.timesheet  where id = ?";
             con = new DBContext().getConnection();
@@ -198,7 +214,7 @@ public class TimesheetDAO {
         ps.setInt(7, timesheet.getId());
         ps.executeUpdate();
     }
-    
+
     public static String myFormatDate(String date) throws ParseException {
         String pattern = "yyyy-MM-dd";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);

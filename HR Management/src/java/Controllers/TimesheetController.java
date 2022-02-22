@@ -281,6 +281,8 @@ public class TimesheetController extends HttpServlet {
     private void showTimesheetReviewList(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
+        request.setAttribute("projects", projectDAO.getAllProjectCode());
+        request.setAttribute("timesheetProcess", settingDAO.getTimesheetProcess());
         request.getRequestDispatcher("/Views/TimesheetReviewView.jsp").forward(request, response);
     }
 
