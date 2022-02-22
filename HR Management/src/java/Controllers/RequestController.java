@@ -5,6 +5,7 @@
  */
 package Controllers;
 
+import Models.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -32,17 +33,31 @@ public class RequestController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet RequestController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet RequestController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        try (PrintWriter out = response.getWriter();) {
+            String action = request.getPathInfo() == null ? "" : request.getPathInfo();
+            String method = request.getMethod();
+            switch (action) {
+                case "/RequestList":
+                    showRequestListView(request, response);
+                    break;
+//                case "/NewTimesheet":
+//                    newRequest(request, response, method);
+//                    break;
+//                case "/TimesheetDetail":
+//                    showRequestDetailView(request, response);
+//                    break;
+//                case "/DeleteTimesheet":
+//                    deleteRequest(request, response);
+//                    break;
+//                case "/EditTimesheet":
+//                    editRequest(request, response, method);
+//                    break;
+//                default:
+//                    response.sendError(404);
+//                    break;
+            }
+        } catch (Exception ex) {
+            log(ex.getMessage());
         }
     }
 
@@ -75,14 +90,19 @@ public class RequestController extends HttpServlet {
         processRequest(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
+    private void showRequestListView(HttpServletRequest request, HttpServletResponse response) {
+        response.setContentType("text/html;charset=UTF-8");
+        User user = (User) request.getSession().getAttribute("account");
+        String request_date = request.getParameter("request_date") != null ? request.getParameter("request_date") : "";
+        String update_date = request.getParameter("update_date") != null ? request.getParameter("update_date") : "";
+        int support_type_id = Integer.parseInt(request.getParameter("update_date") != null ? request.getParameter("update_date") : "");
+        int incharge_staff = Integer.parseInt(request.getParameter("incharge_staff") != null ? request.getParameter("incharge_staff") : "");
+        String incharge_group = request.getParameter("incharge_group") != null ? request.getParameter("incharge_group") : "";
+        int status = Integer.parseInt(request.getParameter("status") != null ? request.getParameter("status") : "");
+        int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+        int offset = (page - 1) * 3;
+            
+    }
 
+// </editor-fold>
 }

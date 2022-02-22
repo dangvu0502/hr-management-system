@@ -117,7 +117,7 @@
                                                                 <div class="col-lg-8">
                                                                     <div class="col-md-1"></div>
                                                                     <div class="col-md-7">
-                                                                       <label class="text-left" for="projectFilter" style="width: 150px;">Username</label><br>
+                                                                        <label class="text-left" for="projectFilter" style="width: 150px;">Username</label><br>
                                                                         <select class="form-control input-md" style="width: 200px;" name="projectFilter" id="projectFilter">
                                                                             <option value="">Choose Username</option>
                                                                             <c:forEach var="project" items="${projects}">
@@ -172,13 +172,13 @@
                                                     </div>
                                                 </form>
                                             </div>
-                                            
+
                                         </div>
                                     </div>
                                     <div class="panel-body" id="timesheetTable">
-                                        <table class="table table-hover">
+                                        <table class="table table-hover" id="table-content">
                                             <tr>
-                                                <th style="width: 10%">ID</th>
+                                                <th style="width: 8%">ID</th>
                                                 <th style="width: 10%">User name</th>
                                                 <th style="width: 13%">Timesheet Date</th>
                                                 <th style="width: 16%">Timesheet Title</th>
@@ -188,53 +188,6 @@
                                                 <th style="width: 10%">Status</th>
                                                 <th style="width: 13%"></th>
                                             </tr>
-
-                                            <tr id="timesheet${timesheet.id}">
-                                                <td style=" cursor: pointer;" onclick="window.open('http://localhost:8080/HR_Management/Timesheet/TimesheetDetail?id=${timesheet.id}', '_blank')" >1</td>
-                                                <td>DangGG</td>
-                                                <td>05-02-2001</td>
-                                                <td>First timesheet</td>
-                                                <td>HRM</td>
-                                                <td>design</td>
-                                                <td>3:00</td>
-                                                <td>
-                                                    <c:if test="${timesheet.status == 1}">
-                                                        <span class="label label-warning">${timesheetStatus[timesheet.status]}</span>
-                                                    </c:if>
-
-                                                    <span class="label label-success">submitted</span>
-
-                                                    <c:if test="${timesheet.status == 3}">
-                                                        <span class="label label-danger">${timesheetStatus[timesheet.status]}</span>
-                                                    </c:if>
-                                                </td>
-                                                <td>
-                                                    <a href="#" class="btn btn-md btn-default"  data-toggle="modal" data-target="#exampleModalCenter"  title="reject"><i class="fa fa-ban"></i></a>
-                                                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="exampleModalCenterTitle">Rejected reason</h5>
-                                                                 
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <textarea rows="5" cols="75" id="reject-reason" name="reject-reason" style="resize: vertical; ">${timesheet.reject_reason}</textarea>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                    <button type="button" class="btn btn-danger">Reject</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <c:if test="${timesheet.status != 2}">
-                                                        <a href="#" class="btn btn-md btn-default" onclick="window.open('http://localhost:8080/HR_Management/Timesheet/EditTimesheet?id=${timesheet.id}', '_blank')" ><i class="fa fa-check"></i></a>
-                                                        </c:if>
-
-
-                                                </td>
-                                            </tr>
-
                                         </table>
                                         <!-- Modal -->
 
@@ -293,38 +246,13 @@
                                                                 $('#timesheetTable').load(link + " " + "#timesheetTable");
                                                             }
 
-                                                            function deleteTimesheet(id) {
-                                                                var cf = confirm("Are you sure to delete?");
-                                                                var pageNumber = document.getElementById('page-active').innerHTML;
-                                                                var fromDate = document.getElementById('fromDate').value;
-                                                                var toDate = document.getElementById('toDate').value;
-                                                                var process = document.getElementById('processFilter').value;
-                                                                var project = document.getElementById('projectFilter').value;
-                                                                var title = document.getElementById('timesheetTitle').value;
-                                                                if (cf) {
-                                                                    //Logic to delete the item
-                                                                    $.ajax({
-
-                                                                        type: "POST",
-
-                                                                        url: "http://localhost:8080/HR_Management/Timesheet/DeleteTimesheet",
-
-                                                                        data: {id: id,
-                                                                            fromDate: fromDate,
-                                                                            toDate: toDate,
-                                                                            process: process,
-                                                                            project: project,
-                                                                            title: title,
-                                                                            page: pageNumber},
-
-                                                                        success: function (number) {
-                                                                            page(number);
-                                                                        }
-
-                                                                    });
-
-
-                                                                }
+                                                            function rejectTimesheet(id) {
+                                                                alert("Reject Timesheet "+ id);
+                                                                alert("Reject reason "+ document.getElementById('reject-reason'+id).value);
+                                                            }
+                                                            
+                                                            function approveTimesheet(id) {
+                                                                alert("Approve Timesheet "+ id);
                                                             }
 
 
@@ -349,6 +277,84 @@
                                                                     $('#myInput').trigger('focus')
                                                                 })
 
+                                                                $.ajax({
+
+                                                                    type: "POST",
+
+                                                                    url: "http://localhost:8080/HR_Management/Timesheet/GetAllTimeSheet",
+
+                                                                    success: function (responseJson) {
+
+                                                                        if (responseJson != null) {
+                                                                            $("#timesheetTable").find("tr:gt(0)").remove();
+                                                                            var table = $("#table-content");
+
+                                                                            $.each(responseJson, function (key, value) {
+                                                                                console.log(value['id']);
+                                                                                var rowNew = "";
+                                                                                rowNew += `<tr>`;
+                                                                                rowNew += `<td style=" cursor: pointer;" onclick="window.open('http://localhost:8080/HR_Management/Timesheet/TimesheetDetail?id=` + value['id'] + `', '_blank')" >` + value['id'] + `</td>`;
+                                                                                rowNew += `<td>`+value['fullname']+`</td>`;
+                                                                                rowNew += `<td>` + value['date'].split("-").reverse().join("-") + `</td>`;
+                                                                                rowNew += `<td>` + value['title'] + `</td>`;
+                                                                                rowNew += `<td>` + value['project_code'] + `</td>`;
+                                                                                rowNew += `<td>` + value['process_value'] + `</td>`;
+                                                                                rowNew += `<td>` + value['duration'] + `</td>`;
+                                                                                if(value['status_value'] == 'approved' ){
+                                                                                    rowNew += `<td>` + `<span class="label label-success">approved</span>` + `</td>`;
+                                                                                    rowNew += `<td><a href="#" class="btn btn-md btn-default"  data-toggle="modal" data-target="#exampleModalCenter"  title="reject"><i class="fa fa-ban"></i></a>
+                                                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalCenterTitle">Rejected reason</h5>
+
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <textarea rows="5" cols="75" id="reject-reason`+value['id']+`" name="reject-reason" style="resize: vertical; "></textarea>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="rejectTimesheet(`+value['id']+`)">Reject</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div> <td>`;
+                                                                                }else if (value['status_value'] == 'rejected' ){
+                                                                                    rowNew += `<td>` + `<span class="label label-danger">rejected</span>` + `</td>`;
+                                                                                    rowNew += `<td><a href="#" class="btn btn-md btn-default" onclick="approveTimesheet(`+value['id']+`)" ><i class="fa fa-check"></i></a></td>`;
+                                                                                }else {
+                                                                                    rowNew += `<td>` + `<span class="label label-warning">submitted</span>` + `</td>`;
+                                                                                    rowNew += `<td>
+                                                    <a href="#" class="btn btn-md btn-default"  data-toggle="modal" data-target="#exampleModalCenter"  title="reject"><i class="fa fa-ban"></i></a>
+                                                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalCenterTitle">Rejected reason</h5>
+
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <textarea rows="5" cols="75" id="reject-reason`+value['id']+`" name="reject-reason" style="resize: vertical; "></textarea>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="rejectTimesheet(`+value['id']+`)">Reject</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>                                                 
+                                                        <a href="#" class="btn btn-md btn-default" onclick="approveTimesheet(`+value['id']+`)" ><i class="fa fa-check"></i></a>
+                                                                              </td>`;
+                                                                                }
+                                                    
+                                                                                rowNew += `</tr>`;
+                                                                                table.append(rowNew);
+                                                                            });
+                                                                        }
+                                                                    }
+
+                                                                });
 
                                                             });
 
