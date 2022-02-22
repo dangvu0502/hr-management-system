@@ -4,7 +4,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Timesheet List</title>
+        <title>Timesheet Review</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
@@ -179,6 +179,7 @@
                                         <table class="table table-hover" id="table-content">
                                             <tr>
                                                 <th style="width: 8%">ID</th>
+                                                <th></th>
                                                 <th style="width: 10%">User name</th>
                                                 <th style="width: 13%">Timesheet Date</th>
                                                 <th style="width: 16%">Timesheet Title</th>
@@ -247,15 +248,15 @@
                                                             }
 
                                                             function rejectTimesheet(id) {
-                                                                alert("Reject Timesheet "+ id);
-                                                                alert("Reject reason "+ document.getElementById('reject-reason'+id).value);
+                                                                alert("Reject Timesheet " + id);
+                                                                alert("Reject reason " + document.getElementById('reject-reason' + id).value);
                                                             }
-                                                            
+
                                                             function approveTimesheet(id) {
-                                                                alert("Approve Timesheet "+ id);
+                                                                alert("Approve Timesheet " + id);
                                                             }
 
-
+                                                            
                                                             $(document).ready(function () {
                                                                 $('#fromDate').change(function () {
                                                                     page(1);
@@ -273,8 +274,6 @@
                                                                     page(1);
                                                                 });
 
-                                                               
-
                                                                 $.ajax({
 
                                                                     type: "POST",
@@ -291,17 +290,81 @@
                                                                                 console.log(value['id']);
                                                                                 var rowNew = "";
                                                                                 rowNew += `<tr>`;
-                                                                                rowNew += `<td style=" cursor: pointer;" onclick="window.open('http://localhost:8080/HR_Management/Timesheet/TimesheetDetail?id=` + value['id'] + `', '_blank')" >` + value['id'] + `</td>`;
-                                                                                rowNew += `<td>`+value['fullname']+`</td>`;
+                                                                                rowNew += `<td style=" cursor: pointer;" data-toggle="modal" data-target="#exampleModalCenter` + (value['id']) + `quickView" >` + value['id'] + `</td>`;
+                                                                                rowNew += `<td> <div class="modal fade" id="exampleModalCenter` + (value['id']) + `quickView" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">`;
+                                                                                rowNew += ` 
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <section class="panel">
+                                                                    <header class="panel-heading text-center">
+                                                                        ` + value['title'] + `
+                                                                    </header>
+                                                                    <div class="panel-body">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-1"></div>
+                                                                            <div class="col-lg-8">
+                                                                                <div class="row">
+                                                                                    <div class="form-group col-lg-12">
+                                                                                        <p class="text-bold" >Project: &nbsp ` + value['project_code'] + `</p>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="row">
+                                                                                    <div class="form-group col-lg-7">
+                                                                                        <p class="text-bold" >Process: &nbsp ` + value['process_value'] + `</p>
+                                                                                    </div>
+                                                                                    <div class="form-group col-lg-5">
+                                                                                        <p class="text-bold" >Date: &nbsp ` + value['date'] + `</p>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="row">
+                                                                                    <div class="form-group col-lg-7">`;
+                                                                                if (value['status_value'] == 'rejected')
+                                                                                    rowNew += `<p class="text-bold" style="pointer-events: none;">Status: &nbsp <span  class="text-danger">` + value['status_value'] + `</span></p>`;
+                                                                                else if (value['status_value'] == 'approved')
+                                                                                    rowNew += `<p class="text-bold" style="pointer-events: none;" >Status: &nbsp <span class="text-success">` + value['status_value'] + `</span></p>`;
+                                                                                else
+                                                                                    rowNew += `<p class="text-bold" style="pointer-events: none;">Status: &nbsp <span class="text-warning">` + value['status_value'] + `</span></p>`;
+                                                                                rowNew += `</div>
+                                                                                <div class="form-group col-lg-5">
+                                                                                        <p class="text-bold" >Duration: &nbsp` + value['duration'] + `</p>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="row ">
+                                                                                    <div class="form-group col-lg-12">
+                                                                                        <label for="work-result">Work result</label><p></p>
+                                                                                        <textarea rows="10" cols="60" id="work-result" name="work-result" style=" resize: vertical;" disabled>` + (value['work_result'] == null ? "" : value['work_result']) + `</textarea>
+                                                                                    </div>
+                                                                                    <div class="form-group col-lg-12">`;
+                                                                                if (value['status_value'] == 'rejected')
+                                                                                    rowNew += `<label for="reject-reason">Reject reason</label><p></p>
+                                                                                            <textarea rows="5" cols="60" id="reject-reason" name="reject-reason" style="  resize: vertical; " disabled>` + (value['reject_reason'] == null ? "" : value['reject_reason']) + `</textarea>`;
+                                                                                rowNew += `
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>                                                                     
+                                                                </section>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div> </td>` ;
+                                                                                rowNew += `<td>` + value['fullname'] + `</td>`;
                                                                                 rowNew += `<td>` + value['date'].split("-").reverse().join("-") + `</td>`;
                                                                                 rowNew += `<td>` + value['title'] + `</td>`;
                                                                                 rowNew += `<td>` + value['project_code'] + `</td>`;
                                                                                 rowNew += `<td>` + value['process_value'] + `</td>`;
                                                                                 rowNew += `<td>` + value['duration'] + `</td>`;
-                                                                                if(value['status_value'] == 'approved' ){
+                                                                                if (value['status_value'] == 'approved') {
                                                                                     rowNew += `<td>` + `<span class="label label-success">approved</span>` + `</td>`;
-                                                                                    rowNew += `<td><a href="#" class="btn btn-md btn-default"  data-toggle="modal" data-target="#exampleModalCenter`+value['id']+`"  title="reject"><i class="fa fa-ban"></i></a>
-                                                    <div class="modal fade" id="exampleModalCenter`+value['id']+`" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                                                    rowNew += `<td><a href="#" class="btn btn-md btn-default"  data-toggle="modal" data-target="#exampleModalCenter` + value['id'] + `"  title="reject"><i class="fa fa-ban"></i></a>
+                                                    <div class="modal fade" id="exampleModalCenter` + value['id'] + `" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
@@ -309,23 +372,23 @@
 
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    <textarea rows="5" cols="75" id="reject-reason`+value['id']+`" name="reject-reason" style="resize: vertical; "></textarea>
+                                                                    <textarea rows="5" cols="75" id="reject-reason` + value['id'] + `" name="reject-reason" style="resize: vertical; "></textarea>
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="rejectTimesheet(`+value['id']+`)">Reject</button>
+                                                                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="rejectTimesheet(` + value['id'] + `)">Reject</button>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div> <td>`;
-                                                                                }else if (value['status_value'] == 'rejected' ){
+                                                                                } else if (value['status_value'] == 'rejected') {
                                                                                     rowNew += `<td>` + `<span class="label label-danger">rejected</span>` + `</td>`;
-                                                                                    rowNew += `<td><a href="#" class="btn btn-md btn-default" onclick="approveTimesheet(`+value['id']+`)" ><i class="fa fa-check"></i></a></td>`;
-                                                                                }else {
+                                                                                    rowNew += `<td><a href="#" class="btn btn-md btn-default" onclick="approveTimesheet(` + value['id'] + `)" ><i class="fa fa-check"></i></a></td>`;
+                                                                                } else {
                                                                                     rowNew += `<td>` + `<span class="label label-warning">submitted</span>` + `</td>`;
                                                                                     rowNew += `<td>
-                                                    <a href="#" class="btn btn-md btn-default"  data-toggle="modal" data-target="#exampleModalCenter`+value['id']+`"  title="reject"><i class="fa fa-ban"></i></a>
-                                                    <div class="modal fade" id="exampleModalCenter`+value['id']+`" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                    <a href="#" class="btn btn-md btn-default"  data-toggle="modal" data-target="#exampleModalCenter` + value['id'] + `"  title="reject"><i class="fa fa-ban"></i></a>
+                                                    <div class="modal fade" id="exampleModalCenter` + value['id'] + `" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
@@ -333,19 +396,19 @@
 
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    <textarea rows="5" cols="75" id="reject-reason`+value['id']+`" name="reject-reason" style="resize: vertical; "></textarea>
+                                                                    <textarea rows="5" cols="75" id="reject-reason` + value['id'] + `" name="reject-reason" style="resize: vertical; "></textarea>
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="rejectTimesheet(`+value['id']+`)">Reject</button>
+                                                                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="rejectTimesheet(` + value['id'] + `)">Reject</button>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>                                                 
-                                                        <a href="#" class="btn btn-md btn-default" onclick="approveTimesheet(`+value['id']+`)" ><i class="fa fa-check"></i></a>
+                                                        <a href="#" class="btn btn-md btn-default" onclick="approveTimesheet(` + value['id'] + `)" ><i class="fa fa-check"></i></a>
                                                                               </td>`;
                                                                                 }
-                                                    
+
                                                                                 rowNew += `</tr>`;
                                                                                 table.append(rowNew);
                                                                             });
