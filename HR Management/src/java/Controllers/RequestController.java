@@ -6,7 +6,7 @@
 package Controllers;
 
 import Dao.RequestDAO;
-import Dao.TimesheetDAO;
+import Models.Request;
 import Models.Timesheet;
 import Models.User;
 import com.google.gson.Gson;
@@ -15,6 +15,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,7 +29,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "RequestController", urlPatterns = {"/Request/*"})
 public class RequestController extends HttpServlet {
+
     private RequestDAO requestDAO;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -60,7 +63,7 @@ public class RequestController extends HttpServlet {
 //                case "/EditTimesheet":
 //                    editRequest(request, response, method);
 //                    break;
-                  case "/GetAllRequest":
+                case "/GetAllRequest":
                     getAllRequest(request, response);
                     break;
 //                default:
@@ -101,26 +104,12 @@ public class RequestController extends HttpServlet {
         processRequest(request, response);
     }
 
-    private void showRequestListView(HttpServletRequest request, HttpServletResponse response) {
-        response.setContentType("text/html;charset=UTF-8");
-        User user = (User) request.getSession().getAttribute("account");
-        String request_date = request.getParameter("request_date") != null ? request.getParameter("request_date") : "";
-        String update_date = request.getParameter("update_date") != null ? request.getParameter("update_date") : "";
-        int support_type_id = Integer.parseInt(request.getParameter("update_date") != null ? request.getParameter("update_date") : "");
-        int incharge_staff = Integer.parseInt(request.getParameter("incharge_staff") != null ? request.getParameter("incharge_staff") : "");
-        String incharge_group = request.getParameter("incharge_group") != null ? request.getParameter("incharge_group") : "";
-        int status = Integer.parseInt(request.getParameter("status") != null ? request.getParameter("status") : "");
-        int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
-        int offset = (page - 1) * 3;
-          
-        
-        
-        
-        
-        
+    private void showRequestListView(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+      ArrayList<Request> r = new ArrayList<Request>();
+      
     }
-    
-     private void getAllRequest(HttpServletRequest request, HttpServletResponse response)
+
+    private void getAllRequest(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
         Gson gson = new Gson();
@@ -129,7 +118,7 @@ public class RequestController extends HttpServlet {
         JsonArray jsonArray = element.getAsJsonArray();
         response.setContentType("application/json");
         response.getWriter().println(jsonArray);
-     
+
     }
 // </editor-fold>
 }
