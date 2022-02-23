@@ -8,6 +8,7 @@ package Controllers;
 import Dao.ProjectDAO;
 import Dao.SettingDAO;
 import Dao.TimesheetDAO;
+import Dao.UserDAO;
 import Models.Timesheet;
 import Models.User;
 import java.io.IOException;
@@ -34,12 +35,13 @@ public class TimesheetController extends HttpServlet {
     private TimesheetDAO timesheetDAO;
     private SettingDAO settingDAO;
     private ProjectDAO projectDAO;
+    private UserDAO userDAO;
 
     public void init() {
         timesheetDAO = new TimesheetDAO();
         settingDAO = new SettingDAO();
         projectDAO = new ProjectDAO();
-
+        userDAO = new UserDAO();
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -229,7 +231,7 @@ public class TimesheetController extends HttpServlet {
         String work_result = request.getParameter("work-result");
         int status = 1;
         User user = (User) request.getSession().getAttribute("account");
-        timesheetDAO.addNewTimesheet(new Timesheet(title, date, process, duration, status, 106, project,work_result));
+        timesheetDAO.addNewTimesheet(new Timesheet(title, date, process, duration, status, 106, project, work_result));
         request.getSession().setAttribute("successMessage", "Add new timesheet success");
         response.sendRedirect("/HR_Management/Timesheet/NewTimesheet");
     }
@@ -284,6 +286,7 @@ public class TimesheetController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setAttribute("projects", projectDAO.getAllProjectCode());
         request.setAttribute("timesheetProcess", settingDAO.getTimesheetProcess());
+        request.setAttribute("users", userDAO.getUsersByGroupCode("G4"));
         request.getRequestDispatcher("/Views/TimesheetReviewView.jsp").forward(request, response);
     }
 
@@ -291,12 +294,39 @@ public class TimesheetController extends HttpServlet {
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
         Gson gson = new Gson();
-        JsonElement element = gson.toJsonTree(timesheetDAO.getAllTimesheet(), new TypeToken<ArrayList<Timesheet>>() {
+        String condition = "";
+        String fromDate = request.getParameter("fromDate") != null ? request.getParameter("fromDate") : "";
+        String toDate = request.getParameter("toDate") != null ? request.getParameter("toDate") : "";
+        String project_code = request.getParameter("project") != null ? request.getParameter("project") : "";
+        String title = request.getParameter("title") != null ? request.getParameter("title") : "";
+        String username = request.getParameter("username") != null ? request.getParameter("username") : "";
+        int process = request.getParameter("process") != null ? Integer.parseInt(request.getParameter("process")) : 0;
+        int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+        int offset = (page - 1) * 3;
+        if (!fromDate.isEmpty()) {
+            condition += " and date >= " + "'" + fromDate + "'";
+        }
+        if (!toDate.isEmpty()) {
+            condition += " and date <= " + "'" + toDate + "'";
+        }
+        if (!project_code.isEmpty()) {
+            condition += " and project_code =  " + "'" + project_code + "'";
+        }
+        if (!title.isEmpty()) {
+            condition += " and title like  " + "'%" + title + "%'";
+        }
+        if (!username.isEmpty()) {
+            condition += " and fullname like  " + "'%" + username + "%'";
+        }
+        if (process != 0) {
+            condition += " and process = " + "'" + process + "'";
+        }
+        JsonElement element = gson.toJsonTree(timesheetDAO.getAllTimesheet(condition), new TypeToken<ArrayList<Timesheet>>() {
         }.getType());
         JsonArray jsonArray = element.getAsJsonArray();
         response.setContentType("application/json");
         response.getWriter().println(jsonArray);
-     
+
     }
 
 }
