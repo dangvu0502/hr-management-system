@@ -117,13 +117,14 @@
                                                                 <div class="col-lg-8">
                                                                     <div class="col-md-1"></div>
                                                                     <div class="col-md-7">
-                                                                        <label class="text-left" for="projectFilter" style="width: 150px;">Username</label><br>
-                                                                        <select class="form-control input-md" style="width: 200px;" name="projectFilter" id="projectFilter">
-                                                                            <option value="">Choose Username</option>
-                                                                            <c:forEach var="project" items="${projects}">
-                                                                                <option value="${project}">${project}</option>
+                                                                        <label class="text-left" for="usernameFilter" style="width: 150px;">Username</label><br>
+                                                                        <input id="usernameFilter" class="form-control input-md" style="width: 200px;" type=text list="usernames" >
+                                                                        <datalist id="usernames" hidden>
+                                                                          
+                                                                            <c:forEach var="user" items="${users}">
+                                                                                <option value="${user.fullname}">${user.fullname}</option>
                                                                             </c:forEach>
-                                                                        </select>
+                                                                        </datalist>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -226,66 +227,31 @@
                                                             }
 
                                                             function page(number) {
-                                                                var pageNumber = number;
                                                                 var fromDate = document.getElementById('fromDate').value;
                                                                 var toDate = document.getElementById('toDate').value;
                                                                 var process = document.getElementById('processFilter').value;
                                                                 var project = document.getElementById('projectFilter').value;
                                                                 var title = document.getElementById('timesheetTitle').value;
-                                                                var link = "http://localhost:8080/HR_Management/Timesheet/TimesheetList?";
-                                                                link += "page=" + pageNumber;
-                                                                link += "&";
-                                                                link += "fromDate=" + fromDate;
-                                                                link += "&";
-                                                                link += "toDate=" + toDate;
-                                                                link += "&";
-                                                                link += "process=" + process;
-                                                                link += "&";
-                                                                link += "project=" + project;
-                                                                link += "&";
-                                                                link += "title=" + title;
-                                                                $('#timesheetTable').load(link + " " + "#timesheetTable");
-                                                            }
-
-                                                            function rejectTimesheet(id) {
-                                                                alert("Reject Timesheet " + id);
-                                                                alert("Reject reason " + document.getElementById('reject-reason' + id).value);
-                                                            }
-
-                                                            function approveTimesheet(id) {
-                                                                alert("Approve Timesheet " + id);
-                                                            }
-
-                                                            
-                                                            $(document).ready(function () {
-                                                                $('#fromDate').change(function () {
-                                                                    page(1);
-                                                                });
-                                                                $('#toDate').change(function () {
-                                                                    page(1);
-                                                                });
-                                                                $('#processFilter').change(function () {
-                                                                    page(1);
-                                                                });
-                                                                $('#projectFilter').change(function () {
-                                                                    page(1);
-                                                                });
-                                                                $('#timesheetTitle').keyup(function () {
-                                                                    page(1);
-                                                                });
-
+                                                                var username = document.getElementById('usernameFilter').value;
+                                                                console.log(username);
                                                                 $.ajax({
 
                                                                     type: "POST",
-
+                                                                    data: {
+                                                                        page: number,
+                                                                        title: title,
+                                                                        username: username,
+                                                                        fromDate: fromDate,
+                                                                        toDate: toDate,
+                                                                        process: process,
+                                                                        project: project
+                                                                    },
                                                                     url: "http://localhost:8080/HR_Management/Timesheet/GetAllTimeSheet",
-
                                                                     success: function (responseJson) {
 
                                                                         if (responseJson != null) {
                                                                             $("#timesheetTable").find("tr:gt(0)").remove();
                                                                             var table = $("#table-content");
-
                                                                             $.each(responseJson, function (key, value) {
                                                                                 console.log(value['id']);
                                                                                 var rowNew = "";
@@ -316,7 +282,7 @@
                                                                                         <p class="text-bold" >Process: &nbsp ` + value['process_value'] + `</p>
                                                                                     </div>
                                                                                     <div class="form-group col-lg-5">
-                                                                                        <p class="text-bold" >Date: &nbsp ` + value['date'] + `</p>
+                                                                                        <p class="text-bold" >Date: &nbsp ` + value['date'].split("-").reverse().join("-") + `</p>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="row">
@@ -354,7 +320,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div> </td>` ;
+                                                </div> </td>`;
                                                                                 rowNew += `<td>` + value['fullname'] + `</td>`;
                                                                                 rowNew += `<td>` + value['date'].split("-").reverse().join("-") + `</td>`;
                                                                                 rowNew += `<td>` + value['title'] + `</td>`;
@@ -416,7 +382,38 @@
                                                                     }
 
                                                                 });
+                                                            }
 
+                                                            function rejectTimesheet(id) {
+                                                                alert("Reject Timesheet " + id);
+                                                                alert("Reject reason " + document.getElementById('reject-reason' + id).value);
+                                                            }
+
+                                                            function approveTimesheet(id) {
+                                                                alert("Approve Timesheet " + id);
+                                                            }
+
+
+                                                            $(document).ready(function () {
+                                                                $('#fromDate').change(function () {
+                                                                    page(1);
+                                                                });
+                                                                $('#toDate').change(function () {
+                                                                    page(1);
+                                                                });
+                                                                $('#processFilter').change(function () {
+                                                                    page(1);
+                                                                });
+                                                                $('#projectFilter').change(function () {
+                                                                    page(1);
+                                                                });
+                                                                $('#timesheetTitle').keyup(function () {
+                                                                    page(1);
+                                                                });
+                                                                $('#usernameFilter').keyup(function () {
+                                                                    page(1);
+                                                                });
+                                                                page(1);
                                                             });
 
 
