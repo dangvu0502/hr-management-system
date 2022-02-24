@@ -295,6 +295,7 @@ public class TimesheetController extends HttpServlet {
     private void getAllTimesheetInGroup(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
+        User user = (User) request.getSession().getAttribute("account");
         Gson gson = new Gson();
         String condition = "";
         String fromDate = request.getParameter("fromDate") != null ? request.getParameter("fromDate") : "";
@@ -323,7 +324,7 @@ public class TimesheetController extends HttpServlet {
         if (process != 0) {
             condition += " and process = " + "'" + process + "'";
         }
-        JsonElement element = gson.toJsonTree(timesheetDAO.getAllTimesheet(condition,"G6"), new TypeToken<ArrayList<Timesheet>>() {
+        JsonElement element = gson.toJsonTree(timesheetDAO.getAllTimesheet(condition,user.getGroup_code()), new TypeToken<ArrayList<Timesheet>>() {
         }.getType());
         JsonArray jsonArray = element.getAsJsonArray();
         response.setContentType("application/json");

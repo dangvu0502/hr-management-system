@@ -67,7 +67,7 @@ public class ProjectDAO {
         }
         return result;
     }
-
+    
     public static void main(String[] args) throws SQLException {
         ProjectDAO projectDAO = new ProjectDAO();
         for (String code : projectDAO.getAllProjectCode()) {
