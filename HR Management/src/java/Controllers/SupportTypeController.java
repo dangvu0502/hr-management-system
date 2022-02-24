@@ -138,7 +138,7 @@ public class SupportTypeController extends HttpServlet {
             } else {
                 s = sDAO.getSupportTypeList(Integer.parseInt(page));//sai
             }
-            request.setAttribute("listS", s);
+            request.setAttribute("listS", s );
             request.getRequestDispatcher("../Views/SupportTypeView.jsp").forward(request, response);
         }
     }

@@ -27,7 +27,7 @@ public class TimesheetDAO {
     PreparedStatement ps;
     ResultSet rs;
 
-    public ArrayList<Timesheet> getAllTimesheet() throws SQLException {
+    public ArrayList<Timesheet> getAllTimesheet(String condition) throws SQLException {
         ArrayList<Timesheet> res = new ArrayList<>();
         try {
             String sql = "with timesheet_status as (\n"
@@ -44,6 +44,7 @@ public class TimesheetDAO {
                     + "		inner join timesheet_process as ts_process on ts_process.order = ts.process\n"
                     + "        inner join hr_system_v2.user as u on u.id = ts.user_id\n"
                     + "Where 1 = 1\n"
+                    + condition
                     + "Order by ts.id\n"
                     + "\n"
                     + "";

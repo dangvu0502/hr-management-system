@@ -5,6 +5,10 @@
  */
 package Models;
 
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 /**
  *
  * @author quocb
@@ -18,7 +22,7 @@ public class Request {
     private int incharge_staff;
     private String incharge_group;
     private int status;
-
+    
     public int getId() {
         return id;
     }
@@ -35,16 +39,16 @@ public class Request {
         this.title = title;
     }
 
-    public String getRequest_date() {
-        return request_date;
+    public String getRequest_date() throws ParseException {
+       return myFormatDate(request_date);
     }
 
     public void setRequest_date(String request_date) {
         this.request_date = request_date;
     }
 
-    public String getUpdate_date() {
-        return update_date;
+    public String getUpdate_date() throws ParseException {
+        return myFormatDate(update_date);
     }
 
     public void setUpdate_date(String update_date) {
@@ -95,5 +99,10 @@ public class Request {
     }
 
     public Request() {
+    }
+        public static String myFormatDate(String date) throws ParseException {
+        String pattern = "dd-MM-yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        return simpleDateFormat.format(new SimpleDateFormat("yyyy-MM-dd").parse(date));
     }
 }

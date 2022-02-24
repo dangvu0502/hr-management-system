@@ -115,7 +115,7 @@
                                                 <form action="" method="post" >
                                                     <div class="input-group">
                                                         <div class="btn btn-md btn-default" style="width: 150px; pointer-events: none;"><span>Search by Title</span></div>
-                                                        <input id="timesheetTitle" type="text" name="timesheetTitle" class="form-control input-md" style="width: 450px;" placeholder="Enter title to search" onclick="dateHideShow()"/>
+                                                        <input id="timesheetTitle" type="text" name="title" class="form-control input-md" style="width: 450px;" placeholder="Enter title to search" onclick="dateHideShow()"/>
                                                         <br>
                                                         <div id="advanced" style="display: none">
                                                             <br>
@@ -142,18 +142,14 @@
                                                                         <label class="text-left" for="projectFilter" style="width: 150px;">Project</label><br>
                                                                         <select class="form-control input-md" style="width: 200px;" name="projectFilter" id="projectFilter">
                                                                             <option value="">Choose Project</option>
-                                                                            <c:forEach var="project" items="${projects}">
-                                                                                <option value="${project}">${project}</option>
-                                                                            </c:forEach>
+                                                                       
                                                                         </select>
                                                                     </div>
                                                                     <div class="col-md-4">
                                                                         <label class="text-left" for="processFilter" style="width: 150px;">Process</label><br>
                                                                         <select class="form-control input-md" style="width: 200px;" name="processFilter" id="processFilter">
                                                                             <option value="0">Choose Process</option>
-                                                                            <c:forEach var="process" items="${timesheetProcess}">
-                                                                                <option value="${process.key}">${process.value}</option>
-                                                                            </c:forEach>
+                                                                        
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -181,14 +177,14 @@
                                                 
                                                 <th style="width: 13%"></th>
                                             </tr>
-                                            <c:forEach var="timesheet" items="${timesheetList}"  varStatus="theCount">
-                                                <tr id="timesheet${timesheet.id}">
+                                            <c:forEach var="r" items="${requestList}"  varStatus="theCount">
+                                                <tr id="timesheet${r.support_type_id}">
                                                     <td style=" cursor: pointer;" onclick="window.open('http://localhost:8080/HR_Management/Timesheet/TimesheetDetail?id=${timesheet.id}', '_blank')" >${timesheet.id}</td>
-                                                    <td>${timesheet.date}</td>
-                                                    <td>${timesheet.title}</td>
-                                                    <td>${timesheet.project_code}</td>
-                                                    <td>${timesheetProcess[timesheet.process]}</td>
-                                                    <td>${timesheet.duration}</td>
+                                                    <td>${r.request_date}</td>
+                                                    <td>${r.title}</td>
+                                                    <td>${r.name}</td>
+                                                    <td>${r.status}</td>
+                                                    <td>${r.update_date}</td>
                                                     <td>
                                                         <c:if test="${timesheet.status == 1}">
                                                             <span class="label label-warning">${timesheetStatus[timesheet.status]}</span>
@@ -278,19 +274,16 @@
                                                                 var pageNumber = number;
                                                                 var fromDate = document.getElementById('fromDate').value;
                                                                 var toDate = document.getElementById('toDate').value;
-                                                                var process = document.getElementById('processFilter').value;
-                                                                var project = document.getElementById('projectFilter').value;
-                                                                var title = document.getElementById('timesheetTitle').value;
-                                                                var link = "http://localhost:8080/HR_Management/Timesheet/TimesheetList?";
+                                                                var name = document.getElementById('name').value;
+                                                                var title = document.getElementById('title').value;
+                                                                var link = "http://localhost:8080/HR_Management/Request/RequestList?";
                                                                 link += "page=" + pageNumber;
                                                                 link += "&";
                                                                 link += "fromDate=" + fromDate;
                                                                 link += "&";
                                                                 link += "toDate=" + toDate;
                                                                 link += "&";
-                                                                link += "process=" + process;
-                                                                link += "&";
-                                                                link += "project=" + project;
+                                                                link += "name=" + name;
                                                                 link += "&";
                                                                 link += "title=" + title;
                                                                 $('#timesheetTable').load(link + " " + "#timesheetTable");

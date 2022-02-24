@@ -89,6 +89,41 @@ public class UserDAO {
         }
         return null;
     }
+    
+    public ArrayList<User> getUsersByGroupCode(String group_code) throws Exception {
+        try {
+            ArrayList<User> res = new ArrayList<>();
+            String sql = "SELECT * FROM hr_system_v2.user WHERE group_code = ? ";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, group_code);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                res.add(new User(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getBoolean(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getString(10),
+                        rs.getInt(11),
+                        rs.getInt(12),
+                        rs.getInt(13),
+                        rs.getString(14),
+                        rs.getBoolean(15),
+                        rs.getBoolean(16)
+                ));
+            }
+            return res;
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return null;
+    }
 
     public int addNewAccount(User user) throws Exception {
         int rows = 0;
