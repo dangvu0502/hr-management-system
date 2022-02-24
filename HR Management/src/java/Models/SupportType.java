@@ -34,6 +34,10 @@ public class SupportType {
         this.description = description;
     }
 
+    public SupportType(String name) {
+        this.name = name;
+    }
+
     public String getIn_charge_group() {
         return in_charge_group;
     }

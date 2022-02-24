@@ -14,14 +14,54 @@ import java.text.SimpleDateFormat;
  * @author quocb
  */
 public class Request {
+
+ 
     private int id;
     private String title;
+
+    public Request(String request_date, String title, SupportType name, User fullname, int status, String update_date) {
+        this.request_date = request_date;
+        this.title = title;
+        this.name = name;
+        this.fullname = fullname;
+        this.status = status;
+        this.update_date = update_date;
+    }
+
+    @Override
+    public String toString() {
+        return "Request{" + "id=" + id + ", title=" + title + ", request_date=" + request_date + ", update_date=" + update_date + ", support_type_id=" + support_type_id + ", incharge_staff=" + incharge_staff + ", incharge_group=" + incharge_group + ", status=" + status + ", name=" + name + ", fullname=" + fullname + '}';
+    }
     private String request_date;
     private String update_date;
     private int support_type_id;
     private int incharge_staff;
     private String incharge_group;
     private int status;
+    private SupportType name;
+    private User fullname;
+
+    public Request(int id, String title, String request_date, String update_date, int support_type_id, int incharge_staff, String incharge_group, int status, SupportType name, User fullname) {
+        this.id = id;
+        this.title = title;
+        this.request_date = request_date;
+        this.update_date = update_date;
+        this.support_type_id = support_type_id;
+        this.incharge_staff = incharge_staff;
+        this.incharge_group = incharge_group;
+        this.status = status;
+        this.name = name;
+        this.fullname = fullname;
+    }
+
+    public SupportType getName() {
+        return name;
+    }
+
+    public User getFullname() {
+        return fullname;
+    }
+ 
     
     public int getId() {
         return id;
@@ -87,16 +127,7 @@ public class Request {
         this.status = status;
     }
 
-    public Request(int id, String title, String request_date, String update_date, int support_type_id, int incharge_staff, String incharge_group, int status) {
-        this.id = id;
-        this.title = title;
-        this.request_date = request_date;
-        this.update_date = update_date;
-        this.support_type_id = support_type_id;
-        this.incharge_staff = incharge_staff;
-        this.incharge_group = incharge_group;
-        this.status = status;
-    }
+    
 
     public Request() {
     }
