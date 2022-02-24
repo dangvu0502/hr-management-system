@@ -45,6 +45,28 @@ public class ProjectDAO {
         }
         return result;
     }
+    
+    
+    public ArrayList<String> getAllProjectCode(String group_code) throws SQLException {
+        ArrayList<String> result = new ArrayList<String>();
+        try {
+            String sql = "SELECT code FROM hr_system_v2.project where group_code = ?;";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, group_code);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                result.add(rs.getString(1));
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;
+    }
 
     public static void main(String[] args) throws SQLException {
         ProjectDAO projectDAO = new ProjectDAO();

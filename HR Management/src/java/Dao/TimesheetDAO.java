@@ -27,7 +27,7 @@ public class TimesheetDAO {
     PreparedStatement ps;
     ResultSet rs;
 
-    public ArrayList<Timesheet> getAllTimesheet(String condition) throws SQLException {
+    public ArrayList<Timesheet> getAllTimesheet(String condition,String group_code) throws SQLException {
         ArrayList<Timesheet> res = new ArrayList<>();
         try {
             String sql = "with timesheet_status as (\n"
@@ -37,19 +37,20 @@ public class TimesheetDAO {
                     + "SELECT * FROM hr_system_v2.setting where type = \"timesheet process\"\n"
                     + ")\n"
                     + "\n"
-                    + "SELECT ts.id,u.fullname,ts.project_code,ts.title,ts.date,ts_process.value as 'process',ts.duration,\n"
+                    + "SELECT ts.id,u.username,ts.project_code,ts.title,ts.date,ts_process.value as 'process',ts.duration,\n"
                     + "		ts_status.value as 'status',ts.work_result,ts.reject_reason\n"
                     + "FROM hr_system_v2.timesheet as ts\n"
                     + "        inner join timesheet_status as ts_status on ts_status.order = ts.status\n"
                     + "		inner join timesheet_process as ts_process on ts_process.order = ts.process\n"
                     + "        inner join hr_system_v2.user as u on u.id = ts.user_id\n"
-                    + "Where 1 = 1\n"
+                    + "Where u.group_code = ?\n"
                     + condition
                     + "Order by ts.id\n"
                     + "\n"
                     + "";
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
+            ps.setString(1, group_code);
             rs = ps.executeQuery();
             while (rs.next()) {
                 Timesheet ts = new Timesheet(

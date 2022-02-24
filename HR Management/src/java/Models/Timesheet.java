@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat;
 public class Timesheet {
 
     int id;
-    String fullname;
+    String username;
     String title;
     String date;
     String process_value;
@@ -62,9 +62,9 @@ public class Timesheet {
         this.project_code = project_code;
     }
 
-    public Timesheet(int id, String fullname, String project_code, String title, String date, String process_value, String duration, String status_value, String work_result, String reject_reason) {
+    public Timesheet(int id, String username, String project_code, String title, String date, String process_value, String duration, String status_value, String work_result, String reject_reason) {
         this.id = id;
-        this.fullname = fullname;
+        this.username = username;
         this.project_code = project_code;
         this.title = title;
         this.date = date;
@@ -77,12 +77,12 @@ public class Timesheet {
 
     
     
-    public String getFullname() {
-        return fullname;
+    public String getUsername() {
+        return username;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setUsername(String fullname) {
+        this.username = username;
     }
 
     public String getProcess_value() {

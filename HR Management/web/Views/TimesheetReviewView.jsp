@@ -122,7 +122,7 @@
                                                                         <datalist id="usernames" hidden>
                                                                           
                                                                             <c:forEach var="user" items="${users}">
-                                                                                <option value="${user.fullname}">${user.fullname}</option>
+                                                                                <option value="${user.username}">${user.username}</option>
                                                                             </c:forEach>
                                                                         </datalist>
                                                                     </div>
@@ -181,7 +181,7 @@
                                             <tr>
                                                 <th style="width: 8%">ID</th>
                                                 <th></th>
-                                                <th style="width: 10%">User name</th>
+                                                <th style="width: 10%">Username</th>
                                                 <th style="width: 13%">Timesheet Date</th>
                                                 <th style="width: 16%">Timesheet Title</th>
                                                 <th style="width: 13%">Project</th>
@@ -246,7 +246,7 @@
                                                                         process: process,
                                                                         project: project
                                                                     },
-                                                                    url: "http://localhost:8080/HR_Management/Timesheet/GetAllTimeSheet",
+                                                                    url: "http://localhost:8080/HR_Management/Timesheet/GetAllTimeSheetInGroup",
                                                                     success: function (responseJson) {
 
                                                                         if (responseJson != null) {
@@ -321,7 +321,7 @@
                                                         </div>
                                                     </div>
                                                 </div> </td>`;
-                                                                                rowNew += `<td>` + value['fullname'] + `</td>`;
+                                                                                rowNew += `<td>` + value['username'] + `</td>`;
                                                                                 rowNew += `<td>` + value['date'].split("-").reverse().join("-") + `</td>`;
                                                                                 rowNew += `<td>` + value['title'] + `</td>`;
                                                                                 rowNew += `<td>` + value['project_code'] + `</td>`;
