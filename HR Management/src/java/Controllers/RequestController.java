@@ -115,13 +115,52 @@ public class RequestController extends HttpServlet {
         String title = request.getParameter("title") != null ? request.getParameter("title") : "";
         String name = request.getParameter("name") != null ? request.getParameter("name") : "";
         int status = request.getParameter("status") != null ? Integer.parseInt(request.getParameter("status")) : 0;
-        int support_type_id = request.getParameter("support_type_id") != null ? Integer.parseInt(request.getParameter("support_type_id")) : 106;
+        int support_type_id = request.getParameter("support_type_id") != null ? Integer.parseInt(request.getParameter("support_type_id")) : 0;
         int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
         int offset = (page - 1) * 3;
         //
-      
+        String sql1 = "SELECT r.request_date, r.title, (s.name) as RequestName, (u.fullname) as 'Incharge Staff', r.status, r.update_date FROM ((hr_system_v2.request r \n"
+                + "join hr_system_v2.`support type` s on r.support_type_id = s.id)\n"
+                + "join hr_system_v2.user u on r.in_charge_staff = u.id)\n"
+                + "where r.support_type_id = s.id";
+        if (!fromDate.isEmpty()) {
+            sql1 += " and r.request_date >= " + "'" + fromDate + "'";
+        }
+        if (!toDate.isEmpty()) {
+            sql1 += "r.request_date <= " + "'" + toDate + "'";
+        }
+        if (!name.isEmpty()) {
+            sql1 += " s.name like  " + "'%" + name + "%'";
+        }
+        if (!title.isEmpty()) {
+            sql1 += " and r.title like  " + "'%" + title + "%'";
+        }
+        if (status != 0) {
+            sql1 += " r.status = " + "'" + status + "'";
+        }
+        sql1 += " limit 3 offset " + offset;
         //
-        int count = requestDAO.getTotalRequest(fromDate, toDate, title, name, status, support_type_id);
+        String sql2 = "SELECT count(r.support_type_id) FROM ((hr_system_v2.request r \n"
+                + "join hr_system_v2.`support type` s on r.support_type_id = s.id)\n"
+                + "join hr_system_v2.user u on r.in_charge_staff = u.id)\n"
+                + "where r.support_type_id = s.id";
+        if (!fromDate.isEmpty()) {
+            sql2 += " and r.request_date >= " + "'" + fromDate + "'";
+        }
+        if (!toDate.isEmpty()) {
+            sql2 += "r.request_date <= " + "'" + toDate + "'";
+        }
+        if (!name.isEmpty()) {
+            sql2 += " s.name like  " + "'%" + name + "%'";
+        }
+        if (!title.isEmpty()) {
+            sql2 += " and r.title like  " + "'%" + title + "%'";
+        }
+        if (status != 0) {
+            sql2 += " r.status = " + "'" + status + "'";
+        }
+        //
+        int count = requestDAO.getTotalRequest(sql2);
         int total = count / 3 + (count % 3 == 0 ? 0 : 1);
         int begin = 1;
         int end = 3;
@@ -135,7 +174,7 @@ public class RequestController extends HttpServlet {
         request.setAttribute("begin", begin);
         request.setAttribute("end", end);
         request.setAttribute("currentNumber", page);
-        request.setAttribute("requestList", requestDAO.getAllRequest());
+        request.setAttribute("requestList", requestDAO.getRequestList(sql1));
         request.getRequestDispatcher("/Views/RequestView.jsp").forward(request, response);
       
     }

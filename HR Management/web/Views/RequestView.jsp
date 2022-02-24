@@ -142,14 +142,14 @@
                                                                         <label class="text-left" for="projectFilter" style="width: 150px;">Project</label><br>
                                                                         <select class="form-control input-md" style="width: 200px;" name="projectFilter" id="projectFilter">
                                                                             <option value="">Choose Project</option>
-
+                                                                       
                                                                         </select>
                                                                     </div>
                                                                     <div class="col-md-4">
                                                                         <label class="text-left" for="processFilter" style="width: 150px;">Process</label><br>
                                                                         <select class="form-control input-md" style="width: 200px;" name="processFilter" id="processFilter">
                                                                             <option value="0">Choose Process</option>
-
+                                                                        
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -174,19 +174,37 @@
                                                 <th style="width: 13%">In-charge staff</th>
                                                 <th style="width: 13%">Status</th>
                                                 <th style="width: 13%">Update Date</th>
-
-                                                <th style="width: 13%"></th>
+                                                
+                                                <th style="width: 13%">Action</th>
                                             </tr>
                                             <c:forEach var="r" items="${requestList}" >
                                                 <tr id="${r.support_type_id}">
-
                                                     <td>${r.request_date}</td>
                                                     <td>${r.title}</td>
-                                                    <td>${r.title}</td>
-                                                    <td>${r.name}</td>
-                                                    <td>${r.status}</td>
+                                                    <td>${r.fullname.fullname}</td>
+                                                    <td>${r.name.name}</td>
+                                                     <td>
+                                                        <c:if test="${r.status == 1}">
+                                                            <span class="label label-warning">Submitted</span>
+                                                        </c:if>
+                                                        <c:if test="${r.status == 2}">
+                                                            <span class="label label-success">Assigned</span>
+                                                        </c:if>
+                                                        <c:if test="${r.status == 3}">
+                                                            <span class="label label-success">Completed</span>
+                                                        </c:if>
+                                                        <c:if test="${r.status == 4}">
+                                                            <span class="label label-danger">Closed</span>
+                                                        </c:if>
+                                                    </td>
                                                     <td>${r.update_date}</td>
-
+                                                   
+                                                    <td>
+                                                        <a href="#" class="btn btn-md btn-default" onclick="deleteTimesheet(${timesheet.id})"><i class="fa fa-trash-o"></i></a>
+                                                            <c:if test="${timesheet.status != 2}">
+                                                            <a href="#" class="btn btn-md btn-default" onclick="window.open('http://localhost:8080/HR_Management/Timesheet/EditTimesheet?id=${timesheet.id}', '_blank')" ><i class="fa fa-pencil"></i></a>
+                                                            </c:if>
+                                                    </td>
                                                 </tr>
                                             </c:forEach>
                                         </table>
@@ -291,12 +309,12 @@
                                                                         url: "http://localhost:8080/HR_Management/Timesheet/DeleteTimesheet",
 
                                                                         data: {id: id,
-                                                                            fromDate: fromDate,
-                                                                            toDate: toDate,
-                                                                            process: process,
-                                                                            project: project,
-                                                                            title: title,
-                                                                            page: pageNumber},
+                                                                               fromDate: fromDate,
+                                                                               toDate: toDate,
+                                                                               process: process,
+                                                                               project: project,
+                                                                               title: title,
+                                                                               page: pageNumber},
 
                                                                         success: function (number) {
                                                                             page(number);
