@@ -281,7 +281,7 @@ public class ContractController extends HttpServlet {
         String EndDate = request.getParameter("EndDate");
         String type = request.getParameter("type");
         ContractDAO contractDAO = new ContractDAO();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         if (sdf.parse(StartDate).before(sdf.parse(EndDate))) {
             contractDAO.updateContract(EndDate, Integer.parseInt(type), Integer.parseInt(id));
             request.getSession().setAttribute("message", "Edit Contract Successfully!!");

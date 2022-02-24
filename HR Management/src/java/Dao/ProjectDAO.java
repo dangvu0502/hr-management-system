@@ -172,6 +172,7 @@ public class ProjectDAO {
         ps.setString(1, project.getCode());
         ps.executeUpdate();
     }
+
     public void setStatus0(Project project) throws SQLException {
         String sql = "UPDATE `hr_system_v2`.`project` SET `status` = '0' WHERE (`code` = ?)";
         con = new DBContext().getConnection();
@@ -180,7 +181,7 @@ public class ProjectDAO {
         ps.executeUpdate();
     }
 
-    public void updateStatus(int status, String code) throws SQLException{
+    public void updateStatus(int status, String code) throws SQLException {
         String sql = "UPDATE `hr_system_v2`.`project` SET `status` = ? WHERE (`code` = ?)";
         con = new DBContext().getConnection();
         ps = con.prepareStatement(sql);
@@ -188,4 +189,32 @@ public class ProjectDAO {
         ps.setString(2, code);
         ps.executeUpdate();
     }
+
+    public void addnewproject(String code, String groupCode, int manager, String projectName, String startDate, String endDate, String description) throws SQLException {
+        String sql = "INSERT INTO `hr_system_v2`.`project`\n"
+                + "(`code`,\n"
+                + "`group_code`,\n"
+                + "`manager_id`,\n"
+                + "`project_name`,\n"
+                + "`start_date`,\n"
+                + "`end_date`,\n"
+                + "`description`)\n"
+                + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try (
+                Connection con = new DBContext().getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, code);
+            ps.setString(2, groupCode);
+            ps.setInt(3, manager);
+            ps.setString(4, projectName);
+            ps.setString(5, startDate);
+            ps.setString(6, endDate);
+            ps.setString(7, description);
+            // execute update SQL stetement
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw e;
+        }
+    }
+
 }
