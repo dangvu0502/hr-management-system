@@ -115,7 +115,7 @@
                                                 <form action="" method="post" >
                                                     <div class="input-group">
                                                         <div class="btn btn-md btn-default" style="width: 150px; pointer-events: none;"><span>Search by Title</span></div>
-                                                        <input id="timesheetTitle" type="text" name="title" class="form-control input-md" style="width: 450px;" placeholder="Enter title to search" onclick="dateHideShow()"/>
+                                                        <input id="requestTitle" type="text" name="title" class="form-control input-md" style="width: 450px;" placeholder="Enter title to search" onclick="dateHideShow()"/>
                                                         <br>
                                                         <div id="advanced" style="display: none">
                                                             <br>
@@ -139,17 +139,35 @@
                                                                 <div class="col-lg-8">
                                                                     <div class="col-md-1"></div>
                                                                     <div class="col-md-7">
-                                                                        <label class="text-left" for="projectFilter" style="width: 150px;">Project</label><br>
-                                                                        <select class="form-control input-md" style="width: 200px;" name="projectFilter" id="projectFilter">
-                                                                            <option value="">Choose Project</option>
-                                                                       
+                                                                        <label class="text-left" for="projectFilter" style="width: 150px;">Support Type</label><br>
+                                                                        <select class="form-control input-md" style="width: 200px;" name="supporttypeFilter" id="supporttypeFilter">
+                                                                            <option value="">Support Type</option>
+                                                                            <c:forEach var="sp" items="${supportName}" >
+                                                                                <option value="${sp}">${sp}</option>
+                                                                            </c:forEach>
                                                                         </select>
                                                                     </div>
                                                                     <div class="col-md-4">
-                                                                        <label class="text-left" for="processFilter" style="width: 150px;">Process</label><br>
+                                                                        <label class="text-left" for="processFilter" style="width: 150px;">Status</label><br>
                                                                         <select class="form-control input-md" style="width: 200px;" name="processFilter" id="processFilter">
-                                                                            <option value="0">Choose Process</option>
-                                                                        
+                                                                            <option value="0">Choose Status</option>
+                                                                            <c:forEach var="r" items="${requestList}" >
+                                                                                <c:if test="${r.status == 1}">
+                                                                                    <option value="${g.status == 1}">Submitted</option>
+
+                                                                                </c:if>
+                                                                                <c:if test="${r.status == 2}">
+                                                                                    <option value="${g.status == 2}">Assigned</option>
+
+                                                                                </c:if>
+                                                                                <c:if test="${r.status == 3}">
+                                                                                    <option value="${r.status == 3}">Completed</option>
+
+                                                                                </c:if>
+                                                                                <c:if test="${r.status == 4}">
+                                                                                    <option value="${r.status == 4}">Closed</option>
+                                                                                </c:if>
+                                                                            </c:forEach>
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -174,7 +192,7 @@
                                                 <th style="width: 13%">In-charge staff</th>
                                                 <th style="width: 13%">Status</th>
                                                 <th style="width: 13%">Update Date</th>
-                                                
+
                                                 <th style="width: 13%">Action</th>
                                             </tr>
                                             <c:forEach var="r" items="${requestList}" >
@@ -183,7 +201,7 @@
                                                     <td>${r.title}</td>
                                                     <td>${r.fullname.fullname}</td>
                                                     <td>${r.name.name}</td>
-                                                     <td>
+                                                    <td>
                                                         <c:if test="${r.status == 1}">
                                                             <span class="label label-warning">Submitted</span>
                                                         </c:if>
@@ -198,7 +216,7 @@
                                                         </c:if>
                                                     </td>
                                                     <td>${r.update_date}</td>
-                                                   
+
                                                     <td>
                                                         <a href="#" class="btn btn-md btn-default" onclick="deleteTimesheet(${timesheet.id})"><i class="fa fa-trash-o"></i></a>
                                                             <c:if test="${timesheet.status != 2}">
@@ -289,7 +307,7 @@
                                                                 link += "name=" + name;
                                                                 link += "&";
                                                                 link += "title=" + title;
-                                                                $('#timesheetTable').load(link + " " + "#timesheetTable");
+                                                                $('#requestTable').load(link + " " + "#requestTable");
                                                             }
 
                                                             function deleteTimesheet(id) {
@@ -309,12 +327,12 @@
                                                                         url: "http://localhost:8080/HR_Management/Timesheet/DeleteTimesheet",
 
                                                                         data: {id: id,
-                                                                               fromDate: fromDate,
-                                                                               toDate: toDate,
-                                                                               process: process,
-                                                                               project: project,
-                                                                               title: title,
-                                                                               page: pageNumber},
+                                                                            fromDate: fromDate,
+                                                                            toDate: toDate,
+                                                                            process: process,
+                                                                            project: project,
+                                                                            title: title,
+                                                                            page: pageNumber},
 
                                                                         success: function (number) {
                                                                             page(number);
@@ -337,10 +355,10 @@
                                                                 $('#processFilter').change(function () {
                                                                     page(1);
                                                                 });
-                                                                $('#projectFilter').change(function () {
+                                                                $('#supporttypeFilter').change(function () {
                                                                     page(1);
                                                                 });
-                                                                $('#timesheetTitle').keyup(function () {
+                                                                $('#requestTitle').keyup(function () {
                                                                     page(1);
                                                                 });
 

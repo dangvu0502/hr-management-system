@@ -6,6 +6,7 @@
 package Controllers;
 
 import Dao.RequestDAO;
+import Dao.SupportTypeDAO;
 import Models.Request;
 import Models.Timesheet;
 import Models.User;
@@ -31,9 +32,10 @@ import javax.servlet.http.HttpServletResponse;
 public class RequestController extends HttpServlet {
 
     private RequestDAO requestDAO ;
+    private SupportTypeDAO supporttypeDAO;
     public void init() {
        requestDAO = new RequestDAO();
-
+       supporttypeDAO = new SupportTypeDAO();
     }
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -127,16 +129,13 @@ public class RequestController extends HttpServlet {
             sql1 += " and r.request_date >= " + "'" + fromDate + "'";
         }
         if (!toDate.isEmpty()) {
-            sql1 += "r.request_date <= " + "'" + toDate + "'";
-        }
-        if (!name.isEmpty()) {
-            sql1 += " s.name like  " + "'%" + name + "%'";
+            sql1 += "and r.request_date <= " + "'" + toDate + "'";
         }
         if (!title.isEmpty()) {
             sql1 += " and r.title like  " + "'%" + title + "%'";
         }
         if (status != 0) {
-            sql1 += " r.status = " + "'" + status + "'";
+            sql1 += "and r.status = " + "'" + status + "'";
         }
         sql1 += " limit 3 offset " + offset;
         //
@@ -148,16 +147,13 @@ public class RequestController extends HttpServlet {
             sql2 += " and r.request_date >= " + "'" + fromDate + "'";
         }
         if (!toDate.isEmpty()) {
-            sql2 += "r.request_date <= " + "'" + toDate + "'";
-        }
-        if (!name.isEmpty()) {
-            sql2 += " s.name like  " + "'%" + name + "%'";
+            sql2 += "and r.request_date <= " + "'" + toDate + "'";
         }
         if (!title.isEmpty()) {
             sql2 += " and r.title like  " + "'%" + title + "%'";
         }
         if (status != 0) {
-            sql2 += " r.status = " + "'" + status + "'";
+            sql2 += "and r.status = " + "'" + status + "'";
         }
         //
         int count = requestDAO.getTotalRequest(sql2);
@@ -175,6 +171,8 @@ public class RequestController extends HttpServlet {
         request.setAttribute("end", end);
         request.setAttribute("currentNumber", page);
         request.setAttribute("requestList", requestDAO.getRequestList(sql1));
+        request.setAttribute("supportName", supporttypeDAO.getAllSpName());
+        request.setAttribute("getStatus", requestDAO.getAllStatus());
         request.getRequestDispatcher("/Views/RequestView.jsp").forward(request, response);
       
     }
@@ -188,7 +186,8 @@ public class RequestController extends HttpServlet {
         JsonArray jsonArray = element.getAsJsonArray();
         response.setContentType("application/json");
         response.getWriter().println(jsonArray);
-
     }
+   
+    
 // </editor-fold>
 }

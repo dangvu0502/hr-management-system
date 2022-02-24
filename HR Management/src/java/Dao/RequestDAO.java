@@ -193,4 +193,23 @@ public class RequestDAO {
         return -1;
     }
      */
+     public int getAllStatus() throws SQLException {
+       
+        try {
+            String sql = "SELECT status FROM hr_system_v2.request group by status;";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+        }
+        return 0;
+    }
 }
