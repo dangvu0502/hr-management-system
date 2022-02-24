@@ -177,8 +177,8 @@
                                                 
                                                 <th style="width: 13%"></th>
                                             </tr>
-                                            <c:forEach var="r" items="${requestList}"  varStatus="theCount">
-                                                <tr id="timesheet${r.support_type_id}">
+                                            <c:forEach var="r" items="${requestList}" >
+                                                <tr id="${r.support_type_id}">
                                                     <td style=" cursor: pointer;" onclick="window.open('http://localhost:8080/HR_Management/Timesheet/TimesheetDetail?id=${timesheet.id}', '_blank')" >${timesheet.id}</td>
                                                     <td>${r.request_date}</td>
                                                     <td>${r.title}</td>

@@ -24,7 +24,7 @@ public class RequestDAO {
     PreparedStatement ps;
     ResultSet rs;
 
-    public ArrayList<Request> getRequestList(String fromDate, String toDate, String title, String requestName, int status, int support_type_id, int page) throws SQLException {
+   /* public ArrayList<Request> getRequestList(String fromDate, String toDate, String title, String requestName, int status, int support_type_id, int page) throws SQLException {
         ArrayList<Request> res = new ArrayList<>();
         try {
             String sql = "SELECT r.request_date, r.title, (s.name) as RequestName, (u.fullname) as 'Incharge Staff', r.status, r.update_date FROM ((hr_system_v2.request r \n"
@@ -72,8 +72,8 @@ public class RequestDAO {
         }
         return res;
     }
-
-   /* public ArrayList<Request> getRequestList(String query) throws SQLException {
+*/
+    public ArrayList<Request> getRequestList(String query) throws SQLException {
         ArrayList<Request> res = new ArrayList<>();
         try {
             String sql = query;
@@ -100,7 +100,7 @@ public class RequestDAO {
             }
         }
         return res;
-    } */
+    }
 
     public ArrayList<Request> getAllRequest() throws SQLException {
         ArrayList<Request> res = new ArrayList<>();
@@ -133,7 +133,7 @@ public class RequestDAO {
         return res;
     }
     
-    /*
+    
     public int getTotalRequest(String query) throws SQLException {
         try {
             String sql = query;
@@ -152,8 +152,8 @@ public class RequestDAO {
         }
         return -1;
     }
-    */
-
+    
+/*
     public int getTotalRequest(String fromDate, String toDate, String title, String requestName, int status, int support_type_id) throws SQLException {
         try {
             String sql = "SELECT count(r.support_type_id) FROM ((hr_system_v2.request r \n"
@@ -191,5 +191,5 @@ public class RequestDAO {
         }
         return -1;
     }
-
+*/
 }
