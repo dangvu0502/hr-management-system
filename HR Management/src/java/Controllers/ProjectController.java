@@ -13,6 +13,7 @@ import Models.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +61,9 @@ public class ProjectController extends HttpServlet {
                     break;
                 case "/Edit":
                     Edit(request, response, method);
+                    break;
+                case "/Add":
+                    Add(request, response, method);
                     break;
                 default:
                     response.sendError(404);
@@ -167,10 +171,10 @@ public class ProjectController extends HttpServlet {
         List<Project> p = new ArrayList<>();
         p = projectDAO.getProjectList(query1);
         for (int i = 0; i < p.size(); i++) {
-            if(p.get(i).getEffort()==100){
+            if (p.get(i).getEffort() == 100) {
                 p.get(i).setStatus(1);
                 projectDAO.setStatus1(p.get(i));
-            }else{
+            } else {
                 p.get(i).setStatus(0);
                 projectDAO.setStatus0(p.get(i));
             }
@@ -232,9 +236,9 @@ public class ProjectController extends HttpServlet {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         if (sdf.parse(startDate).before(sdf.parse(endDate))) {
             projectDAO.updateProject(groupCode, Integer.parseInt(manager), projectName, startDate, endDate, description, Integer.parseInt(effort), code);
-            if(Integer.parseInt(effort) == 100){
+            if (Integer.parseInt(effort) == 100) {
                 projectDAO.updateStatus(1, code);
-            }else{
+            } else {
                 projectDAO.updateStatus(0, code);
             }
             request.getSession().setAttribute("message", "Edit Project Successfully!!");
@@ -243,6 +247,46 @@ public class ProjectController extends HttpServlet {
             request.getSession().setAttribute("message", "End Date must after Start Date!!");
             response.sendRedirect("../Project/Edit?code=" + code);
         }
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="AddProject">
+    private void Add(HttpServletRequest request, HttpServletResponse response, String method) {
+        try (PrintWriter out = response.getWriter();) {
+            if (method.equalsIgnoreCase("post")) {
+                projectAddImplement(request, response);
+            } else if (method.equalsIgnoreCase("get")) {
+                addProjectView(request, response);
+            }
+        } catch (Exception ex) {
+            log(ex.getMessage());
+        }
+    }
+
+    private void projectAddImplement(HttpServletRequest request, HttpServletResponse response) throws SQLException, ParseException, IOException {
+        String code = request.getParameter("code");
+        String groupCode = request.getParameter("group");
+        String manager = request.getParameter("manager");
+        String projectName = request.getParameter("projectName");
+        String startDate = request.getParameter("startDate");
+        String endDate = request.getParameter("endDate");
+        String description = request.getParameter("description");
+        ProjectDAO projectDAO = new ProjectDAO();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        if (sdf.parse(startDate).before(sdf.parse(endDate))) {
+            projectDAO.addnewproject(code, groupCode, Integer.parseInt(manager), projectName, startDate, endDate, description);
+            request.getSession().setAttribute("message", "Add Project Successfully!!");
+            response.sendRedirect("../Project/Add");
+        } else {
+            request.getSession().setAttribute("message", "End Date must after Start Date !!");
+            response.sendRedirect("../Project/Add");
+        }
+    }
+
+    private void addProjectView(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+        request.setAttribute("listU", userDAO.getManagerUserName());
+        request.setAttribute("group", groupDAO.getAllGroupCode());
+        request.getRequestDispatcher("../Views/ProjectAdd.jsp").forward(request, response);
     }
     // </editor-fold>
 }
