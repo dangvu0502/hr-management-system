@@ -134,7 +134,7 @@
                                                                         <label class="text-left" for="parent_group_code" style="width: 150px;">Parent Group Code</label><br>
                                                                         <select class="form-control input-md" style="width: 200px;" name="parent_group_code" id="parent_group_code">
                                                                             <option value="-1">Choose Type Contract</option>
-                                                                             <c:forEach var="pc" items="${parentG}" >
+                                                                            <c:forEach var="pc" items="${parentG}" >
                                                                                 <option value="${pc}">${pc}</option>
                                                                             </c:forEach>
                                                                         </select>
@@ -156,7 +156,7 @@
                                             </div>
                                             <div class="col-lg-2"></div>
                                             <div class="col-lg-2">
-                                                <button onclick="window.open('http://localhost:8080/HR_Management/Timesheet/NewTimesheet', '_blank')" class="btn btn-md btn-primary" style="width: 150px; ">Add new timesheet</button>
+                                                <button onclick="window.open('http://localhost:8080/HR_Management/Group/GroupAdd', '_blank')" class="btn btn-md btn-primary" style="width: 150px; ">Add Group</button>
                                             </div>
                                         </div>
                                     </div>
@@ -196,13 +196,13 @@
                                                         </c:if>
                                                     </td>
                                                     <td>
-                                                    <c:if test = "${g.delete == 1}">
-                                                        <a id="delete" name="" href="../SupportTypeController/Delete?delete=1&id=${s.id}&page=${page}"><i class="glyphicon glyphicon-trash" ></i></a>
-                                                    </c:if>
-                                                    <c:if test = "${g.delete == 0}">
-                                                    <a id="delete" href="../SupportTypeController/Delete?delete=0&id=${s.id}&page=${page}"><i class="glyphicon glyphicon-refresh" ></i></a>
-                                                    </c:if>
-                                                    <a style="margin-left: 10px" href="../SupportTypeController/SupportTypeEdit?id=${s.id}&name=${s.name}&incharge=${s.in_charge_group}&email=${s.email}&status=${s.status}&description=${s.description}" <span class="glyphicon glyphicon-edit"></span></a>
+                                                        <c:if test = "${g.delete == 1}">
+                                                            <a id="delete" name="" href="../Group/Delete?delete=1&code=${g.code}&page=${num}"><i class="glyphicon glyphicon-trash" ></i></a>
+                                                        </c:if>
+                                                        <c:if test = "${g.delete == 0}">
+                                                            <a id="delete" href="../Group/Delete?delete=0&code=${g.code}&page=${num}"><i class="glyphicon glyphicon-refresh" ></i></a>
+                                                        </c:if>
+                                                        <a style="margin-left: 10px" href="../SupportTypeController/SupportTypeEdit?id=${s.id}&name=${s.name}&incharge=${s.in_charge_group}&email=${s.email}&status=${s.status}&description=${s.description}" <span class="glyphicon glyphicon-edit"></span></a>
                                                     </td>
                                                 </tr>
                                             </c:forEach>
@@ -211,7 +211,7 @@
                                             <ul class="pagination pagination-sm no-margin pull-right">
                                                 <c:if test="${total !=0 }">
                                                     <c:if test="${currentNumber>1}">
-                                                        <li><button  class="btn btn-sm btn-primary" onclick="page(${currentNumber-1})"><<</button></li>
+                                                        <li><button  class="btn btn-sm btn-primary" onclick="page(${currentNumber-1})">Back</button></li>
                                                         </c:if>
                                                         <c:if test="${currentNumber>3}">
                                                         <li><button class="btn btn-sm btn-default" onclick="page(${1})">1</button></li>
@@ -235,7 +235,7 @@
                                                         </c:if>
 
                                                     <c:if test="${currentNumber < total}">
-                                                        <li><button  class="btn btn-sm btn-primary" onclick="page(${currentNumber+1})">>></button></li>  
+                                                        <li ><button  class="btn btn-sm btn-primary" onclick="page(${currentNumber+1})">Next</button></li>  
                                                         </c:if>
                                                     </c:if>
                                             </ul>
@@ -276,16 +276,16 @@
                                                                 var pageNumber = number;
                                                                 var parent_group_code = document.getElementById('parent_group_code').value;
                                                                 var status = document.getElementById('status').value;
-                                                                        var delete = document.getElementById('delete').value;
+                                                                var delete = document.getElementById('delete').value;
                                                                 var code = document.getElementById('code').value;
                                                                 var fullname = document.getElementById('fullname').value;
                                                                 console.log(fullname);
-                                                                var link = "http://localhost:8080/HR_Management/Contract/Details?";
+                                                                var link = "http://localhost:8080/HR_Management/Group/GroupList?";
                                                                 link += "page=" + pageNumber;
                                                                 link += "&";
                                                                 link += "parent_group_code=" + parent_group_code;
                                                                 link += "&";
-                                                                        link += "delete=" + delete;
+                                                                link += "delete=" + delete;
                                                                 link += "&";
                                                                 link += "code=" + code;
                                                                 link += "&";
@@ -294,8 +294,7 @@
                                                                 link += "fullname=" + fullname;
                                                                 $('#groupTable').load(link + " " + "#groupTable");
                                                             }
-
-
+                                                            
                                                             $(document).ready(function () {
                                                                 $('#parent_group_code').change(function () {
                                                                     page(1);
@@ -312,8 +311,6 @@
                                                                 $('#fullname').keyup(function () {
                                                                     page(1);
                                                                 });
-
-
                                                             });
         </script>
     </body>

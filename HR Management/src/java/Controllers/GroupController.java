@@ -155,7 +155,6 @@ public class GroupController extends HttpServlet {
             if (!fullname.isEmpty()) {
                 query1 += " and u.fullname like " + "'%" + fullname + "%'";
             }
-
             if (!parent_group_code.isEmpty()) {
                 query1 += "and g.parent_group_code like " + "'%" + parent_group_code + "%'";
             }
@@ -216,6 +215,7 @@ public class GroupController extends HttpServlet {
     }
 
     //</editor-fold>
+    
     // <editor-fold defaultstate="collapsed" desc="GroupEdit">
     /*  private void GroupViewEdit(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
@@ -292,14 +292,8 @@ public class GroupController extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             int delete = Integer.parseInt(request.getParameter("delete"));
-            int id = Integer.parseInt(request.getParameter("id"));
-            String page = request.getParameter("page");
-            if (page == null) {
-                page = "1";
-            }
-
-            GroupDAO g = new GroupDAO();
-            g.editStatusDelete(delete, id);
+            String code = request.getParameter("code");
+            groupDAO.editStatusDelete(delete, code);
             groupListImplement(request, response);
         } catch (Exception e) {
             System.out.println("Error " + e.getMessage());

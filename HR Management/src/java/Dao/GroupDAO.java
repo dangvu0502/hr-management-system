@@ -271,8 +271,8 @@ public class GroupDAO {
         return null;
     }
 
-    public void editStatusDelete(int delete, int id) throws SQLException {
-        String sql = "UPDATE `hr_system_v2`.`group` SET `delete` = ? WHERE (`id` = ?);";
+    public void editStatusDelete(int delete, String code) throws SQLException {
+        String sql = "UPDATE `hr_system_v2`.`group` SET `status` = '?' WHERE (`code` = '?');";
         con = new DBContext().getConnection();
         ps = con.prepareStatement(sql);
         if (delete == 0) {
@@ -280,7 +280,7 @@ public class GroupDAO {
         } else {
             ps.setInt(1, 0);
         }
-        ps.setInt(2, id);
+        ps.setString(2, code);
         ps.executeUpdate();
     }
 
