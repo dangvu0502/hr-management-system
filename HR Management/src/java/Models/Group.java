@@ -4,6 +4,8 @@
  */
 package Models;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -11,37 +13,61 @@ import java.util.Date;
  * @author quocb
  */
 public class Group {
-    private int id;
+
     private String code;
-    private String manager;
+    private int manager_id;
     private String name;
-    private boolean status;
+    private int status;
     private String description;
     private String parent_group_code;
-    private boolean delete;
+    private int delete;
     private String update_date;
+    private User fullname;
 
-    public Group() {
+    public int getStatus() {
+        return status;
     }
 
-    public Group(int id, String code, String manager, String name, Boolean status, String description, String parent_group_code, Boolean delete, String update_date) {
-        this.id = id;
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public int getDelete() {
+        return delete;
+    }
+
+    public void setDelete(int delete) {
+        this.delete = delete;
+    }
+
+    public User getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(User fullname) {
+        this.fullname = fullname;
+    }
+
+    public Group(String code, int manager_id, String name, int status, String description, String parent_group_code, int delete, String update_date) {
         this.code = code;
-        this.manager = manager;
+        this.manager_id = manager_id;
         this.name = name;
         this.status = status;
         this.description = description;
         this.parent_group_code = parent_group_code;
         this.delete = delete;
         this.update_date = update_date;
+
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public Group(String code, String name, User fullname, String parent_group_code, int status, String update_date, int delete) {
+        this.code = code;
+        this.name = name;
+        this.fullname = fullname;
+        this.parent_group_code = parent_group_code;
+        this.status = status;
+        this.update_date = update_date;
+        this.delete = delete;
     }
 
     public String getCode() {
@@ -52,12 +78,12 @@ public class Group {
         this.code = code;
     }
 
-    public String getManager() {
-        return manager;
+    public int getManager_id() {
+        return manager_id;
     }
 
-    public void setManager(String manager) {
-        this.manager = manager;
+    public void setManager_id(int manager_id) {
+        this.manager_id = manager_id;
     }
 
     public String getName() {
@@ -66,14 +92,6 @@ public class Group {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
     }
 
     public String getDescription() {
@@ -92,25 +110,21 @@ public class Group {
         this.parent_group_code = parent_group_code;
     }
 
-    public boolean isDelete() {
-        return delete;
-    }
-
-    public void setDelete(boolean delete) {
-        this.delete = delete;
-    }
-
-    public String getUpdate_date() {
-        return update_date;
+    public String getUpdate_date() throws ParseException {
+        return myFormatDate(update_date);
     }
 
     public void setUpdate_date(String update_date) {
         this.update_date = update_date;
     }
 
-   
-   
+    public Group() {
+    }
 
-    
-   
+    public static String myFormatDate(String date) throws ParseException {
+        String pattern = "dd-MM-yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        return simpleDateFormat.format(new SimpleDateFormat("yyyy-MM-dd").parse(date));
+    }
+
 }
