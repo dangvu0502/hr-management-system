@@ -27,7 +27,7 @@ public class TimesheetDAO {
     PreparedStatement ps;
     ResultSet rs;
 
-    public ArrayList<Timesheet> getAllTimesheet(String condition,String group_code) throws SQLException {
+    public ArrayList<Timesheet> getAllTimesheet(String condition, String group_code) throws SQLException {
         ArrayList<Timesheet> res = new ArrayList<>();
         try {
             String sql = "with timesheet_status as (\n"
@@ -204,18 +204,59 @@ public class TimesheetDAO {
     }
 
     public void updateTimesheet(Timesheet timesheet) throws SQLException, ParseException {
-        String sql = "UPDATE `hr_system_v2`.`timesheet` SET `title` = ? , `date` = ?, `process` = ?"
-                + ", `duration` = ?,  `work_result` = ?, `project_code` = ? WHERE (`id` = ?);";
-        con = new DBContext().getConnection();
-        ps = con.prepareStatement(sql);
-        ps.setString(1, timesheet.getTitle());
-        ps.setString(2, myFormatDate(timesheet.getDate()));
-        ps.setInt(3, timesheet.getProcess());
-        ps.setString(4, timesheet.getDuration());
-        ps.setString(5, timesheet.getWork_result());
-        ps.setString(6, timesheet.getProject_code());
-        ps.setInt(7, timesheet.getId());
-        ps.executeUpdate();
+        try {
+            String sql = "UPDATE `hr_system_v2`.`timesheet` SET `title` = ? , `date` = ?, `process` = ?"
+                    + ", `duration` = ?,  `work_result` = ?, `project_code` = ? WHERE (`id` = ?);";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, timesheet.getTitle());
+            ps.setString(2, myFormatDate(timesheet.getDate()));
+            ps.setInt(3, timesheet.getProcess());
+            ps.setString(4, timesheet.getDuration());
+            ps.setString(5, timesheet.getWork_result());
+            ps.setString(6, timesheet.getProject_code());
+            ps.setInt(7, timesheet.getId());
+            ps.executeUpdate();
+        } catch (Exception e) {
+
+        }finally {
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
+
+    public void rejectTimesheet(int id, String reject_reason) throws SQLException {
+        try {
+            String sql = "UPDATE `hr_system_v2`.`timesheet` SET `status` = '3',`reject_reason` = ? WHERE (`id` = ?)";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, reject_reason);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
+    
+    public void approveTimesheet(int id) throws SQLException {
+        try {
+            String sql = "UPDATE `hr_system_v2`.`timesheet` SET `status` = '2',`reject_reason` = '' WHERE (`id` = ?)";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+        }
     }
 
     public static String myFormatDate(String date) throws ParseException {

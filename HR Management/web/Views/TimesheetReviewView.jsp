@@ -120,7 +120,7 @@
                                                                         <label class="text-left" for="usernameFilter" style="width: 150px;">Username</label><br>
                                                                         <input id="usernameFilter" class="form-control input-md" style="width: 200px;" type=text list="usernames" >
                                                                         <datalist id="usernames" hidden>
-                                                                          
+
                                                                             <c:forEach var="user" items="${users}">
                                                                                 <option value="${user.username}">${user.username}</option>
                                                                             </c:forEach>
@@ -342,7 +342,7 @@
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="rejectTimesheet(` + value['id'] + `)">Reject</button>
+                                                                    <button type="button" class="btn btn-danger"  onclick="rejectTimesheet(` + value['id'] + `)" data-dismiss="modal" >Reject</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -366,7 +366,7 @@
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="rejectTimesheet(` + value['id'] + `)">Reject</button>
+                                                                    <button type="button" class="btn btn-danger" onclick="rejectTimesheet(` + value['id'] + `)" data-dismiss="modal" >Reject</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -384,13 +384,40 @@
                                                                 });
                                                             }
 
-                                                            function rejectTimesheet(id) {
+                                                          function rejectTimesheet(id) {
                                                                 alert("Reject Timesheet " + id);
-                                                                alert("Reject reason " + document.getElementById('reject-reason' + id).value);
+                                                                var reject_reason = document.getElementById('reject-reason' + id).value;
+
+                                                                $.ajax({
+
+                                                                    type: "Post",
+
+                                                                    url: "http://localhost:8080/HR_Management/Timesheet/Reject",
+
+                                                                    data: {id: id,
+                                                                            reject_reason : reject_reason},
+
+                                                                    success: function () {
+                                                                        page(1);
+                                                                    }
+
+                                                                });
                                                             }
 
                                                             function approveTimesheet(id) {
-                                                                alert("Approve Timesheet " + id);
+                                                                 $.ajax({
+
+                                                                    type: "Post",
+
+                                                                    url: "http://localhost:8080/HR_Management/Timesheet/Approve",
+
+                                                                    data: {id: id},
+
+                                                                    success: function () {
+                                                                        page(1);
+                                                                    }
+
+                                                                });
                                                             }
 
 
