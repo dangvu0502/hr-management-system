@@ -191,9 +191,10 @@
                                                 <th style="width: 13%"></th>
                                             </tr>
                                         </table>
-                                        <!-- Modal -->
+
 
                                     </div>
+
                                 </div><!-- /.box-body -->
                             </div><!-- /.box -->
                         </div>
@@ -329,7 +330,8 @@
                                                                                 rowNew += `<td>` + value['duration'] + `</td>`;
                                                                                 if (value['status_value'] == 'approved') {
                                                                                     rowNew += `<td>` + `<span class="label label-success">approved</span>` + `</td>`;
-                                                                                    rowNew += `<td><a href="#" class="btn btn-md btn-default"  data-toggle="modal" data-target="#exampleModalCenter` + value['id'] + `"  title="reject"><i class="fa fa-ban"></i></a>
+                                                                                    rowNew += `<td>
+                                                                        <a href="#" class="btn btn-md btn-default"  data-toggle="modal" data-target="#exampleModalCenter` + value['id'] + `"  title="reject"><i class="fa fa-ban"></i></a>
                                                     <div class="modal fade" id="exampleModalCenter` + value['id'] + `" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                                             <div class="modal-content">
@@ -338,7 +340,7 @@
 
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    <textarea rows="5" cols="75" id="reject-reason` + value['id'] + `" name="reject-reason" style="resize: vertical; "></textarea>
+                                                                    <textarea rows="5" cols="75" id="reject-reason` + value['id'] + `" name="reject-reason" style="resize: vertical; " required></textarea>
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -362,11 +364,11 @@
 
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    <textarea rows="5" cols="75" id="reject-reason` + value['id'] + `" name="reject-reason" style="resize: vertical; "></textarea>
+                                                                    <textarea rows="5" cols="75" id="reject-reason` + value['id'] + `" name="reject-reason" style="resize: vertical; " required></textarea>
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                    <button type="button" class="btn btn-danger" onclick="rejectTimesheet(` + value['id'] + `)" data-dismiss="modal" >Reject</button>
+                                                                    <button type="button" class="btn btn-danger" onclick="rejectTimesheet(` + value['id'] + `)" data-dismiss="modal">Reject</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -384,28 +386,37 @@
                                                                 });
                                                             }
 
-                                                          function rejectTimesheet(id) {
-                                                                alert("Reject Timesheet " + id);
+                                                            function rejectTimesheet(id) {
+
                                                                 var reject_reason = document.getElementById('reject-reason' + id).value;
+                                                                var check = false;
+                                                                if (reject_reason == "") {
+                                                                    alert("Reject reason must not be empty");
+                                                                } else {
+                                                                    $.ajax({
 
-                                                                $.ajax({
+                                                                        type: "Post",
 
-                                                                    type: "Post",
+                                                                        url: "http://localhost:8080/HR_Management/Timesheet/Reject",
 
-                                                                    url: "http://localhost:8080/HR_Management/Timesheet/Reject",
+                                                                        data: {id: id,
+                                                                            reject_reason: reject_reason},
 
-                                                                    data: {id: id,
-                                                                            reject_reason : reject_reason},
+                                                                        success: function () {
+                                                                            setTimeout(function () {
+                                                                                page(1);
+                                                                            }, 1000);
+                                                                        }
 
-                                                                    success: function () {
-                                                                        page(1);
-                                                                    }
+                                                                    });
+                                                                }
 
-                                                                });
+
+
                                                             }
 
                                                             function approveTimesheet(id) {
-                                                                 $.ajax({
+                                                                $.ajax({
 
                                                                     type: "Post",
 

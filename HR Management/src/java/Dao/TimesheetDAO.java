@@ -27,7 +27,7 @@ public class TimesheetDAO {
     PreparedStatement ps;
     ResultSet rs;
 
-    public ArrayList<Timesheet> getAllTimesheet(String condition, String group_code) throws SQLException {
+    public ArrayList<Timesheet> getAllTimesheet(String condition, String group_code, int page) throws SQLException {
         ArrayList<Timesheet> res = new ArrayList<>();
         try {
             String sql = "with timesheet_status as (\n"
@@ -47,10 +47,11 @@ public class TimesheetDAO {
                     + condition
                     + "Order by ts.id\n"
                     + "\n"
-                    + "";
+                    + "limit 3 offset ?";
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
             ps.setString(1, group_code);
+            ps.setInt(2,(page-1)*3);
             rs = ps.executeQuery();
             while (rs.next()) {
                 Timesheet ts = new Timesheet(
@@ -75,6 +76,44 @@ public class TimesheetDAO {
             }
         }
         return res;
+    }
+    
+    
+    public int getTotalTimesheet(String condition, String group_code) throws SQLException {
+        try {
+            String sql = "with timesheet_status as (\n"
+                    + "SELECT * FROM hr_system_v2.setting where type = \"timesheet status\"\n"
+                    + ")\n"
+                    + ", timesheet_process as (\n"
+                    + "SELECT * FROM hr_system_v2.setting where type = \"timesheet process\"\n"
+                    + ")\n"
+                    + "\n"
+                    + "SELECT  COUNT(*)"
+                    + "		"
+                    + "FROM hr_system_v2.timesheet as ts\n"
+                    + "        inner join timesheet_status as ts_status on ts_status.order = ts.status\n"
+                    + "		inner join timesheet_process as ts_process on ts_process.order = ts.process\n"
+                    + "        inner join hr_system_v2.user as u on u.id = ts.user_id\n"
+                    + "Where u.group_code = ?\n"
+                    + condition
+                    + "Order by ts.id\n"
+                    + "\n"
+                    + "";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, group_code);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+        }
+        return 0;
     }
 
     public ArrayList<Timesheet> getTimesheetList(String query) throws SQLException {
@@ -265,8 +304,9 @@ public class TimesheetDAO {
         return simpleDateFormat.format(new SimpleDateFormat("dd-MM-yyyy").parse(date));
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         TimesheetDAO tsDAO = new TimesheetDAO();
+        System.out.println(tsDAO.getTotalTimesheet("", "G6"));
 
     }
 }
