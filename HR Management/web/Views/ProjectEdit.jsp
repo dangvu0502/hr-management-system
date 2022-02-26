@@ -35,6 +35,30 @@
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
+        <style>
+            .box .slider{
+                height: 40px;
+                width: 300px;
+                display: flex;
+                align-items: center;
+            }
+            .box .slider .input{
+                height: 10px;
+                width: 100%;
+                -webkit-appearance: none;
+                outline: none;
+                border-radius: 25px;
+                box-shadow: inset 0px 0px 4px rgba(0,0,0,0.2);
+            }
+            .box .value{
+                font-size: 30px;
+                font-weight: 600;
+                font-family: sans-serif;
+                color: #3498db;
+                width: 55px;
+                text-align: center;
+            }
+        </style>
     </head>
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
@@ -175,14 +199,11 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="form-group col-lg-12">
-                                                        <label for="effort">Effort</label>
-                                                        <input class="form-control input-md" style="width: 200px;" max="100" min="0" type="number" class="form-control" name="effort" value="${p.effort}">
-                                                        <br/>
-                                                        <div class="progress">
-                                                            <div class="progress-bar progress-bar-striped active" role="progressbar"
-                                                                 aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:${p.effort}%;">
-                                                                ${p.effort}%
-                                                            </div>
+                                                        <label>Project Effort</label><br/>
+                                                        <div>
+                                                            <span id="rangeValue">${p.effort}</span>
+                                                            <input class="range" type="range" name="effort" value="${p.effort}" min="0" max="100"
+                                                                   onchange="rangeSlide(this.value)" onmousemove="rangeSlide(this.value)">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -212,11 +233,15 @@
         <script src="../js/Director/myScript.js" type="text/javascript"></script>
         <script>
 
-            /** HIDE ALERT**/
-            $(document).click(function (e) {
-                $('.message').hide();
-            });
-            /** HIDE ALERT**/
+                                                                       /** HIDE ALERT**/
+                                                                       $(document).click(function(e) {
+                                                                           $('.error').hide();
+                                                                       });
+                                                                       /** HIDE ALERT**/
+
+                                                                       function rangeSlide(value) {
+                                                                           document.getElementById('rangeValue').innerHTML = value;
+                                                                       }
         </script>
     </body>
 </html>
