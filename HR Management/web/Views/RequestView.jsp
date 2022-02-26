@@ -115,7 +115,7 @@
                                                 <form action="" method="post" >
                                                     <div class="input-group">
                                                         <div class="btn btn-md btn-default" style="width: 150px; pointer-events: none;"><span>Search by Title</span></div>
-                                                        <input id="title" type="text" name="title" class="form-control input-md" style="width: 450px;" placeholder="Enter title to search" onclick="dateHideShow()"/>
+                                                        <input id="titles" type="text" name="title" class="form-control input-md" style="width: 450px;" placeholder="Enter title to search" onclick="dateHideShow()"/>
                                                         <br>
                                                         <div id="advanced" style="display: none">
                                                             <br>
@@ -151,18 +151,18 @@
                                                                         <label class="text-left" for="status" style="width: 150px;">Status</label><br>
                                                                         <select class="form-control input-md" style="width: 200px;" name="status" id="status">
                                                                             <option value="0">Choose Status</option>
-                                                                          
-                                                                                    <option value="1">Submitted</option>
-                                                                               
-                                                                              
-                                                                                    <option value="2">Assigned</option>
 
-                                                                              
-                                                                                    <option value="3">Completed</option>
+                                                                            <option value="1">Submitted</option>
 
-                                                                          
-                                                                                    <option value="4">Closed</option>
-                                                                             
+
+                                                                            <option value="2">Assigned</option>
+
+
+                                                                            <option value="3">Completed</option>
+
+
+                                                                            <option value="4">Closed</option>
+
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -178,7 +178,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="panel-body" id="timesheetTable">
+                                    <div class="panel-body" id="requestTable">
                                         <table class="table table-hover">
                                             <tr>
                                                 <th style="width: 10%">Request Date</th>
@@ -291,7 +291,8 @@
                                                                 var fromDate = document.getElementById('fromDate').value;
                                                                 var toDate = document.getElementById('toDate').value;
                                                                 var name = document.getElementById('name').value;
-                                                                var title = document.getElementById('title').value;
+                                                                var status = document.getElementById('status').value;
+                                                                var titles = document.getElementById('titles').value;
                                                                 var link = "http://localhost:8080/HR_Management/Request/RequestList?";
                                                                 link += "page=" + pageNumber;
                                                                 link += "&";
@@ -301,11 +302,13 @@
                                                                 link += "&";
                                                                 link += "name=" + name;
                                                                 link += "&";
-                                                                link += "title=" + title;
+                                                                link += "status=" + status;
+                                                                link += "&";
+                                                                link += "title=" + titles;
                                                                 $('#requestTable').load(link + " " + "#requestTable");
                                                             }
 
-                                                            
+
 
 
                                                             $(document).ready(function () {
@@ -318,14 +321,14 @@
                                                                 $('#name').change(function () {
                                                                     page(1);
                                                                 });
-                                                                $('#status').keyup(function () {
+                                                                $('#status').change(function () {
                                                                     page(1);
                                                                 });
-                                                                $('#title').keyup(function () {
+                                                              
+                                                                $('#titles').keyup(function () {
                                                                     page(1);
                                                                 });
 
-                                                           
                                                             });
 
 
