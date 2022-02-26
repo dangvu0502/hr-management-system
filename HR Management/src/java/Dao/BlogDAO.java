@@ -195,4 +195,25 @@ public class BlogDAO {
         return total;
     }
 
+    public boolean UpdatePost(BLog s, String Slug) throws Exception {
+        String updateTableSQL = "UPDATE `hr_system_v2`.`blog` SET `Slug` = ?, `Thumnail_image` = ?, `Tittle` = ?, `Brieft` = ?, `Category` = ?, `Content` = ?, `Author` = ? WHERE (`Slug` = ?);";
+        int check = 0;
+        try (
+                Connection con = new DBContext().getConnection();
+                PreparedStatement ps = con.prepareStatement(updateTableSQL)) { // user try-with-resources in java
+            ps.setString(1, s.getSlug());
+            ps.setString(2, s.getThumnail_Image());
+            ps.setString(3, s.getTittle());
+            ps.setString(4, s.getBrieft());
+            ps.setString(5, s.getCategory());
+            ps.setString(6, s.getContent());
+            ps.setString(7, s.getAuthor());
+            ps.setString(8, Slug);
+            // execute update SQL stetement
+            check = ps.executeUpdate();
+        } catch (SQLException e) {
+            throw e;
+        }
+        return check > 0;
+    }
 }

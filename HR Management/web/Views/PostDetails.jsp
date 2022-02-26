@@ -110,12 +110,19 @@
                                     Update
                                 </header>
                                 <div class="panel-body">
-                                    <form action="">
+                                    <form action="PostDetailsController" method="post">
+
+                                        <div class="row ">
+                                            <div class="form-group col-lg-12">
+                                                <label for="Slug">Slug</label>
+                                                <input type="text" class="form-control" name="Slug" value="<%=b.getSlug()%>" required="" >
+                                            </div>
+                                        </div>
                                         <div class="row ">
                                             <div class="form-group col-lg-12">
                                                 <label for="thumnail">Thumnail</label>
                                                 <img class="centrel" src="<%=b.getThumnail_Image()%>" width="150px" height="150px">
-                                                <input type="text" class="form-control" name="name" value="<%=b.getThumnail_Image()%>" required="">
+                                                <input type="text" class="form-control" name="ThumnailIMG" value="<%=b.getThumnail_Image()%>" required="">
                                             </div>
                                         </div>
                                         <div class="row ">
@@ -127,7 +134,7 @@
                                         <div class="row ">
                                             <div class="form-group col-lg-12">
                                                 <label for="Author">Author</label>
-                                                <input type="text" class="form-control" name="Category" value="<%=b.getAuthor()%>" required="" >
+                                                <input type="text" class="form-control" name="Author" value="<%=b.getAuthor()%>" required="" >
                                             </div>
                                         </div>
                                         <div class="row">

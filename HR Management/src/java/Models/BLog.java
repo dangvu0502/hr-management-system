@@ -99,8 +99,7 @@ public class BLog {
     public BLog() {
     }
 
-    public BLog(int id, String thumnail_Image, String Tittle, String brieft, String Category, String PublishDate, String slug, String content, String author) {
-        this.id = id;
+    public BLog( String thumnail_Image, String Tittle, String brieft, String Category, String PublishDate, String slug, String content, String author) {
         this.thumnail_Image = thumnail_Image;
         this.Tittle = Tittle;
         this.brieft = brieft;

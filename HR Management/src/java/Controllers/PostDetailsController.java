@@ -10,6 +10,8 @@ import Models.BLog;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -76,9 +78,27 @@ public class PostDetailsController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        String Slug = request.getParameter("Slug");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        String publishDate = dtf.format(now);
+
+        String thumnails = request.getParameter("ThumnailIMG");
+        String category = request.getParameter("Category");
+        String Author = request.getParameter("Author");
+        String Tittle = request.getParameter("Tittle");
+        String Brieft = request.getParameter("Brieft");
+        String Content = request.getParameter("Content");
+        BlogDAO eDAO = new BlogDAO();
+        BLog b = new BLog(thumnails, Tittle, Brieft, category, publishDate, Slug, Content, Author);
         try {
-            processRequest(request, response);
-        } catch (ParseException ex) {
+            Boolean check = eDAO.UpdatePost(b, Slug);
+            if (check == false) {
+                return;
+            }
+            response.sendRedirect("PostlistController");
+        } catch (Exception ex) {
             Logger.getLogger(PostDetailsController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
