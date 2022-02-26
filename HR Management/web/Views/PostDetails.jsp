@@ -3,10 +3,9 @@
     Created on : Feb 26, 2022, 4:12:23 AM
     Author     : lehun
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page import="Models.BLog"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -121,14 +120,20 @@
                                         <div class="row ">
                                             <div class="form-group col-lg-12">
                                                 <label for="thumnail">Thumnail</label>
-                                                <img class="centrel" src="<%=b.getThumnail_Image()%>" width="150px" height="150px">
-                                                <input type="text" class="form-control" name="ThumnailIMG" value="<%=b.getThumnail_Image()%>" required="">
+                                                <img id="Image" class="centrel" src="<%=b.getThumnail_Image()%>" width="150px" height="150px" alt="Not Found">
+                                                <input id="URLIMG" type="text" class="form-control" name="ThumnailIMG" value="<%=b.getThumnail_Image()%>" required="" onmouseout="Imageon(this)">
                                             </div>
                                         </div>
-                                        <div class="row ">
+                                        <div class="row">
                                             <div class="form-group col-lg-12">
                                                 <label for="Category">Category name</label>
-                                                <input type="text" class="form-control" name="Category" value="<%=b.getCategory()%>" required="" >
+                                                <!--                                                <input type="text" class="form-control" name="incharge"  value="">-->
+                                                <select name="Category" id="incharge" style="width: 215px;height: 30px;border-radius: 8px;">
+                                                    <c:forEach items="${CCS}" var="c">
+                                                        <option value="${c.id}">${c.categoryName}</option>
+                                                      
+                                                    </c:forEach>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="row ">
@@ -190,11 +195,16 @@
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
         <script type="text/javascript">
-            function deleteByID(id) {
-                if (confirm("Do you really want to delete profile?")) {
-                    window.location = "grouplist?typef=delete" + "&id=" + id;
-                }
-            }
+                                                    function deleteByID(id) {
+                                                        if (confirm("Do you really want to delete profile?")) {
+                                                            window.location = "grouplist?typef=delete" + "&id=" + id;
+                                                        }
+                                                    }
+                                                    function Imageon(x) {
+                                                        var Image = document.getElementById("Image");
+                                                        URLIMG = document.getElementById("URLIMG")
+                                                        Image.src = URLIMG.value;
+                                                    }
         </script>
     </body>
 </html>

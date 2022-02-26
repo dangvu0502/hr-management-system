@@ -7,11 +7,15 @@ package Controllers;
 
 import Dao.BlogDAO;
 import Models.BLog;
+import Models.Category;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -37,13 +41,17 @@ public class PostDetailsController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ParseException {
+            throws  IOException, ParseException, ServletException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String Slug = request.getParameter("Slug");
             BlogDAO eDAO = new BlogDAO();
             BLog b = eDAO.GetBlogBySlug(Slug);
+            Vector<Category> e = new Vector<>();
+            e = eDAO.GetCategory();
+            request.setAttribute("CCS", e);
             request.setAttribute("postDetails", b);
+            
             request.getRequestDispatcher("Views/PostDetails.jsp").forward(request, response);
         }
     }
@@ -92,7 +100,7 @@ public class PostDetailsController extends HttpServlet {
         String Content = request.getParameter("Content");
         int Flag = Integer.parseInt(request.getParameter("Flag"));
         BlogDAO eDAO = new BlogDAO();
-        BLog b = new BLog(thumnails, Tittle, Brieft, category, publishDate, Slug, Content, Author,Flag);
+        BLog b = new BLog(thumnails, Tittle, Brieft, category, publishDate, Slug, Content, Author, Flag);
         try {
             Boolean check = eDAO.UpdatePost(b, Slug);
             if (check == false) {

@@ -7,6 +7,7 @@ package Dao;
 
 import Context.DBContext;
 import Models.BLog;
+import Models.Category;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,7 +31,7 @@ public class BlogDAO {
     public Vector<BLog> GetBlogList(int page) {
         Vector vec = new Vector();
         try {
-            String sql = "SELECT  b.id,b.Slug ,b.Thumnail_image,b.Tittle,b.Brieft,c.Category_Name,b.Content,b.Author,b.PublishDate,b.Flag FROM hr_system_v2.blog b\n"
+            String sql = "SELECT  b.id,b.Slug ,b.Thumnail_image,b.Tittle,b.Brieft,c.CategoryName,b.Content,b.Author,b.PublishDate,b.Flag FROM hr_system_v2.blog b\n"
                     + "LEFT JOIN category c on\n"
                     + "b.Category = c.id where b.Flag = 1 limit 3 offset ? ;";
             con = new DBContext().getConnection();
@@ -60,7 +61,7 @@ public class BlogDAO {
     public Vector<BLog> GetPostLIst(int page) {
         Vector vec = new Vector();
         try {
-            String sql = "SELECT  b.id,b.Slug ,b.Thumnail_image,b.Tittle,b.Brieft,c.Category_Name,b.Content,b.Author,b.PublishDate,b.Flag FROM hr_system_v2.blog b\n"
+            String sql = "SELECT  b.id,b.Slug ,b.Thumnail_image,b.Tittle,b.Brieft,c.CategoryName,b.Content,b.Author,b.PublishDate,b.Flag FROM hr_system_v2.blog b\n"
                     + "LEFT JOIN category c on\n"
                     + "b.Category = c.id limit 3 offset ? ;";
             con = new DBContext().getConnection();
@@ -90,7 +91,7 @@ public class BlogDAO {
     public BLog GetBlogBySlug(String Slug) throws ParseException {
         BLog e = new BLog();
         try {
-            String sql = "SELECT  b.id,b.Slug ,b.Thumnail_image,b.Tittle,b.Brieft,c.Category_Name,b.Content,b.Author,b.PublishDate,b.Flag FROM hr_system_v2.blog b\n"
+            String sql = "SELECT  b.id,b.Slug ,b.Thumnail_image,b.Tittle,b.Brieft,c.CategoryName,b.Content,b.Author,b.PublishDate,b.Flag FROM hr_system_v2.blog b\n"
                     + "LEFT JOIN category c on\n"
                     + "b.Category = c.id  where b.Slug=?";
             con = new DBContext().getConnection();
@@ -117,10 +118,29 @@ public class BlogDAO {
         return e;
     }
 
+    public Vector<Category> GetCategory() {
+        Vector vec = new Vector();
+        try {
+            String sql = "SELECT * FROM hr_system_v2.category;";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Category s = new Category();
+                s.setId(rs.getInt(1));
+                s.setCategoryName(rs.getString(2));
+                vec.add(s);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return vec;
+    }
+
     public Vector<BLog> SearchBlogByType(int page, String Type, String Tittle) throws ParseException {
         Vector vec = new Vector();
         try {
-            String sql = "SELECT  b.id,b.Slug ,b.Thumnail_image,b.Tittle,b.Brieft,c.Category_Name,b.Content,b.Author,b.PublishDate,b.Flag FROM hr_system_v2.blog b\n"
+            String sql = "SELECT  b.id,b.Slug ,b.Thumnail_image,b.Tittle,b.Brieft,c.CategoryName,b.Content,b.Author,b.PublishDate,b.Flag FROM hr_system_v2.blog b\n"
                     + "LEFT JOIN category c on\n"
                     + "b.Category = c.id  where b.Flag = 1 and b." + Type + " like ? limit 3 offset ? ;";
             con = new DBContext().getConnection();
@@ -151,7 +171,7 @@ public class BlogDAO {
     public Vector<BLog> SearchPostbyTittle(int page, String Tittle) {
         Vector vec = new Vector();
         try {
-            String sql = "SELECT  b.id,b.Slug ,b.Thumnail_image,b.Tittle,b.Brieft,c.Category_Name,b.Content,b.Author,b.PublishDate,b.Flag FROM hr_system_v2.blog b\n"
+            String sql = "SELECT  b.id,b.Slug ,b.Thumnail_image,b.Tittle,b.Brieft,c.CategoryName,b.Content,b.Author,b.PublishDate,b.Flag FROM hr_system_v2.blog b\n"
                     + "LEFT JOIN category c on\n"
                     + "b.Category = c.id where b.Tittle like ? and b.Flag = 1 limit 3 offset ? ;";
             con = new DBContext().getConnection();
@@ -274,9 +294,8 @@ public class BlogDAO {
         }
         return check > 0;
     }
-  
-    
-       public void UpdateStatus(int Flag, String Slug) throws SQLException {
+
+    public void UpdateStatus(int Flag, String Slug) throws SQLException {
         String sql = "UPDATE `hr_system_v2`.`blog` SET `Flag` = ? WHERE (`Slug` = ?);";
         con = new DBContext().getConnection();
         ps = con.prepareStatement(sql);
