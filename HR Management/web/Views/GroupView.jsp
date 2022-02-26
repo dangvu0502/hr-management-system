@@ -120,9 +120,9 @@
                                                         <div id="advanced" style="display: none">
                                                             <br>
                                                             <div class="row">
-                                                                <div class="col-lg-2"></div>
-                                                                <div class="col-lg-8">
-                                                                    <div class="col-md-1">
+                                                                <div class="col-lg-1"></div>
+                                                                <div class="col-lg-9">
+                                                                    <div class="col-md-5" style="margin-left: 10px">
                                                                         <label class="text-left" for="delete" style="width: 150px;">Status</label><br>
                                                                         <select class="form-control input-md" style="width: 200px;" name="delete" id="delete">
                                                                             <option value="-1">Choose Type Contract</option>
@@ -130,16 +130,16 @@
                                                                             <option value="1">Pending</option>
                                                                         </select>
                                                                     </div>
-                                                                    <div class="col-md-7">
+                                                                    <div class="col-md-5" style="margin-left: 10px">
                                                                         <label class="text-left" for="parent_group_code" style="width: 150px;">Parent Group Code</label><br>
                                                                         <select class="form-control input-md" style="width: 200px;" name="parent_group_code" id="parent_group_code">
-                                                                            <option value="-1">Choose Type Contract</option>
+                                                                            <option value="">Choose Type Contract</option>
                                                                             <c:forEach var="pc" items="${parentG}" >
                                                                                 <option value="${pc}">${pc}</option>
                                                                             </c:forEach>
                                                                         </select>
                                                                     </div>
-                                                                    <div class="col-md-4">
+                                                                    <div class="col-md-1" style="margin-left: 10px">
                                                                         <label class="text-left" for="status" style="width: 150px;">Group Type</label><br>
                                                                         <select class="form-control input-md" style="width: 200px;" name="status" id="status">
                                                                             <option value="-1">Choose Status</option>
@@ -198,10 +198,10 @@
                                                     <td>
                                                         <c:if test = "${g.delete == 1}">
                                                             <a id="delete" name="" href="../Group/Delete?delete=1&code=${g.code}&page=${num}"><i class="glyphicon glyphicon-trash" ></i></a>
-                                                        </c:if>
-                                                        <c:if test = "${g.delete == 0}">
+                                                            </c:if>
+                                                            <c:if test = "${g.delete == 0}">
                                                             <a id="delete" href="../Group/Delete?delete=0&code=${g.code}&page=${num}"><i class="glyphicon glyphicon-refresh" ></i></a>
-                                                        </c:if>
+                                                            </c:if>
                                                         <a style="margin-left: 10px" href="../SupportTypeController/SupportTypeEdit?id=${s.id}&name=${s.name}&incharge=${s.in_charge_group}&email=${s.email}&status=${s.status}&description=${s.description}" <span class="glyphicon glyphicon-edit"></span></a>
                                                     </td>
                                                 </tr>
@@ -271,13 +271,11 @@
                                                                     x.style.display = "none";
                                                                 }
                                                             }
-
                                                             function page(number) {
                                                                 var pageNumber = number;
                                                                 var parent_group_code = document.getElementById('parent_group_code').value;
                                                                 var status = document.getElementById('status').value;
-                                                                var delete = document.getElementById('delete').value;
-                                                                var code = document.getElementById('code').value;
+                                                                var deletes = document.getElementById('delete').value;
                                                                 var fullname = document.getElementById('fullname').value;
                                                                 console.log(fullname);
                                                                 var link = "http://localhost:8080/HR_Management/Group/GroupList?";
@@ -285,9 +283,7 @@
                                                                 link += "&";
                                                                 link += "parent_group_code=" + parent_group_code;
                                                                 link += "&";
-                                                                link += "delete=" + delete;
-                                                                link += "&";
-                                                                link += "code=" + code;
+                                                                link += "delete=" + deletes;
                                                                 link += "&";
                                                                 link += "status=" + status;
                                                                 link += "&";
@@ -295,14 +291,11 @@
                                                                 $('#groupTable').load(link + " " + "#groupTable");
                                                             }
                                                             
-                                                            $(document).ready(function () {
+                                                             $(document).ready(function () {
                                                                 $('#parent_group_code').change(function () {
                                                                     page(1);
                                                                 });
                                                                 $('#delete').change(function () {
-                                                                    page(1);
-                                                                });
-                                                                $('#code').change(function () {
                                                                     page(1);
                                                                 });
                                                                 $('#status').change(function () {
@@ -311,7 +304,9 @@
                                                                 $('#fullname').keyup(function () {
                                                                     page(1);
                                                                 });
+                                                                
                                                             });
+                                                            
         </script>
     </body>
 </html>

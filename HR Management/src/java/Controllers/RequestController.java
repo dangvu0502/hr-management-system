@@ -129,13 +129,16 @@ public class RequestController extends HttpServlet {
             sql1 += " and r.request_date >= " + "'" + fromDate + "'";
         }
         if (!toDate.isEmpty()) {
-            sql1 += "and r.request_date <= " + "'" + toDate + "'";
+            sql1 += " and r.request_date <= " + "'" + toDate + "'";
         }
         if (!title.isEmpty()) {
             sql1 += " and r.title like  " + "'%" + title + "%'";
         }
+         if (!name.isEmpty()) {
+            sql1 += " and s.name like  " + "'%" + name + "%'";
+        }
         if (status != 0) {
-            sql1 += "and r.status = " + "'" + status + "'";
+            sql1 += " and r.status = " + "'" + status + "'";
         }
         sql1 += " limit 3 offset " + offset;
         //
@@ -147,13 +150,15 @@ public class RequestController extends HttpServlet {
             sql2 += " and r.request_date >= " + "'" + fromDate + "'";
         }
         if (!toDate.isEmpty()) {
-            sql2 += "and r.request_date <= " + "'" + toDate + "'";
+            sql2 += " and r.request_date <= " + "'" + toDate + "'";
         }
+        
         if (!title.isEmpty()) {
             sql2 += " and r.title like  " + "'%" + title + "%'";
         }
+ 
         if (status != 0) {
-            sql2 += "and r.status = " + "'" + status + "'";
+            sql2 += " and r.status = " + "'" + status + "'";
         }
         //
         int count = requestDAO.getTotalRequest(sql2);
@@ -172,7 +177,7 @@ public class RequestController extends HttpServlet {
         request.setAttribute("currentNumber", page);
         request.setAttribute("requestList", requestDAO.getRequestList(sql1));
         request.setAttribute("supportName", supporttypeDAO.getAllSpName());
-        request.setAttribute("getStatus", requestDAO.getAllStatus());
+        request.setAttribute("requestStatus", requestDAO.getAllStatus());
         request.getRequestDispatcher("/Views/RequestView.jsp").forward(request, response);
       
     }

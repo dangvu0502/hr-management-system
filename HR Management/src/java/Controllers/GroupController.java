@@ -150,19 +150,19 @@ public class GroupController extends HttpServlet {
                     + "FROM hr_system_v2.group g join hr_system_v2.user u \n"
                     + "where g.manager_id = u.id";
             if (!code.isEmpty()) {
-                query1 += "and g.code like " + "'%" + code + "%'";
+                query1 += " and g.code like " + "'%" + code + "%'";
             }
             if (!fullname.isEmpty()) {
                 query1 += " and u.fullname like " + "'%" + fullname + "%'";
             }
             if (!parent_group_code.isEmpty()) {
-                query1 += "and g.parent_group_code like " + "'%" + parent_group_code + "%'";
+                query1 += " and g.parent_group_code like " + "'%" + parent_group_code + "%'";
             }
             if (status != -1) {
                 query1 += " and g.status =  " + "'" + status + "'";
             }
             if (delete != -1) {
-                query1 += "and g.delete =  " + "'" + delete + "'";
+                query1 += " and g.delete =  " + "'" + delete + "'";
             }
             query1 += " limit 3 offset " + offset;
 
@@ -171,20 +171,20 @@ public class GroupController extends HttpServlet {
                     + "FROM hr_system_v2.group g join hr_system_v2.user u \n"
                     + "where g.manager_id = u.id) g where status = 1 or status = 0";
             if (!code.isEmpty()) {
-                query2 += "and g.code like " + "'%" + code + "%'";
+                query2 += " and g.code like " + "'%" + code + "%'";
             }
             if (!fullname.isEmpty()) {
                 query2 += " and u.fullname like " + "'%" + fullname + "%'";
             }
 
             if (!parent_group_code.isEmpty()) {
-                query2 += "and g.parent_group_code like " + "'%" + parent_group_code + "%'";
+                query2 += " and g.parent_group_code like " + "'%" + parent_group_code + "%'";
             }
             if (status != -1) {
                 query2 += " and g.status =  " + "'" + status + "'";
             }
             if (delete != -1) {
-                query2 += "and g.delete =  " + "'" + delete + "'";
+                query2 += " and g.delete =  " + "'" + delete + "'";
             }
             int count = groupDAO.getTotalGroup(query2);
             int total = count / 3 + (count % 3 == 0 ? 0 : 1);
@@ -291,10 +291,74 @@ public class GroupController extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            int delete = Integer.parseInt(request.getParameter("delete"));
-            String code = request.getParameter("code");
+            String code = request.getParameter("code") != null ? request.getParameter("code") : "";
+            int delete = request.getParameter("delete") != null ? Integer.parseInt(request.getParameter("delete")) : -1;
             groupDAO.editStatusDelete(delete, code);
-            groupListImplement(request, response);
+            String name = request.getParameter("name") != null ? request.getParameter("name") : "";
+            String fullname = request.getParameter("fullname") != null ? request.getParameter("fullname") : "";
+            String parent_group_code = request.getParameter("parent_group_code") != null ? request.getParameter("parent_group_code") : "";
+            int status = request.getParameter("status") != null ? Integer.parseInt(request.getParameter("status")) : -1;
+            
+            int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+            int offset = (page - 1) * 3;
+            String query1 = "SELECT g.code, g.name, u.fullname, g.parent_group_code, g.status, g.update_date, g.delete \n"
+                    + "FROM hr_system_v2.group g join hr_system_v2.user u \n"
+                    + "where g.manager_id = u.id";
+            if (!code.isEmpty()) {
+                query1 += "and g.code like " + "'%" + code + "%'";
+            }
+            if (!fullname.isEmpty()) {
+                query1 += " and u.fullname like " + "'%" + fullname + "%'";
+            }
+            if (!parent_group_code.isEmpty()) {
+                query1 += "and g.parent_group_code like " + "'%" + parent_group_code + "%'";
+            }
+            if (status != -1) {
+                query1 += " and g.status =  " + "'" + status + "'";
+            }
+            if (delete != -1) {
+                query1 += "and g.delete =  " + "'" + delete + "'";
+            }
+            query1 += " limit 3 offset " + offset;
+            String query2 = "SELECT count(*) FROM (SELECT g.code, g.name, u.fullname, g.parent_group_code, g.status, g.update_date, g.delete \n"
+                    + "FROM hr_system_v2.group g join hr_system_v2.user u \n"
+                    + "where g.manager_id = u.id) g where status = 1 or status = 0";
+            if (!code.isEmpty()) {
+                query2 += "and g.code like " + "'%" + code + "%'";
+            }
+            if (!fullname.isEmpty()) {
+                query2 += " and u.fullname like " + "'%" + fullname + "%'";
+            }
+
+            if (!parent_group_code.isEmpty()) {
+                query2 += "and g.parent_group_code like " + "'%" + parent_group_code + "%'";
+            }
+            if (status != -1) {
+                query2 += " and g.status =  " + "'" + status + "'";
+            }
+            if (delete != -1) {
+                query2 += "and g.delete =  " + "'" + delete + "'";
+            }
+            int count = groupDAO.getTotalGroup(query2);
+            int total = count / 3 + (count % 3 == 0 ? 0 : 1);
+            int begin = 1;
+            int end = 3;
+            while (page > end) {
+                end += 3;
+                begin += 3;
+            }
+            end = Math.min(end, total);
+            begin = Math.min(end, begin);
+            request.setAttribute("total", total);
+            request.setAttribute("begin", begin);
+            request.setAttribute("end", end);
+            request.setAttribute("currentNumber", page);
+            
+            request.setAttribute("listG", groupDAO.getGroupList(query1));
+            request.setAttribute("parentG", groupDAO.getAllPCode());
+            request.getRequestDispatcher("/Views/GroupView.jsp").forward(request, response);
+            
+            
         } catch (Exception e) {
             System.out.println("Error " + e.getMessage());
         }
@@ -316,6 +380,7 @@ public class GroupController extends HttpServlet {
             groupListImplement(request, response);
         }
     }
+    
 }
 //</editor-fold>
 

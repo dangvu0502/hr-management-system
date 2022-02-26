@@ -132,6 +132,7 @@ public class GroupDAO {
         return total;
     }
 */
+/*
     public Vector<Group> getGroupBySearch(String input, int page) {
         Vector vec = new Vector();
         try {
@@ -161,7 +162,8 @@ public class GroupDAO {
         }
         return vec;
     }
-
+*/
+/*
     public Boolean editGroup(Group g, int id) throws SQLException {
         int check = 0;
         try {
@@ -177,6 +179,8 @@ public class GroupDAO {
         }
         return check > 0;
     }
+*/
+/*
 
     public Vector<Group> getOne(int id) {
         Vector vec = new Vector();
@@ -206,7 +210,8 @@ public class GroupDAO {
         }
         return vec;
     }
-
+*/
+/*
     public Vector<Group> getGroup() {
         Vector vec = new Vector();
         try {
@@ -234,7 +239,8 @@ public class GroupDAO {
         }
         return vec;
     }
-
+*/
+/*
     public boolean InsertGroup(Group g) throws Exception {
         int check = 0;
         try {
@@ -253,6 +259,7 @@ public class GroupDAO {
         }
         return check > 0;
     }
+*/
 
     public HashMap<String, String> getAllGroupNameAndCode() {
         HashMap<String, String> role = new HashMap<>();
@@ -272,7 +279,7 @@ public class GroupDAO {
     }
 
     public void editStatusDelete(int delete, String code) throws SQLException {
-        String sql = "UPDATE `hr_system_v2`.`group` SET `status` = '?' WHERE (`code` = '?');";
+        String sql = "UPDATE `hr_system_v2`.`group` SET `delete` = ? WHERE (`code` = ?);";
         con = new DBContext().getConnection();
         ps = con.prepareStatement(sql);
         if (delete == 0) {
@@ -282,8 +289,11 @@ public class GroupDAO {
         }
         ps.setString(2, code);
         ps.executeUpdate();
+        if (con != null) {
+                con.close();
+            }
     }
-
+/*
     public Vector<String> getAllCode() {
         Vector vec = new Vector();
         try {
@@ -300,6 +310,7 @@ public class GroupDAO {
         }
         return vec;
     }
+*/
       public ArrayList<String> getAllPCode() throws SQLException {
         ArrayList<String> result = new ArrayList<String>();
         try {
@@ -319,7 +330,7 @@ public class GroupDAO {
         }
         return result;
     }
-
+/*
     public Vector<Group> filterGroupList(String input, int option, int page) {
         Vector vec = new Vector();
         try {
@@ -355,7 +366,7 @@ public class GroupDAO {
         }
         return vec;
     }
-
+*/
     public ArrayList<String> getAllGroupCode() throws SQLException {
         ArrayList<String> result = new ArrayList<String>();
         try {
