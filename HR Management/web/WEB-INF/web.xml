@@ -68,6 +68,10 @@
         <servlet-name>PostController</servlet-name>
         <servlet-class>Controllers.PostController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UserListController</servlet-name>
+        <servlet-class>Controllers.UserListController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AccountController</servlet-name>
         <url-pattern>/Account/*</url-pattern>
@@ -123,6 +127,10 @@
     <servlet-mapping>
         <servlet-name>PostController</servlet-name>
         <url-pattern>/PostController/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserListController</servlet-name>
+        <url-pattern>/UserListController/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
