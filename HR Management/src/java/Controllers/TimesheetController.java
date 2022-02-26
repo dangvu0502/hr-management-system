@@ -70,9 +70,15 @@ public class TimesheetController extends HttpServlet {
                 case "/Review":
                     showTimesheetReviewList(request, response);
                     break;
-                case "/GetAllTimeSheet":
-                    getAllTimesheet(request, response);
+                case "/GetAllTimeSheetInGroup":
+                    getAllTimesheetInGroup(request, response);
                     break;
+                case "/Reject":
+                    rejectTimesheet(request, response);
+                    break;
+                case "/Approve":
+                    approveTimesheet(request, response);
+                    break;     
                 default:
                     response.sendError(404);
                     break;
@@ -107,7 +113,7 @@ public class TimesheetController extends HttpServlet {
         int offset = (page - 1) * 3;
 
         //this query for search and filter
-        String query1 = "SELECT * FROM hr_system_v2.timesheet Where user_id= " + 106;
+        String query1 = "SELECT * FROM hr_system_v2.timesheet Where user_id= " + user.getId();
         if (!fromDate.isEmpty()) {
             query1 += " and date >= " + "'" + fromDate + "'";
         }
@@ -126,7 +132,7 @@ public class TimesheetController extends HttpServlet {
         query1 += " limit 3 offset " + offset;
 
         //this query for  total timesheet
-        String query2 = "SELECT count(id) FROM hr_system_v2.timesheet Where user_id= " + 106;
+        String query2 = "SELECT count(id) FROM hr_system_v2.timesheet Where user_id= " + user.getId();
         if (!fromDate.isEmpty()) {
             query2 += " and date >= " + "'" + fromDate + "'";
         }
@@ -158,7 +164,7 @@ public class TimesheetController extends HttpServlet {
         request.setAttribute("end", end);
         request.setAttribute("currentNumber", page);
         request.setAttribute("timesheetList", timesheetDAO.getTimesheetList(query1));
-        request.setAttribute("projects", projectDAO.getAllProjectCode());
+        request.setAttribute("projects", projectDAO.getAllProjectCode(user.getGroup_code()));
         request.setAttribute("timesheetProcess", settingDAO.getTimesheetProcess());
         request.setAttribute("timesheetStatus", settingDAO.getTimesheetStatus());
         request.getRequestDispatcher("/Views/TimesheetListView.jsp").forward(request, response);
@@ -187,13 +193,14 @@ public class TimesheetController extends HttpServlet {
     private void showNewTimesheetView(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
+        User user = (User) request.getSession().getAttribute("account");
         if (request.getParameter("id") != null) {
             Timesheet timesheet = timesheetDAO.getTimesheetById(Integer.parseInt(request.getParameter("id")));
             request.setAttribute("viDate", myFormatDate(timesheet.getDate()));
 
             request.setAttribute("timesheet", timesheet);
         }
-        request.setAttribute("projects", projectDAO.getAllProjectCode());
+        request.setAttribute("projects", projectDAO.getAllProjectCode(user.getGroup_code()));
         request.setAttribute("timesheetProcess", settingDAO.getTimesheetProcess());
         request.getRequestDispatcher("/Views/NewTimesheetView.jsp").forward(request, response);
     }
@@ -231,7 +238,7 @@ public class TimesheetController extends HttpServlet {
         String work_result = request.getParameter("work-result");
         int status = 1;
         User user = (User) request.getSession().getAttribute("account");
-        timesheetDAO.addNewTimesheet(new Timesheet(title, date, process, duration, status, 106, project, work_result));
+        timesheetDAO.addNewTimesheet(new Timesheet(title, date, process, duration, status, user.getId(), project, work_result));
         request.getSession().setAttribute("successMessage", "Add new timesheet success");
         response.sendRedirect("/HR_Management/Timesheet/NewTimesheet");
     }
@@ -248,7 +255,7 @@ public class TimesheetController extends HttpServlet {
         String title = request.getParameter("title") != null ? request.getParameter("title") : "";
         int process = request.getParameter("process") != null ? Integer.parseInt(request.getParameter("process")) : 0;
         int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
-        String query2 = "SELECT count(id) FROM hr_system_v2.timesheet Where user_id= " + 106;
+        String query2 = "SELECT count(id) FROM hr_system_v2.timesheet Where user_id= " + user.getId();
         if (!fromDate.isEmpty()) {
             query2 += " and date >= " + "'" + fromDate + "'";
         }
@@ -284,15 +291,17 @@ public class TimesheetController extends HttpServlet {
     private void showTimesheetReviewList(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
-        request.setAttribute("projects", projectDAO.getAllProjectCode());
+        User user = (User) request.getSession().getAttribute("account");
+        request.setAttribute("projects", projectDAO.getAllProjectCode(user.getGroup_code()));
         request.setAttribute("timesheetProcess", settingDAO.getTimesheetProcess());
-        request.setAttribute("users", userDAO.getUsersByGroupCode("G4"));
+        request.setAttribute("users", userDAO.getUsersByGroupCode(user.getGroup_code()));
         request.getRequestDispatcher("/Views/TimesheetReviewView.jsp").forward(request, response);
     }
 
-    private void getAllTimesheet(HttpServletRequest request, HttpServletResponse response)
+    private void getAllTimesheetInGroup(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         response.setContentType("text/html;charset=UTF-8");
+        User user = (User) request.getSession().getAttribute("account");
         Gson gson = new Gson();
         String condition = "";
         String fromDate = request.getParameter("fromDate") != null ? request.getParameter("fromDate") : "";
@@ -302,7 +311,7 @@ public class TimesheetController extends HttpServlet {
         String username = request.getParameter("username") != null ? request.getParameter("username") : "";
         int process = request.getParameter("process") != null ? Integer.parseInt(request.getParameter("process")) : 0;
         int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
-        int offset = (page - 1) * 3;
+       
         if (!fromDate.isEmpty()) {
             condition += " and date >= " + "'" + fromDate + "'";
         }
@@ -316,17 +325,31 @@ public class TimesheetController extends HttpServlet {
             condition += " and title like  " + "'%" + title + "%'";
         }
         if (!username.isEmpty()) {
-            condition += " and fullname like  " + "'%" + username + "%'";
+            condition += " and username like  " + "'%" + username + "%'";
         }
         if (process != 0) {
             condition += " and process = " + "'" + process + "'";
         }
-        JsonElement element = gson.toJsonTree(timesheetDAO.getAllTimesheet(condition), new TypeToken<ArrayList<Timesheet>>() {
+        JsonElement element = gson.toJsonTree(timesheetDAO.getAllTimesheet(condition,user.getGroup_code(),page), new TypeToken<ArrayList<Timesheet>>() {
         }.getType());
         JsonArray jsonArray = element.getAsJsonArray();
         response.setContentType("application/json");
         response.getWriter().println(jsonArray);
-
+    }
+    
+    private void rejectTimesheet(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        response.setContentType("text/html;charset=UTF-8");
+        int id = Integer.parseInt(request.getParameter("id"));
+        String reject_reason = request.getParameter("reject_reason");
+        timesheetDAO.rejectTimesheet(id, reject_reason);
+    }
+    
+    private void approveTimesheet(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        response.setContentType("text/html;charset=UTF-8");
+        int id = Integer.parseInt(request.getParameter("id"));
+        timesheetDAO.approveTimesheet(id);
     }
 
 }
