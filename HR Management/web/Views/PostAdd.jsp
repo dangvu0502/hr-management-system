@@ -3,8 +3,6 @@
     Created on : Feb 26, 2022, 4:12:23 AM
     Author     : lehun
 --%>
-
-<%@page import="Models.BLog"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -97,73 +95,72 @@
 
             <!-- Right side column. Contains the navbar and content of the page -->
             <aside class="right-side">
-                <%    BLog b = (BLog) request.getAttribute("postDetails");%>
                 <!-- Main content -->
                 <section class="content">
                     <div class="row">
                         <div class="panel">
                             <header class="panel-heading">
-                                Post Update
+                                Post Add
                             </header>
-                            <div class="panel-body" style="width: 50%;">
+                            <div class="panel-body">
                                 <header class="panel-heading">
-                                    Update
+                                   Add
                                 </header>
-                                <div class="panel-body">
-                                    <form action="PostDetailsController" method="post">
+                                <div class="panel-body" style="width: 50%">
+                                    <form action="../PostlistController/Addc" method="post">
 
                                         <div class="row ">
                                             <div class="form-group col-lg-12">
                                                 <label for="Slug">Slug</label>
-                                                <input type="text" class="form-control" name="Slug" value="<%=b.getSlug()%>" required="" >
+                                                <input type="text" class="form-control" name="Slug" required="" >
                                             </div>
                                         </div>
                                         <div class="row ">
                                             <div class="form-group col-lg-12">
                                                 <label for="thumnail">Thumnail</label>
-                                                <img class="centrel" src="<%=b.getThumnail_Image()%>" width="150px" height="150px">
-                                                <input type="text" class="form-control" name="ThumnailIMG" value="<%=b.getThumnail_Image()%>" required="">
+                                                <img id="images" class="centrel" src="#" width="150px" height="150px" alt="No Images">
+                                                <input type="text" class="form-control" name="ThumnailIMG" required="" onclick="Imga()">
                                             </div>
                                         </div>
                                         <div class="row ">
                                             <div class="form-group col-lg-12">
                                                 <label for="Category">Category name</label>
-                                                <input type="text" class="form-control" name="Category" value="<%=b.getCategory()%>" required="" >
+                                                <input type="text" class="form-control" name="Category" required="" >
                                             </div>
                                         </div>
                                         <div class="row ">
                                             <div class="form-group col-lg-12">
                                                 <label for="Author">Author</label>
-                                                <input type="text" class="form-control" name="Author" value="<%=b.getAuthor()%>" required="" >
+                                                <input type="text" class="form-control" name="Author"  required="" >
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="form-group col-lg-12">
                                                 <label for="Tittle">Tittle</label>
-                                                <input type="text" class="form-control" name="Tittle" value="<%=b.getTittle()%>" required="" >
+                                                <input type="text" class="form-control" name="Tittle" required="" >
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="form-group col-lg-12">
                                                 <label for="Brieft">Brieft</label>
-                                                <textarea type="text" class="form-control" name="Brieft" required="" rows="4"cols="50" ><%=b.getBrieft()%></textarea>
+                                                <textarea type="text" class="form-control" name="Brieft" required="" rows="4"cols="50" ></textarea>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="form-group col-lg-12">
                                                 <label for="Content" >Content</label>
-                                                <textarea class="form-control" name="Content" required="" rows="4" cols="50"><%=b.getContent()%></textarea>
+                                                <textarea class="form-control" name="Content" required="" rows="4" cols="50"></textarea>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="form-group col-lg-12">
                                                 <label for="Status">Status</label><br>
-                                                <input  type="radio" name="Flag" value="1" id="rbStatus" <c:if test="<%=b.getFlag() == 1%>">checked="" </c:if>> <span style="margin-right: 2rem;" >Active</span>
-                                                <input type="radio" name="Flag" value="0" id="rbStatus" <c:if test="<%=b.getFlag() == 0%>">checked="" </c:if>> Deactivate
+                                                <input  type="radio" name="foo" value="1" id="rbStatus" > <span style="margin-right: 2rem;" >Active</span>
+                                                <input type="radio" name="foo" value="0" id="rbStatus" checked="checked"> Deactivate
                                             </div>
                                         </div>
                                         <div class=" form-group row col-lg-12 text-center">
-                                            <button type="submit" id="submit-btn" class="btn btn-info">Save Change</button>
+                                            <button type="submit" id="submit-btn" class="btn btn-info">Add New</button>
                                         </div>
                                     </form>
                                 </div>
@@ -194,6 +191,9 @@
                 if (confirm("Do you really want to delete profile?")) {
                     window.location = "grouplist?typef=delete" + "&id=" + id;
                 }
+            }
+            function Imga(){
+                
             }
         </script>
     </body>

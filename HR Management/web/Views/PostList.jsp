@@ -101,7 +101,7 @@
                             <header class="panel-heading">Post Details</header>
                             <div class="panel-body" style="width: 50%">
                                 <header class="panel-heading">
-                                    <form action="PostlistController" method="post" >
+                                    <form action="../PostController/Views" method="" >
                                         <div class="input-group">
                                             <div class="btn btn-md btn-default" style="width: 150px; pointer-events: none;"><span>Search by Title</span></div>
                                             <input id="SearchPost" type="text" name="SearchPost"value="${SearchPost}" class="form-control input-md" style="width: 450px;" placeholder="Enter title to search" />
@@ -113,7 +113,7 @@
                             <div class="panel-body">
                                 <div class="pull-right">
                                     <div class="btn btn-success">
-                                        <a id="opener" href="#" style="color: white">Add</a>
+                                        <a id="opener" href="../PostController/Add" style="color: white">Add</a>
                                     </div>
                                 </div>
                                 <table class="table table-bordered">
@@ -125,6 +125,7 @@
                                         <th>author</th>       
                                         <th>Content</th>                           
                                         <th>featured</th>
+                                        <th>Flag</th>
                                     </tr>
 
                                     <c:forEach items="${listE}" var="e">
@@ -139,7 +140,14 @@
                                             <td><span>${e.category}</span></td>                 
                                             <td><span>${e.author}</span></td>                          
                                             <td><span>${e.content}</span></td>   
-                                            <td><span><a href="PostDetailsController?Slug=${e.slug}">View</a></span></td>   
+                                            <td><span><a href="../PostDetailsController?Slug=${e.slug}">Update</a></span>/
+                                                <span><a href="../BlogDetailsController?Slug=${e.slug}">View</a></span>
+                                            </td>   
+                                            <td><span> <c:if test = "${e.flag==1}"> <span class="badge bg-green">Active</span></c:if>
+                                                    <c:if test = "${e.flag==0}"><span class="badge bg-red">Deactivate</span></c:if></span>
+                                                    &nbsp;&nbsp;
+                                                    <a href="../PostController/Status?Slug=${e.slug}&Flag=${e.flag}">   <span class="glyphicon glyphicon-retweet"></span></a>
+                                            </td>   
                                         </tr>
                                     </c:forEach>
                                 </table>
@@ -148,10 +156,10 @@
                                         <c:forEach begin="1" end="${endP}" var="p">
                                             <c:choose>
                                                 <c:when test="${empty SearchPost }">
-                                                    <li class="page-item"><a class="page-link" href="PostlistController?page=${p}">${p}</a></li>
+                                                    <li class="page-item"><a class="page-link" href="../PostController/Views?page=${p}">${p}</a></li>
                                                     </c:when>
                                                     <c:otherwise>
-                                                    <li class="page-item"><a class="page-link" href="PostlistController?page=${p}&SearchPost=${SearchPost}">${p}</a></li>
+                                                    <li class="page-item"><a class="page-link" href="../PostController/Views?page=${p}&SearchPost=${SearchPost}">${p}</a></li>
                                                     </c:otherwise>
                                                 </c:choose>
 

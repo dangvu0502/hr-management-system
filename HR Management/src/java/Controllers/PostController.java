@@ -9,7 +9,6 @@ import Dao.BlogDAO;
 import Models.BLog;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -17,7 +16,6 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,8 +24,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author lehun
  */
-@WebServlet(name = "PostlistController", urlPatterns = {"/PostlistController/*"})
-public class PostlistController extends HttpServlet {
+public class PostController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,21 +41,24 @@ public class PostlistController extends HttpServlet {
         String action = request.getPathInfo() == null ? "" : request.getPathInfo();
         String method = request.getMethod();
         switch (action) {
+            case "/Views":
+                ViewPostList(request, response);
+                break;
             case "/Add":
-                request.getRequestDispatcher("Views/PostAdd.jsp").forward(request, response);
+                request.getRequestDispatcher("../Views/PostAdd.jsp").forward(request, response);
                 break;
             case "/Status":
                 String Slug = request.getParameter("Slug");
                 int Flag = Integer.parseInt(request.getParameter("Flag"));
                 BlogDAO EDAO = new BlogDAO();
                 EDAO.UpdateStatus(Flag, Slug);
-                response.sendRedirect("../PostlistController");
+                response.sendRedirect("../PostController/Views");
                 break;
             default:
                 response.sendError(404);
                 break;
         }
-        ViewPostList(request, response);
+
     }
 
 //    public void ADD(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -75,7 +75,6 @@ public class PostlistController extends HttpServlet {
             if (page == null) {
                 page = "1";
             }
-            init();
             request.setAttribute("page", page);
             BlogDAO eDAO = new BlogDAO();
             int count = 0;
@@ -95,7 +94,7 @@ public class PostlistController extends HttpServlet {
             }
             request.setAttribute("endP", endPage);
             request.setAttribute("listE", e);
-            request.getRequestDispatcher("Views/PostList.jsp").forward(request, response);
+            request.getRequestDispatcher("../Views/PostList.jsp").forward(request, response);
         } catch (IOException | NumberFormatException | ServletException e) {
             System.out.println("ádfasdfasdfasd" + e.getMessage());
         }
@@ -139,7 +138,11 @@ public class PostlistController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ViewPostList(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(PostController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -153,8 +156,10 @@ public class PostlistController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if ("/Addc".equals(request.getPathInfo())) {
-            AddSubMit(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(PostController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -167,5 +172,4 @@ public class PostlistController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

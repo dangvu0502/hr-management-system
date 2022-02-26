@@ -60,6 +60,14 @@
         <servlet-name>ProjectController</servlet-name>
         <servlet-class>Controllers.ProjectController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PostListController1</servlet-name>
+        <servlet-class>Controllers.PostListController1</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PostController</servlet-name>
+        <servlet-class>Controllers.PostController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AccountController</servlet-name>
         <url-pattern>/Account/*</url-pattern>
@@ -107,6 +115,14 @@
     <servlet-mapping>
         <servlet-name>ProjectController</servlet-name>
         <url-pattern>/Project/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PostListController1</servlet-name>
+        <url-pattern>/PostListController1</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PostController</servlet-name>
+        <url-pattern>/PostController/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

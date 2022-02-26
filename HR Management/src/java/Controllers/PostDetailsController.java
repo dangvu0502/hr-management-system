@@ -90,14 +90,15 @@ public class PostDetailsController extends HttpServlet {
         String Tittle = request.getParameter("Tittle");
         String Brieft = request.getParameter("Brieft");
         String Content = request.getParameter("Content");
+        int Flag = Integer.parseInt(request.getParameter("Flag"));
         BlogDAO eDAO = new BlogDAO();
-        BLog b = new BLog(thumnails, Tittle, Brieft, category, publishDate, Slug, Content, Author);
+        BLog b = new BLog(thumnails, Tittle, Brieft, category, publishDate, Slug, Content, Author,Flag);
         try {
             Boolean check = eDAO.UpdatePost(b, Slug);
             if (check == false) {
                 return;
             }
-            response.sendRedirect("PostlistController");
+            response.sendRedirect("PostController/Views");
         } catch (Exception ex) {
             Logger.getLogger(PostDetailsController.class.getName()).log(Level.SEVERE, null, ex);
         }
