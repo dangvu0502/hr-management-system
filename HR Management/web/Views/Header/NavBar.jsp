@@ -45,7 +45,7 @@
 
             </c:if>
             <c:if test="${sessionScope.account.role_id eq 2}"> 
-                <a class="nav-item nav-link" href="<%= request.getContextPath()%>/Project/List">Project</a>
+                <a class="nav-item nav-link" href="<%= request.getContextPath()%>/Project/Manager">Project</a>
             </c:if>
             <c:if test="${sessionScope.account.role_id eq 3}"> 
                 <a class="nav-item nav-link" href="<%= request.getContextPath()%>/Project/List">Project</a>
