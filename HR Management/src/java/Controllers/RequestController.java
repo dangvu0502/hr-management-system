@@ -31,12 +31,14 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "RequestController", urlPatterns = {"/Request/*"})
 public class RequestController extends HttpServlet {
 
-    private RequestDAO requestDAO ;
+    private RequestDAO requestDAO;
     private SupportTypeDAO supporttypeDAO;
+
     public void init() {
-       requestDAO = new RequestDAO();
-       supporttypeDAO = new SupportTypeDAO();
+        requestDAO = new RequestDAO();
+        supporttypeDAO = new SupportTypeDAO();
     }
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -134,7 +136,7 @@ public class RequestController extends HttpServlet {
         if (!title.isEmpty()) {
             sql1 += " and r.title like  " + "'%" + title + "%'";
         }
-         if (!name.isEmpty()) {
+        if (!name.isEmpty()) {
             sql1 += " and s.name like  " + "'%" + name + "%'";
         }
         if (status != 0) {
@@ -152,11 +154,13 @@ public class RequestController extends HttpServlet {
         if (!toDate.isEmpty()) {
             sql2 += " and r.request_date <= " + "'" + toDate + "'";
         }
-        
+
         if (!title.isEmpty()) {
             sql2 += " and r.title like  " + "'%" + title + "%'";
         }
- 
+        if (!name.isEmpty()) {
+            sql2 += " and s.name like  " + "'%" + name + "%'";
+        }
         if (status != 0) {
             sql2 += " and r.status = " + "'" + status + "'";
         }
@@ -179,7 +183,7 @@ public class RequestController extends HttpServlet {
         request.setAttribute("supportName", supporttypeDAO.getAllSpName());
         request.setAttribute("requestStatus", requestDAO.getAllStatus());
         request.getRequestDispatcher("/Views/RequestView.jsp").forward(request, response);
-      
+
     }
 
     private void getAllRequest(HttpServletRequest request, HttpServletResponse response)
@@ -192,7 +196,6 @@ public class RequestController extends HttpServlet {
         response.setContentType("application/json");
         response.getWriter().println(jsonArray);
     }
-   
-    
+
 // </editor-fold>
 }

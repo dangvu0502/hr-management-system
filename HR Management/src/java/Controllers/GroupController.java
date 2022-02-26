@@ -153,7 +153,7 @@ public class GroupController extends HttpServlet {
                 query1 += " and g.code like " + "'%" + code + "%'";
             }
             if (!fullname.isEmpty()) {
-                query1 += " and u.fullname like " + "'%" + fullname + "%'";
+                query1 += " and u.fullname like  " + "'%" + fullname + "%' or g.code like " + "'%" + fullname + "%'";
             }
             if (!parent_group_code.isEmpty()) {
                 query1 += " and g.parent_group_code like " + "'%" + parent_group_code + "%'";
@@ -174,7 +174,7 @@ public class GroupController extends HttpServlet {
                 query2 += " and g.code like " + "'%" + code + "%'";
             }
             if (!fullname.isEmpty()) {
-                query2 += " and u.fullname like " + "'%" + fullname + "%'";
+                query2 += " and u.fullname like  " + "'%" + fullname + "%' or g.code like " + "'%" + fullname + "%'";
             }
 
             if (!parent_group_code.isEmpty()) {
@@ -304,11 +304,9 @@ public class GroupController extends HttpServlet {
             String query1 = "SELECT g.code, g.name, u.fullname, g.parent_group_code, g.status, g.update_date, g.delete \n"
                     + "FROM hr_system_v2.group g join hr_system_v2.user u \n"
                     + "where g.manager_id = u.id";
-            if (!code.isEmpty()) {
-                query1 += "and g.code like " + "'%" + code + "%'";
-            }
+
             if (!fullname.isEmpty()) {
-                query1 += " and u.fullname like " + "'%" + fullname + "%'";
+                query1 += " and u.fullname like  " + "'%" + fullname + "%' or g.code like " + "'%" + fullname + "%'";
             }
             if (!parent_group_code.isEmpty()) {
                 query1 += "and g.parent_group_code like " + "'%" + parent_group_code + "%'";
@@ -316,16 +314,12 @@ public class GroupController extends HttpServlet {
             if (status != -1) {
                 query1 += " and g.status =  " + "'" + status + "'";
             }
-            if (delete != -1) {
-                query1 += "and g.delete =  " + "'" + delete + "'";
-            }
+
             query1 += " limit 3 offset " + offset;
             String query2 = "SELECT count(*) FROM (SELECT g.code, g.name, u.fullname, g.parent_group_code, g.status, g.update_date, g.delete \n"
                     + "FROM hr_system_v2.group g join hr_system_v2.user u \n"
                     + "where g.manager_id = u.id) g where status = 1 or status = 0";
-            if (!code.isEmpty()) {
-                query2 += "and g.code like " + "'%" + code + "%'";
-            }
+
             if (!fullname.isEmpty()) {
                 query2 += " and u.fullname like " + "'%" + fullname + "%'";
             }
@@ -336,9 +330,7 @@ public class GroupController extends HttpServlet {
             if (status != -1) {
                 query2 += " and g.status =  " + "'" + status + "'";
             }
-            if (delete != -1) {
-                query2 += "and g.delete =  " + "'" + delete + "'";
-            }
+
             int count = groupDAO.getTotalGroup(query2);
             int total = count / 3 + (count % 3 == 0 ? 0 : 1);
             int begin = 1;

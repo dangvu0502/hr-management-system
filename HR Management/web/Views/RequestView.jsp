@@ -194,8 +194,9 @@
                                                 <tr id="${r.support_type_id}">
                                                     <td>${r.request_date}</td>
                                                     <td>${r.title}</td>
-                                                    <td>${r.fullname.fullname}</td>
                                                     <td>${r.name.name}</td>
+                                                    <td>${r.fullname.fullname}</td>
+                                                    
                                                     <td>
                                                         <c:if test="${r.status == 1}">
                                                             <span class="label label-warning">Submitted</span>

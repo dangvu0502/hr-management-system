@@ -197,10 +197,10 @@
                                                     </td>
                                                     <td>
                                                         <c:if test = "${g.delete == 1}">
-                                                            <a id="delete" name="" href="../Group/Delete?delete=1&code=${g.code}&page=${num}"><i class="glyphicon glyphicon-trash" ></i></a>
+                                                            <a id="delete" name="" href="../Group/Delete?delete=1&code=${g.code}&page=${currentNumber}"><i class="glyphicon glyphicon-trash" ></i></a>
                                                             </c:if>
                                                             <c:if test = "${g.delete == 0}">
-                                                            <a id="delete" href="../Group/Delete?delete=0&code=${g.code}&page=${num}"><i class="glyphicon glyphicon-refresh" ></i></a>
+                                                            <a id="delete" href="../Group/Delete?delete=0&code=${g.code}&page=${currentNumber}"><i class="glyphicon glyphicon-refresh" ></i></a>
                                                             </c:if>
                                                         <a style="margin-left: 10px" href="../SupportTypeController/SupportTypeEdit?id=${s.id}&name=${s.name}&incharge=${s.in_charge_group}&email=${s.email}&status=${s.status}&description=${s.description}" <span class="glyphicon glyphicon-edit"></span></a>
                                                     </td>
@@ -290,8 +290,8 @@
                                                                 link += "fullname=" + fullname;
                                                                 $('#groupTable').load(link + " " + "#groupTable");
                                                             }
-                                                            
-                                                             $(document).ready(function () {
+
+                                                            $(document).ready(function () {
                                                                 $('#parent_group_code').change(function () {
                                                                     page(1);
                                                                 });
@@ -304,9 +304,40 @@
                                                                 $('#fullname').keyup(function () {
                                                                     page(1);
                                                                 });
-                                                                
+
                                                             });
-                                                            
+                                                            function deleteTimesheet(code) {
+                                                                var cf = confirm("Are you sure to delete?");
+                                                                var pageNumber = document.getElementById('page-active').innerHTML;
+                                                                var parent_group_code = document.getElementById('parent_group_code').value;
+                                                                var status = document.getElementById('status').value;
+                                                                var deletes = document.getElementById('delete').value;
+                                                                var fullname = document.getElementById('fullname').value;
+                                                                if (cf) {
+                                                                    //Logic to delete the item
+                                                                    $.ajax({
+
+                                                                        type: "POST",
+
+                                                                        url: "http://localhost:8080/HR_Management/Timesheet/DeleteTimesheet",
+
+                                                                        data: {code: code,
+                                                                            parent_group_code: parent_group_code,
+                                                                            toDate: toDate,
+                                                                            status: status,
+                                                                            deletes: deletes,
+                                                                            fullname: fullname,
+                                                                            page: pageNumber},
+
+                                                                        success: function (number) {
+                                                                            page(number);
+                                                                        }
+
+                                                                    });
+
+
+                                                                }
+                                                            }
         </script>
     </body>
 </html>
