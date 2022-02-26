@@ -389,7 +389,6 @@
                                                             function rejectTimesheet(id) {
 
                                                                 var reject_reason = document.getElementById('reject-reason' + id).value;
-                                                                var check = false;
                                                                 if (reject_reason == "") {
                                                                     alert("Reject reason must not be empty");
                                                                 } else {
@@ -405,7 +404,7 @@
                                                                         success: function () {
                                                                             setTimeout(function () {
                                                                                 page(1);
-                                                                            }, 1000);
+                                                                            }, 500);
                                                                         }
 
                                                                     });
