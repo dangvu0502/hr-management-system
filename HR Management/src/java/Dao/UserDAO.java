@@ -387,4 +387,24 @@ public class UserDAO {
         }
         return result;
     }
+    public List<User> getManagerFullname() throws SQLException {
+        List<User> result = new ArrayList<User>();
+        try {
+            String sql = "SELECT id, fullname FROM hr_system_v2.user;";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                User u = new User(rs.getInt(1), rs.getString(2));
+                result.add(u);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;
+    }
 }

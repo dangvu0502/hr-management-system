@@ -156,7 +156,7 @@
                                             </div>
                                             <div class="col-lg-2"></div>
                                             <div class="col-lg-2">
-                                                <button onclick="window.open('http://localhost:8080/HR_Management/Group/GroupAdd', '_blank')" class="btn btn-md btn-primary" style="width: 150px; ">Add Group</button>
+                                                <button onclick="window.open('http://localhost:8080/HR_Management/Group/GroupAdd', '_blank')" class="btn btn-md btn-primary" style="width: 150px; ">Add New Group</button>
                                             </div>
                                         </div>
                                     </div>
