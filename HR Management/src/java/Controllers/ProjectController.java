@@ -65,6 +65,9 @@ public class ProjectController extends HttpServlet {
                 case "/Add":
                     Add(request, response, method);
                     break;
+                case "/Manager":
+                    managerProjectView(request, response);
+                    break;
                 default:
                     response.sendError(404);
                     break;
@@ -289,4 +292,95 @@ public class ProjectController extends HttpServlet {
         request.getRequestDispatcher("../Views/ProjectAdd.jsp").forward(request, response);
     }
     // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="ManagerProject">
+    private void managerProjectView(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        User user = (User) request.getSession().getAttribute("account");
+        String fromDate = request.getParameter("fromDate") != null ? request.getParameter("fromDate") : "";
+        String toDate = request.getParameter("toDate") != null ? request.getParameter("toDate") : "";
+        int status = request.getParameter("status") != null ? Integer.parseInt(request.getParameter("status")) : -1;
+        String search = request.getParameter("search") != null ? request.getParameter("search") : "";
+        String group = request.getParameter("group") != null ? request.getParameter("group") : "";
+        String pm = request.getParameter("pm") != null ? request.getParameter("pm") : "";
+        String code = request.getParameter("code");
+        int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+        int offset = (page - 1) * 3;
+
+        //this query for search and filter
+        String query1 = "SELECT * FROM hr_system_v2.project where manager_id = " + user.getId();
+        if (!fromDate.isEmpty()) {
+            query1 += " and start_date >= " + "'" + fromDate + "'";
+        }
+        if (!toDate.isEmpty()) {
+            query1 += " and end_date <= " + "'" + toDate + "'";
+        }
+        if (status != -1) {
+            query1 += " and status =  " + "'" + status + "'";
+        }
+        if (!search.isEmpty()) {
+            query1 += " and code like  " + "'%" + search + "%' or project_name like " + "'%" + search + "%'";
+        }
+        if (!group.isEmpty()) {
+            query1 += " and group_code = " + "'" + group + "'";
+        }
+        if (!pm.isEmpty()) {
+            query1 += " and manager_id = " + "'" + pm + "'";
+        }
+        query1 += " limit 3 offset " + offset;
+
+        //this query for  total contract
+        String query2 = "SELECT count(*) FROM hr_system_v2.project where manager_id = " + user.getId();
+        if (!fromDate.isEmpty()) {
+            query2 += " and start_date >= " + "'" + fromDate + "'";
+        }
+        if (!toDate.isEmpty()) {
+            query2 += " and end_date <= " + "'" + toDate + "'";
+        }
+        if (status != -1) {
+            query2 += " and c.status =  " + "'" + status + "'";
+        }
+        if (!search.isEmpty()) {
+            query2 += " and code or project_name like  " + "'%" + search + "%'";
+        }
+        if (!group.isEmpty()) {
+            query2 += " and group_code = " + "'" + group + "'";
+        }
+        if (!pm.isEmpty()) {
+            query2 += " and manager_id = " + "'" + pm + "'";
+        }
+        List<Project> p = new ArrayList<>();
+        p = projectDAO.getProjectList(query1);
+        for (int i = 0; i < p.size(); i++) {
+            if (p.get(i).getEffort() == 100) {
+                p.get(i).setStatus(1);
+                projectDAO.setStatus1(p.get(i));
+            } else {
+                p.get(i).setStatus(0);
+                projectDAO.setStatus0(p.get(i));
+            }
+        }
+        int projectCount = projectDAO.getTotalProject(query2);
+        int total = projectCount / 3 + (projectCount % 3 == 0 ? 0 : 1);
+        int begin = 1;
+        int end = 3;
+        while (page > end) {
+            end += 3;
+            begin += 3;
+        }
+        end = Math.min(end, total);
+        begin = Math.min(end, begin);
+        request.setAttribute("total", total);
+        request.setAttribute("begin", begin);
+        request.setAttribute("end", end);
+        request.setAttribute("currentNumber", page);
+        request.setAttribute("project",projectDAO.getOne(code));
+        request.setAttribute("group", groupDAO.getAllGroupCode());
+        request.setAttribute("projectList", projectDAO.getProjectList(query1));
+//        request.setAttribute("contractProcess", settingDAO.getTimesheetProcess());
+//        request.setAttribute("contractStatus", settingDAO.getTimesheetStatus());
+        request.getRequestDispatcher("/Views/ProjectManager.jsp").forward(request, response);
+    }
+    // </editor-fold>
+
 }

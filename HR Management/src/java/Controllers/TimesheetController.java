@@ -73,6 +73,12 @@ public class TimesheetController extends HttpServlet {
                 case "/GetAllTimeSheetInGroup":
                     getAllTimesheetInGroup(request, response);
                     break;
+                case "/Reject":
+                    rejectTimesheet(request, response);
+                    break;
+                case "/Approve":
+                    approveTimesheet(request, response);
+                    break;     
                 default:
                     response.sendError(404);
                     break;
@@ -305,7 +311,7 @@ public class TimesheetController extends HttpServlet {
         String username = request.getParameter("username") != null ? request.getParameter("username") : "";
         int process = request.getParameter("process") != null ? Integer.parseInt(request.getParameter("process")) : 0;
         int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
-        int offset = (page - 1) * 3;
+       
         if (!fromDate.isEmpty()) {
             condition += " and date >= " + "'" + fromDate + "'";
         }
@@ -324,12 +330,26 @@ public class TimesheetController extends HttpServlet {
         if (process != 0) {
             condition += " and process = " + "'" + process + "'";
         }
-        JsonElement element = gson.toJsonTree(timesheetDAO.getAllTimesheet(condition,user.getGroup_code()), new TypeToken<ArrayList<Timesheet>>() {
+        JsonElement element = gson.toJsonTree(timesheetDAO.getAllTimesheet(condition,user.getGroup_code(),page), new TypeToken<ArrayList<Timesheet>>() {
         }.getType());
         JsonArray jsonArray = element.getAsJsonArray();
         response.setContentType("application/json");
         response.getWriter().println(jsonArray);
-
+    }
+    
+    private void rejectTimesheet(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        response.setContentType("text/html;charset=UTF-8");
+        int id = Integer.parseInt(request.getParameter("id"));
+        String reject_reason = request.getParameter("reject_reason");
+        timesheetDAO.rejectTimesheet(id, reject_reason);
+    }
+    
+    private void approveTimesheet(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        response.setContentType("text/html;charset=UTF-8");
+        int id = Integer.parseInt(request.getParameter("id"));
+        timesheetDAO.approveTimesheet(id);
     }
 
 }
