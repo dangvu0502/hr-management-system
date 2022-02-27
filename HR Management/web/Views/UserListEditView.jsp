@@ -41,55 +41,11 @@
                 <!-- Add the class icon to your logo image or logo icon to add the margining -->
                 Home
             </a>
-            
+
         </header>
         <div class="wrapper row-offcanvas row-offcanvas-left">
             <!-- Left side column. contains the logo and sidebar -->
-            <aside class="left-side sidebar-offcanvas">
-                <!-- sidebar: style can be found in sidebar.less -->
-                <section class="sidebar">
-                    <!-- Sidebar user panel -->
-                    <div class="user-panel">
-                        <div class="pull-left image">
-                            <img src="img/avatar3.png" class="img-circle" alt="User Image" />
-                        </div>
-                        <div class="pull-left info">
-                            <p>${sessionScope.account.fullname}</p>
-
-                            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-                        </div>
-                    </div>
-                    <ul class="sidebar-menu">
-                        <li >
-                            <a href="../Views/Home.jsp">
-                                <i class="fa fa-home"></i> <span>Home Page</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<%= request.getContextPath()%>/BlogController">
-                                <i class="fa fa-rss"></i> <span>Blog</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<%= request.getContextPath()%>/SettingController/Setting">
-                                <i class="fa fa-gear"></i> <span>Setting List</span>
-                            </a>
-                        </li>
-                        <li >
-                            <a href="<%= request.getContextPath()%>/Group/GroupList">
-                                <i class="fa fa-user"></i> <span>Group List</span>
-                            </a>
-                        </li>
-                        <li class="active">
-                            <a href="<%= request.getContextPath()%>/SupportTypeController/SupportType">
-                                <i class="fa fa-user"></i> <span>Support Type</span>
-                            </a>
-                        </li>
-                    </ul>
-                    
-                </section>
-                <!-- /.sidebar -->
-            </aside>
+            <%@include  file="Header/Treebar.jsp" %>
 
             <!-- Right side column. Contains the navbar and content of the page -->
             <aside class="right-side">

@@ -70,36 +70,7 @@
         </header>
         <div class="wrapper row-offcanvas row-offcanvas-left">
             <!-- Left side column. contains the logo and sidebar -->
-            <aside class="left-side sidebar-offcanvas">
-                <!-- sidebar: style can be found in sidebar.less -->
-                <section class="sidebar">
-                    <!-- Sidebar user panel -->
-                    <div class="user-panel">
-                        <div class="pull-left image">
-                            <img src="../userimg/${sessionScope.account.avatar}" class="img-circle" alt="User Image" />
-                        </div>
-                        <div class="pull-left info">
-                            <p>${sessionScope.account.fullname}</p>
-
-                            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-                        </div>
-                    </div>
-                    <ul class="sidebar-menu">
-                        <li class="active">
-                            <a href="../Project/List">
-                                <i class="fa fa-glass"></i> <span>Project List</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="../Project/Add">
-                                <i class="fa fa-glass"></i> <span>Project Add</span>
-                            </a>
-                        </li>
-
-                    </ul>
-                </section>
-                <!-- /.sidebar -->
-            </aside>
+          <%@include  file="Header/Treebar.jsp" %>
             <!-- Main content -->
             <section class="content">
                 <div class="row">
