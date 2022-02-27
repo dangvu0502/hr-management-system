@@ -236,7 +236,7 @@ public class BlogDAO {
     public int GetTotalBlog() {
         int total = 0;
         try {
-            String sql = "select count(*) from hr_system_v2.blog where blog.Flag = 1";
+            String sql = "select count(*) from hr_system_v2.blog";
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();

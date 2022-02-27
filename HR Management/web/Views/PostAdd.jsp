@@ -107,7 +107,7 @@
                                    Add
                                 </header>
                                 <div class="panel-body" style="width: 50%">
-                                    <form action="../PostlistController/Addc" method="post">
+                                    <form action="../PostController/AddSubMit" method="post">
 
                                         <div class="row ">
                                             <div class="form-group col-lg-12">
@@ -119,7 +119,7 @@
                                             <div class="form-group col-lg-12">
                                                 <label for="thumnail">Thumnail</label>
                                                 <img id="images" class="centrel" src="#" width="150px" height="150px" alt="No Images">
-                                                <input type="text" class="form-control" name="ThumnailIMG" required="" onclick="Imga()">
+                                                <input id="IMGURL" type="text" class="form-control" name="ThumnailIMG" required="" onmousemove="Imga()">
                                             </div>
                                         </div>
                                         <div class="row ">
@@ -155,8 +155,8 @@
                                         <div class="row">
                                             <div class="form-group col-lg-12">
                                                 <label for="Status">Status</label><br>
-                                                <input  type="radio" name="foo" value="1" id="rbStatus" > <span style="margin-right: 2rem;" >Active</span>
-                                                <input type="radio" name="foo" value="0" id="rbStatus" checked="checked"> Deactivate
+                                                <input  type="radio" name="Flag" value="1" id="rbStatus" > <span style="margin-right: 2rem;" >Active</span>
+                                                <input type="radio" name="Flag" value="0" id="rbStatus" checked="checked"> Deactivate
                                             </div>
                                         </div>
                                         <div class=" form-group row col-lg-12 text-center">
@@ -193,7 +193,8 @@
                 }
             }
             function Imga(){
-                
+                var images = document.getElementById("images");
+                images.src= document.getElementById("URLIMG").value;
             }
         </script>
     </body>

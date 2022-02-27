@@ -47,6 +47,9 @@ public class PostController extends HttpServlet {
             case "/Add":
                 request.getRequestDispatcher("../Views/PostAdd.jsp").forward(request, response);
                 break;
+            case "/AddSubMit":
+                AddSubMit(request, response);
+                break;
             case "/Status":
                 String Slug = request.getParameter("Slug");
                 int Flag = Integer.parseInt(request.getParameter("Flag"));
@@ -120,7 +123,7 @@ public class PostController extends HttpServlet {
             if (check == false) {
                 return;
             }
-            response.sendRedirect("../PostlistController");
+            response.sendRedirect("../PostController/Views");
         } catch (Exception ex) {
             Logger.getLogger(PostDetailsController.class.getName()).log(Level.SEVERE, null, ex);
         }
