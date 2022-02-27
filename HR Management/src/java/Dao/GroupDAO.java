@@ -39,13 +39,14 @@ public class GroupDAO {
             rs = ps.executeQuery();
             while (rs.next()) {
                 Group g = new Group(
-                        rs.getString(1),
+                        rs.getInt(1),
                         rs.getString(2),
-                        new User(rs.getString(3)),
-                        rs.getString(4),
-                        rs.getInt(5),
-                        rs.getString(6),
-                        rs.getInt(7));
+                        rs.getString(3),
+                        new User(rs.getString(4)),
+                        rs.getString(5),
+                        rs.getInt(6),
+                        rs.getString(7),
+                        rs.getInt(8));
                 res.add(g);
             }
         } catch (Exception e) {
@@ -58,7 +59,7 @@ public class GroupDAO {
         return res;
     }
 
- public int getTotalGroup(String query) throws SQLException {
+    public int getTotalGroup(String query) throws SQLException {
         try {
             String sql = query;
             con = new DBContext().getConnection();
@@ -133,7 +134,6 @@ public class GroupDAO {
         }
     }
 
-
     public ArrayList<String> getAllPCode() throws SQLException {
         ArrayList<String> result = new ArrayList<String>();
         try {
@@ -154,29 +154,30 @@ public class GroupDAO {
         return result;
     }
 
-    
     public List<Group> getOne(String code) throws SQLException {
         List<Group> list = new ArrayList<>();
         try {
             //mo ket noi
             Connection conn = new DBContext().getConnection();
-            String sql = "SELECT g.code, g.name, u.fullname, g.parent_group_code, g.status, g.update_date, g.delete \n"
-                    + "FROM hr_system_v2.group g join hr_system_v2.user u \n"
-                    + "on g.manager_id = u.id  where code = ?;";
+            String sql = "SELECT g.manager_id, g.code, g.name, u.fullname, g.parent_group_code, g.status, g.update_date, g.delete \n"
+                    + "FROM hr_system_v2.group g join hr_system_v2.user u on g.manager_id = u.id \n"
+                    + " where code = ?;";
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
             ps.setString(1, code);
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                Group g = new Group( rs.getString(1),
-                rs.getString(2),
-                new User(rs.getString(3)),
-                rs.getString(4),
-                rs.getInt(5),
-                rs.getString(6),
-                rs.getInt(7));
-               
+                Group g = new Group(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        new User(rs.getString(4)),
+                        rs.getString(5),
+                        rs.getInt(6),
+                        rs.getString(7),
+                        rs.getInt(8));
+
                 list.add(g);
             }
         } catch (Exception ex) {
@@ -257,7 +258,7 @@ public class GroupDAO {
         }
         return result;
     }
-    
+
     public ArrayList<String> getDate(String code) throws SQLException {
         ArrayList<String> result = new ArrayList<String>();
         try {
@@ -302,7 +303,7 @@ public class GroupDAO {
     public void editGroup(String code, int manager_id, String name, int status, String parent_group_code, String update_date) throws SQLException {
         String sql = "UPDATE `hr_system_v2`.`group` SET `manager_id` = ?, `name` = ?, `status` = ?, `parent_group_code` = ?, `update_date` = ? "
                 + "WHERE (`code` = ?);";
-         try (
+        try (
                 Connection con = new DBContext().getConnection();
                 PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, manager_id);
@@ -315,13 +316,14 @@ public class GroupDAO {
             ps.executeUpdate();
         } catch (SQLException e) {
             throw e;
-        }finally {
+        } finally {
             if (con != null) {
                 con.close();
             }
         }
     }
-        public static String myFormatDate(String date) throws ParseException {
+
+    public static String myFormatDate(String date) throws ParseException {
         String pattern = "yyyy-MM-dd";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         return simpleDateFormat.format(new SimpleDateFormat("dd-MM-yyyy").parse(date));

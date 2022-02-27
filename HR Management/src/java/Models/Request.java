@@ -133,7 +133,7 @@ public class Request {
     public Request() {
     }
         public static String myFormatDate(String date) throws ParseException {
-        String pattern = "dd-MM-yyyy";
+        String pattern = "yyyy-MM-dd";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         return simpleDateFormat.format(new SimpleDateFormat("yyyy-MM-dd").parse(date));
     }

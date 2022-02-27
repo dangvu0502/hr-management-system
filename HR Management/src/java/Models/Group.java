@@ -70,7 +70,8 @@ public class Group {
 
     }
 
-    public Group(String code, String name, User fullname, String parent_group_code, int status, String update_date, int delete) {
+    public Group(int manager_id,String code, String name, User fullname, String parent_group_code, int status, String update_date, int delete) {
+        this.manager_id = manager_id;
         this.code = code;
         this.name = name;
         this.fullname = fullname;
@@ -132,7 +133,7 @@ public class Group {
     }
 
     public static String myFormatDate(String date) throws ParseException {
-        String pattern = "dd-MM-yyyy";
+        String pattern = "yyyy-MM-dd";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         return simpleDateFormat.format(new SimpleDateFormat("yyyy-MM-dd").parse(date));
     }

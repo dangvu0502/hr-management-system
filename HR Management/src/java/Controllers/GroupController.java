@@ -146,8 +146,8 @@ public class GroupController extends HttpServlet {
             int delete = request.getParameter("delete") != null ? Integer.parseInt(request.getParameter("delete")) : -1;
             int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
             int offset = (page - 1) * 3;
-            String query1 = "SELECT g.code, g.name, u.fullname, g.parent_group_code, g.status, g.update_date, g.delete \n"
-                    + "FROM hr_system_v2.group g join hr_system_v2.user u \n"
+            String query1 = "SELECT g.manager_id, g.code, g.name, u.fullname, g.parent_group_code, g.status, g.update_date, g.delete \n"
+                    + "FROM hr_system_v2.group g join hr_system_v2.user u\n"
                     + "where g.manager_id = u.id";
             if (!code.isEmpty()) {
                 query1 += " and g.code like " + "'%" + code + "%'";
@@ -167,7 +167,7 @@ public class GroupController extends HttpServlet {
             query1 += " limit 3 offset " + offset;
 
             //
-            String query2 = "SELECT count(*) FROM (SELECT g.code, g.name, u.fullname, g.parent_group_code, g.status, g.update_date, g.delete \n"
+            String query2 = "SELECT count(*) FROM (SELECT g.manager_id, g.code, g.name, u.fullname, g.parent_group_code, g.status, g.update_date, g.delete \n"
                     + "FROM hr_system_v2.group g join hr_system_v2.user u \n"
                     + "where g.manager_id = u.id) g where status = 1 or status = 0";
             if (!code.isEmpty()) {
@@ -340,12 +340,12 @@ public class GroupController extends HttpServlet {
     }
 
     private void groupEditImplement(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-        String code = request.getParameter("code"); 
+        String code = request.getParameter("code");
         String manager = request.getParameter("manager");
         String name = request.getParameter("name");
         String parent_group_code = request.getParameter("parent_group_code"); //null
         String status = request.getParameter("status"); //null
-        String update_date = request.getParameter("update_date"); 
+        String update_date = request.getParameter("update_date");
         groupDAO.editGroup(code, Integer.parseInt(manager), name, Integer.parseInt(status), parent_group_code, update_date);
         request.getSession().setAttribute("message", "Edit Group Successfully!!");
         response.sendRedirect("../Group/GroupEdit?code=" + code);
@@ -354,16 +354,17 @@ public class GroupController extends HttpServlet {
     private void groupEditView(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException, ParseException {
         String code = request.getParameter("code");
         List<Group> group = new GroupDAO().getOne(code);
-       
+
         request.setAttribute("listU", userDAO.getManagerFullname());
         request.setAttribute("groupCode", groupDAO.getAllPGroupCode());
         request.setAttribute("ListN", groupDAO.getAllName());
         request.setAttribute("ListD", groupDAO.getDate(code));
-     //   request.setAttribute("viDate", myFormatDate());
+        //   request.setAttribute("viDate", myFormatDate());
         request.setAttribute("group", group);
         request.getRequestDispatcher("../Views/GroupViewEdit.jsp").forward(request, response);
     }
-     private String myFormatDate(String date) throws ParseException {
+
+    private String myFormatDate(String date) throws ParseException {
         String pattern = "yyyy-MM-dd";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         return simpleDateFormat.format(new SimpleDateFormat("dd-MM-yyyy").parse(date));

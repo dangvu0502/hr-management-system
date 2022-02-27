@@ -165,7 +165,7 @@
                                                         <label for="manager">Manager</label>
                                                         <select class="form-control input-md" style="width: 200px;" name="manager">
                                                             <c:forEach items="${listU}" var="u">
-                                                                <option value="${g.manager_id}">${u.username}</option>
+                                                                <option value="${u.id}" ${g.manager_id eq u.id ?'selected':''}>${u.username}</option>
                                                             </c:forEach>
                                                         </select>
                                                     </div>

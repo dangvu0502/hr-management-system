@@ -131,7 +131,7 @@
 
                                     <div class="row">
                                         <div class="col-lg-2"></div>
-                                        <c:forEach items="${r}" var="r">
+                                        <c:forEach items="${requestlist}" var="r">
                                             <input name="id" value="${r.id}" hidden="">
                                             <div class="col-lg-8">
                                                 <div class="row">
