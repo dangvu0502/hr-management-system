@@ -287,7 +287,7 @@ public class RequestController extends HttpServlet {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         if (sdf.parse(update_date).before(sdf.parse(request_date))) {
             requestDAO.updateRequest(title, request_date, update_date, Integer.parseInt(support_type_id), Integer.parseInt(in_charge_staff),Integer.parseInt(status),id);
-            request.getSession().setAttribute("message", "Add Project Successfully!!");
+            request.getSession().setAttribute("message", "Edit Project Successfully!!");
             response.sendRedirect("/HR_Management/Request/EditRequest?id=" + id);
         } else {
             request.getSession().setAttribute("message", "End Date must after Start Date !!");
