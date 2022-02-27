@@ -130,15 +130,15 @@
                                                         <label for="support_type_id">Request Name</label>
                                                         <select class="form-control input-md" style="width: 200px;" name="support_type_id" >
                                                             <c:forEach var="sp" items="${listSP}">
-                                                                <option value="${sp.id}" >${sp.name}</option>
+                                                                <option value="${sp.id}" ${r.support_type_id eq sp.id ?'selected':''}  >${sp.name}</option>
                                                             </c:forEach>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="form-group col-lg-12">
-                                                        <label for="manager">Incharge Staff</label>
-                                                        <select class="form-control input-md" style="width: 200px;" name="manager">
+                                                        <label for="in_charge_staff">Incharge Staff</label>
+                                                        <select class="form-control input-md" style="width: 200px;" name="in_charge_staff">
                                                             <c:forEach items="${listU}" var="u">
                                                                 <option value="${u.id}">${u.username}</option>
                                                             </c:forEach>
@@ -148,7 +148,7 @@
                                                 <div class="row">
                                                     <div class="form-group col-lg-12">
                                                         <label for="status" >Status</label>
-                                                        <input  type="radio" name="status" value="1" style="margin-left: 10px" > <span style="margin-right: 5px" >Submitted</span>
+                                                        <input type="radio" name="status" value="1" style="margin-left: 10px" > <span style="margin-right: 5px" >Submitted</span>
                                                         <input type="radio" name="status" value="2" checked="checked" style="margin-right: 5px"   > Assigned
                                                         <input type="radio" name="status" value="3"  style="margin-right: 5px;" > Completed
                                                         <input type="radio" name="status" value="4"  style="margin-right: 5px;" > Closed

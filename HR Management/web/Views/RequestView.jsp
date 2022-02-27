@@ -215,9 +215,9 @@
 
                                                     <td>
                                                         <a href="#" class="btn btn-md btn-default" onclick="deleteRequest(${r.id})"><i class="fa fa-trash-o"></i></a>
-                                                            <c:if test="${timesheet.status != 2}">
-                                                            <a href="#" class="btn btn-md btn-default" onclick="window.open('http://localhost:8080/HR_Management/Timesheet/EditTimesheet?id=${timesheet.id}', '_blank')" ><i class="fa fa-pencil"></i></a>
-                                                            </c:if>
+
+                                                        <a href="#" class="btn btn-md btn-default" onclick="window.open('http://localhost:8080/HR_Management/Request/EditRequest?id=${r.id}', '_blank')" ><i class="fa fa-pencil"></i></a>
+
                                                     </td>
                                                 </tr>
                                             </c:forEach>

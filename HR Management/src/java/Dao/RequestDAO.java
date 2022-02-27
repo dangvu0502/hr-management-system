@@ -6,6 +6,7 @@
 package Dao;
 
 import Context.DBContext;
+import Models.Group;
 import Models.Request;
 import Models.SupportType;
 import Models.Timesheet;
@@ -15,6 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import org.apache.jasper.tagplugins.jstl.ForEach;
 
 /**
@@ -123,30 +125,83 @@ public class RequestDAO {
         return -1;
     }
 
-    public void addnewrequest(String title, String request_date, String update_date, int support_type_id, int in_charge_staff, String in_charge_group, int status) throws SQLException {
+    public void addnewrequest(String title, String request_date, String update_date, int support_type_id, int in_charge_staff, int status) throws SQLException {
         String sql = "INSERT INTO `hr_system_v2`.`request` \n"
-                + "(`title`, `request_date`, `update_date`, `support_type_id`, `in_charge_staff`, `in_charge_group`, `status`) \n"
-                + "VALUES (?, ?, ?, ?, ?, ?, ?);";
+                + "(`title`, `request_date`, `update_date`, `support_type_id`, `in_charge_staff`,  `status`) \n"
+                + "VALUES (?, ?, ?, ?, ?, ?);";
         try (
-            Connection con = new DBContext().getConnection();
-            PreparedStatement ps = con.prepareStatement(sql)) {
+                Connection con = new DBContext().getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, title);
             ps.setString(2, request_date);
             ps.setString(3, update_date);
             ps.setInt(4, support_type_id);
             ps.setInt(5, in_charge_staff);
-            ps.setString(6, in_charge_group);
-            ps.setInt(7, status);
-            
+
+            ps.setInt(6, status);
+
             // execute update SQL stetement
             ps.executeUpdate();
         } catch (SQLException e) {
             throw e;
-        }finally {
+        } finally {
             if (con != null) {
                 con.close();
             }
         }
+    }
+
+    public void updateRequest(String title, String request_date, String update_date, int support_type_id, int in_charge_staff, int status, int id) throws SQLException {
+        String sql = "UPDATE `hr_system_v2`.`request` SET `title` = ?, `request_date` = ?, `update_date` = ?, `support_type_id` = ?,`in_charge_staff` = ? , `status` = ? WHERE (`id` = ?);";
+        try (
+                Connection con = new DBContext().getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, title);
+            ps.setString(2, request_date);
+            ps.setString(3, update_date);
+            ps.setInt(4, support_type_id);
+            ps.setInt(5, in_charge_staff);
+            ps.setInt(6, status);
+            ps.setInt(7, id);
+            // execute update SQL stetement
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw e;
+        }
+    }
+
+    public List<Request> getOne(int id) throws SQLException {
+        List<Request> list = new ArrayList<>();
+        try {
+            //mo ket noi
+            Connection conn = new DBContext().getConnection();
+            String sql = "SELECT r.id, r.request_date, r.title, (s.name) as RequestName, (u.fullname) as 'Incharge Staff', r.status, r.update_date FROM ((hr_system_v2.request r \n"
+                    + "                join hr_system_v2.`support type` s on r.support_type_id = s.id)\n"
+                    + "                join hr_system_v2.user u on r.in_charge_staff = u.id)\n"
+                    + "                where r.id = ?;";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Request r = new Request(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        new SupportType(rs.getString(4)),
+                        new User(rs.getString(5)),
+                        rs.getInt(6),
+                        rs.getString(7));
+                list.add(r);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+        }
+        return list;
     }
 
     public int getAllStatus() throws SQLException {

@@ -21,6 +21,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -64,18 +65,17 @@ public class RequestController extends HttpServlet {
                     showRequestListView(request, response);
                     break;
                 case "/AddRequest":
-                      addRequest(request, response, method);
-//                    break;
+                    addRequest(request, response, method);
+                    break;
 //                case "/TimesheetDetail":
 //                    showRequestDetailView(request, response);
 //                    break;
                 case "/DeleteRequest":
                     deleteRequest(request, response);
-//                    break;
-//                case "/EditTimesheet":
-//                    editRequest(request, response, method);
-//                    break;
-
+                    break;
+                case "/EditRequest":
+                    editRequest(request, response, method);
+                    break;
                 default:
                     response.sendError(404);
                     break;
@@ -141,7 +141,7 @@ public class RequestController extends HttpServlet {
         }
         if (!name.isEmpty()) {
             sql1 += " and s.name like  " + "'%" + name + "%'";
-        } 
+        }
         if (status != 0) {
             sql1 += " and r.status = " + "'" + status + "'";
         }
@@ -224,7 +224,7 @@ public class RequestController extends HttpServlet {
         int count = requestDAO.getTotalRequest(sql2);
         int total = count / 3 + (count % 3 == 0 ? 0 : 1);
         response.getWriter().print(Math.min(total, page));
-        
+
     }
 
     private void addRequest(HttpServletRequest request, HttpServletResponse response, String method) {
@@ -239,17 +239,23 @@ public class RequestController extends HttpServlet {
         }
     }
 
-    private void groupAddImplement(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+    private void groupAddImplement(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ParseException {
         String title = request.getParameter("title");
         String update_date = request.getParameter("update_date");
         String request_date = request.getParameter("request_date");
         String support_type_id = request.getParameter("support_type_id");
-        String in_charge_staff = request.getParameter("in_charge_staff");
-        String in_charge_group = request.getParameter("in_charge_group");
+        String in_charge_staff = request.getParameter("in_charge_staff"); //null
         String status = request.getParameter("status");
-        requestDAO.addnewrequest(title, request_date, update_date, Integer.parseInt(support_type_id),Integer.parseInt(in_charge_staff), in_charge_group, Integer.parseInt(status));
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        if (sdf.parse(update_date).before(sdf.parse(request_date))) {
+           requestDAO.addnewrequest(title, request_date, update_date, Integer.parseInt(support_type_id), Integer.parseInt(in_charge_staff), Integer.parseInt(status));
         request.getSession().setAttribute("message", "Add Project Successfully!!");
         response.sendRedirect("../Request/AddRequest");
+        } else {
+            request.getSession().setAttribute("message", "End Date must after Start Date !!");
+             response.sendRedirect("../Request/AddRequest");
+        }
+        
     }
 
     private void addGroupView(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
@@ -258,6 +264,44 @@ public class RequestController extends HttpServlet {
         request.getRequestDispatcher("../Views/RequestViewAdd.jsp").forward(request, response);
     }
 
+    private void editRequest(HttpServletRequest request, HttpServletResponse response, String method) {
+        try (PrintWriter out = response.getWriter();) {
+            if (method.equalsIgnoreCase("post")) {
+                requestEditImplement(request, response);
+            } else if (method.equalsIgnoreCase("get")) {
+                editRequestView(request, response);
+            }
+        } catch (Exception ex) {
+            log(ex.getMessage());
+        }
+    }
 
-    
+    private void requestEditImplement(HttpServletRequest request, HttpServletResponse response) throws SQLException, ParseException, IOException {
+        String title = request.getParameter("title");
+        String update_date = request.getParameter("update_date");
+        String request_date = request.getParameter("request_date");
+        String support_type_id = request.getParameter("support_type_id");
+        String in_charge_staff = request.getParameter("in_charge_staff");
+        String status = request.getParameter("status");
+        String id = request.getParameter("id");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        if (sdf.parse(update_date).before(sdf.parse(request_date))) {
+        requestDAO.updateRequest(title, request_date, update_date, Integer.parseInt(support_type_id), Integer.parseInt(in_charge_staff),Integer.parseInt(status),Integer.parseInt(id));
+        request.getSession().setAttribute("message", "Add Project Successfully!!");
+        response.sendRedirect("../Request/EditRequest");
+        } else {
+            request.getSession().setAttribute("message", "End Date must after Start Date !!");
+             response.sendRedirect("../Request/EditRequest");
+        }
+    }
+
+    private void editRequestView(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+        String id = request.getParameter("id");
+        List<Request> r = new RequestDAO().getOne(Integer.parseInt(id));
+        request.setAttribute("listSP", supporttypeDAO.getAllSpName());
+        request.setAttribute("listU", userDAO.getManagerFullname());
+        request.getRequestDispatcher("../Views/RequestViewEdit.jsp").forward(request, response);
+        request.setAttribute("r", r);
+    }
+
 }
