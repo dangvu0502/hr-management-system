@@ -122,7 +122,9 @@
                                                 <div class="row">
                                                     <div class="form-group col-lg-12">
                                                         <label for="request_date">Request Date</label><i style="color: red; font-size: 20px">*</i>
+                                                        
                                                         <input type="date" class="form-control" name="request_date" value="${r.request_date}" required="">
+                                                        <h5 style="color: red"><i>End Date must after Start Date !!</i></h5>
                                                     </div>
                                                 </div>
                                                 <div class="row">
