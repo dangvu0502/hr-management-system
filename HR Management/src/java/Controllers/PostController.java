@@ -7,6 +7,7 @@ package Controllers;
 
 import Dao.BlogDAO;
 import Models.BLog;
+import Models.Category;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -45,6 +46,10 @@ public class PostController extends HttpServlet {
                 ViewPostList(request, response);
                 break;
             case "/Add":
+                Vector<Category> e = new Vector<>();
+                BlogDAO eDAO = new BlogDAO();
+                e = eDAO.GetCategory();
+                request.setAttribute("Categorys", e);
                 request.getRequestDispatcher("../Views/PostAdd.jsp").forward(request, response);
                 break;
             case "/AddSubMit":
