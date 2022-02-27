@@ -174,7 +174,7 @@ public class SupportTypeDAO {
      public List<SupportType> getAllSpName() throws SQLException {
         List<SupportType> result = new ArrayList<SupportType>();
         try {
-            String sql = "SELECT id, fullname FROM hr_system_v2.user;";
+            String sql = "SELECT id, name FROM hr_system_v2.`support type`;";
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
