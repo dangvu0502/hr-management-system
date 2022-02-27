@@ -47,6 +47,16 @@ public class Group {
     public void setFullname(User fullname) {
         this.fullname = fullname;
     }
+    public Group(String code, String name, int manager_id, String parent_group_code, int status, String update_date, int delete) {
+        this.code = code;
+        this.manager_id = manager_id;
+        this.name = name;
+        this.status = status;
+        this.parent_group_code = parent_group_code;
+        this.delete = delete;
+        this.update_date = update_date;
+
+    }
 
     public Group(String code, int manager_id, String name, int status, String description, String parent_group_code, int delete, String update_date) {
         this.code = code;

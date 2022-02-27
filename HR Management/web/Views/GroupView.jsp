@@ -202,7 +202,7 @@
                                                             <c:if test = "${g.delete == 0}">
                                                             <a id="delete" href="../Group/Delete?delete=0&code=${g.code}&page=${currentNumber}"><i class="glyphicon glyphicon-refresh" ></i></a>
                                                             </c:if>
-                                                        <a style="margin-left: 10px" href="../SupportTypeController/SupportTypeEdit?id=${s.id}&name=${s.name}&incharge=${s.in_charge_group}&email=${s.email}&status=${s.status}&description=${s.description}" <span class="glyphicon glyphicon-edit"></span></a>
+                                                            <a style="margin-left: 10px" onclick="window.open('http://localhost:8080/HR_Management/Group/GroupEdit?code=${g.code}', '_blank')" > <span class="glyphicon glyphicon-edit"></span></a>
                                                     </td>
                                                 </tr>
                                             </c:forEach>

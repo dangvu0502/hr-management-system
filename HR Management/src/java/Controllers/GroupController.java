@@ -11,6 +11,7 @@ import Dao.SettingDAO;
 import Dao.SupportTypeDAO;
 import Dao.UserDAO;
 import Models.Group;
+import static Models.Group.myFormatDate;
 import Models.SupportType;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -65,7 +66,7 @@ public class GroupController extends HttpServlet {
                     GroupAdd(request, response, method);
                     break;
                 case "/GroupEdit":
-//                    GroupEdit(request, response);
+                    GroupEdit(request, response, method);
                     break;
                 case "/Delete":
                     changeStatusDelete(request, response);
@@ -227,7 +228,7 @@ public class GroupController extends HttpServlet {
         }
     }
 
-    private void GroupAddImplement(HttpServletRequest request, HttpServletResponse response) throws SQLException, ParseException, IOException {
+    private void GroupAddImplement(HttpServletRequest request, HttpServletResponse response) throws SQLException, ParseException, IOException, Exception {
         String code = request.getParameter("code"); //null
         String manager = request.getParameter("manager");
         String name = request.getParameter("name");
@@ -236,8 +237,14 @@ public class GroupController extends HttpServlet {
         String status = request.getParameter("status");
         String update_date = request.getParameter("update_date"); //null
         groupDAO.addnewGroup(code, Integer.parseInt(manager), name, Integer.parseInt(status), parent_group_code, update_date);
-        request.getSession().setAttribute("message", "Add Project Successfully!!");
-        response.sendRedirect("../Group/GroupAdd");
+        if (groupDAO.SearchByCode(code) != null) {
+            request.getSession().setAttribute("codeErrorMessage", "Add Group Failed Code existed");
+            response.sendRedirect("../Group/GroupAdd");
+        } else {
+            request.getSession().setAttribute("message", "Add Group Successfully!!");
+            response.sendRedirect("../Group/GroupAdd");
+        }
+
     }
 
     private void addGroupView(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
@@ -245,7 +252,7 @@ public class GroupController extends HttpServlet {
         request.setAttribute("listU", userDAO.getManagerFullname());
         request.setAttribute("group", groupDAO.getAllPGroupCode());
         request.setAttribute("ListN", groupDAO.getAllName());
-        
+
         request.getRequestDispatcher("/Views/GroupViewAdd.jsp").forward(request, response);
     }
 
@@ -320,6 +327,47 @@ public class GroupController extends HttpServlet {
         }
     }
 
+    private void GroupEdit(HttpServletRequest request, HttpServletResponse response, String method) {
+        try (PrintWriter out = response.getWriter();) {
+            if (method.equalsIgnoreCase("post")) {
+                groupEditImplement(request, response);
+            } else if (method.equalsIgnoreCase("get")) {
+                groupEditView(request, response);
+            }
+        } catch (Exception ex) {
+            log(ex.getMessage());
+        }
+    }
+
+    private void groupEditImplement(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        String code = request.getParameter("code"); 
+        String manager = request.getParameter("manager");
+        String name = request.getParameter("name");
+        String parent_group_code = request.getParameter("parent_group_code"); //null
+        String status = request.getParameter("status"); //null
+        String update_date = request.getParameter("update_date"); 
+        groupDAO.editGroup(code, Integer.parseInt(manager), name, Integer.parseInt(status), parent_group_code, update_date);
+        request.getSession().setAttribute("message", "Edit Group Successfully!!");
+        response.sendRedirect("../Group/GroupEdit?code=" + code);
+    }
+
+    private void groupEditView(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException, ParseException {
+        String code = request.getParameter("code");
+        List<Group> group = new GroupDAO().getOne(code);
+       
+        request.setAttribute("listU", userDAO.getManagerFullname());
+        request.setAttribute("groupCode", groupDAO.getAllPGroupCode());
+        request.setAttribute("ListN", groupDAO.getAllName());
+        request.setAttribute("ListD", groupDAO.getDate(code));
+     //   request.setAttribute("viDate", myFormatDate());
+        request.setAttribute("group", group);
+        request.getRequestDispatcher("../Views/GroupViewEdit.jsp").forward(request, response);
+    }
+     private String myFormatDate(String date) throws ParseException {
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        return simpleDateFormat.format(new SimpleDateFormat("dd-MM-yyyy").parse(date));
+    }
 }
 //</editor-fold>
 

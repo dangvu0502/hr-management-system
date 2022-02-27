@@ -93,7 +93,7 @@
                                 </header>
                                 <c:if test="${message != null}">
                                     <c:choose>
-                                        <c:when test = "${message eq 'Add Project Successfully!!'}">
+                                        <c:when test = "${message eq 'Add Group Successfully!!'}">
                                             <div class="error alert alert-success" role="alert">
                                                 <p class="mb-0">${message}</p>
                                             </div>
@@ -114,12 +114,8 @@
                                             <div class="col-lg-8">
                                                 <div class="row ">
                                                     <div class="form-group col-lg-12">
-                                                        <label for="code">Group Code</label><i style="color: red; font-size: 20px">*</i>
-                                                        <select class="form-control input-md" style="width: 200px;" name="code" >
-                                                            <c:forEach var="listG" items="${listG}">
-                                                                <option value="${listG}" >${listG}</option>
-                                                            </c:forEach>
-                                                        </select>
+                                                        <label for="code">GroupCode</label><i style="color: red; font-size: 20px">*</i>
+                                                        <input type="text" class="form-control" name="code" required="">
                                                     </div>
                                                 </div>
                                                 <div class="row">
