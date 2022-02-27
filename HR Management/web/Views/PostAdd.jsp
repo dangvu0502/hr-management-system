@@ -194,7 +194,7 @@
             }
             function Imga(){
                 var images = document.getElementById("images");
-                images.src= document.getElementById("URLIMG").value;
+                images.src= document.getElementById("IMGURL").value;
             }
         </script>
     </body>
