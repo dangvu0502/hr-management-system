@@ -283,12 +283,12 @@ public class RequestController extends HttpServlet {
         String support_type_id = request.getParameter("support_type_id");
         String in_charge_staff = request.getParameter("in_charge_staff");
         String status = request.getParameter("status");
-        String id = request.getParameter("id");
+        int id = Integer.parseInt(request.getParameter("id"));
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         if (sdf.parse(update_date).before(sdf.parse(request_date))) {
-        requestDAO.updateRequest(title, request_date, update_date, Integer.parseInt(support_type_id), Integer.parseInt(in_charge_staff),Integer.parseInt(status),Integer.parseInt(id));
-        request.getSession().setAttribute("message", "Add Project Successfully!!");
-        response.sendRedirect("../Request/EditRequest");
+            requestDAO.updateRequest(title, request_date, update_date, Integer.parseInt(support_type_id), Integer.parseInt(in_charge_staff),Integer.parseInt(status),id);
+            request.getSession().setAttribute("message", "Add Project Successfully!!");
+            response.sendRedirect("/HR_Management/Request/EditRequest?id=" + id);
         } else {
             request.getSession().setAttribute("message", "End Date must after Start Date !!");
              response.sendRedirect("../Request/EditRequest");
@@ -296,8 +296,8 @@ public class RequestController extends HttpServlet {
     }
 
     private void editRequestView(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
-        String id = request.getParameter("id");
-        List<Request> requestList = new RequestDAO().getOne(Integer.parseInt(id));
+        int id = Integer.parseInt(request.getParameter("id"));
+        List<Request> requestList = new RequestDAO().getOne(id);
         request.setAttribute("listSP", supporttypeDAO.getAllSpName());
         request.setAttribute("listU", userDAO.getManagerFullname());
         request.setAttribute("requestList", requestList);
