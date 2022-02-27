@@ -115,7 +115,7 @@
                                                 <div class="row ">
                                                     <div class="form-group col-lg-12">
                                                         <label for="code">Group Code</label><i style="color: red; font-size: 20px">*</i>
-                                                        <select class="form-control input-md" style="width: 200px;" name="group" >
+                                                        <select class="form-control input-md" style="width: 200px;" name="code" >
                                                             <c:forEach var="listG" items="${listG}">
                                                                 <option value="${listG}" >${listG}</option>
                                                             </c:forEach>
@@ -135,7 +135,7 @@
                                                 <div class="row">
                                                     <div class="form-group col-lg-12">
                                                         <label for="group">Group Parent Code</label>
-                                                        <select class="form-control input-md" style="width: 200px;" name="group" >
+                                                        <select class="form-control input-md" style="width: 200px;" name="parent_group_code" >
                                                             <c:forEach var="group" items="${group}">
                                                                 <option value="${group}" ${p.groupCode eq group ?'selected':''} >${group}</option>
                                                             </c:forEach>
@@ -163,9 +163,11 @@
                                                     <div class="form-group col-lg-12">
                                                         <jsp:useBean id="now" class="java.util.Date" />
                                                         <fmt:formatDate var="date" value="${now}" pattern="yyyy-MM-dd" />
-                                                        <label for="update_date">Update date</label>
+                                                        <label for="update_date1">Update date</label>
                                                         <h5 style="color: red"><i>By add new group, start date will set from now on....<br/>Otherwise you can edit it later</i></h5>
-                                                        <input type="date" class="form-control" name="update_date" value="${date}" disabled="">
+                                                        <input type="date" class="form-control" name="update_dat1e" value="${date}" disabled="">
+                                                        
+                                                        <input name="update_date" value="${date}" hidden="">
                                                         
                                                     </div>
                                                 </div>

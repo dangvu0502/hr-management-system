@@ -228,13 +228,13 @@ public class GroupController extends HttpServlet {
     }
 
     private void GroupAddImplement(HttpServletRequest request, HttpServletResponse response) throws SQLException, ParseException, IOException {
-        String code = request.getParameter("code");
+        String code = request.getParameter("code"); //null
         String manager = request.getParameter("manager");
         String name = request.getParameter("name");
-        String fullname = request.getParameter("fullname");
-        String parent_group_code = request.getParameter("parent_group_code");
+        String fullname = request.getParameter("fullname"); //null
+        String parent_group_code = request.getParameter("parent_group_code"); //null
         String status = request.getParameter("status");
-        String update_date = request.getParameter("update_date");
+        String update_date = request.getParameter("update_date"); //null
         groupDAO.addnewGroup(code, Integer.parseInt(manager), name, Integer.parseInt(status), parent_group_code, update_date);
         request.getSession().setAttribute("message", "Add Project Successfully!!");
         response.sendRedirect("../Group/GroupAdd");
