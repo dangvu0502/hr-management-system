@@ -283,10 +283,10 @@ public class RequestController extends HttpServlet {
         String support_type_id = request.getParameter("support_type_id");
         String in_charge_staff = request.getParameter("in_charge_staff");
         String status = request.getParameter("status");
-        int id = Integer.parseInt(request.getParameter("id"));
+        String id = request.getParameter("id");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         if (sdf.parse(update_date).before(sdf.parse(request_date))) {
-        requestDAO.updateRequest(title, request_date, update_date, Integer.parseInt(support_type_id), Integer.parseInt(in_charge_staff),Integer.parseInt(status),id);
+        requestDAO.updateRequest(title, request_date, update_date, Integer.parseInt(support_type_id), Integer.parseInt(in_charge_staff),Integer.parseInt(status),Integer.parseInt(id));
         request.getSession().setAttribute("message", "Add Project Successfully!!");
         response.sendRedirect("../Request/EditRequest");
         } else {
@@ -296,12 +296,12 @@ public class RequestController extends HttpServlet {
     }
 
     private void editRequestView(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        List<Request> requestlist = new RequestDAO().getOne(id);
+        String id = request.getParameter("id");
+        List<Request> requestList = new RequestDAO().getOne(Integer.parseInt(id));
         request.setAttribute("listSP", supporttypeDAO.getAllSpName());
         request.setAttribute("listU", userDAO.getManagerFullname());
+        request.setAttribute("requestList", requestList);
         request.getRequestDispatcher("../Views/RequestViewEdit.jsp").forward(request, response);
-        request.setAttribute("requestlist", requestlist);
     }
 
 }

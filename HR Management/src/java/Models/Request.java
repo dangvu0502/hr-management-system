@@ -28,7 +28,17 @@ public class Request {
         this.status = status;
         this.update_date = update_date;
     }
-
+    public Request(int id, String request_date, String title, int support_type_id,int incharge_staff, SupportType name, User fullname, int status, String update_date) {
+        this.id = id;
+        this.request_date = request_date;
+        this.title = title;
+        this.support_type_id = support_type_id;
+        this.incharge_staff = incharge_staff;
+        this.name = name;
+        this.fullname = fullname;
+        this.status = status;
+        this.update_date = update_date;
+    }
     @Override
     public String toString() {
         return "Request{" + "id=" + id + ", title=" + title + ", request_date=" + request_date + ", update_date=" + update_date + ", support_type_id=" + support_type_id + ", incharge_staff=" + incharge_staff + ", incharge_group=" + incharge_group + ", status=" + status + ", name=" + name + ", fullname=" + fullname + '}';

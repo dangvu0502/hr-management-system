@@ -94,7 +94,7 @@
                                                                         <select class="form-control input-md" style="width: 200px;" name="name" id="name">
                                                                             <option value="">Support Type</option>
                                                                             <c:forEach var="sp" items="${supportName}" >
-                                                                                <option value="${sp}">${sp}</option>
+                                                                                <option value="${sp.name}">${sp.name}</option>
                                                                             </c:forEach>
                                                                         </select>
                                                                     </div>

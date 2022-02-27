@@ -175,10 +175,10 @@ public class RequestDAO {
         try {
             //mo ket noi
             Connection conn = new DBContext().getConnection();
-            String sql = "SELECT r.id, r.request_date, r.title, (s.name) as RequestName, (u.fullname) as 'Incharge Staff', r.status, r.update_date FROM ((hr_system_v2.request r \n"
-                    + "                join hr_system_v2.`support type` s on r.support_type_id = s.id)\n"
-                    + "                join hr_system_v2.user u on r.in_charge_staff = u.id)\n"
-                    + "                where r.id = ?;";
+            String sql = "SELECT r.id, r.request_date, r.title,r.support_type_id,r.in_charge_staff, (s.name) as RequestName, (u.fullname) as 'Incharge Staff', r.status, r.update_date FROM ((hr_system_v2.request r\n"
+                    + "join hr_system_v2.`support type` s on r.support_type_id = s.id)\n"
+                    + "join hr_system_v2.user u on r.in_charge_staff = u.id)\n"
+                    + " where r.support_type_id = s.id and r.id = ?";
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
@@ -188,10 +188,12 @@ public class RequestDAO {
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
-                        new SupportType(rs.getString(4)),
-                        new User(rs.getString(5)),
-                        rs.getInt(6),
-                        rs.getString(7));
+                        rs.getInt(4),
+                        rs.getInt(5),
+                        new SupportType(rs.getString(6)),
+                        new User(rs.getString(7)),
+                        rs.getInt(8),
+                        rs.getString(9));
                 list.add(r);
             }
         } catch (Exception ex) {
