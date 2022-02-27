@@ -330,11 +330,14 @@ public class TimesheetController extends HttpServlet {
         if (process != 0) {
             condition += " and process = " + "'" + process + "'";
         }
-        JsonElement element = gson.toJsonTree(timesheetDAO.getAllTimesheet(condition,user.getGroup_code(),page), new TypeToken<ArrayList<Timesheet>>() {
-        }.getType());
-        JsonArray jsonArray = element.getAsJsonArray();
+//        JsonElement element = gson.toJsonTree(timesheetDAO.getAllTimesheet(condition,user.getGroup_code(),page), new TypeToken<ArrayList<Timesheet>>() {
+//        }.getType());
+        ResponseData responseData = new ResponseData();
+        int total = timesheetDAO.getTotalTimesheet(condition,user.getGroup_code())/3 + (timesheetDAO.getTotalTimesheet(condition,user.getGroup_code())%3 == 0 ? 0 : 1); 
+        responseData.setTotal(total);
+        responseData.setData(timesheetDAO.getAllTimesheet(condition,user.getGroup_code(),page));
         response.setContentType("application/json");
-        response.getWriter().println(jsonArray);
+        response.getWriter().println(gson.toJson(responseData));
     }
     
     private void rejectTimesheet(HttpServletRequest request, HttpServletResponse response)
@@ -351,5 +354,35 @@ public class TimesheetController extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         timesheetDAO.approveTimesheet(id);
     }
-
+    
 }
+
+ class ResponseData <T>{
+    private int total;
+    private ArrayList<T> data;
+
+    public ResponseData() {
+    }
+
+    public ResponseData(int total, ArrayList<T> data) {
+        this.total = total;
+        this.data = data;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
+    public ArrayList<T> getData() {
+        return data;
+    }
+
+    public void setData(ArrayList<T> data) {
+        this.data = data;
+    }
+    
+ }
