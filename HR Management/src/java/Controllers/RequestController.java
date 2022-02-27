@@ -7,6 +7,7 @@ package Controllers;
 
 import Dao.RequestDAO;
 import Dao.SupportTypeDAO;
+import Dao.UserDAO;
 import Models.Request;
 import Models.Timesheet;
 import Models.User;
@@ -17,6 +18,8 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,10 +36,12 @@ public class RequestController extends HttpServlet {
 
     private RequestDAO requestDAO;
     private SupportTypeDAO supporttypeDAO;
+    private UserDAO userDAO;
 
     public void init() {
         requestDAO = new RequestDAO();
         supporttypeDAO = new SupportTypeDAO();
+        userDAO = new UserDAO();
     }
 
     /**
@@ -58,24 +63,22 @@ public class RequestController extends HttpServlet {
                 case "/RequestList":
                     showRequestListView(request, response);
                     break;
-//                case "/NewTimesheet":
-//                    newRequest(request, response, method);
+                case "/AddRequest":
+                      addRequest(request, response, method);
 //                    break;
 //                case "/TimesheetDetail":
 //                    showRequestDetailView(request, response);
 //                    break;
-//                case "/DeleteTimesheet":
-//                    deleteRequest(request, response);
+                case "/DeleteRequest":
+                    deleteRequest(request, response);
 //                    break;
 //                case "/EditTimesheet":
 //                    editRequest(request, response, method);
 //                    break;
-                case "/GetAllRequest":
-                    getAllRequest(request, response);
+
+                default:
+                    response.sendError(404);
                     break;
-//                default:
-//                    response.sendError(404);
-//                    break;
             }
         } catch (Exception ex) {
             log(ex.getMessage());
@@ -123,10 +126,10 @@ public class RequestController extends HttpServlet {
         int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
         int offset = (page - 1) * 3;
         //
-        String sql1 = "SELECT r.request_date, r.title, (s.name) as RequestName, (u.fullname) as 'Incharge Staff', r.status, r.update_date FROM ((hr_system_v2.request r \n"
-                + "join hr_system_v2.`support type` s on r.support_type_id = s.id)\n"
-                + "join hr_system_v2.user u on r.in_charge_staff = u.id)\n"
-                + "where r.support_type_id = s.id";
+        String sql1 = "SELECT r.id, r.request_date, r.title, (s.name) as RequestName, (u.fullname) as 'Incharge Staff', r.status, r.update_date FROM ((hr_system_v2.request r \n"
+                + "                join hr_system_v2.`support type` s on r.support_type_id = s.id)\n"
+                + "                join hr_system_v2.user u on r.in_charge_staff = u.id)\n"
+                + "                where r.support_type_id = s.id";
         if (!fromDate.isEmpty()) {
             sql1 += " and r.request_date >= " + "'" + fromDate + "'";
         }
@@ -138,7 +141,7 @@ public class RequestController extends HttpServlet {
         }
         if (!name.isEmpty()) {
             sql1 += " and s.name like  " + "'%" + name + "%'";
-        }
+        } 
         if (status != 0) {
             sql1 += " and r.status = " + "'" + status + "'";
         }
@@ -186,16 +189,75 @@ public class RequestController extends HttpServlet {
 
     }
 
-    private void getAllRequest(HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
-        response.setContentType("text/html;charset=UTF-8");
-        Gson gson = new Gson();
-        JsonElement element = gson.toJsonTree(requestDAO.getAllRequest(), new TypeToken<ArrayList<Timesheet>>() {
-        }.getType());
-        JsonArray jsonArray = element.getAsJsonArray();
-        response.setContentType("application/json");
-        response.getWriter().println(jsonArray);
+// </editor-fold>
+    private void deleteRequest(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        requestDAO.deleteGroupById(id);
+        String fromDate = request.getParameter("fromDate") != null ? request.getParameter("fromDate") : "";
+        String toDate = request.getParameter("toDate") != null ? request.getParameter("toDate") : "";
+        String title = request.getParameter("title") != null ? request.getParameter("title") : "";
+        String name = request.getParameter("name") != null ? request.getParameter("name") : "";
+        int status = request.getParameter("status") != null ? Integer.parseInt(request.getParameter("status")) : 0;
+        int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+
+        String sql2 = "SELECT count(r.support_type_id) FROM ((hr_system_v2.request r \n"
+                + "join hr_system_v2.`support type` s on r.support_type_id = s.id)\n"
+                + "join hr_system_v2.user u on r.in_charge_staff = u.id)\n"
+                + "where r.support_type_id = s.id";
+        if (!fromDate.isEmpty()) {
+            sql2 += " and r.request_date >= " + "'" + fromDate + "'";
+        }
+        if (!toDate.isEmpty()) {
+            sql2 += " and r.request_date <= " + "'" + toDate + "'";
+        }
+
+        if (!title.isEmpty()) {
+            sql2 += " and r.title like  " + "'%" + title + "%'";
+        }
+        if (!name.isEmpty()) {
+            sql2 += " and s.name like  " + "'%" + name + "%'";
+        }
+        if (status != 0) {
+            sql2 += " and r.status = " + "'" + status + "'";
+        }
+
+        int count = requestDAO.getTotalRequest(sql2);
+        int total = count / 3 + (count % 3 == 0 ? 0 : 1);
+        response.getWriter().print(Math.min(total, page));
+        
     }
 
-// </editor-fold>
+    private void addRequest(HttpServletRequest request, HttpServletResponse response, String method) {
+        try (PrintWriter out = response.getWriter();) {
+            if (method.equalsIgnoreCase("post")) {
+                groupAddImplement(request, response);
+            } else if (method.equalsIgnoreCase("get")) {
+                addGroupView(request, response);
+            }
+        } catch (Exception ex) {
+            log(ex.getMessage());
+        }
+    }
+
+    private void groupAddImplement(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        String title = request.getParameter("title");
+        String update_date = request.getParameter("update_date");
+        String request_date = request.getParameter("request_date");
+        String support_type_id = request.getParameter("support_type_id");
+        String in_charge_staff = request.getParameter("in_charge_staff");
+        String in_charge_group = request.getParameter("in_charge_group");
+        String status = request.getParameter("status");
+        requestDAO.addnewrequest(title, request_date, update_date, Integer.parseInt(support_type_id),Integer.parseInt(in_charge_staff), in_charge_group, Integer.parseInt(status));
+        request.getSession().setAttribute("message", "Add Project Successfully!!");
+        response.sendRedirect("../Request/AddRequest");
+    }
+
+    private void addGroupView(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+        request.setAttribute("listSP", supporttypeDAO.getAllSpName());
+        request.setAttribute("listU", userDAO.getManagerFullname());
+        request.getRequestDispatcher("../Views/RequestViewAdd.jsp").forward(request, response);
+    }
+
+
+    
 }

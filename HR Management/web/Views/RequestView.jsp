@@ -174,7 +174,7 @@
                                             </div>
                                             <div class="col-lg-2"></div>
                                             <div class="col-lg-2">
-                                                <button onclick="window.open('http://localhost:8080/HR_Management/Timesheet/NewTimesheet', '_blank')" class="btn btn-md btn-primary" style="width: 150px; ">Add new timesheet</button>
+                                                <button onclick="window.open('http://localhost:8080/HR_Management/Request/AddRequest', '_blank')" class="btn btn-md btn-primary" style="width: 150px; ">Add new Request</button>
                                             </div>
                                         </div>
                                     </div>
@@ -196,7 +196,7 @@
                                                     <td>${r.title}</td>
                                                     <td>${r.name.name}</td>
                                                     <td>${r.fullname.fullname}</td>
-                                                    
+
                                                     <td>
                                                         <c:if test="${r.status == 1}">
                                                             <span class="label label-warning">Submitted</span>
@@ -214,7 +214,7 @@
                                                     <td>${r.update_date}</td>
 
                                                     <td>
-                                                        <a href="#" class="btn btn-md btn-default" onclick="deleteTimesheet(${timesheet.id})"><i class="fa fa-trash-o"></i></a>
+                                                        <a href="#" class="btn btn-md btn-default" onclick="deleteRequest(${r.id})"><i class="fa fa-trash-o"></i></a>
                                                             <c:if test="${timesheet.status != 2}">
                                                             <a href="#" class="btn btn-md btn-default" onclick="window.open('http://localhost:8080/HR_Management/Timesheet/EditTimesheet?id=${timesheet.id}', '_blank')" ><i class="fa fa-pencil"></i></a>
                                                             </c:if>
@@ -310,8 +310,6 @@
                                                             }
 
 
-
-
                                                             $(document).ready(function () {
                                                                 $('#fromDate').change(function () {
                                                                     page(1);
@@ -325,14 +323,45 @@
                                                                 $('#status').change(function () {
                                                                     page(1);
                                                                 });
-                                                              
                                                                 $('#titles').keyup(function () {
                                                                     page(1);
                                                                 });
 
                                                             });
 
+                                                            function deleteRequest(id) {
+                                                                var cf = confirm("Are you sure to delete?");
+                                                                var pageNumber = document.getElementById('page-active').innerHTML;
+                                                                var fromDate = document.getElementById('fromDate').value;
+                                                                var toDate = document.getElementById('toDate').value;
+                                                                var name = document.getElementById('name').value;
+                                                                var status = document.getElementById('status').value;
+                                                                var titles = document.getElementById('titles').value;
+                                                                if (cf) {
+                                                                    //Logic to delete the item
+                                                                    $.ajax({
 
+                                                                        type: "POST",
+
+                                                                        url: "http://localhost:8080/HR_Management/Request/DeleteRequest",
+
+                                                                        data: {id: id,
+                                                                            fromDate: fromDate,
+                                                                            toDate: toDate,
+                                                                            name: name,
+                                                                            status: status,
+                                                                            title: titles,
+                                                                            page: pageNumber},
+
+                                                                        success: function (number) {
+                                                                            page(number);
+                                                                        }
+
+                                                                    });
+
+
+                                                                }
+                                                            }
 
 
         </script>

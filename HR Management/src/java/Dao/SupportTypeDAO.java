@@ -171,15 +171,16 @@ public class SupportTypeDAO {
         ps.executeUpdate();
     }
     
-    public ArrayList<String> getAllSpName() throws SQLException {
-        ArrayList<String> result = new ArrayList<String>();
+     public List<SupportType> getAllSpName() throws SQLException {
+        List<SupportType> result = new ArrayList<SupportType>();
         try {
-            String sql = "SELECT name FROM hr_system_v2.`support type`;";
+            String sql = "SELECT id, fullname FROM hr_system_v2.user;";
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
-                result.add(rs.getString(1));
+                SupportType u = new SupportType(rs.getInt(1), rs.getString(2));
+                result.add(u);
             }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());

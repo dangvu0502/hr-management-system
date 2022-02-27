@@ -19,7 +19,8 @@ public class Request {
     private int id;
     private String title;
 
-    public Request(String request_date, String title, SupportType name, User fullname, int status, String update_date) {
+    public Request(int id, String request_date, String title, SupportType name, User fullname, int status, String update_date) {
+        this.id = id;
         this.request_date = request_date;
         this.title = title;
         this.name = name;
