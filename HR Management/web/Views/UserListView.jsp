@@ -40,46 +40,7 @@
         </header>
         <div class="wrapper row-offcanvas row-offcanvas-left">
             <!-- Left side column. contains the logo and sidebar -->
-            <aside class="left-side sidebar-offcanvas">
-                <!-- sidebar: style can be found in sidebar.less -->
-                <section class="sidebar">
-                    <!-- Sidebar user panel -->
-                    <div class="user-panel">
-                        <div class="pull-left image">
-                            <img src="../userimg/${sessionScope.account.avatar}" class="img-circle" alt="User Image" />
-                        </div>
-                        <div class="pull-left info">
-                            <p>${sessionScope.account.fullname}</p>
-
-                            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-                        </div>
-                    </div>
-                    <ul class="sidebar-menu">
-                        <li >
-                            <a href="<%= request.getContextPath()%>/Views/Home.jsp">
-                                <i class="fa fa-home"></i> <span>Home Page</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<%= request.getContextPath()%>/BlogController">
-                                <i class="fa fa-rss"></i> <span>Blog</span>
-                            </a>
-                        </li>
-                        <li class="active">
-                            <a href="../Project/List">
-                                <i class="fa fa-glass"></i> <span>Project List</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="../Project/Add">
-                                <i class="fa fa-glass"></i> <span>Project Add</span>
-                            </a>
-                        </li>
-
-                    </ul>
-                </section>
-                <!-- /.sidebar -->
-            </aside>
+            <%@include file="Header/Treebar.jsp" %>
 
             <!-- Right side column. Contains the navbar and content of the page -->
             <aside class="right-side">
@@ -190,7 +151,7 @@
                                                             <span class="badge bg-green">Activate</span>
                                                             &nbsp;
                                                             <a onclick="noti()" href="../UserListController/ChangeStatus?status=1&id=${user.id}&page=${currentNumber}"><span class="glyphicon glyphicon-retweet"></span></a>
-                                                            
+
                                                         </c:if>
                                                     </td>
                                                     <td>
@@ -246,7 +207,7 @@
                 </div>
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
-        
+
         <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
         <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
@@ -262,51 +223,51 @@
                     x.style.display = "none";
                 }
             }
-            
-            
-
-                    function page(number) {
-                        var pageNumber = number;
-                        var group = document.getElementById('groupFilter').value;
-                        var gender = document.getElementById('genderFilter').value;
-                        var status = document.getElementById('statusFilter').value;
-                        var search = document.getElementById('userSearch').value;
-                        var link = "http://localhost:8080/HR_Management/UserListController/UserList?";
-                        link += "page=" + pageNumber;
-                        link += "&";
-                        link += "group=" + group;
-                        link += "&";
-                        link += "gender=" + gender;
-                        link += "&";
-                        link += "status=" + status;
-                        link += "&";
-                        link += "search=" + search;
-                        $('#projectTable').load(link + " " + "#projectTable");
-                    }
 
 
-                    $(document).ready(function () {
-                        $('#groupFilter').change(function () {
-                            page(1);
-                        });
-                        $('#genderFilter').change(function () {
-                            page(1);
-                        });
-                        $('#statusFilter').change(function () {
-                            page(1);
-                        });
-                        $('#userSearch').keyup(function () {
-                            page(1);
-                        });
+
+            function page(number) {
+                var pageNumber = number;
+                var group = document.getElementById('groupFilter').value;
+                var gender = document.getElementById('genderFilter').value;
+                var status = document.getElementById('statusFilter').value;
+                var search = document.getElementById('userSearch').value;
+                var link = "http://localhost:8080/HR_Management/UserListController/UserList?";
+                link += "page=" + pageNumber;
+                link += "&";
+                link += "group=" + group;
+                link += "&";
+                link += "gender=" + gender;
+                link += "&";
+                link += "status=" + status;
+                link += "&";
+                link += "search=" + search;
+                $('#projectTable').load(link + " " + "#projectTable");
+            }
 
 
-                    });
+            $(document).ready(function () {
+                $('#groupFilter').change(function () {
+                    page(1);
+                });
+                $('#genderFilter').change(function () {
+                    page(1);
+                });
+                $('#statusFilter').change(function () {
+                    page(1);
+                });
+                $('#userSearch').keyup(function () {
+                    page(1);
+                });
 
-                    function deleteByID(id) {
-                        if (confirm("Do you really want to delete profile?")) {
-                            window.location = "SettingDetailController?typef=delete" + "&id=" + id;
-                        }
-                    }
+
+            });
+
+            function deleteByID(id) {
+                if (confirm("Do you really want to delete profile?")) {
+                    window.location = "SettingDetailController?typef=delete" + "&id=" + id;
+                }
+            }
         </script>
     </body>
 </html>

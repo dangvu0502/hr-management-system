@@ -32,31 +32,104 @@
                             <i class="fa fa-home"></i> <span>Home Page</span>
                         </a>
                     </li>
+                    <li >
+                        <a href="<%= request.getContextPath()%>/User/ChangePassword" >
+                            <i class="fa fa-cogs"></i> <span>Change password</span>
+                        </a>
+                    </li>
+                    <li > 
+                        <a href="<%= request.getContextPath()%>/Timesheet/TimesheetList">
+                            <i class="fa fa-tablet"></i> <span>TimeSheet List</span>
+                        </a>
+                    </li>
                     <li>
                         <a href="<%= request.getContextPath()%>/BlogController">
                             <i class="fa fa-rss"></i> <span>Blog</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="<%= request.getContextPath()%>/SettingController/Setting">
-                            <i class="fa fa-gear"></i> <span>Setting List</span>
-                        </a>
-                    </li>
-                    <li >
-                        <a href="<%= request.getContextPath()%>/Group/GroupList">
-                            <i class="fa fa-user"></i> <span>Group List</span>
-                        </a>
-                    </li>
-                    <li class="active">
-                        <a href="<%= request.getContextPath()%>/SupportTypeController/SupportType">
-                            <i class="fa fa-user"></i> <span>Support Type</span>
-                        </a>
-                    </li>
+                    <c:if test="${sessionScope.account.role_id eq 1}"> 
+                        <li> 
+                            <a href="<%= request.getContextPath()%>/SettingController/Setting">
+                                <i class="fa fa-folder-o"></i> <span>Setting List</span>
+                            </a>
+                        </li>
+
+                        <li> 
+                            <a href="<%= request.getContextPath()%>/SupportTypeController/SupportType">
+                                <i class="fa fa-folder-o"></i> <span>Support Type</span>
+                            </a>
+                        </li>
+                    </c:if>
+                    <c:if test="${sessionScope.account.role_id eq 2}"> 
+                        <li> 
+                            <a href="<%= request.getContextPath()%>/Project/List">
+                                <i class="fa fa-folder-o"></i> <span>Project List</span>
+                            </a>
+                        </li>
+                        <li> 
+                            <a href="<%= request.getContextPath()%>/Project/Add">
+                                <i class="fa fa-folder-o"></i> <span>Project Add</span>
+                            </a>
+                        </li>
+                        <li> 
+                            <a href="<%= request.getContextPath()%>/UserListController/UserList">
+                                <i class="fa fa-folder-o"></i> <span>User List</span>
+                            </a>
+                        </li>
+
+                    </c:if>
                     <c:if test="${sessionScope.account.role_id eq 3}">
-                        <a  href="<%= request.getContextPath()%>/Project/List">Project</a>
-                        <a  href="<%= request.getContextPath()%>/Contract/Details">Contract</a>
-                        <a  href="<%= request.getContextPath()%>/User/NewUser">New User</a>
+                        <li> 
+                            <a href="<%= request.getContextPath()%>/Project/List">
+                                <i class="fa fa-folder-o"></i> <span>Project List</span>
+                            </a>
+                        </li>
+                        <li> 
+                            <a href="<%= request.getContextPath()%>/User/NewUser">
+                                <i class="fa fa-plus-square"></i> <span>New User</span>
+                            </a>
+                        </li>
+                        <li> 
+                            <a href="<%= request.getContextPath()%>/PostController/Views">
+                                <i class="fa fa-tablet"></i> <span>Post List</span>
+                            </a>
+                        </li>
+                        <li> 
+                            <a href="<%= request.getContextPath()%>/Contract/Details">
+                                <i class="fa fa-glass"></i> <span>Contract Details</span>
+                            </a>
+                        </li>
+                        <li> 
+                            <a href="<%= request.getContextPath()%>/Contract/Add">
+                                <i class="fa fa-glass"></i> <span>Contract Add</span>
+                            </a>
+                        </li>
                     </c:if> 
+                    <c:if test="${sessionScope.account.role_id eq 4}">
+
+                        <li> 
+                            <a href="<%= request.getContextPath()%>/Project/List">
+                                <i class="fa fa-tablet"></i> <span>Project List</span>
+                            </a>
+                        </li>
+                        <li> 
+                            <a href="<%= request.getContextPath()%>/Project/Add">
+                                <i class="fa fa-tablet"></i> <span>Project Add</span>
+                            </a>
+                        </li>
+                        <li> 
+                            <a href="<%= request.getContextPath()%>/Group/GroupList">
+                                <i class="fa fa-folder-o"></i> <span>Group List</span>
+                            </a>
+                        </li>
+                        <li> 
+                            <a href="<%= request.getContextPath()%>/Request/RequestList">
+                                <i class="fa fa-tablet"></i> <span>Request List</span>
+                            </a>
+                        </li>
+
+
+                    </c:if>
                 </ul>
             </section>
             <!-- /.sidebar -->

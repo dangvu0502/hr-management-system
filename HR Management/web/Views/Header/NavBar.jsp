@@ -42,7 +42,6 @@
                 <a class="nav-item nav-link" href="<%= request.getContextPath()%>/SettingController/Setting">Setting List</a>
                 <a class="nav-item nav-link" href="<%= request.getContextPath()%>/Group/GroupList">Group List</a>
                 <a class="nav-item nav-link" href="<%= request.getContextPath()%>/SupportTypeController/SupportType">Support Type</a>
-
             </c:if>
             <c:if test="${sessionScope.account.role_id eq 2}"> 
                 <a class="nav-item nav-link" href="<%= request.getContextPath()%>/Project/Manager">Project</a>

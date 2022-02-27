@@ -140,9 +140,9 @@ public class AccountController extends HttpServlet {
                     String date = simpleDateFormat.format(date1);
                     account.setDob(date);
                     session.setAttribute("account", account);
-                    session.setMaxInactiveInterval(10*60);
+                    session.setMaxInactiveInterval(10 * 60);
                     request.getSession().setAttribute("account", account); //lưu trên ss
-                    response.sendRedirect("../Views/Home.jsp");
+                    response.sendRedirect("../Timesheet/TimesheetList");
                 }
             }
         }
@@ -157,7 +157,6 @@ public class AccountController extends HttpServlet {
     }
 
     //</editor-fold>
-    
     // <editor-fold defaultstate="collapsed" desc="Register and RegisterVerify">
     private void setVerified(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
@@ -232,7 +231,6 @@ public class AccountController extends HttpServlet {
     }
 
     //</editor-fold>
-    
     // <editor-fold defaultstate="collapsed" desc="Forgot Password and New Password">
     private void newPassword(HttpServletRequest request, HttpServletResponse response, String method)
             throws Exception {
@@ -242,7 +240,9 @@ public class AccountController extends HttpServlet {
                 newPasswordImplement(request, response);
             } else if (method.equalsIgnoreCase("get")) {
                 String encrypt = request.getQueryString();
-                if(encrypt == null || encrypt.isEmpty()) response.sendError(404);
+                if (encrypt == null || encrypt.isEmpty()) {
+                    response.sendError(404);
+                }
                 String[] decrypt = trippleDes.decrypt(encrypt).split(" ");
                 String email = decrypt[0];
                 LocalDateTime time = LocalDateTime.parse(decrypt[1]);
@@ -795,9 +795,8 @@ public class AccountController extends HttpServlet {
     //</editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Something went wrong">
-    private String somethingWentWrong =
-           
-            "<!DOCTYPE html>\n"
+    private String somethingWentWrong
+            = "<!DOCTYPE html>\n"
             + "<html>\n"
             + "    <head>\n"
             + "        <link href=\"https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600;900&display=swap\" rel=\"stylesheet\">\n"
