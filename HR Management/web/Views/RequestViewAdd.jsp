@@ -118,16 +118,7 @@
                                                         <input type="text" class="form-control" name="title" required="">
                                                     </div>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="form-group col-lg-12">
-                                                        <jsp:useBean id="now" class="java.util.Date" />
-                                                        <fmt:formatDate var="date" value="${now}" pattern="yyyy-MM-dd" />
-                                                        <label for="update_date1">Update Date</label>
-                                                        <h5 style="color: red"><i>By add new request, start date will set from now on....<br/>Otherwise you can edit it later</i></h5>
-                                                        <input type="date" class="form-control" name="update_date1" value="${date}" disabled="">
-                                                        <input name="update_date" value="${date}" hidden="">
-                                                    </div>
-                                                </div>
+
                                                 <div class="row">
                                                     <div class="form-group col-lg-12">
                                                         <label for="request_date">Request Date</label><i style="color: red; font-size: 20px">*</i>
@@ -161,6 +152,16 @@
                                                         <input type="radio" name="status" value="2" checked="checked" style="margin-right: 5px"   > Assigned
                                                         <input type="radio" name="status" value="3"  style="margin-right: 5px;" > Completed
                                                         <input type="radio" name="status" value="4"  style="margin-right: 5px;" > Closed
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-lg-12">
+                                                        <jsp:useBean id="now" class="java.util.Date" />
+                                                        <fmt:formatDate var="date" value="${now}" pattern="yyyy-MM-dd" />
+                                                        <label for="update_date1">Update Date</label>
+                                                        <h5 style="color: red"><i>By add new request, start date will set from now on....<br/>Otherwise you can edit it later</i></h5>
+                                                        <input type="date" class="form-control" name="update_date1" value="${date}" disabled="">
+                                                        <input name="update_date" value="${date}" hidden="">
                                                     </div>
                                                 </div>
                                                 <div class=" form-group row col-lg-12 text-center">
