@@ -51,6 +51,7 @@
                 <a class="nav-item nav-link" href="<%= request.getContextPath()%>/Project/List">Project</a>
                 <a class="nav-item nav-link" href="<%= request.getContextPath()%>/Contract/Details">Contract</a>
                 <a class="nav-item nav-link" href="<%= request.getContextPath()%>/User/NewUser">New User</a>
+                <a class="nav-item nav-link" href="<%= request.getContextPath()%>/PostController/Views">Post List</a>
             </c:if>
             <a class="nav-item nav-link" href="#">Our Team</a>
 

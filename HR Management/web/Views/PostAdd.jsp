@@ -3,8 +3,9 @@
     Created on : Feb 26, 2022, 4:12:23 AM
     Author     : lehun
 --%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -48,51 +49,7 @@
         </header>
         <div class="wrapper row-offcanvas row-offcanvas-left">
             <!-- Left side column. contains the logo and sidebar -->
-            <aside class="left-side sidebar-offcanvas">
-                <!-- sidebar: style can be found in sidebar.less -->
-                <section class="sidebar">
-                    <!-- Sidebar user panel -->
-                    <div class="user-panel">
-                        <div class="pull-left image">
-                            <img src="img/avatar3.png" class="img-circle" alt="User Image" />
-                        </div>
-                        <div class="pull-left info">
-                            <p>${sessionScope.account.fullname}</p>
-
-                            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-                        </div>
-                    </div>
-                    <ul class="sidebar-menu">
-                        <li >
-                            <a href="./Views/Home.jsp">
-                                <i class="fa fa-home"></i> <span>Home Page</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<%= request.getContextPath()%>/BlogController">
-                                <i class="fa fa-rss"></i> <span>Blog</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<%= request.getContextPath()%>/SettingController/Setting">
-                                <i class="fa fa-gear"></i> <span>Setting List</span>
-                            </a>
-                        </li>
-                        <li >
-                            <a href="<%= request.getContextPath()%>/Group/GroupList">
-                                <i class="fa fa-user"></i> <span>Group List</span>
-                            </a>
-                        </li>
-                        <li class="active">
-                            <a href="<%= request.getContextPath()%>/SupportTypeController/SupportType">
-                                <i class="fa fa-user"></i> <span>Support Type</span>
-                            </a>
-                        </li>
-                    </ul>
-                </section>
-                <!-- /.sidebar -->
-            </aside>
-
+            <%@include file="Header/Treebar.jsp" %>
             <!-- Right side column. Contains the navbar and content of the page -->
             <aside class="right-side">
                 <!-- Main content -->
@@ -104,10 +61,10 @@
                             </header>
                             <div class="panel-body">
                                 <header class="panel-heading">
-                                   Add
+                                    Add
                                 </header>
                                 <div class="panel-body" style="width: 50%">
-                                    <form action="../PostlistController/Addc" method="post">
+                                    <form action="../PostController/AddSubMit" method="post">
 
                                         <div class="row ">
                                             <div class="form-group col-lg-12">
@@ -119,13 +76,18 @@
                                             <div class="form-group col-lg-12">
                                                 <label for="thumnail">Thumnail</label>
                                                 <img id="images" class="centrel" src="#" width="150px" height="150px" alt="No Images">
-                                                <input type="text" class="form-control" name="ThumnailIMG" required="" onclick="Imga()">
+                                                <input id="IMGURL" type="text" class="form-control" name="ThumnailIMG" required="" onmousemove="Imga()">
                                             </div>
                                         </div>
-                                        <div class="row ">
+                                        <div class="row">
                                             <div class="form-group col-lg-12">
                                                 <label for="Category">Category name</label>
-                                                <input type="text" class="form-control" name="Category" required="" >
+                                                <!--                                                <input type="text" class="form-control" name="incharge"  value="">-->
+                                                <select name="Category" id="Category" style="width: 215px;height: 30px;border-radius: 8px;">
+                                                    <c:forEach items="${Categorys}" var="c">
+                                                        <option value="${c.id}">${c.categoryName}</option>
+                                                    </c:forEach>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="row ">
@@ -155,8 +117,8 @@
                                         <div class="row">
                                             <div class="form-group col-lg-12">
                                                 <label for="Status">Status</label><br>
-                                                <input  type="radio" name="foo" value="1" id="rbStatus" > <span style="margin-right: 2rem;" >Active</span>
-                                                <input type="radio" name="foo" value="0" id="rbStatus" checked="checked"> Deactivate
+                                                <input  type="radio" name="Flag" value="1" id="rbStatus" > <span style="margin-right: 2rem;" >Active</span>
+                                                <input type="radio" name="Flag" value="0" id="rbStatus" checked="checked"> Deactivate
                                             </div>
                                         </div>
                                         <div class=" form-group row col-lg-12 text-center">
@@ -187,14 +149,15 @@
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
         <script type="text/javascript">
-            function deleteByID(id) {
-                if (confirm("Do you really want to delete profile?")) {
-                    window.location = "grouplist?typef=delete" + "&id=" + id;
-                }
-            }
-            function Imga(){
-                
-            }
+                                                    function deleteByID(id) {
+                                                        if (confirm("Do you really want to delete profile?")) {
+                                                            window.location = "grouplist?typef=delete" + "&id=" + id;
+                                                        }
+                                                    }
+                                                    function Imga() {
+                                                        var images = document.getElementById("images");
+                                                        images.src = document.getElementById("IMGURL").value;
+                                                    }
         </script>
     </body>
 </html>

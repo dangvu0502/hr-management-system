@@ -173,7 +173,7 @@ public class BlogDAO {
         try {
             String sql = "SELECT  b.id,b.Slug ,b.Thumnail_image,b.Tittle,b.Brieft,c.CategoryName,b.Content,b.Author,b.PublishDate,b.Flag FROM hr_system_v2.blog b\n"
                     + "LEFT JOIN category c on\n"
-                    + "b.Category = c.id where b.Tittle like ? and b.Flag = 1 limit 3 offset ? ;";
+                    + "b.Category = c.id where b.Tittle like ? limit 3 offset ? ;";
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
             ps.setString(1, Tittle + "%");
@@ -219,7 +219,7 @@ public class BlogDAO {
     public int GetTotalPostByTittle(String Search) {
         int total = 0;
         try {
-            String sql = "select count(*) from hr_system_v2.blog  where blog.Tittle like ? and blog.Flag = 1;";
+            String sql = "select count(*) from hr_system_v2.blog  where blog.Tittle like ? ;";
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
             ps.setString(1, Search + "%");
@@ -236,7 +236,7 @@ public class BlogDAO {
     public int GetTotalBlog() {
         int total = 0;
         try {
-            String sql = "select count(*) from hr_system_v2.blog where blog.Flag = 1";
+            String sql = "select count(*) from hr_system_v2.blog";
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
