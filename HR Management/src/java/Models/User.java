@@ -13,6 +13,7 @@ import java.util.Objects;
  * @author Egamorft
  */
 public class User {
+
     private int id;
     private String fullname;
     private String username;
@@ -29,7 +30,7 @@ public class User {
     private String group_code;
     private boolean status;
     private boolean verified;
-    
+
     public User() {
     }
 
@@ -37,16 +38,16 @@ public class User {
         this.id = id;
     }
 
-    public User(String username) {
-        this.username = username;
+    public User(String fullname) {
+        this.fullname = fullname;
     }
-    
+
 
     public User(int id, String username) {
         this.id = id;
         this.username = username;
     }
-    
+
     public User(String fullname, String username, String password, String email, String mobile, boolean gender) {
         this.fullname = fullname;
         this.username = username;
@@ -54,9 +55,9 @@ public class User {
         this.email = email;
         this.mobile = mobile;
         this.gender = gender;
-    } 
+    }
 
-    public User(String fullname, String username,  String email, String mobile, boolean gender, String group_code, boolean status, boolean verified, int role_id) {
+    public User(String fullname, String username, String email, String mobile, boolean gender, String group_code, boolean status, boolean verified, int role_id) {
         this.role_id = role_id;
         this.fullname = fullname;
         this.username = username;
@@ -67,9 +68,7 @@ public class User {
         this.status = status;
         this.verified = verified;
     }
-    
-    
-    
+
     public User(int id, String fullname, String username, String password, String email, String mobile, boolean gender, String avatar, String dob, String address, int role_id, int project_role_id, int supervisor_id, String group_code, boolean status) {
         this.id = id;
         this.fullname = fullname;
@@ -87,8 +86,8 @@ public class User {
         this.group_code = group_code;
         this.status = status;
     }
-    
-      public User(int id, String fullname, String username, String password, String email, String mobile, boolean gender, String avatar, String dob, String address, int role_id, int project_role_id, int supervisor_id, String group_code, boolean status, boolean verified) {
+
+    public User(int id, String fullname, String username, String password, String email, String mobile, boolean gender, String avatar, String dob, String address, int role_id, int project_role_id, int supervisor_id, String group_code, boolean status, boolean verified) {
         this.id = id;
         this.fullname = fullname;
         this.username = username;
@@ -112,7 +111,7 @@ public class User {
         this.email = email;
     }
 
-    
+   
 
     public int getId() {
         return id;
@@ -233,8 +232,8 @@ public class User {
     public void setStatus(boolean status) {
         this.status = status;
     }
-    
-      public boolean isVerified() {
+
+    public boolean isVerified() {
         return verified;
     }
 
@@ -327,6 +326,4 @@ public class User {
         return true;
     }
 
-   
-    
 }

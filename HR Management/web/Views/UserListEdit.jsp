@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Group | Edit</title>
+        <title>Project | Edit</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
@@ -107,11 +107,11 @@
                     <div class="col-lg-6 ">
                         <section class="panel">
                             <header class="panel-heading text-center">
-                                Group Edit
+                                Edit User
                             </header>
                             <c:if test="${message != null}">
                                 <c:choose>
-                                    <c:when test = "${message eq 'Edit Group Successfully!!'}">
+                                    <c:when test = "${message eq 'Edit Project Successfully!!'}">
                                         <div class="error alert alert-success" role="alert">
                                             <h4 class="alert-heading">Error</h4><hr>
                                             <p class="mb-0">${message}</p>
@@ -127,81 +127,80 @@
                                 <c:remove var="message" scope="session" /> 
                             </c:if>
                             <div class="panel-body">
-                                <form action="../Group/GroupEdit" method="post">
-
+                                <form action="../UserListController/Edit" >
+                                    <div class="row ">
+                                        <div class="form-group col-lg-12">
+                                            <label for="name">ID</label>
+                                            <input type="text" class="form-control" name="id"  value="${userList.id}" readonly="">
+                                        </div>
+                                    </div>
                                     <div class="row">
-                                        <div class="col-lg-2"></div>
-                                        <c:forEach items="${group}" var="g">
-                                            <input name="code" value="${g.code}" hidden="">
-                                            <div class="col-lg-8">
-                                                <div class="row ">
-                                                    <div class="form-group col-lg-12">
-                                                        <label for="code1">Code</label>
-                                                        <input type="text" class="form-control" name="code1" value="${g.code}" disabled="">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="form-group col-lg-12">
-                                                        <label for="name">Group Name</label>
-                                                        <select class="form-control input-md" style="width: 200px;" name="name">
-                                                            <c:forEach var="ListN" items="${ListN}">
-                                                                <option value="${ListN}" ${g.name eq ListN ?'selected':''}>${ListN}</option>
-                                                            </c:forEach>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="form-group col-lg-12">
-                                                        <label for="parent_group_code">Group Parent Code</label>
-                                                        <select class="form-control input-md" style="width: 200px;" name="parent_group_code" >
-                                                            <c:forEach var="groupCode" items="${groupCode}">
-                                                                <option value="${groupCode}" ${g.parent_group_code eq groupCode ?'selected':''} >${groupCode}</option>
-                                                            </c:forEach>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="form-group col-lg-12">
-                                                        <label for="manager">Manager</label>
-                                                        <select class="form-control input-md" style="width: 200px;" name="manager">
-                                                            <c:forEach items="${listU}" var="u">
-                                                                <option value="${g.manager_id}">${u.username}</option>
-                                                            </c:forEach>
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row">
-                                                    <div class="form-group col-lg-12">
-                                                        <label for="update_date">Update Date</label>
-                            
-                                                            <input type="date" class="form-control" name="update_date" value="${g.update_date}">
-                                                   
-                                                        
-                                                    </div>
-                                                </div>
-
-                                                <div class="row">
-                                                    <div class="form-group col-lg-12">
-                                                        <label for="Status">Status</label><br>
-                                                        <c:choose>
-                                                            <c:when test = "${g.status == 0}">
-                                                                <input  type="radio" name="status" value="1" id="rbStatus" > <span style="margin-right: 2rem;" >BA</span>
-                                                                <input type="radio" name="status" value="0" id="rbStatus" checked="checked"> Non BA
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                <input  type="radio" name="status" value="1" id="rbStatus" checked="checked"> <span style="margin-right: 2rem;" >Active</span>
-                                                                <input type="radio" name="status" value="0" id="rbStatus"> Non BA
-                                                            </c:otherwise>
-                                                        </c:choose>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group row col-lg-12 text-center">
-                                                    <button type="submit" id="submit-btn" class="btn btn-info">Save Change</button>
-                                                </div>
-                                            </div>
-                                        </c:forEach>
+                                        <div class="form-group col-lg-12">
+                                            <label for="group">Group Code</label>
+                                            <select class="form-control input-md" style="width: 200px;" name="groupUser" >
+                                                <c:forEach var="group" items="${group}">
+                                                    <option value="${group}" ${p.groupCode eq group ?'selected':''} >${group}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row ">
+                                        <div class="form-group col-lg-12">
+                                            <label for="name">User Name</label>
+                                            
+                                            <input type="text" class="form-control" name="username"  value="${userList.username}">
+                                        </div>
+                                    </div>
+                                        <div class="row ">
+                                        <div class="form-group col-lg-12">
+                                            <label for="name">Full Name</label>
+                                            <input type="text" class="form-control" name="fullname"  value="${userList.fullname}">
+                                        </div>
+                                    </div>
+                                        <div class="row">
+                                        <div class="form-group col-lg-12">
+                                            <label for="Status">Gender</label><br>
+                                            <c:choose>
+                                                <c:when test = "${userList.gender == false}">
+                                                    <input  type="radio" name="genderUser" value="1" id="rbStatus" > <span style="margin-right: 2rem;" >Male</span>
+                                                    <input type="radio" name="genderUser" value="0" id="rbStatus" checked="checked"> Female
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <input  type="radio" name="genderUser" value="1" id="rbStatus" checked="checked"> <span style="margin-right: 2rem;" >Male</span>
+                                                    <input type="radio" name="genderUser" value="0" id="rbStatus"> Female
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-lg-12">
+                                            <label for="email">Email</label>
+                                            <input type="email" class="form-control" name="email"  value="${userList.email}">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-lg-12">
+                                            <label for="description">Mobile</label>
+                                            <input type="text" class="form-control" name="mobile"  value="${userList.mobile}">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-lg-12">
+                                            <label for="Status">Status</label><br>
+                                            <c:choose>
+                                                <c:when test = "${listS.status == false}">
+                                                    <input  type="radio" name="foo" value="1" id="rbStatus" > <span style="margin-right: 2rem;" >Active</span>
+                                                    <input type="radio" name="foo" value="0" id="rbStatus" checked="checked"> Deactivate
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <input  type="radio" name="foo" value="1" id="rbStatus" checked="checked"> <span style="margin-right: 2rem;" >Active</span>
+                                                    <input type="radio" name="foo" value="0" id="rbStatus"> Deactivate
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </div>
+                                    </div>
+                                    <div class=" form-group row col-lg-12 text-center">
+                                        <button type="submit" id="submit-btn" class="btn btn-info"  >Save Change</button>
                                     </div>
                                 </form>
 

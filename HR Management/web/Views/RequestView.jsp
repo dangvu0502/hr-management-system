@@ -102,7 +102,7 @@
                         <div class="col-xs-12">
                             <div class="panel">
                                 <header class="panel-heading">
-                                    Timesheet List
+                                    Request List
                                 </header>
                                 <!-- <div class="box-header"> -->
                                 <!-- <h3 class="box-title">Responsive Hover Table</h3> -->
@@ -115,7 +115,7 @@
                                                 <form action="" method="post" >
                                                     <div class="input-group">
                                                         <div class="btn btn-md btn-default" style="width: 150px; pointer-events: none;"><span>Search by Title</span></div>
-                                                        <input id="timesheetTitle" type="text" name="title" class="form-control input-md" style="width: 450px;" placeholder="Enter title to search" onclick="dateHideShow()"/>
+                                                        <input id="titles" type="text" name="title" class="form-control input-md" style="width: 450px;" placeholder="Enter title to search" onclick="dateHideShow()"/>
                                                         <br>
                                                         <div id="advanced" style="display: none">
                                                             <br>
@@ -139,17 +139,30 @@
                                                                 <div class="col-lg-8">
                                                                     <div class="col-md-1"></div>
                                                                     <div class="col-md-7">
-                                                                        <label class="text-left" for="projectFilter" style="width: 150px;">Project</label><br>
-                                                                        <select class="form-control input-md" style="width: 200px;" name="projectFilter" id="projectFilter">
-                                                                            <option value="">Choose Project</option>
-                                                                       
+                                                                        <label class="text-left" for="name" style="width: 150px;">Support Type</label><br>
+                                                                        <select class="form-control input-md" style="width: 200px;" name="name" id="name">
+                                                                            <option value="">Support Type</option>
+                                                                            <c:forEach var="sp" items="${supportName}" >
+                                                                                <option value="${sp}">${sp}</option>
+                                                                            </c:forEach>
                                                                         </select>
                                                                     </div>
                                                                     <div class="col-md-4">
-                                                                        <label class="text-left" for="processFilter" style="width: 150px;">Process</label><br>
-                                                                        <select class="form-control input-md" style="width: 200px;" name="processFilter" id="processFilter">
-                                                                            <option value="0">Choose Process</option>
-                                                                        
+                                                                        <label class="text-left" for="status" style="width: 150px;">Status</label><br>
+                                                                        <select class="form-control input-md" style="width: 200px;" name="status" id="status">
+                                                                            <option value="0">Choose Status</option>
+
+                                                                            <option value="1">Submitted</option>
+
+
+                                                                            <option value="2">Assigned</option>
+
+
+                                                                            <option value="3">Completed</option>
+
+
+                                                                            <option value="4">Closed</option>
+
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -165,7 +178,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="panel-body" id="timesheetTable">
+                                    <div class="panel-body" id="requestTable">
                                         <table class="table table-hover">
                                             <tr>
                                                 <th style="width: 10%">Request Date</th>
@@ -174,28 +187,32 @@
                                                 <th style="width: 13%">In-charge staff</th>
                                                 <th style="width: 13%">Status</th>
                                                 <th style="width: 13%">Update Date</th>
-                                                
-                                                <th style="width: 13%"></th>
+
+                                                <th style="width: 13%">Action</th>
                                             </tr>
-                                            <c:forEach var="r" items="${requestList}"  varStatus="theCount">
-                                                <tr id="timesheet${r.support_type_id}">
-                                                    <td style=" cursor: pointer;" onclick="window.open('http://localhost:8080/HR_Management/Timesheet/TimesheetDetail?id=${timesheet.id}', '_blank')" >${timesheet.id}</td>
+                                            <c:forEach var="r" items="${requestList}" >
+                                                <tr id="${r.support_type_id}">
                                                     <td>${r.request_date}</td>
                                                     <td>${r.title}</td>
-                                                    <td>${r.name}</td>
-                                                    <td>${r.status}</td>
-                                                    <td>${r.update_date}</td>
+                                                    <td>${r.name.name}</td>
+                                                    <td>${r.fullname.fullname}</td>
+                                                    
                                                     <td>
-                                                        <c:if test="${timesheet.status == 1}">
-                                                            <span class="label label-warning">${timesheetStatus[timesheet.status]}</span>
+                                                        <c:if test="${r.status == 1}">
+                                                            <span class="label label-warning">Submitted</span>
                                                         </c:if>
-                                                        <c:if test="${timesheet.status == 2}">
-                                                            <span class="label label-success">${timesheetStatus[timesheet.status]}</span>
+                                                        <c:if test="${r.status == 2}">
+                                                            <span class="label label-success">Assigned</span>
                                                         </c:if>
-                                                        <c:if test="${timesheet.status == 3}">
-                                                            <span class="label label-danger">${timesheetStatus[timesheet.status]}</span>
+                                                        <c:if test="${r.status == 3}">
+                                                            <span class="label label-success">Completed</span>
+                                                        </c:if>
+                                                        <c:if test="${r.status == 4}">
+                                                            <span class="label label-danger">Closed</span>
                                                         </c:if>
                                                     </td>
+                                                    <td>${r.update_date}</td>
+
                                                     <td>
                                                         <a href="#" class="btn btn-md btn-default" onclick="deleteTimesheet(${timesheet.id})"><i class="fa fa-trash-o"></i></a>
                                                             <c:if test="${timesheet.status != 2}">
@@ -275,7 +292,8 @@
                                                                 var fromDate = document.getElementById('fromDate').value;
                                                                 var toDate = document.getElementById('toDate').value;
                                                                 var name = document.getElementById('name').value;
-                                                                var title = document.getElementById('title').value;
+                                                                var status = document.getElementById('status').value;
+                                                                var titles = document.getElementById('titles').value;
                                                                 var link = "http://localhost:8080/HR_Management/Request/RequestList?";
                                                                 link += "page=" + pageNumber;
                                                                 link += "&";
@@ -285,43 +303,13 @@
                                                                 link += "&";
                                                                 link += "name=" + name;
                                                                 link += "&";
-                                                                link += "title=" + title;
-                                                                $('#timesheetTable').load(link + " " + "#timesheetTable");
+                                                                link += "status=" + status;
+                                                                link += "&";
+                                                                link += "title=" + titles;
+                                                                $('#requestTable').load(link + " " + "#requestTable");
                                                             }
 
-                                                            function deleteTimesheet(id) {
-                                                                var cf = confirm("Are you sure to delete?");
-                                                                var pageNumber = document.getElementById('page-active').innerHTML;
-                                                                var fromDate = document.getElementById('fromDate').value;
-                                                                var toDate = document.getElementById('toDate').value;
-                                                                var process = document.getElementById('processFilter').value;
-                                                                var project = document.getElementById('projectFilter').value;
-                                                                var title = document.getElementById('timesheetTitle').value;
-                                                                if (cf) {
-                                                                    //Logic to delete the item
-                                                                    $.ajax({
 
-                                                                        type: "POST",
-
-                                                                        url: "http://localhost:8080/HR_Management/Timesheet/DeleteTimesheet",
-
-                                                                        data: {id: id,
-                                                                               fromDate: fromDate,
-                                                                               toDate: toDate,
-                                                                               process: process,
-                                                                               project: project,
-                                                                               title: title,
-                                                                               page: pageNumber},
-
-                                                                        success: function (number) {
-                                                                            page(number);
-                                                                        }
-
-                                                                    });
-
-
-                                                                }
-                                                            }
 
 
                                                             $(document).ready(function () {
@@ -331,21 +319,17 @@
                                                                 $('#toDate').change(function () {
                                                                     page(1);
                                                                 });
-                                                                $('#processFilter').change(function () {
+                                                                $('#name').change(function () {
                                                                     page(1);
                                                                 });
-                                                                $('#projectFilter').change(function () {
+                                                                $('#status').change(function () {
                                                                     page(1);
                                                                 });
-                                                                $('#timesheetTitle').keyup(function () {
+                                                              
+                                                                $('#titles').keyup(function () {
                                                                     page(1);
                                                                 });
 
-                                                                setInterval(function () {
-                                                                    var number = document.getElementById('page-active').innerHTML;
-                                                                    console.log(number);
-                                                                    page(number);
-                                                                }, 10000);
                                                             });
 
 

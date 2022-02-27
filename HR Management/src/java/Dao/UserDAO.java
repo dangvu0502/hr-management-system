@@ -6,11 +6,15 @@
 package Dao;
 
 import Context.DBContext;
+import Models.Project;
+import Models.SupportType;
+import Models.Timesheet;
 import Models.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +27,116 @@ public class UserDAO {
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
+    
+    public int getTotalUser(String query) throws SQLException {
+        try {
+            String sql = query;
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+        }
+        return -1;
+    }
+    
+    public boolean updateUserList(User u, int id) throws Exception {
+        String updateTableSQL = "UPDATE `hr_system_v2`.`user` SET `group_code` = ?, `username` = ?, `fullname` = ?, `gender` = ?, `email` = ?, `mobile` = ?, `status` = ? WHERE (`id` = ?);";
+        int check = 0;
+        try (
+                Connection con = new DBContext().getConnection();
+                PreparedStatement ps = con.prepareStatement(updateTableSQL)) { // user try-with-resources in java
+            ps.setString(1, u.getGroup_code());
+            ps.setString(2, u.getUsername());
+            ps.setString(3, u.getFullname());
+            ps.setBoolean(4, u.isGender());
+            ps.setString(5, u.getEmail());
+            ps.setString(6, u.getMobile());
+            ps.setBoolean(7, u.isStatus());
+            ps.setInt(8, id);
+            // execute update SQL stetement
+            check = ps.executeUpdate();
+        } catch (SQLException e) {
+            throw e;
+        }
+        return check > 0;
+
+    }
+    
+    
+    public void editStatus(int status, int setting_id) throws SQLException {
+        String sql = "UPDATE `hr_system_v2`.`user` SET `status` = ? WHERE (`id` = ?);";
+        con = new DBContext().getConnection();
+        ps = con.prepareStatement(sql);
+        if (status == 0) {
+            ps.setInt(1, 1);
+        } else {
+            ps.setInt(1, 0);
+        }
+        ps.setInt(2, setting_id);
+        ps.executeUpdate();
+    }
+
+    public ArrayList<User> getUserList(String query) throws SQLException {
+        ArrayList<User> res = new ArrayList<>();
+        try {
+            String sql = query;
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            String pattern = "dd-MM-yyyy";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            while (rs.next()) {
+                User u = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getBoolean(7), rs.getString(8), simpleDateFormat.format(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString(9))),  rs.getString(10), rs.getInt(11), rs.getInt(12), rs.getInt(13), rs.getString(14), rs.getBoolean(15));
+                res.add(u);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+        }
+        return res;
+    }
+    
+    public User getUserListById(int id) throws SQLException {
+        try {
+            String sql = "SELECT * FROM hr_system_v2.user  where id = ?";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return new User(
+                        rs.getInt(1), 
+                        rs.getString(2), 
+                        rs.getString(3), 
+                        rs.getString(4), 
+                        rs.getString(5),
+                        rs.getString(6), 
+                        rs.getBoolean(7),
+                        rs.getString(8), 
+                        rs.getString(9),  
+                        rs.getString(10), 
+                        rs.getInt(11), rs.getInt(12), rs.getInt(13), rs.getString(14), rs.getBoolean(15));
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+        }
+        return null;
+    }
 
     public User searchUserByUsername(String username) throws Exception {
         try {
@@ -89,7 +203,7 @@ public class UserDAO {
         }
         return null;
     }
-    
+
     public ArrayList<User> getUsersByGroupCode(String group_code) throws Exception {
         try {
             ArrayList<User> res = new ArrayList<>();
@@ -371,6 +485,26 @@ public class UserDAO {
         List<User> result = new ArrayList<User>();
         try {
             String sql = "SELECT id, username FROM hr_system_v2.user where role_id = 2 or 3;";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                User u = new User(rs.getInt(1), rs.getString(2));
+                result.add(u);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;
+    }
+    public List<User> getManagerFullname() throws SQLException {
+        List<User> result = new ArrayList<User>();
+        try {
+            String sql = "SELECT id, fullname FROM hr_system_v2.user;";
             con = new DBContext().getConnection();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
