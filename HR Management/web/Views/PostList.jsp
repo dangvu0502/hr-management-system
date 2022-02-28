@@ -30,6 +30,20 @@
         <!-- Theme style -->
         <link href="<%= request.getContextPath()%>/css/style.css" rel="stylesheet" />
         <link href="<%= request.getContextPath()%>/css/dialog.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <!-- bootstrap 3.0.2 -->
+        <link href="../css/bootstrap.min.css" rel="stylesheet" />
+        <!-- font Awesome -->
+        <link href="../css/font-awesome.min.css" rel="stylesheet" />
+        <!-- Ionicons -->
+        <link href="../css/ionicons.min.css" rel="stylesheet" />
+        <!-- google font -->
+        <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' />
+        <!-- Theme style -->
+        <link href="../css/style.css" rel="stylesheet"/>
+        <link href="../css/dialog.css" rel="stylesheet" type="text/css"/>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -65,6 +79,59 @@
                                             <button type="submit" class="btn btn-md btn-default">Search</button>
                                         </div>
                                     </form>
+                                </header>
+                                <header class="panel-heading">
+                                    Filter &nbsp;
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                            Type <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="../PostController/Views">All</a></li>
+                                                <c:forEach items="${Categorys}" var="c">
+                                                    <c:choose>
+                                                        <c:when test="${empty StatusFilter }">
+                                                        <li>
+                                                            <a href="../PostController/Filter?Category=${c.id}">${c.categoryName}</a>
+                                                        </li>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <li>
+                                                            <a href="../PostController/Filter?Category=${c.id}&Status=${StatusFilter}">${c.categoryName}</a>
+                                                        </li>
+                                                    </c:otherwise>
+                                                </c:choose>
+
+                                            </c:forEach>
+                                        </ul>
+                                    </div>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                            Status <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="../PostController/Views">All</a></li>
+
+                                            <c:choose>
+                                                <c:when test="${empty CateFilter }">
+                                                    <li>
+                                                        <a href="../PostController/Filter?Status=1">Activate</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="../PostController/Filter?Status=0">Deactivate</a>
+                                                    </li>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <li>
+                                                        <a href="../PostController/Filter?Category=${CateFilter}&Status=1">Activate</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="../PostController/Filter?Category=${CateFilter}&Status=0">Deactivate</a>
+                                                    </li>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </ul>
+                                    </div>
                                 </header>
                             </div>
                             <div class="panel-body">

@@ -52,6 +52,9 @@ public class PostController extends HttpServlet {
                 request.setAttribute("Categorys", e);
                 request.getRequestDispatcher("../Views/PostAdd.jsp").forward(request, response);
                 break;
+            case "/Filter":
+                FilterSubmit(request, response);
+                break;
             case "/AddSubMit":
                 AddSubMit(request, response);
                 break;
@@ -100,12 +103,44 @@ public class PostController extends HttpServlet {
             if (endPage % 3 != 0) {
                 endPage++;
             }
+            Vector<Category> ec = new Vector<>();
+            ec = eDAO.GetCategory();
+            request.setAttribute("Categorys", ec);
             request.setAttribute("endP", endPage);
             request.setAttribute("listE", e);
             request.getRequestDispatcher("../Views/PostList.jsp").forward(request, response);
         } catch (IOException | NumberFormatException | ServletException e) {
             System.out.println("ádfasdfasdfasd" + e.getMessage());
         }
+    }
+
+    public void FilterSubmit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String CategoryFilter = request.getParameter("Category") != null ? request.getParameter("Category") : "-1";
+        String StatusFilter = request.getParameter("Status") != null ? request.getParameter("Status") : "-1";
+        String page = request.getParameter("page");
+        if (page == null) {
+            page = "1";
+        }
+        request.setAttribute("page", page);
+
+        Vector<BLog> ec = new Vector<>();
+        int count = 0;
+        BlogDAO edo = new BlogDAO();
+        count = edo.GetTotalBlog();
+     
+        if (Integer.parseInt(CategoryFilter) != -1) {
+            request.setAttribute("CateFilter", CategoryFilter);
+        }
+        if (Integer.parseInt(StatusFilter) != -1) {
+            request.setAttribute("StatusFilter", StatusFilter);
+        }
+        ec = edo.FilterPostByStatusAndCategory(Integer.parseInt(CategoryFilter), Integer.parseInt(StatusFilter), Integer.parseInt(page));
+       
+        request.setAttribute("listE", ec);
+        Vector<Category> eca = new Vector<>();
+        eca = edo.GetCategory();
+        request.setAttribute("Categorys", eca);
+        request.getRequestDispatcher("../Views/PostList.jsp").forward(request, response);
     }
 
     public void AddSubMit(HttpServletRequest request, HttpServletResponse response) {

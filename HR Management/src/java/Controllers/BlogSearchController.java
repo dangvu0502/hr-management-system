@@ -38,24 +38,23 @@ public class BlogSearchController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String page = request.getParameter("page");
         String Search = request.getParameter("Search");
-        String Type = request.getParameter("Type");
         if (page == null) {
             page = "1";
         }
         request.setAttribute("page", page);
         BlogDAO eDAO = new BlogDAO();
-        int count = eDAO.GetTotalBlogBySearch(Type, Search);
+        int count = eDAO.GetTotalBlogBySearch(Search);
         int endPage = count / 3;
-        if (endPage % 5 != 0) {
+        if (endPage % 3 != 0) {
             endPage++;
         }
         request.setAttribute("endP", endPage);
         request.setAttribute("Search", Search);
-        request.setAttribute("Type", Type);
+
         try {
             Vector<BLog> e = new Vector();
 
-            e = eDAO.SearchBlogByType(Integer.parseInt(page), Type, Search);
+            e = eDAO.SearchBlogByType(Integer.parseInt(page), Search);
             request.setAttribute("listE", e);
             request.getRequestDispatcher("Views/BlogSearch.jsp").forward(request, response);
         } catch (ParseException ex) {
@@ -91,25 +90,21 @@ public class BlogSearchController extends HttpServlet {
             throws ServletException, IOException {
         String page = request.getParameter("page");
         String Search = request.getParameter("inputSearch");
-        String Type = request.getParameter("type");
         if (page == null) {
             page = "1";
         }
         request.setAttribute("page", page);
         BlogDAO eDAO = new BlogDAO();
-        int count = eDAO.GetTotalBlogBySearch(Type, Search);
+        int count = eDAO.GetTotalBlogBySearch(Search);
         int endPage = count / 3;
-        if (endPage % 5 != 0) {
+        if (endPage % 3 != 0) {
             endPage++;
         }
         request.setAttribute("endP", endPage);
         request.setAttribute("Search", Search);
-        request.setAttribute("Type", Type);
-
         try {
             Vector<BLog> e = new Vector();
-
-            e = eDAO.SearchBlogByType(Integer.parseInt(page), Type, Search);
+            e = eDAO.SearchBlogByType(Integer.parseInt(page), Search);
             if (e.isEmpty()) {
                 String Error = "Search Not Found";
                 request.setAttribute("IsEmpty", Error);

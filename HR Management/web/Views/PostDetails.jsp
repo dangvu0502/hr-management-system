@@ -131,7 +131,6 @@
                                                 <select name="Category" id="incharge" style="width: 215px;height: 30px;border-radius: 8px;">
                                                     <c:forEach items="${CCS}" var="c">
                                                         <option value="${c.id}">${c.categoryName}</option>
-                                                      
                                                     </c:forEach>
                                                 </select>
                                             </div>
