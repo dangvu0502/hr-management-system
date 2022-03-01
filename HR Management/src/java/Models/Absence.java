@@ -14,16 +14,20 @@ public class Absence {
     private int id;
     private int user_id;
     private String request_date;
-    private String type;
+    private int type;
     private String title;
     private String from;
     private String to;
-    private boolean status;
+    private String reject_reason;
+    private float duration;
+    private int status;
+    private String user_name;
+    private String group;
 
     public Absence() {
     }
 
-    public Absence(int id, int user_id, String request_date, String type, String title, String from, String to, boolean status) {
+    public Absence(int id, int user_id, String request_date, int type, String title, String from, String to, String reject_reason, float duration, int status, String user_name, String group) {
         this.id = id;
         this.user_id = user_id;
         this.request_date = request_date;
@@ -31,7 +35,11 @@ public class Absence {
         this.title = title;
         this.from = from;
         this.to = to;
+        this.reject_reason = reject_reason;
+        this.duration = duration;
         this.status = status;
+        this.user_name = user_name;
+        this.group = group;
     }
 
     public int getId() {
@@ -58,11 +66,11 @@ public class Absence {
         this.request_date = request_date;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 
@@ -90,12 +98,45 @@ public class Absence {
         this.to = to;
     }
 
-    public boolean isStatus() {
+    public String getReject_reason() {
+        return reject_reason;
+    }
+
+    public void setReject_reason(String reject_reason) {
+        this.reject_reason = reject_reason;
+    }
+
+    public float getDuration() {
+        return duration;
+    }
+
+    public void setDuration(float duration) {
+        this.duration = duration;
+    }
+
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(int status) {
         this.status = status;
     }
-    
+
+    public String getUser_name() {
+        return user_name;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
+    }
+
+
 }
