@@ -118,14 +118,14 @@
                                     </div>
                                     <div class="row ">
                                         <div class="form-group col-lg-12">
-                                            <label for="name">User Name</label>
+                                            <label for="name">User Name</label><i style="color: red; font-size: 20px">*</i>
                                             
                                             <input type="text" class="form-control" name="username"  value="${userList.username}">
                                         </div>
                                     </div>
                                         <div class="row ">
                                         <div class="form-group col-lg-12">
-                                            <label for="name">Full Name</label>
+                                            <label for="name">Full Name</label><i style="color: red; font-size: 20px">*</i>
                                             <input type="text" class="form-control" name="fullname"  value="${userList.fullname}">
                                         </div>
                                     </div>
@@ -146,7 +146,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="form-group col-lg-12">
-                                            <label for="email">Email</label>
+                                            <label for="email">Email</label><i style="color: red; font-size: 20px">*</i>
                                             <input type="email" class="form-control" name="email"  value="${userList.email}">
                                         </div>
                                     </div>
