@@ -72,6 +72,10 @@
         <servlet-name>UserListController</servlet-name>
         <servlet-class>Controllers.UserListController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AbsencesController</servlet-name>
+        <servlet-class>Controllers.AbsencesController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AccountController</servlet-name>
         <url-pattern>/Account/*</url-pattern>
@@ -131,6 +135,10 @@
     <servlet-mapping>
         <servlet-name>UserListController</servlet-name>
         <url-pattern>/UserListController/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AbsencesController</servlet-name>
+        <url-pattern>/AbsencesController/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
