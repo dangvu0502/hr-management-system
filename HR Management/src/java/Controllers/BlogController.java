@@ -44,7 +44,7 @@ public class BlogController extends HttpServlet {
             BlogDAO eDAO = new BlogDAO();
             int count = eDAO.GetTotalBlog();
             int endPage = count / 3;
-            if (endPage % 5 != 0) {
+            if (endPage % 3 != 0) {
                 endPage++;
             }
             request.setAttribute("endP", endPage);

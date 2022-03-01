@@ -282,6 +282,36 @@ public class SettingDAO {
         return null;
     }
 
+    public HashMap<Integer, String> getAbsenceSetting(int option) throws SQLException {
+        HashMap<Integer, String> type = new HashMap<>();
+        try {
+            String sql = "SELECT * FROM hr_system_v2.setting\n";
+            switch (option) {
+                case 1:
+                    sql += "where type = \"absence type\"";
+                    break;
+                case 2:
+                    sql += "where type = \"absence request status\"";
+                    break;
+                default:
+                    return null;
+            }
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                type.put(rs.getInt(5), rs.getString(3));
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+        }
+        return type;
+    }
+
     public static void main(String[] args) {
         SettingDAO st = new SettingDAO();
         int role = st.getTotalSetting(null, "m");

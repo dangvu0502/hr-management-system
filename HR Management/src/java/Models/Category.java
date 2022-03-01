@@ -12,12 +12,7 @@ package Models;
 public class Category {
 
     private int id;
-    private String Category_Name;
-
-    public Category(int id, String Category_Name) {
-        this.id = id;
-        this.Category_Name = Category_Name;
-    }
+    private String CategoryName;
 
     public int getId() {
         return id;
@@ -27,12 +22,21 @@ public class Category {
         this.id = id;
     }
 
-    public String getCategory_Name() {
-        return Category_Name;
+    public String getCategoryName() {
+        return CategoryName;
     }
 
-    public void setCategory_Name(String Category_Name) {
-        this.Category_Name = Category_Name;
+    public void setCategoryName(String CategoryName) {
+        this.CategoryName = CategoryName;
     }
+
+    public Category() {
+    }
+
+    public Category(int id, String CategoryName) {
+        this.id = id;
+        this.CategoryName = CategoryName;
+    }
+
 
 }

@@ -36,57 +36,7 @@
         </header>
         <div class="wrapper row-offcanvas row-offcanvas-left">
             <!-- Left side column. contains the logo and sidebar -->
-            <aside class="left-side sidebar-offcanvas">
-                <!-- sidebar: style can be found in sidebar.less -->
-                <section class="sidebar">
-                    <!-- Sidebar user panel -->
-                    <div class="user-panel">
-                        <!--                        <div class="pull-left image">
-                                                    <img src="img/avatar3.png" class="img-circle" alt="User Image" />
-                                                </div>-->
-                        <div class="pull-left info">
-                            <p>Hello, Jane</p>
-
-                            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-                        </div>
-                    </div>
-                    <!-- search form -->
-                    <form action="#" method="get" class="sidebar-form">
-                        <div class="input-group">
-                            <input type="text" name="q" class="form-control" placeholder="Search..."/>
-                            <span class="input-group-btn">
-                                <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
-                            </span>
-                        </div>
-                    </form>
-                    <ul class="sidebar-menu">
-                        <li>
-                            <a href="index.html">
-                                <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="general.html">
-                                <i class="fa fa-gavel"></i> <span>General</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="basic_form.html">
-                                <i class="fa fa-globe"></i> <span>Basic Elements</span>
-                            </a>
-                        </li>
-
-                        <li class="active">
-                            <a href="simple.html">
-                                <i class="fa fa-glass"></i> <span>Simple tables</span>
-                            </a>
-                        </li>
-
-                    </ul>
-                </section>
-                <!-- /.sidebar -->
-            </aside>
-
+           <%@include file="Header/Treebar.jsp" %>
             <!-- Right side column. Contains the navbar and content of the page -->
             <aside class="right-side">
 
@@ -119,11 +69,11 @@
                                                                     <div class="col-md-1"></div>
                                                                     <div class="col-md-7">
                                                                         <label class="text-left" for="fromDate" style="width: 150px;">From</label><br>
-                                                                        <input type="date" class="form-control" id="fromDate" style="width: 200px;" name="fromDate" >
+                                                                        <input type="date" class="form-control" id="fromDate" style="width: 200px;" name="fromDate">
                                                                     </div>
                                                                     <div class="col-md-4">
                                                                         <label class="text-left" for="toDate" style="width: 150px;">To</label><br>
-                                                                        <input type="date" class="form-control" id="toDate" style="width: 200px;" name="toDate" >
+                                                                        <input type="date" class="form-control" id="toDate" style="width: 200px;" name="toDate">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -136,12 +86,14 @@
                                                                         <label class="text-left" for="projectFilter" style="width: 150px;">Project</label><br>
                                                                         <select class="form-control input-md" style="width: 200px;" name="projectFilter" id="projectFilter">
                                                                             <option value="">Choose Project</option>
-                                                                            <option value="HRM">HRM</option>
+                                                                            <c:forEach var="project" items="${projects}">
+                                                                                <option value="${project}">${project}</option>
+                                                                            </c:forEach>
                                                                         </select>
                                                                     </div>
                                                                     <div class="col-md-4">
                                                                         <label class="text-left" for="processFilter" style="width: 150px;">Process</label><br>
-                                                                        <select class="form-control input-md" style="width: 200px;" name="procescFilter" id="processFilter">
+                                                                        <select class="form-control input-md" style="width: 200px;" name="processFilter" id="processFilter">
                                                                             <option value="0">Choose Process</option>
                                                                             <c:forEach var="process" items="${timesheetProcess}">
                                                                                 <option value="${process.key}">${process.value}</option>
@@ -164,7 +116,7 @@
                                     <div class="panel-body" id="timesheetTable">
                                         <table class="table table-hover">
                                             <tr>
-                                                <th style="width: 10%">#</th>
+                                                <th style="width: 10%">ID</th>
                                                 <th style="width: 13%">Timesheet Date</th>
                                                 <th style="width: 16%">Timesheet Title</th>
                                                 <th style="width: 13%">Project</th>
@@ -175,29 +127,98 @@
                                             </tr>
                                             <c:forEach var="timesheet" items="${timesheetList}"  varStatus="theCount">
                                                 <tr id="timesheet${timesheet.id}">
-                                                    <td style=" cursor: pointer;" onclick="window.open('http://localhost:8080/HR_Management/Timesheet/TimesheetDetail?id=${timesheet.id}', '_blank')" >${theCount.count}</td>
-                                                    <td>${timesheet.date}</td>
-                                                    <td>${timesheet.title}</td>
-                                                    <td>${timesheet.project_code}</td>
-                                                    <td>${timesheetProcess[timesheet.process]}</td>
-                                                    <td>${timesheet.duration}</td>
-                                                    <td>
-                                                        <c:if test="${timesheet.status == 1}">
-                                                            <span class="label label-warning">${timesheetStatus[timesheet.status]}</span>
+                                                    <td style=" cursor: pointer;" data-toggle="modal" data-target="#exampleModalCenter${timesheet.id}">${timesheet.id}</td>
+                                                <div class="modal fade" id="exampleModalCenter${timesheet.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <section class="panel">
+                                                                    <header class="panel-heading text-center">
+                                                                        ${timesheet.title}
+                                                                    </header>
+                                                                    <div class="panel-body">
+
+                                                                        <div class="row">
+                                                                            <div class="col-lg-1"></div>
+                                                                            <div class="col-lg-8">
+                                                                                <div class="row">
+                                                                                    <div class="form-group col-lg-12">
+                                                                                        <p class="text-bold" >Project: &nbsp ${timesheet.project_code}</p>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="row">
+                                                                                    <div class="form-group col-lg-7">
+                                                                                        <p class="text-bold" >Process: &nbsp ${timesheetProcess[timesheet.process]}</p>
+                                                                                    </div>
+                                                                                    <div class="form-group col-lg-5">
+                                                                                        <p class="text-bold" >Date: &nbsp ${timesheet.date}</p>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="row">
+                                                                                    <div class="form-group col-lg-7">
+                                                                                        <c:if test="${timesheet.status == 1}">
+                                                                                            <p class="text-bold" style="pointer-events: none;">Status: &nbsp <span  class="text-warning">${timesheetStatus[timesheet.status]}</span></p>
+                                                                                            </c:if>
+                                                                                            <c:if test="${timesheet.status == 2}">
+                                                                                            <p class="text-bold" style="pointer-events: none;" >Status: &nbsp <span class="text-success">${timesheetStatus[timesheet.status]}</span></p>
+                                                                                            </c:if>
+                                                                                            <c:if test="${timesheet.status == 3}">
+                                                                                            <p class="text-bold" style="pointer-events: none;">Status: &nbsp <span class="text-danger">${timesheetStatus[timesheet.status]}</span></p>
+                                                                                            </c:if>
+                                                                                    </div>
+                                                                                    <div class="form-group col-lg-5">
+                                                                                        <p class="text-bold" >Duration: &nbsp ${timesheet.duration}</p>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="row ">
+                                                                                    <div class="form-group col-lg-12">
+                                                                                        <label for="work-result">Work result</label><p></p>
+                                                                                        <textarea rows="10" cols="60" id="work-result" name="work-result" style=" resize: vertical;" disabled>${timesheet.work_result}</textarea>
+                                                                                    </div>
+                                                                                    <div class="form-group col-lg-12">
+                                                                                        <c:if test="${timesheet.status == 3}">
+                                                                                            <label for="reject-reason">Reject reason</label><p></p>
+                                                                                            <textarea rows="5" cols="60" id="reject-reason" name="reject-reason" style="  resize: vertical; " disabled>${timesheet.reject_reason}</textarea>
+                                                                                        </c:if>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </section>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <td>${timesheet.date}</td>
+                                                <td>${timesheet.title}</td>
+                                                <td>${timesheet.project_code}</td>
+                                                <td>${timesheetProcess[timesheet.process]}</td>
+                                                <td>${timesheet.duration}</td>
+                                                <td>
+                                                    <c:if test="${timesheet.status == 1}">
+                                                        <span class="label label-warning">${timesheetStatus[timesheet.status]}</span>
+                                                    </c:if>
+                                                    <c:if test="${timesheet.status == 2}">
+                                                        <span class="label label-success">${timesheetStatus[timesheet.status]}</span>
+                                                    </c:if>
+                                                    <c:if test="${timesheet.status == 3}">
+                                                        <span class="label label-danger">${timesheetStatus[timesheet.status]}</span>
+                                                    </c:if>
+                                                </td>
+                                                <td>
+                                                    <a href="#" class="btn btn-md btn-default" onclick="deleteTimesheet(${timesheet.id})"><i class="fa fa-trash-o"></i></a>
+                                                        <c:if test="${timesheet.status != 2}">
+                                                        <a href="#" class="btn btn-md btn-default" onclick="window.open('http://localhost:8080/HR_Management/Timesheet/EditTimesheet?id=${timesheet.id}', '_blank')" ><i class="fa fa-pencil"></i></a>
                                                         </c:if>
-                                                        <c:if test="${timesheet.status == 2}">
-                                                            <span class="label label-success">${timesheetStatus[timesheet.status]}</span>
-                                                        </c:if>
-                                                        <c:if test="${timesheet.status == 3}">
-                                                            <span class="label label-danger">${timesheetStatus[timesheet.status]}</span>
-                                                        </c:if>
-                                                    </td>
-                                                    <td>
-                                                        <a href="#" class="btn btn-md btn-default" onclick="deleteTimesheet(${timesheet.id})"><i class="fa fa-trash-o"></i></a>
-                                                            <c:if test="${timesheet.status != 2}">
-                                                            <a href="#" class="btn btn-md btn-default"><i class="fa fa-pencil"></i></a>
-                                                            </c:if>
-                                                    </td>
+                                                </td>
                                                 </tr>
                                             </c:forEach>
                                         </table>
@@ -205,31 +226,31 @@
                                             <ul class="pagination pagination-sm no-margin pull-right">
                                                 <c:if test="${total !=0 }">
                                                     <c:if test="${currentNumber>1}">
-                                                        <li><button id="page${currentNumber-1}" class="btn btn-sm btn-primary" onclick="page(${currentNumber-1})"><<</button></li>
+                                                        <li><button  class="btn btn-sm btn-primary" onclick="page(${currentNumber-1})"><<</button></li>
                                                         </c:if>
                                                         <c:if test="${currentNumber>3}">
-                                                        <li><button id="page${1}" class="btn btn-sm btn-default" onclick="page(${1})">1</button></li>
-                                                        <li><button id="page${Math.max(end-5,1)}" class="btn btn-sm btn-default" onclick="page(${Math.max(end-5,1)})">...</button></li>
+                                                        <li><button class="btn btn-sm btn-default" onclick="page(${1})">1</button></li>
+                                                        <li><button  class="btn btn-sm btn-default" onclick="page(${Math.max(end-5,1)})">...</button></li>
                                                         </c:if>
                                                         <c:forEach begin="${begin}" end="${end}" var="num">
                                                             <c:if test="${num == currentNumber}">
-                                                            <li><button id="page${num}" class="btn btn-sm btn-primary" onclick="page(${num})">${num}</button></li>
+                                                            <li><button id="page-active" class="btn btn-sm btn-primary" onclick="page(${num})">${num}</button></li>
                                                             </c:if>
                                                             <c:if test="${num != currentNumber}">
-                                                            <li><button id="page${num}" class="btn btn-sm btn-default" onclick="page(${num})">${num}</button></li>
+                                                            <li><button  class="btn btn-sm btn-default" onclick="page(${num})">${num}</button></li>
                                                             </c:if>    
                                                         </c:forEach>
 
                                                     <c:if test="${begin+3 < total}">
-                                                        <li><button id="page${Math.min(begin+3,total)}" class="btn btn-sm btn-default" onclick="page(${Math.min(begin+3,total)})">...</button></li>
-                                                        <li><button id="page${total}" class="btn btn-sm btn-default" onclick="page(${total})">${total}</button></li>
+                                                        <li><button  class="btn btn-sm btn-default" onclick="page(${begin+3})">...</button></li>
+                                                        <li><button  class="btn btn-sm btn-default" onclick="page(${total})">${total}</button></li>
                                                         </c:if>
                                                         <c:if test="${begin+3 >= total && end != total}">
-                                                        <li><button id="page${total}" class="btn btn-sm btn-default" onclick="page(${total})">${total}</button></li>
+                                                        <li><button  class="btn btn-sm btn-default" onclick="page(${total})">${total}</button></li>
                                                         </c:if>
 
                                                     <c:if test="${currentNumber < total}">
-                                                        <li><button id="page${currentNumber+1}" class="btn btn-sm btn-primary" onclick="page(${currentNumber+1})">>></button></li>  
+                                                        <li><button  class="btn btn-sm btn-primary" onclick="page(${currentNumber+1})">>></button></li>  
                                                         </c:if>
                                                     </c:if>
                                             </ul>
@@ -273,7 +294,6 @@
                                                                 var process = document.getElementById('processFilter').value;
                                                                 var project = document.getElementById('projectFilter').value;
                                                                 var title = document.getElementById('timesheetTitle').value;
-                                                                console.log(title);
                                                                 var link = "http://localhost:8080/HR_Management/Timesheet/TimesheetList?";
                                                                 link += "page=" + pageNumber;
                                                                 link += "&";
@@ -291,6 +311,12 @@
 
                                                             function deleteTimesheet(id) {
                                                                 var cf = confirm("Are you sure to delete?");
+                                                                var pageNumber = document.getElementById('page-active').innerHTML;
+                                                                var fromDate = document.getElementById('fromDate').value;
+                                                                var toDate = document.getElementById('toDate').value;
+                                                                var process = document.getElementById('processFilter').value;
+                                                                var project = document.getElementById('projectFilter').value;
+                                                                var title = document.getElementById('timesheetTitle').value;
                                                                 if (cf) {
                                                                     //Logic to delete the item
                                                                     $.ajax({
@@ -299,15 +325,21 @@
 
                                                                         url: "http://localhost:8080/HR_Management/Timesheet/DeleteTimesheet",
 
-                                                                        data: {id: id},
+                                                                        data: {id: id,
+                                                                            fromDate: fromDate,
+                                                                            toDate: toDate,
+                                                                            process: process,
+                                                                            project: project,
+                                                                            title: title,
+                                                                            page: pageNumber},
 
-                                                                        success: function () {
-                                                                            page(1);
+                                                                        success: function (number) {
+                                                                            page(number);
                                                                         }
 
                                                                     });
-                                                                    
-                                                                    
+
+
                                                                 }
                                                             }
 
@@ -328,8 +360,13 @@
                                                                 $('#timesheetTitle').keyup(function () {
                                                                     page(1);
                                                                 });
-                                                            });
 
+//                                                                setInterval(function () {
+//                                                                    var number = document.getElementById('page-active').innerHTML;
+//                                                                    console.log(number);
+//                                                                    page(number);
+//                                                                }, 10000);
+                                                            });
 
 
 

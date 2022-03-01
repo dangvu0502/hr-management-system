@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Register</title>
+        <title>Contract | Edit</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
@@ -132,6 +132,15 @@
                                                         <input type="date" class="form-control" name="EndDate" value="${c.endDate}">
                                                     </div>
                                                 </div>
+                                                <div class="row ">
+                                                    <div class="form-group col-lg-12">
+                                                        <label for="type">Select type:</label>
+                                                        <select class="form-control input-md" style="width: 200px;" name="type">
+                                                            <option value="0"${c.type == 0 ? "selected":""}>Intern</option>
+                                                            <option value="1"${c.type == 1 ? "selected":""}>Official</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                                 <div class="row">
                                                     <div class="form-group col-lg-12">
                                                         <c:choose>
@@ -170,11 +179,11 @@
         <script src="../js/Director/myScript.js" type="text/javascript"></script>
         <script>
 
-            /** HIDE ALERT**/
-            $(document).click(function (e) {
-                $('.message').hide();
-            });
-            /** HIDE ALERT**/
+                                                        /** HIDE ALERT**/
+                                                        $(document).click(function (e) {
+                                                            $('.message').hide();
+                                                        });
+                                                        /** HIDE ALERT**/
 
 
         </script>

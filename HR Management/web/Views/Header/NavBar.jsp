@@ -42,13 +42,15 @@
                 <a class="nav-item nav-link" href="<%= request.getContextPath()%>/SettingController/Setting">Setting List</a>
                 <a class="nav-item nav-link" href="<%= request.getContextPath()%>/Group/GroupList">Group List</a>
                 <a class="nav-item nav-link" href="<%= request.getContextPath()%>/SupportTypeController/SupportType">Support Type</a>
-
             </c:if>
             <c:if test="${sessionScope.account.role_id eq 2}"> 
+                <a class="nav-item nav-link" href="<%= request.getContextPath()%>/Project/Manager">Project</a>
             </c:if>
             <c:if test="${sessionScope.account.role_id eq 3}"> 
+                <a class="nav-item nav-link" href="<%= request.getContextPath()%>/Project/List">Project</a>
                 <a class="nav-item nav-link" href="<%= request.getContextPath()%>/Contract/Details">Contract</a>
                 <a class="nav-item nav-link" href="<%= request.getContextPath()%>/User/NewUser">New User</a>
+                <a class="nav-item nav-link" href="<%= request.getContextPath()%>/PostController/Views">Post List</a>
             </c:if>
             <a class="nav-item nav-link" href="#">Our Team</a>
 

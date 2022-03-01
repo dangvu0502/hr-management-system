@@ -143,12 +143,12 @@ public class SupportTypeDAO {
             while (rs.next()) {
                 Group g = new Group();
                 g.setCode(rs.getString(1));
-                g.setManager(rs.getString(2));
+                g.setManager_id(rs.getInt(2));
                 g.setName(rs.getString(3));
-                g.setStatus(rs.getBoolean(4));
+                g.setStatus(rs.getInt(4));
                 g.setDescription(rs.getString(5));
                 g.setParent_group_code(rs.getString(6));
-                g.setDelete(rs.getBoolean(7));
+                g.setDelete(rs.getInt(7));
                 g.setUpdate_date(rs.getString(8));
                 vec.add(g);
             }
@@ -169,5 +169,26 @@ public class SupportTypeDAO {
         }
         ps.setInt(2, id);
         ps.executeUpdate();
+    }
+    
+     public List<SupportType> getAllSpName() throws SQLException {
+        List<SupportType> result = new ArrayList<SupportType>();
+        try {
+            String sql = "SELECT id, name FROM hr_system_v2.`support type`;";
+            con = new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                SupportType u = new SupportType(rs.getInt(1), rs.getString(2));
+                result.add(u);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;
     }
 }

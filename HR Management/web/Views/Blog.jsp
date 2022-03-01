@@ -175,10 +175,7 @@
                 <form action="BlogSearchController" method="post" class="form-inline" 
                       style="padding: 20px 0px 20px 30px">
                     <div class="form-group mb-2">
-                        <select class="form-control" name="type" >
-                            <option value="Tittle">Tittle</option>
-                            <option value="Brieft">Brieft</option>
-                        </select>                                            
+                        Search <br>                                       
                     </div>
                     <div class="form-group mb-2 align-center">
                         <label for="TittleSearch" class="sr-only"></label>

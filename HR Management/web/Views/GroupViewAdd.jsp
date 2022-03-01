@@ -1,18 +1,12 @@
-<%-- 
-    Document   : SupportTypeAdd
-    Created on : Jan 30, 2022, 9:30:43 PM
-    Author     : hide
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
 
 
         <meta charset="UTF-8">
-        <title>Director | Simple Tables</title>
+        <title>Group | Add</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
@@ -37,215 +31,10 @@
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
         <header class="header">
-            <a href="../Views/Home.jsp" class="logo">
+            <a href="Views1/Home.jsp" class="logo">
                 <!-- Add the class icon to your logo image or logo icon to add the margining -->
                 Home
             </a>
-            <!-- Header Navbar: style can be found in header.less -->
-            <!--            <nav class="navbar navbar-static-top" role="navigation">
-                             Sidebar toggle button
-                            <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </a>
-                            <div class="navbar-right">
-                                <ul class="nav navbar-nav">
-                                     Messages: style can be found in dropdown.less
-                                    <li class="dropdown messages-menu">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                            <i class="fa fa-envelope"></i>
-                                            <span class="label label-success">4</span>
-                                        </a>
-                                        <ul class="dropdown-menu">
-                                            <li class="header">You have 4 messages</li>
-                                            <li>
-                                                 inner menu: contains the actual data 
-                                                <ul class="menu">
-                                                    <li> start message 
-                                                        <a href="#">
-                                                            <div class="pull-left">
-                                                                <img src="img/avatar3.png" class="img-circle" alt="User Image"/>
-                                                            </div>
-                                                            <h4>
-                                                                Support Team
-                                                                <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                                                            </h4>
-                                                            <p>Why not buy a new awesome theme?</p>
-                                                        </a>
-                                                    </li> end message 
-                                                    <li>
-                                                        <a href="#">
-                                                            <div class="pull-left">
-                                                                <img src="img/avatar2.png" class="img-circle" alt="user image"/>
-                                                            </div>
-                                                            <h4>
-                                                                Director Design Team
-                                                                <small><i class="fa fa-clock-o"></i> 2 hours</small>
-                                                            </h4>
-                                                            <p>Why not buy a new awesome theme?</p>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">
-                                                            <div class="pull-left">
-                                                                <img src="img/avatar.png" class="img-circle" alt="user image"/>
-                                                            </div>
-                                                            <h4>
-                                                                Developers
-                                                                <small><i class="fa fa-clock-o"></i> Today</small>
-                                                            </h4>
-                                                            <p>Why not buy a new awesome theme?</p>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">
-                                                            <div class="pull-left">
-                                                                <img src="img/avatar2.png" class="img-circle" alt="user image"/>
-                                                            </div>
-                                                            <h4>
-                                                                Sales Department
-                                                                <small><i class="fa fa-clock-o"></i> Yesterday</small>
-                                                            </h4>
-                                                            <p>Why not buy a new awesome theme?</p>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">
-                                                            <div class="pull-left">
-                                                                <img src="img/avatar.png" class="img-circle" alt="user image"/>
-                                                            </div>
-                                                            <h4>
-                                                                Reviewers
-                                                                <small><i class="fa fa-clock-o"></i> 2 days</small>
-                                                            </h4>
-                                                            <p>Why not buy a new awesome theme?</p>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="footer"><a href="#">See All Messages</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown tasks-menu">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                            <i class="fa fa-tasks"></i>
-                                            <span class="label label-danger">9</span>
-                                        </a>
-                                        <ul class="dropdown-menu">
-            
-                                            <li class="header">You have 9 tasks</li>
-                                            <li>
-                                                 inner menu: contains the actual data 
-                                                <ul class="menu">
-                                                    <li> Task item 
-                                                        <a href="#">
-                                                            <h3>
-                                                                Design some buttons
-                                                                <small class="pull-right">20%</small>
-                                                            </h3>
-                                                            <div class="progress progress-striped xs">
-                                                                <div class="progress-bar progress-bar-success" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                                                    <span class="sr-only">20% Complete</span>
-                                                                </div>
-                                                            </div>
-                                                        </a>
-                                                    </li> end task item 
-                                                    <li> Task item 
-                                                        <a href="#">
-                                                            <h3>
-                                                                Create a nice theme
-                                                                <small class="pull-right">40%</small>
-                                                            </h3>
-                                                            <div class="progress progress-striped xs">
-                                                                <div class="progress-bar progress-bar-danger" style="width: 40%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                                                    <span class="sr-only">40% Complete</span>
-                                                                </div>
-                                                            </div>
-                                                        </a>
-                                                    </li> end task item 
-                                                    <li> Task item 
-                                                        <a href="#">
-                                                            <h3>
-                                                                Some task I need to do
-                                                                <small class="pull-right">60%</small>
-                                                            </h3>
-                                                            <div class="progress progress-striped xs">
-                                                                <div class="progress-bar progress-bar-info" style="width: 60%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                                                    <span class="sr-only">60% Complete</span>
-                                                                </div>
-                                                            </div>
-                                                        </a>
-                                                    </li> end task item 
-                                                    <li> Task item 
-                                                        <a href="#">
-                                                            <h3>
-                                                                Make beautiful transitions
-                                                                <small class="pull-right">80%</small>
-                                                            </h3>
-                                                            <div class="progress progress-striped xs">
-                                                                <div class="progress-bar progress-bar-warning" style="width: 80%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                                                    <span class="sr-only">80% Complete</span>
-                                                                </div>
-                                                            </div>
-                                                        </a>
-                                                    </li> end task item 
-                                                </ul>
-                                            </li>
-                                            <li class="footer">
-                                                <a href="#">View all tasks</a>
-                                            </li>
-            
-                                        </ul>
-                                    </li>
-                                     User Account: style can be found in dropdown.less 
-                                    <li class="dropdown user user-menu">
-            
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                            <i class="fa fa-user"></i>
-                                            <span>Jane Doe <i class="caret"></i></span>
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
-                                            <li class="dropdown-header text-center">Account</li>
-            
-                                            <li>
-                                                <a href="#">
-                                                    <i class="fa fa-clock-o fa-fw pull-right"></i>
-                                                    <span class="badge badge-success pull-right">10</span> Updates</a>
-                                                <a href="#">
-                                                    <i class="fa fa-envelope-o fa-fw pull-right"></i>
-                                                    <span class="badge badge-danger pull-right">5</span> Messages</a>
-                                                <a href="#"><i class="fa fa-magnet fa-fw pull-right"></i>
-                                                    <span class="badge badge-info pull-right">3</span> Subscriptions</a>
-                                                <a href="#"><i class="fa fa-question fa-fw pull-right"></i> <span class=
-                                                                                                                  "badge pull-right">11</span> FAQ</a>
-                                            </li>
-            
-                                            <li class="divider"></li>
-            
-                                            <li>
-                                                <a href="#">
-                                                    <i class="fa fa-user fa-fw pull-right"></i>
-                                                    Profile
-                                                </a>
-                                                <a data-toggle="modal" href="#modal-user-settings">
-                                                    <i class="fa fa-cog fa-fw pull-right"></i>
-                                                    Settings
-                                                </a>
-                                            </li>
-            
-                                            <li class="divider"></li>
-            
-                                            <li>
-                                                <a href="#"><i class="fa fa-ban fa-fw pull-right"></i> Logout</a>
-                                            </li>
-                                        </ul>
-            
-                                    </li>
-                                </ul>
-                            </div>
-                        </nav>-->
         </header>
         <div class="wrapper row-offcanvas row-offcanvas-left">
             <!-- Left side column. contains the logo and sidebar -->
@@ -255,7 +44,7 @@
                     <!-- Sidebar user panel -->
                     <div class="user-panel">
                         <div class="pull-left image">
-                            <img src="img/avatar3.png" class="img-circle" alt="User Image" />
+                            <img src="../userimg/${sessionScope.account.avatar}" class="img-circle" alt="User Image" />
                         </div>
                         <div class="pull-left info">
                             <p>${sessionScope.account.fullname}</p>
@@ -263,10 +52,9 @@
                             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                         </div>
                     </div>
-
                     <ul class="sidebar-menu">
                         <li >
-                            <a href="../Views/Home.jsp">
+                            <a href="<%= request.getContextPath()%>/Views/Home.jsp">
                                 <i class="fa fa-home"></i> <span>Home Page</span>
                             </a>
                         </li>
@@ -276,50 +64,17 @@
                             </a>
                         </li>
                         <li>
-                            <a href="<%= request.getContextPath()%>/SettingController/Setting">
-                                <i class="fa fa-gear"></i> <span>Setting List</span>
+                            <a href="../Group/GroupList">
+                                <i class="fa fa-glass"></i> <span>Project List</span>
                             </a>
                         </li>
                         <li class="active">
-                            <a href="<%= request.getContextPath()%>/Group/GroupList">
-                                <i class="fa fa-user"></i> <span>Group List</span>
+                            <a href="../Group/GroupAdd">
+                                <i class="fa fa-glass"></i> <span>Group Add</span>
                             </a>
                         </li>
+
                     </ul>
-                    <!-- search form -->
-                    <!--                    <form action="#" method="get" class="sidebar-form">
-                                            <div class="input-group">
-                                                <input type="text" name="q" class="form-control" placeholder="Search..."/>
-                                                <span class="input-group-btn">
-                                                    <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
-                                                </span>
-                                            </div>
-                                        </form>-->
-                    <!--                    <ul class="sidebar-menu">
-                                            <li>
-                                                <a href="index.html">
-                                                    <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="general.html">
-                                                    <i class="fa fa-gavel"></i> <span>General</span>
-                                                </a>
-                                            </li>
-                    
-                                            <li>
-                                                <a href="basic_form.html">
-                                                    <i class="fa fa-globe"></i> <span>Basic Elements</span>
-                                                </a>
-                                            </li>
-                    
-                                            <li class="active">
-                                                <a href="simple.html">
-                                                    <i class="fa fa-glass"></i> <span>Simple tables</span>
-                                                </a>
-                                            </li>
-                    
-                                        </ul>-->
                 </section>
                 <!-- /.sidebar -->
             </aside>
@@ -330,178 +85,101 @@
                 <!-- Main content -->
                 <section class="content">
                     <div class="row">
-                        <div class="panel">
-                            <header class="panel-heading">
-                                Group ADD
-                            </header>
-                            <div class="panel-body" style="width: 50%;">
-                                <header class="panel-heading">
-                                    Group ADD
+                        <div  class="col-lg-3"></div>
+                        <div class="col-lg-6 ">
+                            <section class="panel">
+                                <header class="panel-heading text-center">
+                                    Add Group
                                 </header>
-                                <div class="panel-body">
-                                    <form action="../Group/GroupAdd" >
-                                        <!--                                        <div class="row ">
-                                                                                            <div class="form-group col-lg-12">
-                                                                                                <label for="ID">ID</label>
-                                                                                                <input type="text" class="form-control" name="spid" readonly="" value="${listS.id}">
-                                                                                            </div>
-                                                                                        </div>-->
-                                        <div class="row">
-                                            <div class="form-group col-lg-12">
-                                                <label for="code">Code</label>
-                                                <input type="text" class="form-control" name="code"  value="">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-lg-12">
-                                                <label for="manager">Manager</label>
-                                                <input type="text" class="form-control" name="manager"  value="">
-                                            </div>
-                                        </div>
-                                        <div class="row ">
-                                            <div class="form-group col-lg-12">
-                                                <label for="name">Name</label>
-                                                <input type="text" class="form-control" name="name"  value="">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-lg-12">
-                                                <label for="Status">Status</label><br>
-                                                <input  type="radio" name="status" value="1" id="rbStatus" checked="checked" > <span style="margin-right: 2rem;" >BA</span>
-                                                <input type="radio" name="status" value="0" id="rbStatus" > Non BA
-
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-lg-12">
-                                                <label for="description">Description</label>
-                                                <input type="text" class="form-control" name="description"  value="">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-lg-12">
-                                                <label for="parentcode">Parent Group Code</label>
-                                                <input type="text" class="form-control" name="parent_group_code"  value="">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-lg-12">
-                                                <label for="updatedate">Update date</label>
-                                                <input type="date" class="form-control" name="update_date"  value="">
-                                            </div>
-                                        </div>
-
-                                        <div class=" form-group row col-lg-12 text-center">
-                                            <button type="submit" id="submit-btn" class="btn btn-info"  >Add Support Type</button>
-                                        </div>
-                                    </form>
-                                    <!--                                    <form action="../SupportTypeController/Edit" >
-                                                                            <div class="row">
-                                                                                <div class="col-lg-2"></div>
-                                    
-                                                                                <div class="col-lg-8">
-                                                                                    <div class="row ">
-                                                                                        <div class="form-group col-lg-12">
-                                                                                            <label for="ID">ID</label>
-                                                                                            <input type="text" class="form-control" name="spid" disabled="" value="${listS.id}">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="row ">
-                                                                                        <div class="form-group col-lg-12">
-                                                                                            <label for="name">Name</label>
-                                                                                            <input type="text" class="form-control" name="name"  value="${listS.name}">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="row">
-                                                                                        <div class="form-group col-lg-12">
-                                                                                            <label for="email">Email</label>
-                                                                                            <input type="email" class="form-control" name="email"  value="${listS.email}">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                        <div class="row">
-                                                                                        <div class="form-group col-lg-12">
-                                                                                            <label for="description">Description</label>
-                                                                                            <input type="text" class="form-control" name="description"  value="${listS.description}">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="row">
-                                                                                        <div class="form-group col-lg-12">
-                                                                                            <label for="InCharge">In Charge</label>
-                                                                                            <input type="text" class="form-control" name="InCharge"  value="${listS.in_charge_group}">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="row">
-                                                                                        <div class="form-group col-lg-12">
-                                                                                            <label for="Status">Status</label><br>
+                                <c:if test="${message != null}">
                                     <c:choose>
-                                        <c:when test = "${listS.status == false}">
-                                            <input  type="radio" name="foo" value="1" id="rbStatus" > <span style="margin-right: 2rem;" >Active</span>
-                                            <input type="radio" name="foo" value="0" id="rbStatus" checked="checked"> Deactivate
+                                        <c:when test = "${message eq 'Add Group Successfully!!'}">
+                                            <div class="error alert alert-success" role="alert">
+                                                <p class="mb-0">${message}</p>
+                                            </div>
                                         </c:when>
                                         <c:otherwise>
-                                            <input  type="radio" name="foo" value="1" id="rbStatus" checked="checked"> <span style="margin-right: 2rem;" >Active</span>
-                                            <input type="radio" name="foo" value="0" id="rbStatus"> Deactivate
+                                            <div class="error alert alert-danger" role="alert">
+                                                <p class="mb-0">${message}</p>
+                                            </div>
                                         </c:otherwise>
                                     </c:choose>
+                                    <c:remove var="message" scope="session" /> 
+                                </c:if>
+                                <div class="panel-body">
+                                    <form action="../Group/GroupAdd" method="POST">
+
+                                        <div class="row">
+                                            <div class="col-lg-2"></div>
+                                            <div class="col-lg-8">
+                                                <div class="row ">
+                                                    <div class="form-group col-lg-12">
+                                                        <label for="code">GroupCode</label><i style="color: red; font-size: 20px">*</i>
+                                                        <input type="text" class="form-control" name="code" required="">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-lg-12">
+                                                        <label for="name">Group Name</label>
+                                                        <select class="form-control input-md" style="width: 200px;" name="name" >
+                                                            <c:forEach var="ListN" items="${ListN}">
+                                                                <option value="${ListN}">${ListN}</option>
+                                                            </c:forEach>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-lg-12">
+                                                        <label for="group">Group Parent Code</label>
+                                                        <select class="form-control input-md" style="width: 200px;" name="parent_group_code" >
+                                                            <c:forEach var="group" items="${group}">
+                                                                <option value="${group}" ${p.groupCode eq group ?'selected':''} >${group}</option>
+                                                            </c:forEach>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-lg-12">
+                                                        <label for="manager">Manager</label>
+                                                        <select class="form-control input-md" style="width: 200px;" name="manager">
+                                                            <c:forEach items="${listU}" var="u">
+                                                                <option value="${u.id}">${u.username}</option>
+                                                            </c:forEach>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-lg-12">
+                                                        <label for="status" >Status</label>
+                                                        <input  type="radio" name="status" value="1" checked="checked" style="margin-left: 10px" > <span style="margin-right: 2rem;" >BA</span>
+                                                        <input type="radio" name="status" value="0"  > Non BA
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-lg-12">
+                                                        <jsp:useBean id="now" class="java.util.Date" />
+                                                        <fmt:formatDate var="date" value="${now}" pattern="yyyy-MM-dd" />
+                                                        <label for="update_date1">Update date</label>
+                                                        <h5 style="color: red"><i>By add new group, start date will set from now on....<br/>Otherwise you can edit it later</i></h5>
+                                                        <input type="date" class="form-control" name="update_dat1e" value="${date}" disabled="">
+                                                        
+                                                        <input name="update_date" value="${date}" hidden="">
+                                                        
+                                                    </div>
+                                                </div>
+
+                                                <div class=" form-group row col-lg-12 text-center">
+                                                    <button type="submit" id="submit-btn" class="btn btn-info"  >Add Group</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+
                                 </div>
-                            </div>
-                            <div class=" form-group row col-lg-12 text-center">
-                                <button type="submit" id="submit-btn" class="btn btn-info"  >Save Change</button>
-                            </div>
-                </form>-->
-                                </div>
-                            </div>
-                            <!--                            <div class="panel-body">
-                                                            <div style="margin-left: 30rem;" ><div style="display: flex; justify-content: space-between;margin-bottom: 2rem">
-                                                                    <div><label>ID</label></div>
-                                                                    <div style="margin-left: 4rem;"><input  disabled="true" style="border-radius:8px; " type="text" id="txtId" value="${listS.id}"></div>
-                                                                </div>
-                                                                <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
-                                                                    <div><label>Name</label></div>
-                                                                    <div  style="margin-left: 4rem;"><input style="border-radius:8px; " type="text" id="txtName" value="${listS.name}"></div>
-                                                                </div>
-                                                                <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
-                                                                    <div><label>Gmail</label></div>
-                                                                    <div style="margin-left: 4rem;" ><input style="border-radius:8px; " type="text" id="txtGmail" value="${listS.email}"></div>
-                                                                </div>
-                                                                <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
-                                                                    <div><label>Description</label></div>
-                                                                    <div  style="margin-left: 4rem;"><input style="border-radius:8px; " type="text" id="txtDescription" value="${listS.description}"></div>
-                                                                </div>
-                                                                <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
-                                                                    <div><label>Status</label></div>
-                                                                    <div style="padding-right: 2rem;" >
-                                                                        <input  type="radio" name="foo" value="1" id="rbStatus" checked="checked"> <span style="margin-right: 2rem;" >Active</span>
-                                                                        <input type="radio" name="foo" value="0" id="rbStatus"> Deactivate
-                                                                    </div>
-                                                                </div>
-                                                                <div style="display: flex;justify-content: space-between;margin-bottom: 2rem">
-                                                                    <div><label>In Charge</label></div>
-                                                                    <div style="margin-left: 4rem;" >
-                                                                        <select name="cbbType" id="cbbInCharge" style="width: 215px;height: 30px;border-radius: 8px;">
-                                                                            <option value="0">Admin</option>
-                                                                            <option value="1">HR</option>
-                                                                            <option value="2">Manager</option>
-                                                                            <option value="3">Staff</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div> 
-                                                                <div><a href="../SupportTypeController/Edit?id=${listS.id}&name=${txtName}&incharge=${listS.in_charge_group}&email=${listS.email}&status=${listS.status}&description=${listS.description}">Edit</a></div>
-                                                                <div><a href="../SupportTypeController/SupportType?page=1">Cancer</a></div>
-                                                            </div>-->
-
-
-                            <div class="table-foot">
-                                <ul class="pagination pagination-sm no-margin pull-right">
-
-                                </ul>
-                            </div>
+                            </section>
                         </div>
                     </div>
-                    </div>
-                </section><!-- /.content -->
+                </section>
                 <div class="footer-main">
                     Copyright &copy Director, 2014
                 </div>
@@ -511,12 +189,10 @@
         <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
-        <script type="text/javascript">
-            function deleteByID(id) {
-                if (confirm("Do you really want to delete profile?")) {
-                    window.location = "grouplist?typef=delete" + "&id=" + id;
-                }
-            }
-        </script>
     </body>
+    <script>
+        function addFunction() {
+            alert("Successfully!!");
+        }
+    </script>
 </html>

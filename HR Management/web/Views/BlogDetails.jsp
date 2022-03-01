@@ -155,7 +155,7 @@
         <!--navbar-->    
         <%@ include file = "Header/NavBar.jsp" %>
         <!--navbar-->
-        
+
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <!-- https://1.bp.blogspot.com/-Az_2DYAbtNI/X6yyinSmerI/AAAAAAAADbw/AYAOC_dN6VoUqSl5R96JB7-3y_owsXzZwCLcBGAsYHQ/w330-h270-p-k-no-nu/m1%2B%25281%2529.jpg -->
@@ -167,10 +167,7 @@
                 <form action="BlogSearchController" method="post" class="form-inline" 
                       style="padding: 20px 0px 20px 30px">
                     <div class="form-group mb-2">
-                        <select class="form-control" name="type" >
-                            <option value="Tittle">Tittle</option>
-                            <option value="Brieft">Brieft</option>
-                        </select>                                            
+                        Search <br>                                     
                     </div>
                     <div class="form-group mb-2 align-center">
                         <label for="TittleSearch" class="sr-only"></label>

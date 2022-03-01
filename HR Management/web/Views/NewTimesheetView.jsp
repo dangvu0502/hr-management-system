@@ -6,12 +6,13 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%> 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Timesheet Detail</title>
+        <title>Timesheet</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
@@ -46,10 +47,25 @@
                     <div class="col-lg-6 ">
                         <section class="panel">
                             <header class="panel-heading text-center">
-                                New Timesheet
+                                <c:choose>
+                                    <c:when test="${timesheet == null}">
+                                        New Timesheet
+                                    </c:when>
+                                    <c:otherwise>
+                                        Edit Timesheet
+                                    </c:otherwise>
+                                </c:choose>
                             </header>
                             <div class="panel-body">
-                                <form action="/HR_Management/Timesheet/NewTimesheet" method="POST" role="form" onsubmit="return chooseProject && chooseProcess && isValid">
+                                <c:choose>
+                                    <c:when test="${timesheet == null}">
+                                        <c:set var = "action"  value = "/HR_Management/Timesheet/NewTimesheet"/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:set var = "action"  value = "/HR_Management/Timesheet/EditTimesheet?id=${timesheet.id}"/>
+                                    </c:otherwise>
+                                </c:choose>
+                                <form action="${action}" method="POST" role="form" onsubmit="return chooseProject && chooseProcess && isValid && cf">
                                     <div class="row">
                                         <div class="col-lg-2"></div>
                                         <div class="col-lg-8">
@@ -62,19 +78,41 @@
                                             <div class="row ">
                                                 <div class="form-group col-lg-12">
                                                     <label for="title">Title</label>
-                                                    <input type="text" class="form-control" id="title" name="title" placeholder="Enter timesheet title" required>
+                                                    <c:choose>
+                                                        <c:when test="${timesheet == null}">
+                                                            <input type="text" class="form-control" id="title" name="title" placeholder="Enter timesheet title" required>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <input type="text" class="form-control" id="title" name="title" placeholder="Enter timesheet title" required value="${timesheet.title}">
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </div>
                                             </div>
                                             <div class="row ">
                                                 <div class="form-group col-lg-6">
                                                     <label for="date">Date</label>
-                                                    <input type="date" class="form-control" id="date" name="date"  placeholder="Enter your username" required>
+                                                    <c:choose>
+                                                        <c:when test="${timesheet == null}">                                                       
+                                                            <input type="date" class="form-control" id="date" name="date" required>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <input type="date" class="form-control" id="date" name="date" required value="${viDate}">
+                                                        </c:otherwise>
+                                                    </c:choose>
 
                                                 </div>
                                                 <div class="form-group col-lg-6">
-                                                    <label for="duration">Duration (hour : minute)</label>
-                                                    <input type="text" class="form-control" id="duration" onkeyup="validate()" name="duration" placeholder="Ex: 1:30" required>
-                                                    <span id='isValidHour'></span> 
+                                                    <label for="duration">Duration (hours : minutes)</label>
+                                                    <c:choose>
+                                                        <c:when test="${timesheet == null}">
+                                                            <input type="text" class="form-control" id="duration" onkeyup="validate()" name="duration" placeholder="Ex: 1:30" required>
+                                                            <span id='isValidHour'></span>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <input type="text" class="form-control" id="duration"  name="duration" placeholder="Ex: 1:30" required value="${timesheet.duration}">
+                                                            <span id='isValidHour'></span>
+                                                        </c:otherwise>    
+                                                    </c:choose> 
                                                 </div>
                                             </div>
 
@@ -82,28 +120,74 @@
                                                 <div class="form-group col-lg-6" >
                                                     <label for="project">Project</label>
                                                     <select class="form-control text-bold" aria-label="" id="project" name="project" onchange="val1()">
-                                                        <option value="0" selected></option>
-                                                        <option value="HRM">HRM</option>        
+                                                        
+                                                        <c:forEach var="project" items="${projects}">
+                                                            <c:choose>
+                                                                <c:when test="${timesheet != null && timesheet.project_code == project}">
+                                                                    <option value="${project}" selected>${project}</option>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <option value="${project}">${project}</option>
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </c:forEach>       
                                                     </select>
                                                 </div>
                                                 <div class="form-group col-lg-6" >
                                                     <label for="process">Process</label>
                                                     <select class="form-control text-bold" aria-label="" id="process" name="process" onchange="val2()">
-                                                        <option value="0" selected></option>
+                                                       
                                                         <c:forEach var="process" items="${timesheetProcess}">
-                                                            <option value="${process.key}">${process.value}</option>
+                                                            <c:choose>
+                                                                <c:when test="${timesheet != null && timesheet.process == process.key}">
+                                                                    <option value="${process.key}" selected>${process.value}</option>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <option value="${process.key}">${process.value}</option>
+                                                                </c:otherwise>
+                                                            </c:choose>
                                                         </c:forEach>
                                                     </select>
                                                 </div>
                                             </div>
-
-
-
-                                            <div class=" form-group col-lg-12 text-center">
-                                                <br>
-                                                <button type="submit" id="submit-btn" class="btn btn-info"  >Add new timesheet</button>
-                                            </div>
-
+                                            <c:if test="${timesheet != null}">
+                                                <div class="row">
+                                                    <div class="form-group col-lg-12">
+                                                        <label for="work-result">Work result</label><p></p>
+                                                        <textarea rows="10" cols="60" id="work-result" name="work-result" style=" resize: vertical;" >${timesheet.work_result}</textarea>
+                                                    </div>
+                                                </div>
+                                            </c:if>
+                                            <c:if test="${timesheet == null}">
+                                                <div class="row">
+                                                    <div class="form-group col-lg-12">
+                                                        <label for="work-result">Work result</label><p></p>
+                                                        <textarea rows="10" cols="60" id="work-result" name="work-result" style=" resize: vertical;" ></textarea>
+                                                    </div>
+                                                </div>
+                                            </c:if>
+                                            <c:if test="${timesheet != null && timesheet.status == 3}">
+                                                <div class="row">
+                                                    <div class="form-group col-lg-12">
+                                                        <label for="reject-reason">Reject reason</label><p></p>
+                                                        <textarea rows="10" cols="60" id="reject-reason" name="reject-reason" style=" resize: vertical;" disabled>${timesheet.reject_reason}</textarea>
+                                                    </div>
+                                                </div>
+                                            </c:if>
+                                            <c:choose>
+                                                <c:when test="${timesheet == null}">
+                                                    <div class=" form-group col-lg-12 text-center">
+                                                        <br>
+                                                        <button type="submit" id="submit-btn" class="btn btn-info"  >Add new timesheet</button>
+                                                    </div>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <div class=" form-group col-lg-12 text-center">
+                                                        <br>
+                                                        <button type="submit" id="submit-btn" class="btn btn-info" onclick="confirmEdit()">Save</button>
+                                                    </div>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </div>
                                     </div>
                                 </form>
@@ -170,6 +254,18 @@
                                                                 }
                                                             }
                                                         }
+                                                        
+                                                        var cf = true;
+                                                        function confirmEdit(){
+                                                            cf = confirm("Confirm Edit");
+                                                        }
+
+                                                        $(document).ready(function () {
+                                                            validate();
+                                                            val1();
+                                                            val2();
+                                                           
+                                                        });
         </script>
 
     </body>

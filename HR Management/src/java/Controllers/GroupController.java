@@ -6,12 +6,18 @@
 package Controllers;
 
 import Dao.GroupDAO;
+import Dao.ProjectDAO;
 import Dao.SettingDAO;
 import Dao.SupportTypeDAO;
+import Dao.UserDAO;
 import Models.Group;
+import static Models.Group.myFormatDate;
 import Models.SupportType;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Vector;
 import javax.servlet.ServletException;
@@ -27,6 +33,14 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "GroupController", urlPatterns = {"/Group/*"})
 public class GroupController extends HttpServlet {
+
+    private GroupDAO groupDAO;
+    private UserDAO userDAO;
+
+    public void init() {
+        groupDAO = new GroupDAO();
+        userDAO = new UserDAO();
+    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -48,24 +62,14 @@ public class GroupController extends HttpServlet {
                 case "/GroupList":
                     groupListImplement(request, response);
                     break;
-                case "/GroupViewEdit":
-                    GroupViewEdit(request, response);
-                    break;
-                case "/GroupViewAdd":
-                    request.getRequestDispatcher("../Views/GroupViewAdd.jsp").forward(request, response);
-                    break;
                 case "/GroupAdd":
-                    GroupAdd(request, response);
-
+                    GroupAdd(request, response, method);
                     break;
                 case "/GroupEdit":
-                    GroupEdit(request, response);
+                    GroupEdit(request, response, method);
                     break;
                 case "/Delete":
                     changeStatusDelete(request, response);
-                    break;
-                case "/Filter":
-                    filterGroup(request, response);
                     break;
                 default:
                     response.sendError(404);
@@ -134,53 +138,71 @@ public class GroupController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
         try (PrintWriter out = response.getWriter();) {
-            String group_type = request.getParameter("type");
-            String input = request.getParameter("input");
-            String page = request.getParameter("page");
-            if (page == null) {
-                page = "1";
+            String code = request.getParameter("code") != null ? request.getParameter("code") : "";
+            String name = request.getParameter("name") != null ? request.getParameter("name") : "";
+            String fullname = request.getParameter("fullname") != null ? request.getParameter("fullname") : "";
+            String parent_group_code = request.getParameter("parent_group_code") != null ? request.getParameter("parent_group_code") : "";
+            int status = request.getParameter("status") != null ? Integer.parseInt(request.getParameter("status")) : -1;
+            int delete = request.getParameter("delete") != null ? Integer.parseInt(request.getParameter("delete")) : -1;
+            int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+            int offset = (page - 1) * 3;
+            String query1 = "SELECT g.manager_id, g.code, g.name, u.fullname, g.parent_group_code, g.status, g.update_date, g.delete \n"
+                    + "FROM hr_system_v2.group g join hr_system_v2.user u\n"
+                    + "where g.manager_id = u.id";
+            if (!code.isEmpty()) {
+                query1 += " and g.code like " + "'%" + code + "%'";
             }
-            request.setAttribute("page", page);
-            GroupDAO gDAO = new GroupDAO();
+            if (!fullname.isEmpty()) {
+                query1 += " and u.fullname like  " + "'%" + fullname + "%' or g.code like " + "'%" + fullname + "%'";
+            }
+            if (!parent_group_code.isEmpty()) {
+                query1 += " and g.parent_group_code like " + "'%" + parent_group_code + "%'";
+            }
+            if (status != -1) {
+                query1 += " and g.status =  " + "'" + status + "'";
+            }
+            if (delete != -1) {
+                query1 += " and g.delete =  " + "'" + delete + "'";
+            }
+            query1 += " limit 3 offset " + offset;
 
-            Vector<String> c = gDAO.getAllCode();
-            request.setAttribute("listC", c);
-            boolean check = true;
-            for (String type : c) {
-                if (type.equals(input)) {
-                    check = false;
-                    break;
-                }
+            //
+            String query2 = "SELECT count(*) FROM (SELECT g.manager_id, g.code, g.name, u.fullname, g.parent_group_code, g.status, g.update_date, g.delete \n"
+                    + "FROM hr_system_v2.group g join hr_system_v2.user u \n"
+                    + "where g.manager_id = u.id) g where status = 1 or status = 0";
+            if (!code.isEmpty()) {
+                query2 += " and g.code like " + "'%" + code + "%'";
             }
-            int count;
-            Vector<Group> g;
-            if (input == null || input.isEmpty()) {
-                g = gDAO.getGroupList(Integer.parseInt(page));
-                count = gDAO.getTotalGroup(null, null);
-            } else {
-                if ("1".equals(input) || "0".equals(input)) {
-                    g = gDAO.filterGroupList(input, 2, Integer.parseInt(page));
-                    count = gDAO.getTotalGroup(input, null);
-                } else {
-                    if (check) {
-                        g = gDAO.getGroupBySearch(input, Integer.parseInt(page));
-                        count = gDAO.getTotalGroup(null, input);
-                    } else {
-                        g = gDAO.filterGroupList(input, 1, Integer.parseInt(page));
-                        count = gDAO.getTotalGroup(input, null);
-                    }
-                }
+            if (!fullname.isEmpty()) {
+                query2 += " and u.fullname like  " + "'%" + fullname + "%' or g.code like " + "'%" + fullname + "%'";
             }
-            int endPage = count / 6;
-            if (count % 6 != 0) {
-                endPage++;
+
+            if (!parent_group_code.isEmpty()) {
+                query2 += " and g.parent_group_code like " + "'%" + parent_group_code + "%'";
             }
-            request.setAttribute("endP", endPage);
-            request.setAttribute("gr", group_type);
-            request.setAttribute("txtS", input);
-           
-            request.setAttribute("listG", g);
-            request.getRequestDispatcher("../Views/GroupView.jsp").forward(request, response);
+            if (status != -1) {
+                query2 += " and g.status =  " + "'" + status + "'";
+            }
+            if (delete != -1) {
+                query2 += " and g.delete =  " + "'" + delete + "'";
+            }
+            int count = groupDAO.getTotalGroup(query2);
+            int total = count / 3 + (count % 3 == 0 ? 0 : 1);
+            int begin = 1;
+            int end = 3;
+            while (page > end) {
+                end += 3;
+                begin += 3;
+            }
+            end = Math.min(end, total);
+            begin = Math.min(end, begin);
+            request.setAttribute("total", total);
+            request.setAttribute("begin", begin);
+            request.setAttribute("end", end);
+            request.setAttribute("currentNumber", page);
+            request.setAttribute("listG", groupDAO.getGroupList(query1));
+            request.setAttribute("parentG", groupDAO.getAllPCode());
+            request.getRequestDispatcher("/Views/GroupView.jsp").forward(request, response);
         }
     }
 
@@ -193,72 +215,45 @@ public class GroupController extends HttpServlet {
     }
 
     //</editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="GroupEdit">
-    private void GroupViewEdit(HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("utf-8");
-        try (PrintWriter out = response.getWriter();) {
-            int id = Integer.parseInt(request.getParameter("id"));
-            String code = request.getParameter("code");
-            String manager = request.getParameter("manager");
-            String name = request.getParameter("name");
-            Boolean status = Boolean.parseBoolean(request.getParameter("status"));
-            String description = request.getParameter("description");
-            String parent_group_code = request.getParameter("parent_group_code");
-            String update_date = request.getParameter("update_date");
-
-            Group g = new Group(id, code, manager, name, status, description, parent_group_code, true, update_date);
-            request.setAttribute("listG", g);
-            request.getRequestDispatcher("../Views/GroupViewEdit.jsp").forward(request, response);
-        }
-    }
-
-    private void GroupEdit(HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("utf-8");
-        try (PrintWriter out = response.getWriter();) {
-            int id = Integer.parseInt(request.getParameter("id"));
-            String code = request.getParameter("code");
-            String manager = request.getParameter("manager");
-            String name = request.getParameter("name");
-            Boolean status = Boolean.parseBoolean(request.getParameter("status"));
-            String description = request.getParameter("description");
-            String parent_group_code = request.getParameter("parent_group_code");
-            String update_date = request.getParameter("update_date");
-
-//            boolean sta = status.contains("1") ? true : false;
-            Group g = new Group(id, code, manager, name, status, description, parent_group_code, true, update_date);
-            GroupDAO gdao = new GroupDAO();
-            boolean check = gdao.editGroup(g, id);
-
-            request.setAttribute("listG", g);
-            groupListImplement(request, response);
-        }
-    }
-
-    //</editor-fold>
     // <editor-fold defaultstate="collapsed" desc="GroupAdd">
-    private void GroupAdd(HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("utf-8");
+    private void GroupAdd(HttpServletRequest request, HttpServletResponse response, String method) {
         try (PrintWriter out = response.getWriter();) {
-            String code = request.getParameter("code");
-            String manager = request.getParameter("manager");
-            String name = request.getParameter("name");
-            Boolean status = Boolean.parseBoolean(request.getParameter("status"));
-            String description = request.getParameter("description");
-            String parent_group_code = request.getParameter("parent_group_code");
-            String update_date = request.getParameter("update_date");
-            Group gr = new Group(1, code, manager, name, status, description, parent_group_code, true, update_date);
-
-            GroupDAO gDAO = new GroupDAO();
-            boolean check = gDAO.InsertGroup(gr);
-
-            groupListImplement(request, response);
+            if (method.equalsIgnoreCase("post")) {
+                GroupAddImplement(request, response);
+            } else if (method.equalsIgnoreCase("get")) {
+                addGroupView(request, response);
+            }
+        } catch (Exception ex) {
+            log(ex.getMessage());
         }
+    }
+
+    private void GroupAddImplement(HttpServletRequest request, HttpServletResponse response) throws SQLException, ParseException, IOException, Exception {
+        String code = request.getParameter("code"); //null
+        String manager = request.getParameter("manager");
+        String name = request.getParameter("name");
+        String fullname = request.getParameter("fullname"); //null
+        String parent_group_code = request.getParameter("parent_group_code"); //null
+        String status = request.getParameter("status");
+        String update_date = request.getParameter("update_date"); //null
+        groupDAO.addnewGroup(code, Integer.parseInt(manager), name, Integer.parseInt(status), parent_group_code, update_date);
+        if (groupDAO.SearchByCode(code) != null) {
+            request.getSession().setAttribute("codeErrorMessage", "Add Group Failed Code existed");
+            response.sendRedirect("../Group/GroupAdd");
+        } else {
+            request.getSession().setAttribute("message", "Add Group Successfully!!");
+            response.sendRedirect("../Group/GroupAdd");
+        }
+
+    }
+
+    private void addGroupView(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+        request.setAttribute("listG", groupDAO.getAllGroupCode());
+        request.setAttribute("listU", userDAO.getManagerFullname());
+        request.setAttribute("group", groupDAO.getAllPGroupCode());
+        request.setAttribute("ListN", groupDAO.getAllName());
+
+        request.getRequestDispatcher("/Views/GroupViewAdd.jsp").forward(request, response);
     }
 
     //delete
@@ -268,36 +263,111 @@ public class GroupController extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            int delete = Integer.parseInt(request.getParameter("delete"));
-            int id = Integer.parseInt(request.getParameter("id"));
-            String page = request.getParameter("page");
-            if (page == null) {
-                page = "1";
+            String code = request.getParameter("code") != null ? request.getParameter("code") : "";
+            int delete = request.getParameter("delete") != null ? Integer.parseInt(request.getParameter("delete")) : -1;
+            groupDAO.editStatusDelete(delete, code);
+            String name = request.getParameter("name") != null ? request.getParameter("name") : "";
+            String fullname = request.getParameter("fullname") != null ? request.getParameter("fullname") : "";
+            String parent_group_code = request.getParameter("parent_group_code") != null ? request.getParameter("parent_group_code") : "";
+            int status = request.getParameter("status") != null ? Integer.parseInt(request.getParameter("status")) : -1;
+
+            int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+            int offset = (page - 1) * 3;
+            String query1 = "SELECT g.code, g.name, u.fullname, g.parent_group_code, g.status, g.update_date, g.delete \n"
+                    + "FROM hr_system_v2.group g join hr_system_v2.user u \n"
+                    + "where g.manager_id = u.id";
+
+            if (!fullname.isEmpty()) {
+                query1 += " and u.fullname like  " + "'%" + fullname + "%' or g.code like " + "'%" + fullname + "%'";
+            }
+            if (!parent_group_code.isEmpty()) {
+                query1 += "and g.parent_group_code like " + "'%" + parent_group_code + "%'";
+            }
+            if (status != -1) {
+                query1 += " and g.status =  " + "'" + status + "'";
             }
 
-            GroupDAO g = new GroupDAO();
-            g.editStatusDelete(delete, id);
-            groupListImplement(request, response);
+            query1 += " limit 3 offset " + offset;
+            String query2 = "SELECT count(*) FROM (SELECT g.code, g.name, u.fullname, g.parent_group_code, g.status, g.update_date, g.delete \n"
+                    + "FROM hr_system_v2.group g join hr_system_v2.user u \n"
+                    + "where g.manager_id = u.id) g where status = 1 or status = 0";
+
+            if (!fullname.isEmpty()) {
+                query2 += " and u.fullname like " + "'%" + fullname + "%'";
+            }
+
+            if (!parent_group_code.isEmpty()) {
+                query2 += "and g.parent_group_code like " + "'%" + parent_group_code + "%'";
+            }
+            if (status != -1) {
+                query2 += " and g.status =  " + "'" + status + "'";
+            }
+
+            int count = groupDAO.getTotalGroup(query2);
+            int total = count / 3 + (count % 3 == 0 ? 0 : 1);
+            int begin = 1;
+            int end = 3;
+            while (page > end) {
+                end += 3;
+                begin += 3;
+            }
+            end = Math.min(end, total);
+            begin = Math.min(end, begin);
+            request.setAttribute("total", total);
+            request.setAttribute("begin", begin);
+            request.setAttribute("end", end);
+            request.setAttribute("currentNumber", page);
+
+            request.setAttribute("listG", groupDAO.getGroupList(query1));
+            request.setAttribute("parentG", groupDAO.getAllPCode());
+            request.getRequestDispatcher("/Views/GroupView.jsp").forward(request, response);
+
         } catch (Exception e) {
             System.out.println("Error " + e.getMessage());
         }
     }
 
-    private void filterGroup(HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("utf-8");
-        try (PrintWriter out = response.getWriter()) {
-            String filter = request.getParameter("input");
-            HttpSession ses = request.getSession();
-            if (!"All".equals(filter)) {
-                ses.setAttribute("session", filter);
-                ses.setMaxInactiveInterval(-1);
-            } else {
-                ses.removeAttribute("session");
+    private void GroupEdit(HttpServletRequest request, HttpServletResponse response, String method) {
+        try (PrintWriter out = response.getWriter();) {
+            if (method.equalsIgnoreCase("post")) {
+                groupEditImplement(request, response);
+            } else if (method.equalsIgnoreCase("get")) {
+                groupEditView(request, response);
             }
-            groupListImplement(request, response);
+        } catch (Exception ex) {
+            log(ex.getMessage());
         }
+    }
+
+    private void groupEditImplement(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        String code = request.getParameter("code");
+        String manager = request.getParameter("manager");
+        String name = request.getParameter("name");
+        String parent_group_code = request.getParameter("parent_group_code"); //null
+        String status = request.getParameter("status"); //null
+        String update_date = request.getParameter("update_date");
+        groupDAO.editGroup(code, Integer.parseInt(manager), name, Integer.parseInt(status), parent_group_code, update_date);
+        request.getSession().setAttribute("message", "Edit Group Successfully!!");
+        response.sendRedirect("../Group/GroupEdit?code=" + code);
+    }
+
+    private void groupEditView(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException, ParseException {
+        String code = request.getParameter("code");
+        List<Group> group = new GroupDAO().getOne(code);
+
+        request.setAttribute("listU", userDAO.getManagerFullname());
+        request.setAttribute("groupCode", groupDAO.getAllPGroupCode());
+        request.setAttribute("ListN", groupDAO.getAllName());
+        request.setAttribute("ListD", groupDAO.getDate(code));
+        //   request.setAttribute("viDate", myFormatDate());
+        request.setAttribute("group", group);
+        request.getRequestDispatcher("../Views/GroupViewEdit.jsp").forward(request, response);
+    }
+
+    private String myFormatDate(String date) throws ParseException {
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        return simpleDateFormat.format(new SimpleDateFormat("dd-MM-yyyy").parse(date));
     }
 }
 //</editor-fold>
