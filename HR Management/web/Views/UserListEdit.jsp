@@ -109,6 +109,7 @@
                                         <div class="form-group col-lg-12">
                                             <label for="group">Group Code</label>
                                             <select class="form-control input-md" style="width: 200px;" name="groupUser" >
+                                                <option value="${userList.group_code}">${userList.group_code}</option>
                                                 <c:forEach var="group" items="${group}">
                                                     <option value="${group}" ${p.groupCode eq group ?'selected':''} >${group}</option>
                                                 </c:forEach>

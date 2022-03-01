@@ -63,7 +63,7 @@
                                             <div class="col-lg-8">
                                                 <form action="" method="post" >
                                                     <div class="input-group">
-                                                        <div class="btn btn-md btn-default" style="width: 180px; pointer-events: none;"><span>Search by Code, Name</span></div>
+                                                        <div class="btn btn-md btn-default" style="width: 180px; pointer-events: none;"><span>Search</span></div>
                                                         <input id="userSearch" type="text" name="userSearch" class="form-control input-md" style="width: 450px;" placeholder="Enter user name, full name, email, mobile to search" onclick="dateHideShow()"/>
                                                         <br>
                                                         <div id="advanced" style="display: none">
@@ -145,17 +145,18 @@
                                                         <c:if test="${!user.status}">
                                                             <span class="badge bg-red">Deactivate</span>
                                                             &nbsp;
-                                                            <a href="../UserListController/ChangeStatus?status=0&id=${user.id}"><span class="glyphicon glyphicon-retweet"></span></a>
+<!--                                                            <a href="../UserListController/ChangeStatus?status=0&id=${user.id}&page=${currentNumber}"><span class="glyphicon glyphicon-retweet"></span></a>-->
+                                                            <a onclick="changeStatus(${user.id},${currentNumber},0)" href=""><span class="glyphicon glyphicon-retweet"></span></a>
                                                             </c:if>
                                                             <c:if test="${user.status}">
                                                             <span class="badge bg-green">Activate</span>
                                                             &nbsp;
-                                                            <a onclick="noti()" href="../UserListController/ChangeStatus?status=1&id=${user.id}&page=${currentNumber}"><span class="glyphicon glyphicon-retweet"></span></a>
-
+<!--                                                            <a onclick="noti()" href="../UserListController/ChangeStatus?status=1&id=${user.id}&page=${currentNumber}"><span class="glyphicon glyphicon-retweet"></span></a>-->
+                                                            <a onclick="changeStatus(${user.id},${currentNumber},1)" href=""><span class="glyphicon glyphicon-retweet"></span></a>
                                                         </c:if>
                                                     </td>
                                                     <td>
-                                                        <a href="#" class="btn btn-md btn-default" onclick="deleteTimesheet(${timesheet.id})"><i class="fa fa-trash-o"></i></a>
+<!--                                                        <a href="" class="btn btn-md btn-default" onclick="changeStatus(${user.id},${currentNumber},1)"  ><i class="fa fa-pencil"></i></a>-->
                                                         <a href="../UserListController/EditView?id=${user.id}" class="btn btn-md btn-default"  ><i class="fa fa-pencil"></i></a>
                                                     </td>
                                                 </tr>
@@ -223,7 +224,24 @@
                     x.style.display = "none";
                 }
             }
-
+            
+            function changeStatus(id,number,status) {
+                                                                var cf = confirm("Are you sure to change status?");
+                                                                if (cf) {
+                                                                    //Logic to delete the item
+                                                                    $.ajax({
+                                                                        type: "POST",
+                                                                        url: "http://localhost:8080/HR_Management/UserListController/ChangeStatus?",
+                                                                        data: {id: id,
+                                                                            status: status,
+                                                                            page: number},
+                                                                        success: function () {
+                                                                            page(number)
+                                                                        }
+                                                                    });
+                                                                }
+                                                            }
+            
 
 
             function page(number) {
@@ -263,11 +281,6 @@
 
             });
 
-            function deleteByID(id) {
-                if (confirm("Do you really want to delete profile?")) {
-                    window.location = "SettingDetailController?typef=delete" + "&id=" + id;
-                }
-            }
         </script>
     </body>
 </html>
