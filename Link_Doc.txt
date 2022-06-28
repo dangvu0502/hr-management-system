@@ -1,6 +1,0 @@
-SDS :
-https://docs.google.com/document/d/1PTUVfr-alc3dirrS2_tiv5Gg_LkMGdzRs3fBPNUErIQ/edit
-SRS :
-https://docs.google.com/document/d/1FaKqhJLwcWE9At8IBSaLbxuQWXP4jUaur6sCJ4P74lU/edit
-tracking :
-https://docs.google.com/spreadsheets/d/1yOy4cWtQOxUhRWE1xyo7euBVxNRPoervCvFfK1hQjVY/edit#gid=827169497
